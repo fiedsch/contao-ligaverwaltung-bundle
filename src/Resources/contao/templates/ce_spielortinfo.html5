@@ -1,0 +1,30 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<h3><?= $this->spielort->name ?></h3>
+
+<div class="address">
+  <?php
+  $rawAddress = $this->spielort->street . ',' . $this->spielort->postal . ' ' . $this->spielort->city;
+  $encodedAddress = urlencode($rawAddress);
+  ?>
+  <a target="_blank" href="https://www.google.de/maps/place/<?=$encodedAddress?>">
+  <?= $this->spielort->street; ?><br>
+  <?= $this->spielort->postal; ?> <?= $this->spielort->city; ?>
+  </a>
+</div>
+
+<div class="contact">
+  <?php if ($this->spielort->phone): ?>
+  Telefon: <?= $this->spielort->phone; ?>
+  <?php endif; ?>
+  <?php if ($this->spielort->website): ?>
+    <br><a target="_blank" href="<?= $this->spielort->website; ?>"><?= $this->spielort->website; ?></a>
+  <?php endif; ?>
+</div>
+
+<?php $this->endblock(); ?>
+
+
+

@@ -1,0 +1,48 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<!--
+<div class="row">
+  <div class="col-xs-12">
+  <h1>Spielortseite <?= $this->spielort_name ?></h1>
+  </div>
+</div>
+-->
+
+<div class="row">
+  <div class="spielortinfo col-md-6 col-xs-12">
+      <h2>Wo wird gespielt?</h2>
+      <?= $this->spielortinfo; ?>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="todos col-md-6 col-xs-12">
+      <h2>Wer spielt aktuell hier?</h2>
+
+      <!--
+      <pre>
+      <?php // print_r(['ligen_config' => $this->ligen_config]); ?>
+      <?php // print_r(['gefundene_ligen' => $this->gefundene_ligen]); ?>
+      <?php // print_r(['show_ligen' => $this->show_ligen]); ?>
+      <?php // print_r(['ligen_lookup' => $this->ligen_lookup]); ?>
+      <?php // print_r(['mannschafts_liste' => $this->mannschaften_liste]); ?>
+      <?php // print_r(['mannschaften_in_ligen_liste' => $this->mannschaften_in_ligen_liste]); ?>
+      </pre>
+      <!-- -->
+
+      <?php foreach ($this->show_ligen as $ligaId): ?>
+        <h3><?= $this->ligen_lookup[$ligaId]->name ?> <?= $this->ligen_lookup[$ligaId]->getRelated('saison')->name ?></h3>
+        <ul>
+        <?php foreach ($this->mannschaften_in_ligen_liste[$ligaId] as $mannschaft): ?>
+        <li><?= $mannschaft ?></li>
+        <?php endforeach ?>
+        </ul>
+      <?php endforeach ?>
+
+  </div>
+</div>
+
+<?php $this->endblock(); ?>

@@ -1,0 +1,32 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<h2><?= $this->begegnunglabel ?></h2>
+
+<?php if ($this->spielergebnisse): ?>
+
+<table class="table table-hover spielbericht">
+<thead>
+<tr>
+<th><?= $this->home ?></th>
+<th><?= $this->away ?></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<?php foreach($this->spielergebnisse as $spielergebnis): ?>
+<tr>
+<td><?= $spielergebnis['home'] ?></td>
+<td><?= $spielergebnis['away'] ?></td>
+<td><?= $spielergebnis['score'] ?></td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>
+<?php endif; ?>
+
+<?php $this->endblock(); ?>
+
+
+

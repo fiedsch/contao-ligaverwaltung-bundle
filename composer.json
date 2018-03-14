@@ -1,0 +1,41 @@
+{
+  "name": "fiedsch/ligaverwaltung-bundle",
+  "type": "contao-bundle",
+  "description": "Contao 4 Bundle: Ligaverwaltung",
+  "license": "MIT",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Andreas Fieger",
+      "email": "dev@andreas-fieger.de",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "symfony/framework-bundle": "^3.3",
+    "contao/core-bundle": "^4.4",
+    "eluceo/ical": "^0.13"
+  },
+  "autoload": {
+    "psr-4": {
+      "Fiedsch\\LigaverwaltungBundle\\": "src/"
+    },
+    "classmap": [
+      "src/Resources/contao"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/assets",
+      "src/Resources/contao/config",
+      "src/Resources/contao/dca",
+      "src/Resources/contao/languages",
+      "src/Resources/contao/templates"
+    ]
+  },
+  "extra": {
+    "contao-manager-plugin": "Fiedsch\\LigaverwaltungBundle\\ContaoManager\\Plugin",
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

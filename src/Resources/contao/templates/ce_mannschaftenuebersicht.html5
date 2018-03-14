@@ -1,0 +1,60 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if ($this->details): ?>
+  <?php foreach ($this->ligen as $ligaid => $liga): ?>
+    <h2><?= $liga ?></h2>
+        <table class="table table-hover">
+        <thead>
+        <tr>
+        <th>Mannschaft</th>
+        <th>Teamcaptain</th>
+        <th>Spielort</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->details[$ligaid] as $mannschaftsinfos): ?>
+            <tr>
+            <td><?= $mannschaftsinfos['mannschaft'] ?></td>
+            <td>
+            <ul>
+            <?php foreach ($mannschaftsinfos['tc'] as $tc): ?>
+                <li><?= $tc ?></li>
+            <?php endforeach; ?>
+            </ul>
+            </td>
+            <td>
+              <ul>
+                <?php if ($mannschaftsinfos['spielort']['website']): ?>
+                  <li><?= sprintf("<a href='%s'>%s</a>",
+                    $mannschaftsinfos['spielort']['website'],
+                    $mannschaftsinfos['spielort']['name']
+                    ) ?></li>
+                <?php else: ?>
+                  <li><?= $mannschaftsinfos['spielort']['name'] ?></li>
+                <?php endif; ?>
+                <?php if (1||$mannschaftsinfos['spielort']['phone']): ?>
+                <li><?= sprintf("<a href='tel:%s'>%s</a>",
+                    $mannschaftsinfos['spielort']['phone'],
+                    $mannschaftsinfos['spielort']['phone']
+                    ) ?></li>
+                <?php endif; ?>
+              </ul>
+            </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+        </table>
+  <?php endforeach; ?>
+<?php endif; ?>
+
+<style>
+td ul { padding-left: 0; }
+td li { list-style-type: none; }
+</style>
+
+<?php $this->endblock(); ?>
+
+
+

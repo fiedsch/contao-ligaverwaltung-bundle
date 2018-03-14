@@ -1,0 +1,3 @@
+ligaverwaltung:
+    resource: "@FiedschLigaverwaltungBundle/Controller"
+    type: annotation

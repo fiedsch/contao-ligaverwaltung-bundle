@@ -1,0 +1,35 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<div class="row">
+  <div class="col-xs-12">
+  <h1>Mannschaftsseite <?= $this->mannschaft_name ?></h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="spielortinfo col-md-6 col-xs-12">
+      <?= $this->spielortinfo; ?>
+  </div>
+</div>
+
+<div class="row">
+  <div class="spielerliste col-md-6 col-xs-12">
+     <?= $this->spielerliste; ?>
+  </div>
+  <div class="spielplan col-md-6 col-xs-12">
+     <?= $this->spielplan; ?>
+  </div>
+</div>
+
+<div class="row">
+  <div class="spielplan col-md-6 col-xs-12">
+    <?= $this->ranking; ?>
+  </div>
+  <div class="spielplan col-md-6 col-xs-12">
+    <?= $this->highlightranking; ?>
+  </div>
+</div>
+
+<?php $this->endblock(); ?>

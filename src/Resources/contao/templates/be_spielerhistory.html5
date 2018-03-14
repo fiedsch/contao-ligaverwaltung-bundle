@@ -1,0 +1,30 @@
+<div class="spielerhistory">
+
+  <table class="tl_listing history">
+    <thead>
+        <tr>
+          <th>Saison</th>
+          <th>Mannschaft</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->history as $record): ?>
+      <tr>
+        <td><?= $record['saison'] ?></td>
+        <td><?= $record['mannschaft'] ?></td>
+      </tr>
+    <?php endforeach; ?>
+    <tbody>
+  </table>
+
+</div>
+
+<style>
+table.history th,
+table.history td
+{
+  padding:.5em;
+  text-align: left;
+  border-bottom: 1px solid #666;
+}
+</style>

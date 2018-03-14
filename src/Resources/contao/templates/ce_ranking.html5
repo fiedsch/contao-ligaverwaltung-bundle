@@ -1,0 +1,87 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if ($this->rankingtype === 'mannschaften'): ?>
+
+<?php if ($this->listitems): ?>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Platz</th>
+        <th>Mannschaft</th>
+        <th>Spiele</th>
+        <th>g</th>
+        <th>u</th>
+        <th>v</th>
+        <th>Legs</th>
+        <th>Spiele</th>
+        <th>Punkte</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->listitems as $listitem): ?>
+      <tr>
+          <td><?= $listitem['rang'] ?></td>
+          <td><?= $listitem['name'] ?></td>
+          <td><?= $listitem['begegnungen'] ?></td>
+          <td><?= $listitem['gewonnen'] ?></td>
+          <td><?= $listitem['unentschieden'] ?></td>
+          <td><?= $listitem['verloren'] ?></td>
+          <td><?= $listitem['legs_self'] ?>:<?= $listitem['legs_other'] ?></td>
+          <td><?= $listitem['spiele_self'] ?>:<?= $listitem['spiele_other'] ?></td>
+          <td><?= $listitem['punkte_self'] ?>:<?= $listitem['punkte_other'] ?></td>
+      </tr>
+    <?php endforeach; ?>
+    </tbody>
+  </table>
+<?php else: ?>
+   <code>Es liegen noch keine Ergebnise vor.</code>
+<?php endif; ?>
+
+<?php endif; ?>
+
+
+<?php if ($this->rankingtype === 'spieler'): ?>
+
+<?php if ($this->listitems): ?>
+  <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Platz</th>
+          <th>Name</th>
+          <?php if ($this->rankingsubtype === 'alle'): ?>
+          <th>Mannschaft</th>
+          <?php endif; ?>
+          <th>Legs</th>
+          <th>Spiele</th>
+          <th>Punkte</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($this->listitems as $listitem): ?>
+          <tr>
+          <td><?= $listitem['rang'] ?></td>
+          <td><?= $listitem['name'] ?></td>
+          <?php if ($this->rankingsubtype === 'alle'): ?>
+          <td><?= $listitem['mannschaft'] ?></td>
+          <?php endif; ?>
+          <td><?= $listitem['legs_self'] ?> : <?= $listitem['legs_other'] ?></td>
+          <td><?= $listitem['spiele_self'] ?> : <?= $listitem['spiele_other'] ?></td>
+          <td><?= $listitem['punkte_self'] ?></td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+  </table>
+<?php else: ?>
+  <code>Es liegen noch keine Ergebnise vor.</code>
+<?php endif; ?>
+
+<?php endif; ?>
+
+<?php // $this->showTemplateVars(); ?>
+
+<?php $this->endblock(); ?>
+
+
+

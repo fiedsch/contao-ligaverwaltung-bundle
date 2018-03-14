@@ -1,0 +1,122 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if ($this->rankingtype === 'mannschaften'): ?>
+
+<?php if ($this->listitems): ?>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Mannschaft</th>
+        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+        || $this->rankingfield == \HighlightModel::TYPE_171
+        || $this->rankingfield == \HighlightModel::TYPE_180): ?>
+        <th>171</th>
+        <th>180</th>
+        <?php endif; ?>
+        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+        || $this->rankingfield == \HighlightModel::TYPE_HIGHFINISH): ?>
+        <th>Highfinish</th>
+        <?php endif; ?>
+        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+                || $this->rankingfield == \HighlightModel::TYPE_SHORTLEG): ?>
+        <th>Shortleg</th>
+        <?php endif; ?>
+      </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->listitems as $listitem): ?>
+      <tr>
+          <td><?= $listitem['mannschaft'] ?></td>
+          <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+          || $this->rankingfield == \HighlightModel::TYPE_171
+          || $this->rankingfield == \HighlightModel::TYPE_180): ?>
+          <td><?= $listitem['hl_171'] ?></td>
+          <td><?= $listitem['hl_180'] ?></td>
+          <?php endif; ?>
+          <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+          || $this->rankingfield == \HighlightModel::TYPE_HIGHFINISH): ?>
+          <td><?= $listitem['hl_highfinish'] ?></td>
+          <?php endif; ?>
+          <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+          || $this->rankingfield == \HighlightModel::TYPE_SHORTLEG): ?>
+          <td><?= $listitem['hl_shortleg'] ?></td>
+          <?php endif; ?>
+      </tr>
+    <?php endforeach; ?>
+    </tbody>
+  </table>
+  <?php else: ?>
+     <code>Es liegen noch keine Ergebnise vor.</code>
+<?php endif; ?>
+
+<?php endif; ?>
+
+
+<?php if ($this->rankingtype === 'spieler'): ?>
+
+<?php if ($this->listitems): ?>
+  <table class="table table-hover">
+      <thead>
+        <tr>
+          <?php if ($this->rankingfield != \HighlightModel::TYPE_ALL): ?>
+            <th>&nbsp;</th><!-- Rangplatz -->
+          <?php endif; ?>
+          <th>Name</th>
+          <th>Mannschaft</th>
+        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+        || $this->rankingfield == \HighlightModel::TYPE_171
+        || $this->rankingfield == \HighlightModel::TYPE_180): ?>
+        <th>171</th>
+        <th>180</th>
+        <?php endif; ?>
+        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+        || $this->rankingfield == \HighlightModel::TYPE_HIGHFINISH): ?>
+        <th>Highfinish</th>
+        <?php endif; ?>
+        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+        || $this->rankingfield == \HighlightModel::TYPE_SHORTLEG): ?>
+        <th>Shortleg</th>
+        <?php endif; ?>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($this->listitems as $listitem): ?>
+          <tr>
+            <?php if ($this->rankingfield != \HighlightModel::TYPE_ALL): ?>
+              <td><?= $listitem['hl_rang'] ?></td>
+            <?php endif; ?>
+            <td><?= $listitem['name'] ?></td>
+            <td><?= $listitem['mannschaft'] ?></td>
+            <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+            || $this->rankingfield == \HighlightModel::TYPE_171
+            || $this->rankingfield == \HighlightModel::TYPE_180): ?>
+            <td><?= $listitem['hl_171'] ?: '' ?></td>
+            <td><?= $listitem['hl_180'] ?: '' ?></td>
+            <?php endif; ?>
+            <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+            || $this->rankingfield == \HighlightModel::TYPE_HIGHFINISH): ?>
+            <td><?= $listitem['hl_highfinish'] ?></td>
+            <?php endif; ?>
+            <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
+            || $this->rankingfield == \HighlightModel::TYPE_SHORTLEG): ?>
+            <td><?= $listitem['hl_shortleg'] ?></td>
+            <?php endif; ?>
+            <!-- <td><code><?= json_encode($listitem['hl_punkte']) ?></code></td> -->
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+  </table>
+ <?php else: ?>
+   <code>Es liegen noch keine Ergebnise vor.</code>
+<?php endif; ?>
+
+<?php endif; ?>
+
+<?php // $this->showTemplateVars(); ?>
+
+<?php $this->endblock(); ?>
+
+
+

@@ -1,0 +1,10 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if ($this->spielort): ?>
+  <h1>Spielortinfo</h1>
+  <?= $this->spielortseite; ?>
+<?php endif; ?>
+
+<?php $this->endblock(); ?>

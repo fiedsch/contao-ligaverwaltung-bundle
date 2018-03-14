@@ -1,0 +1,57 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if ($this->listitems): ?>
+  <table class="table table-hover table-condensed">
+  <tbody>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Spielerpass</th>
+        <?php if ($this->showdetails) { ?>
+        <th>Kontakt</th>
+        <?php } ?>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->listitems as $listitem): ?>
+      <tr>
+      <?php
+      $teamcaptain_suffix = '';
+      if (
+            $this->showdetails
+            &&
+            ($listitem['spieler']->teamcaptain || $listitem['spieler']->co_teamcaptain)
+         ) {
+            $details = [];
+            if ($listitem['spieler']->teamcaptain)    { $details[] = "TC";    }
+            if ($listitem['spieler']->co_teamcaptain) { $details[] = "Co-TC"; }
+            if ($listitem['member']->mobile) {
+                $details[] = sprintf("<a href='tel:%s'>%s</a>",
+                    $listitem['member']->mobile,
+                    $listitem['member']->mobile
+                    );
+            }
+            if ($listitem['member']->email) {
+                $details[] = sprintf("<a href='%s'>%s</a>",
+                    \StringUtil::encodeEmail('mailto:'.$listitem['member']->email),
+                    \StringUtil::encodeEmail($listitem['member']->email)
+                );
+            }
+            $teamcaptain_suffix = join(", ", $details);
+      }
+      ?>
+        <td><?= \Fiedsch\LigaverwaltungBundle\DCAHelper::makeSpielerName($listitem['member']) ?></td>
+        <td><?= $listitem['member']->anonymize ? '' : $listitem['member']->passnummer ?></td>
+        <td><?= $teamcaptain_suffix ?></td>
+      </tr>
+    <?php endforeach; ?>
+    </tbody>
+  </table>
+<?php endif; ?>
+
+<?php $this->endblock(); ?>
+
+
+
