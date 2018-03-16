@@ -63,3 +63,8 @@ $GLOBALS['TL_LANG']['tl_spieler']['active'] = [
     'Aktiv',
     'Dieser Spieler nimmt aktiv am Spielbetrieb der Mannschaft teil'
 ];
+
+$GLOBALS['TL_LANG']['tl_spieler']['ersatzspieler'] = [
+    'Ersatzspieler',
+    'Der Spieler ist Ersatzspieler. Er kann bei mehreren Mannschaften gleichzeitig "aushelfen".',
+];

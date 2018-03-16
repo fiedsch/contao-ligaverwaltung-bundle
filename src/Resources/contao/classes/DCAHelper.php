@@ -306,8 +306,9 @@ class DCAHelper
                 . ' LEFT JOIN tl_mannschaft m ON (s.pid=m.id)'
                 . ' LEFT JOIN tl_liga l ON (m.liga=l.id)'
                 . ' WHERE l.saison=?'
-                . ' AND s.active=\'1\''
                 . ' AND m.active=\'1\''
+                . ' AND s.active=\'1\''
+                . ' AND s.ersatzspieler<>\'1\''
                 . ')'
                 . ' AND tl_member.disable=\'\''
                 //. ' ORDER BY tl_member.lastname';
@@ -326,8 +327,9 @@ class DCAHelper
                 . ' SELECT s.member_id FROM tl_spieler s'
                 . ' LEFT JOIN tl_mannschaft m ON (s.pid=m.id)'
                 . ' WHERE m.liga=?'
-                . ' AND s.active=\'1\''
                 . ' AND m.active=\'1\''
+                . ' AND s.active=\'1\''
+                . ' AND s.ersatzspieler<>\'1\''
                 . ')'
                 . ' AND tl_member.disable=\'\''
                 . ' ORDER BY tl_member.lastname';
@@ -355,12 +357,14 @@ class DCAHelper
         $teamcaptain_label = $arrRow['teamcaptain'] ? ('(Teamcaptain: ' . $member->email . ')') : '';
         $co_teamcaptain_label = $arrRow['co_teamcaptain'] ? ('(Co-Teamcaptain: ' . $member->email . ')') : '';
         $active_label = $arrRow['active'] ==='1' ? '' : '<span class="tl_red">nicht aktiv</span>';
+        $ersatzspieler_label = $arrRow['ersatzspieler'] ==='' ? '' : '<span class="tl_red">Ersatzspieler</span>';
 
-        return sprintf('<div class="tl_content_left">%s %s%s %s</div>',
+        return sprintf('<div class="tl_content_left">%s %s%s %s %s</div>',
             self::makeSpielerName($member),
             $teamcaptain_label,
             $co_teamcaptain_label,
-            $active_label
+            $active_label,
+            $ersatzspieler_label
         );
     }
 
@@ -388,6 +392,7 @@ class DCAHelper
 
     /**
      * Sicherstellen, daß ein Spieler nur in einer Mannschaft gleichzeitig aktiv ist.
+     * Ausnahme: er/sie ist als "ersatzspieler" markiert.
      *
      * @param string $value
      * @param \DataContainer $dc
@@ -450,6 +455,7 @@ class DCAHelper
                         . ' LEFT JOIN tl_member me ON (s.member_id=me.id)'
                         . " WHERE s.pid IN ($filterlist)"
                         . " AND s.active='1'"
+                        . " AND s.ersatzspieler<>'1'"
                         . ' AND me.id=?'
                         ;
                 $queryResult = \Database::getInstance()->prepare($query)->execute($dc->activeRecord->member_id);
