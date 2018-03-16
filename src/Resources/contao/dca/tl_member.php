@@ -32,7 +32,7 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
                 $arrRow['id'],
                 // getHtml(a, foo, c) setzt mit foo das alt-Attribut, wir benötigen aber das title-Attribut
                 // das wir im dritten Parameter "manuell" setzen.
-                \Contao\Image::getHtml('diff.gif', $GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0], 'style="vertical-align:top" title="'.$GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0].'"')
+                \Contao\Image::getHtml('diff.svg', $GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0], 'style="vertical-align:top" title="'.$GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0].'"')
             );
         }
 ];

@@ -62,13 +62,13 @@ $GLOBALS['TL_DCA']  ['tl_begegnung'] = [
             'edit'       => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['edit'],
                 'href'  => 'table=tl_spiel',
-                'icon'  => 'edit.gif',
+                'icon'  => 'edit.svg',
             ],
             */
             'edit'       => [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['edit'],
             'href'  => 'do=liga.begegnungserfassung',
-            'icon'  => 'editheader.gif',
+            'icon'  => 'editheader.svg',
             'button_callback' => function($arrRow,
                                           $href,
                                           $label,
@@ -89,36 +89,36 @@ $GLOBALS['TL_DCA']  ['tl_begegnung'] = [
                         REQUEST_TOKEN,
                         $arrRow['id'],
                         //'<span style="width:6em;display:inline-block">bearbeiten</span>' //json_encode(func_get_args())
-                        '<img src="system/themes/flexible/images/edit.gif" width="12" height="16" alt="Begegnung bearbeiten">&nbsp;'
+                        '<img src="system/themes/flexible/images/edit.svg" width="12" height="16" alt="Begegnung bearbeiten">&nbsp;'
                     );
                 }
                 return sprintf('<a href="contao/main.php?%s&id=%d" title="" class="edit">%s</a>',
                     $href,
                     $arrRow['id'],
-                    '<img src="system/themes/flexible/images/edit.gif" width="12" height="16" alt="Begegnung erfassen">&nbsp;'
+                    '<img src="system/themes/flexible/images/edit.svg" width="12" height="16" alt="Begegnung erfassen">&nbsp;'
                 );
             }
            ],
             'editheader' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editheader'],
                 'href'  => 'act=edit',
-                'icon'  => 'header.gif',
+                'icon'  => 'header.svg',
             ],
             'copy'       => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['copy'],
                 'href'  => 'act=copy',
-                'icon'  => 'copy.gif',
+                'icon'  => 'copy.svg',
             ],
             'delete'     => [
                 'label'      => &$GLOBALS['TL_LANG']['tl_begegnung']['delete'],
                 'href'       => 'act=delete',
-                'icon'       => 'delete.gif',
+                'icon'       => 'delete.svg',
                 'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
             ],
             'show'       => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['show'],
                 'href'  => 'act=show',
-                'icon'  => 'show.gif',
+                'icon'  => 'show.svg',
             ],
         ],
     ],

@@ -49,29 +49,29 @@ $GLOBALS['TL_DCA']  ['tl_liga'] = [
                 'label' => &$GLOBALS['TL_LANG']['tl_liga']['edit'],
                 //'href'  => 'act=edit',
                 'href'  => 'table=tl_begegnung',
-                'icon'  => 'edit.gif',
+                'icon'  => 'edit.svg',
             ],
             'editheader' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_liga']['editheader'],
                 'href'  => 'act=edit',
-                'icon'  => 'header.gif',
+                'icon'  => 'header.svg',
             ],
 
             'copy'   => [
                 'label' => &$GLOBALS['TL_LANG']['tl_liga']['copy'],
                 'href'  => 'act=copy',
-                'icon'  => 'copy.gif',
+                'icon'  => 'copy.svg',
             ],
             'delete' => [
                 'label'      => &$GLOBALS['TL_LANG']['tl_liga']['delete'],
                 'href'       => 'act=delete',
-                'icon'       => 'delete.gif',
+                'icon'       => 'delete.svg',
                 'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
             ],
             'show'   => [
                 'label' => &$GLOBALS['TL_LANG']['tl_liga']['show'],
                 'href'  => 'act=show',
-                'icon'  => 'show.gif',
+                'icon'  => 'show.svg',
             ],
             'toggle' => [
                 'label'                => &$GLOBALS['TL_LANG']['tl_liga']['toggle'],
@@ -81,11 +81,11 @@ $GLOBALS['TL_DCA']  ['tl_liga'] = [
                     'options' => [
                         [
                             'value' => '',
-                            'icon'  => 'invisible.gif',
+                            'icon'  => 'invisible.svg',
                         ],
                         [
                             'value' => '1',
-                            'icon'  => 'visible.gif',
+                            'icon'  => 'visible.svg',
                         ],
                     ],
                 ],
