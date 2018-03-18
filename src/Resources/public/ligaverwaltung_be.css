@@ -1,8 +1,0 @@
-/* Menüpunkt Spielerhistorie verstecken */
-#liga ul.tl_level_2 li:nth-last-of-type(2),
-#liga ul.tl_level_2 li:last-of-type
-{
-    display: none;
-}
-
-

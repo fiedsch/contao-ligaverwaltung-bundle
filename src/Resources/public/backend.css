@@ -1,0 +1,7 @@
+/*
+ * Backend Styles for "Ligaverwaltung" Bundle
+ */
+#tl_navigation .group-liga {
+    background: url(logo.svg) 3px 2px no-repeat;
+}
+

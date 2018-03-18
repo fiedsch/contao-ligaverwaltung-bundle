@@ -2,7 +2,7 @@
 
 /**
  * @package Ligaverwaltung
- * @link https://github.com/fiedsch/contao-ligaverwaltung/
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
 
@@ -12,7 +12,6 @@ use Contao\LigaModel;
 use Contao\BegegnungModel;
 use Contao\SpielortModel;
 use Contao\MannschaftModel;
-use Contao\CoreBundle\Exception\PageNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 use \Eluceo\iCal\Component\Calendar;
 use \Eluceo\iCal\Component\Event;
@@ -46,7 +45,7 @@ class IcalController
     protected function initialize()
     {
         $tz = 'Europe/Berlin';
-        $dtz = new \DateTimeZone($tz);
+        // $dtz = new \DateTimeZone($tz);
         date_default_timezone_set($tz);
     }
 

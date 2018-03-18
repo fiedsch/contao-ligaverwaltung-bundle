@@ -38,51 +38,51 @@
         <?php endif; ?>
         <?php foreach ($spiele as $spiel): ?>
             <tr class="spiel">
-            <?php if ($this->mannschaft): ?>
-            <?php printf("
-            <td class='spiel am'>%s %s (%s)</td>
-            <td class='spiel where'>%s</td>
-            <td class='spiel home'>%s</td>
-            <td class='spiel away'>%s</td>
-            <!-- <td class='spiel against'>%s</td> -->
-            <td class='spiel ort'>%s</td>
-            <td class='spiel score'>%s</td>
-            <td class='spiel legs%s'>%s</td>",
-                            $spiel['am'],
-                            $spiel['um']  ? $spiel['um'] : '',
-                            $spiel['spiel_tag'] . ".&nbsp;Spieltag",
-                            $spiel['heimspiel']
-                                ? '<i class="fas fa-home" aria-hidden="true" title="zuhause"></i><span class="sr-only">zuhause</span>'
-                                :' <i class="fas fa-car" aria-hidden="true" title="auswärts"></i><span class="sr-only">auswärts</span>',
-                            $spiel['home'],
-                            $spiel['away'],
-                            $spiel['heimspiel'] ? $spiel['away'] : $spiel['home'],
-                            $spiel['im'],
-                            $spiel['score'],
-                            empty($spiel["legs"]) ? " empty": (preg_match("/nicht angetreten/", $spiel["legs"]) ? " noshow" : ""),
-                            $spiel['legs']
-                            );
-                          ?>
+                <?php if ($this->mannschaft): ?>
+                    <?php printf("
+                    <td class='spiel am w-25'>%s %s (%s)</td>
+                    <td class='spiel where'>%s</td>
+                    <td class='spiel home w-25'>%s</td>
+                    <td class='spiel away w-25'>%s</td>
+                    <!-- <td class='spiel against'>%s</td> -->
+                    <td class='spiel ort w-25'>%s</td>
+                    <td class='spiel score'>%s</td>
+                    <td class='spiel legs%s'>%s</td>",
+                        $spiel['am'],
+                        $spiel['um']  ? $spiel['um'] : '',
+                        $spiel['spiel_tag'] . ".&nbsp;Spieltag",
+                        $spiel['heimspiel']
+                            ? '<i class="fas fa-home" aria-hidden="true" title="zuhause"></i><span class="sr-only">zuhause</span>'
+                            :' <i class="fas fa-car" aria-hidden="true" title="auswärts"></i><span class="sr-only">auswärts</span>',
+                        $spiel['home'],
+                        $spiel['away'],
+                        $spiel['heimspiel'] ? $spiel['away'] : $spiel['home'],
+                        $spiel['im'],
+                        $spiel['score'],
+                        empty($spiel["legs"]) ? " empty": (preg_match("/nicht angetreten/", $spiel["legs"]) ? " noshow" : ""),
+                        $spiel['legs']
+                        );
+                    ?>
 
-            <?php else: ?>
-              <?php printf("
-              <td class='spiel am'>%s %s</td>
-              <td class='spiel home'>%s</td>
-              <td class='spiel away'>%s</td>
-              <td class='spiel ort'>%s</td>
-              <td class='spiel score'>%s</td>
-              <td class='spiel legs%s'>%s</td>",
-                    $spiel['am'],
-                    $spiel['um']  ? $spiel['um'] : '',
-                    $spiel['home'],
-                    $spiel['away'],
-                    $spiel['im'],
-                    $spiel['score'] ?: '&ndash;',
-                    empty($spiel["legs"]) ? " empty" : (!preg_match("/\d+:\d+/", $spiel["legs"]) ? " noshow" : ""),
-                    $spiel['legs'] ?: '&ndash;'
-                );
-              ?>
-            <?php endif; ?>
+                <?php else: ?>
+                    <?php printf("
+                    <td class='spiel am'>%s %s</td>
+                    <td class='spiel home'>%s</td>
+                    <td class='spiel away'>%s</td>
+                    <td class='spiel ort'>%s</td>
+                    <td class='spiel score'>%s</td>
+                    <td class='spiel legs%s'>%s</td>",
+                        $spiel['am'],
+                        $spiel['um']  ? $spiel['um'] : '',
+                        $spiel['home'],
+                        $spiel['away'],
+                        $spiel['im'],
+                        $spiel['score'] ?: '&ndash;',
+                        empty($spiel["legs"]) ? " empty" : (!preg_match("/\d+:\d+/", $spiel["legs"]) ? " noshow" : ""),
+                        $spiel['legs'] ?: '&ndash;'
+                    );
+                    ?>
+                <?php endif; ?>
             </tr>
         <?php endforeach; ?>
         <?php if ($this->mannschaft): ?>
@@ -102,7 +102,7 @@
 <?php endif; ?>
 
 <style>
-    /*
+/*
 td.spiel.am      {  width: 12em; }
 td.spiel.home,
 td.spiel.away,
@@ -111,7 +111,7 @@ td.spiel.ort     { width: 20em; }
 td.spiel.where   { width: 10em; }
 */
 
-/* endweder scoped (nur für Spielplan) oder in zentraler (S)CSS-Datei */
+/* entweder scoped (nur für Spielplan) oder in zentraler (S)CSS-Datei */
 /*
 .table > tbody > tr:last-child > td {
     border-bottom: 1px solid #ddd;
@@ -135,6 +135,3 @@ td.spiel.where   { width: 10em; }
 </style>
 
 <?php $this->endblock(); ?>
-
-
-

@@ -4,7 +4,7 @@ namespace Contao;
 
 /**
  * @package Ligaverwaltung
- * @link https://github.com/fiedsch/contao-ligaverwaltung/
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle-bundle/
  * @license https://opensource.org/licenses/MIT
  */
 class HighlightModel extends Model

@@ -2,7 +2,7 @@
 
 /**
  * @package Ligaverwaltung
- * @link https://github.com/fiedsch/contao-ligaverwaltung/
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
 
@@ -187,6 +187,7 @@ class Begegnung
      *
      * @param array $a
      * @param array $b
+     * @return boolean
      */
     public static function compareMannschaftResults($a, $b)
     {

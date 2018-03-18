@@ -2,7 +2,7 @@
 
 /**
  * @package Ligaverwaltung
- * @link https://github.com/fiedsch/contao-ligaverwaltung/
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
 
