@@ -63,5 +63,5 @@ $GLOBALS['TL_HOOKS']['addCustomRegexp'][] = array('\Fiedsch\LigaverwaltungBundle
 
 /* Add to Backend CSS */
 if (TL_MODE === 'BE') {
-    $GLOBALS['TL_CSS'][] = 'bundles/fiedschligaverwaltung/ligaverwaltung_be.css';
+    $GLOBALS['TL_CSS'][] = 'bundles/fiedschligaverwaltung/backend.css';
 }
