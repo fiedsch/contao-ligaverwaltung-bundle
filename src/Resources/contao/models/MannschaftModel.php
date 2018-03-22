@@ -59,7 +59,7 @@ class MannschaftModel extends Model
         if ($teampageId && $this->active) {
             $teampage = PageModel::findById($teampageId);
 
-            if (\Config::get('folderUrl')) {
+            if (Config::get('folderUrl')) {
                 $url = Controller::generateFrontendUrl($teampage->row(), '/id/'.$this->id);
             } else {
                 $url = Controller::generateFrontendUrl($teampage->row()) . '?id=' . $this->id;

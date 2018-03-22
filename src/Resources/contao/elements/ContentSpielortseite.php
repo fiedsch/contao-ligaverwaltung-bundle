@@ -20,6 +20,7 @@ use Contao\SpielortModel;
 use Contao\ContentModel;
 use Contao\MannschaftModel;
 use Contao\LigaModel;
+use Patchwork\Utf8;
 
 class ContentSpielortseite extends ContentElement
 {
@@ -44,7 +45,7 @@ class ContentSpielortseite extends ContentElement
                 $headline = $spielortModel->name;
             }
 
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['CTE']['spielortseite'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielortseite'][0]) . ' ###';
             $objTemplate->id = $this->id;
             $objTemplate->link = $headline;
 

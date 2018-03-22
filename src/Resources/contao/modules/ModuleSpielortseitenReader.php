@@ -19,6 +19,7 @@ use Contao\Module;
 use Contao\BackendTemplate;
 use Contao\ContentModel;
 use Contao\SpielortModel;
+use Patchwork\Utf8;
 
 class ModuleSpielortseitenReader extends Module
 {
@@ -41,7 +42,7 @@ class ModuleSpielortseitenReader extends Module
         if (TL_MODE == 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['spielortseitenreader'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['spielortseitenreader'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;

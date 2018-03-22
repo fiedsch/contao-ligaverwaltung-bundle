@@ -18,6 +18,7 @@ use Contao\Module;
 use Contao\BackendTemplate;
 use Contao\BegegnungModel;
 use Contao\ContentModel;
+use Patchwork\Utf8;
 
 class ModuleSpielberichtReader extends Module
 {
@@ -41,7 +42,7 @@ class ModuleSpielberichtReader extends Module
             /** @var \BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['spielberichtreader'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['spielberichtreader'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;

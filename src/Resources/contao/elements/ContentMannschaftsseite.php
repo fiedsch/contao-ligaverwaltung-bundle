@@ -17,6 +17,7 @@ use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
 use Contao\MannschaftModel;
+use Patchwork\Utf8;
 
 class ContentMannschaftsseite extends ContentElement
 {
@@ -41,7 +42,7 @@ class ContentMannschaftsseite extends ContentElement
                 $headline = $mannschaftModel->getFullName();
             }
 
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftsseite'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftsseite'][0]) . ' ###';
             $objTemplate->id = $this->id;
             $objTemplate->link = $headline;
 
