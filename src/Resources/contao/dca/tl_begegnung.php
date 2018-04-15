@@ -124,7 +124,7 @@ $GLOBALS['TL_DCA']  ['tl_begegnung'] = [
     ],
 
     'palettes' => [
-        'default' => '{title_legend},pid,home,away;{details_legend},spiel_tag,spiel_am',
+        'default' => '{title_legend},pid,home,away;{details_legend},spiel_tag,spiel_am,kommentar',
     ],
 
     'fields' => [
@@ -189,6 +189,13 @@ $GLOBALS['TL_DCA']  ['tl_begegnung'] = [
             'eval'      => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
             'sql'       => "varchar(11) NOT NULL default ''",
         ],
+        'kommentar' => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_begegnung']['kommentar'],
+            'exclude'   => true,
+            'inputType' => 'textarea',
+            'eval'      => ['tl_class' => 'long', 'maxlength'=>255, 'rte'=> 'tinyMCE'],
+            'sql'       => "mediumtext NULL",
+        ]
     ],
 ];
 

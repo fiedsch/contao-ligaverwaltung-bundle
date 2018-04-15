@@ -175,7 +175,8 @@ class ContentSpielplan extends ContentElement
                 'im'    => $spielfrei ? '' : $spielortlabel,
                 'score' => $inactive && $already_played ? 'nicht gewertet' : $linked_score,
                 'legs'  => $inactive  ? '' : ($already_played ? $begegnung->getLegs() : ''),
-                'spiel_tag' => $begegnung->spiel_tag
+                'spiel_tag' => $begegnung->spiel_tag,
+                // 'kommentar' => $begegnung->kommentar,
             ];
             if ($this->mannschaft) {
                 $spiel['heimspiel'] = $home->id == $this->mannschaft;
