@@ -89,13 +89,13 @@ $GLOBALS['TL_DCA']  ['tl_begegnung'] = [
                         REQUEST_TOKEN,
                         $arrRow['id'],
                         //'<span style="width:6em;display:inline-block">bearbeiten</span>' //json_encode(func_get_args())
-                        '<img src="system/themes/flexible/images/edit.svg" width="12" height="16" alt="Begegnung bearbeiten">&nbsp;'
+                        '<img src="system/themes/flexible/icons/edit.svg" width="12" height="16" alt="Begegnung bearbeiten">&nbsp;'
                     );
                 }
                 return sprintf('<a href="contao/main.php?%s&id=%d" title="" class="edit">%s</a>',
                     $href,
                     $arrRow['id'],
-                    '<img src="system/themes/flexible/images/edit.svg" width="12" height="16" alt="Begegnung erfassen">&nbsp;'
+                    '<img src="system/themes/flexible/icons/edit.svg" width="12" height="16" alt="Begegnung erfassen">&nbsp;'
                 );
             }
            ],
