@@ -19,6 +19,7 @@ use Contao\BackendTemplate;
 use Contao\MannschaftModel;
 use Contao\ContentModel;
 use Fiedsch\LigaverwaltungBundle\ContentMannschaftsseite;
+use Patchwork\Utf8;
 
 class ModuleMannschaftsseitenReader extends Module
 {
