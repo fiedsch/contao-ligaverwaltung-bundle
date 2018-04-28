@@ -43,7 +43,7 @@
       }
       ?>
         <td><?= \Fiedsch\LigaverwaltungBundle\DCAHelper::makeSpielerName($listitem['member']) ?></td>
-        <td><?= $listitem['member']->anonymize ? '' : $listitem['member']->passnummer ?></td>
+        <td><?= $listitem['member']->anonymize ? substr(SpielerModel::ANONYM_LABEL,0,3) : $listitem['member']->passnummer ?></td>
         <td><?= $teamcaptain_suffix ?></td>
       </tr>
     <?php endforeach; ?>
