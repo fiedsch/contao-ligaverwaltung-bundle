@@ -19,6 +19,7 @@ use Contao\ContentElement;
 use Contao\BackendTemplate;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
+use Patchwork\Utf8;
 
 class ContentMannschaftsliste extends ContentElement
 {
@@ -43,7 +44,7 @@ class ContentMannschaftsliste extends ContentElement
                 $liga->name,
                 $liga->getRelated('saison')->name
             );
-            $objTemplate->wildcard = "### " . $GLOBALS['TL_LANG']['CTE']['mannschaftsliste'][0] . " $subject ###";
+            $objTemplate->wildcard = "### " . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftsliste'][0]) . " $subject ###";
             return $objTemplate->parse();
         }
         return parent::generate();

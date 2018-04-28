@@ -19,6 +19,7 @@ use Contao\BackendTemplate;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SpielerModel;
+use Patchwork\Utf8;
 
 class ContentMannschaftenuebersicht extends ContentElement
 {
@@ -34,7 +35,7 @@ class ContentMannschaftenuebersicht extends ContentElement
         if (TL_MODE == 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = "### " . $GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'][0] . " ###";
+            $objTemplate->wildcard = "### " . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'][0]) . " ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;

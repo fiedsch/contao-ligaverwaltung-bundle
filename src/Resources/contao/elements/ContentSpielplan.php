@@ -24,6 +24,7 @@ use Contao\SaisonModel;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\BegegnungModel;
+use Patchwork\Utf8;
 
 class ContentSpielplan extends ContentElement
 {
@@ -68,7 +69,7 @@ class ContentSpielplan extends ContentElement
         );
         $suffix = sprintf("%s %s", $ligalabel, $filter);
         $objTemplate->title = $this->headline;
-        $objTemplate->wildcard = "### " . $GLOBALS['TL_LANG']['CTE']['spielplan'][0] . " $suffix ###";
+        $objTemplate->wildcard = "### " . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielplan'][0]) . " $suffix ###";
         // $objTemplate->id = $this->id;
         // $objTemplate->link = 'the text that will be linked with href';
         // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;

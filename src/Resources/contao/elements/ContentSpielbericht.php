@@ -18,6 +18,7 @@ use Contao\ContentElement;
 use Contao\BackendTemplate;
 use Contao\BegegnungModel;
 use Contao\SpielModel;
+use Patchwork\Utf8;
 
 class ContentSpielbericht extends ContentElement
 {
@@ -35,7 +36,7 @@ class ContentSpielbericht extends ContentElement
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
             $begegnunglabel = BegegnungModel::findById($this->begegnung) ? BegegnungModel::findById($this->begegnung)->getLabel('full') : 'Begegnung nicht gefunden!';
-            $objTemplate->wildcard = "### " . $GLOBALS['TL_LANG']['CTE']['spielbericht'][0] . " $begegnunglabel ###";
+            $objTemplate->wildcard = "### " . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielbericht'][0]) . " $begegnunglabel ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;

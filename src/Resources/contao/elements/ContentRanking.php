@@ -14,6 +14,7 @@ use Contao\BackendTemplate;
 use Contao\LigaModel;
 use Contao\SpielerModel;
 use Contao\MannschaftModel;
+use Patchwork\Utf8;
 
 
 /**
@@ -52,7 +53,7 @@ class ContentRanking extends ContentElement
                 );
             }
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = "### " . $GLOBALS['TL_LANG']['CTE']['ranking'][0] . " $suffix $subject ###";
+            $objTemplate->wildcard = "### " . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['ranking'][0]) . " $suffix $subject ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
