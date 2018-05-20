@@ -315,6 +315,11 @@ class ModuleBegegnungserfassung extends BackendModule
             }
             */
 
+            // Die zu sortierenden JSON-Daten sind strings, bei denen der Name
+            // vorne steht. Daher passt eine String-Sortierung ;-)
+            usort($team_home, function($a, $b) { return $a <=> $b; });
+            usort($team_away, function($a, $b) { return $a <=> $b; });
+
             // Immer noch zusätzlich einen "Spieler", der ausgewählt werden kann,
             // wenn z.B. 6 Spieler gemeldet sind, aber am konkreten Spieltag nur
             // 4 Spieler erschienen sind. Es wäre dann wenig sinnvoll, die nicht
