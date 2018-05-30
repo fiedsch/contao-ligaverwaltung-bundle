@@ -24,6 +24,9 @@ array_insert($GLOBALS['BE_MOD'], 2, [
         ],
         'liga.highlight'  => [
             'tables' => ['tl_highlight'],
+            'javascript' => 'bundles/fiedschligaverwaltung/tl_highlight.js',
+            'stylesheet' => 'bundles/fiedschligaverwaltung/tl_highlight.css',
+
         ],
         // In ModuleBegegnungserfassung als ::redirect() auf 'liga.begegnung' falls
         // keine id angegeben ist.
