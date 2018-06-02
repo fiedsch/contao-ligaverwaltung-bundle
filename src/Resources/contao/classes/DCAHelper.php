@@ -775,9 +775,11 @@ class DCAHelper
     public function getBegegnungenForHighlight()
     {
         $result = [];
-        $begegnungen = BegegnungModel::findAll();
+        $begegnungen = \BegegnungModel::findAll(['eager' => true]);
         foreach ($begegnungen as $begegnung) {
-            $result[$begegnung->id] = $begegnung->getLabel($mode = 'full');
+            if ($begegnung->getRelated('pid')->aktiv) {
+                $result[$begegnung->id] = $begegnung->getLabel($mode = 'full');
+            }
         }
         asort($result);
         return $result;
