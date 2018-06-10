@@ -64,12 +64,12 @@ $GLOBALS['TL_LANG']['tl_spiel']['away2'] = [
 
 $GLOBALS['TL_LANG']['tl_spiel']['score_home'] = [
     'Score (Legs/Sätze) Heimmannschaft',
-    'Legs/Sätze Spieler Heimmannschaft',
+    'Legs bzw. Sätze Spieler Heimmannschaft',
 ];
 
 $GLOBALS['TL_LANG']['tl_spiel']['score_away'] = [
-    'Score Auswärtsmannschaft',
-    'Legs/Sätze Spieler Auswärtsmannschaft',
+    'Score (Legs/Sätze) Auswärtsmannschaft',
+    'Legs bzw. Sätze Spieler Auswärtsmannschaft',
 ];
 
 $GLOBALS['TL_LANG']['tl_spiel']['spieltype'] = [
