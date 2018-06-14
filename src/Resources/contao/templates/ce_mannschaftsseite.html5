@@ -9,25 +9,28 @@
 </div>
 
 <div class="row">
-  <div class="spielortinfo col-md-6 col-xs-12">
+  <div class="spielortinfo col-md-6 col-sm-12">
       <?= $this->spielortinfo; ?>
   </div>
 </div>
 
 <div class="row">
-  <div class="spielerliste col-md-6 col-xs-12">
+  <div class="spielerliste col-sm-12">
      <?= $this->spielerliste; ?>
   </div>
-  <div class="spielplan col-md-6 col-xs-12">
+</div>
+
+<div class="row">
+  <div class="spielplan col-sm-12">
      <?= $this->spielplan; ?>
   </div>
 </div>
 
 <div class="row">
-  <div class="spielplan col-md-6 col-xs-12">
+  <div class="ranking col-md-6 col-sm-12">
     <?= $this->ranking; ?>
   </div>
-  <div class="spielplan col-md-6 col-xs-12">
+  <div class="ranking col-md-6 col-sm-12">
     <?= $this->highlightranking; ?>
   </div>
 </div>
