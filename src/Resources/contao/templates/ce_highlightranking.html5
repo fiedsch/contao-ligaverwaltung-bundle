@@ -5,6 +5,7 @@
 <?php if ($this->rankingtype === 'mannschaften'): ?>
 
 <?php if ($this->listitems): ?>
+  <div class="table-responsive">
   <table class="table table-hover">
     <thead>
       <tr>
@@ -47,6 +48,7 @@
     <?php endforeach; ?>
     </tbody>
   </table>
+  </div>
   <?php else: ?>
      <code>Es liegen noch keine Ergebnise vor.</code>
 <?php endif; ?>
@@ -57,6 +59,7 @@
 <?php if ($this->rankingtype === 'spieler'): ?>
 
 <?php if ($this->listitems): ?>
+  <div class="table-responsive">
   <table class="table table-hover">
       <thead>
         <tr>
@@ -108,6 +111,7 @@
         <?php endforeach; ?>
       </tbody>
   </table>
+  </div>
  <?php else: ?>
    <code>Es liegen noch keine Ergebnise vor.</code>
 <?php endif; ?>

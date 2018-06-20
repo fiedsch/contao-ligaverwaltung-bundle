@@ -24,6 +24,7 @@
 ?>
 
     <?php if ($this->mannschaft): // nur ein langer Block ?>
+      <div class="table-responsive">
       <table class="spielplan table table-hover">
       <tbody>
     <?php endif; ?>
@@ -33,6 +34,7 @@
           <?php // keine Zwischenüberschriften bei "Spielplan einer Mannschaft" ?>
         <?php else: ?>
           <h<?= $sublevel ?>><?= $spieltag ?>. Spieltag</h<?= $sublevel ?>>
+          <div class="table-responsive">
           <table class="spielplan table table-hover"> <?php // ein Block je Spieltag ?>
           <tbody>
         <?php endif; ?>
@@ -89,12 +91,14 @@
         <?php else: ?>
         </tbody>
         </table>
+        </div>
         <?php endif; ?>
     <?php endforeach; ?>
 
     <?php if ($this->mannschaft): ?>
       </tbody>
       </table>
+      </div>
     <?php endif; ?>
 
 <?php else: ?>
