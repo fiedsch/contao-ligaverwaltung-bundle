@@ -4,4 +4,4 @@
 * [Konfiguration](configuration.md) 
 * [Content Elemente](contentelements.md)
 * [Module](modules.md)
-* [Änderungen im laufenden Betrieb](runing.md)
+* [Änderungen im laufenden Liga-Betrieb](runing.md)

@@ -14,7 +14,7 @@ TODO (?) mit `ContentMannschaftsliste` zusammenführen.
   * Konfiguration
     * Auswahl einer Saison
 
-* `ContentSpielerliste` Liste aller (aktiven) Spielrr einer Mannschaft.
+* `ContentSpielerliste` Liste aller (aktiven) Spieler einer Mannschaft.
   * Konfiguration 
     * Auswahl einer Mannschaft 
     * Details anzeigen (ja/nein)
