@@ -3,7 +3,6 @@
   "type": "contao-bundle",
   "description": "Contao 4 Bundle: Ligaverwaltung",
   "license": "MIT",
-  "version": "0.0.5",
   "authors": [
     {
       "name": "Andreas Fieger",
