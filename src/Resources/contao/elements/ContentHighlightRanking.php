@@ -427,7 +427,38 @@ class ContentHighlightRanking extends ContentElement
         } else {
             arsort($data);
         }
-        return implode(',', $data);
+
+        // return implode(',', $data);
+        return static::compressResultsArray($data);
+    }
+
+    /**
+     * Compress an array of results
+     * i.e. display "15,15,15,16,..." as "3x15,16,..."
+    *
+     * @param array $data
+     * @return string
+     */
+    protected static function compressResultsArray($data)
+    {
+        $aggregated = [];
+        $current = null;
+        foreach ($data as $entry) {
+            if ($current !== $entry) {
+                $current = $entry;
+                $aggregated[$current] = 0;
+            }
+            $aggregated[$current]++;
+        }
+        $result = [];
+        foreach ($aggregated as $k => $v) {
+            if ($v == 1) {
+                $result[] = $k;
+            } else {
+                $result[] = sprintf("<small>%d&times;</small>%s", $v, $k);
+            }
+        }
+        return implode(', ', $result);
     }
 
 }
