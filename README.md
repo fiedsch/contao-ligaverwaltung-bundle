@@ -13,8 +13,6 @@
 
 ## TODOs
 
-* Bei den Rankings "13,13,13,14,14" als "13 (3x), 14 (2x)" ausgeben
-* Font Awesome "SVG mit JS"
 * FIXME: eigene Routen mit `app_dev.php` aufrufen (erzeugt noch "not found"-Fehler)
 
 
