@@ -212,9 +212,9 @@ class DCAHelper
 
         $final_score = $punkte_home + $punkte_away > 0 ? sprintf('%d:%d', $punkte_home, $punkte_away) : '';
 
-        return sprintf("<span class='tl_gray'>%s %s %s %d. Spieltag:</span> 
-                        <span class='tl_blue'>%s %s %s</span> 
-                        <span class='tl_green'>%s</span> 
+        return sprintf("<span class='tl_gray'>%s %s %s %d. Spieltag:</span>
+                        <span class='tl_blue'>%s %s %s</span>
+                        <span class='tl_green'>%s</span>
                         <span class='tl_gray'>%s</span>",
             $verband->name,
             $liga->name,
@@ -386,13 +386,13 @@ class DCAHelper
         if ($dc->value < 1) {
             return '';
         }
-        return '<a href="contao/main.php?do=member&amp;&amp;act=edit&amp;id=' . $dc->value
-            . '&amp;popup=1&amp;&amp;rt=' . REQUEST_TOKEN
+        return '<a href="contao/main.php?do=member&amp;act=edit&amp;id=' . $dc->value
+            . '&amp;popup=1&amp;rt=' . REQUEST_TOKEN
             . '" title="' . specialchars($GLOBALS['TL_LANG']['tl_spieler']['editmember'][1]) . '"'
             . ' style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\''
             . specialchars(str_replace("'", "\\'", specialchars($GLOBALS['TL_LANG']['tl_spieler']['editmember'][1])))
             . '\',\'url\':this.href});return false">'
-            . Image::getHtml('alias.gif', $GLOBALS['TL_LANG']['tl_spieler']['editmember'][1], 'style="vertical-align:top"')
+            . Image::getHtml('alias.svg', $GLOBALS['TL_LANG']['tl_spieler']['editmember'][1], 'style="vertical-align:top"')
             . '</a>';
     }
 
