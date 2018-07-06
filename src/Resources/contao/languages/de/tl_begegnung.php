@@ -58,3 +58,8 @@ $GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'] = [
     'Begegnung findet statt am/um',
     'Datum und Uhrzeit, an dem die Begegnung statt findet.'
 ];
+
+$GLOBALS['TL_LANG']['tl_begegnung']['kommentar'] = [
+    'Kommentar',
+    'Kommentar zum Spiel. Z.B. zu Spielverlegung oder Protest etc.'
+];
