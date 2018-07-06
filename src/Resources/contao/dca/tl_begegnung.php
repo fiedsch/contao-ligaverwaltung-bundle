@@ -192,8 +192,9 @@ $GLOBALS['TL_DCA']  ['tl_begegnung'] = [
         'kommentar' => [
             'label'     => &$GLOBALS['TL_LANG']['tl_begegnung']['kommentar'],
             'exclude'   => true,
+            'search' => true,
             'inputType' => 'textarea',
-            'eval'      => ['tl_class' => 'long', 'maxlength'=>255, 'rte'=> 'tinyMCE'],
+            'eval'      => ['tl_class' => 'clr long', 'maxlength'=>255, 'rte'=> false],
             'sql'       => "mediumtext NULL",
         ]
     ],
