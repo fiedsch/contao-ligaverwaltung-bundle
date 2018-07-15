@@ -154,7 +154,6 @@ class ContentHighlightRanking extends ContentElement
      */
     protected function getRankingTypeFilter($tablealias)
     {
-        $result = '';
         switch ($this->rankingfield) {
             case HighlightModel::TYPE_171:
             case HighlightModel::TYPE_180:

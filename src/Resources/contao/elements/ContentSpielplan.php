@@ -106,7 +106,6 @@ class ContentSpielplan extends ContentElement
             return;
         }
 
-        $listitems = [];
         foreach ($begegnungen as $begegnung) {
 
             // Nicht fertig eingegebene Spiele ausfiltern

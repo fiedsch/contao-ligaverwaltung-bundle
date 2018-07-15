@@ -540,7 +540,6 @@ class DCAHelper
         $result = []; // $initial;
         $spieler = SpielerModel::findByPid($begegnung->away);
         if ($spieler) {
-            $member = $spieler->getRelated('member_id');
             foreach ($spieler as $sp) {
                 $member = $sp->getRelated('member_id');
                 $result[$sp->id] = self::makeSpielerName($member);

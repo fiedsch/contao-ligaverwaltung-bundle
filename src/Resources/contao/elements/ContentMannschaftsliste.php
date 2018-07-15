@@ -36,9 +36,7 @@ class ContentMannschaftsliste extends ContentElement
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
 
-
             $liga = LigaModel::findById($this->liga);
-            $suffix = 'Mannschaften';
             $subject = sprintf('%s %s %s',
                 $liga->getRelated('pid')->name,
                 $liga->name,
