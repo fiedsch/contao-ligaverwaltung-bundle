@@ -487,7 +487,7 @@ class DCAHelper
      * Spieler der Heimmannschaft
      * ('options_callback' in tl_spiel)
      *
-     * @param DataContaner|DC_Table $dc
+     * @param DataContainer|DC_Table $dc
      * @return array
      */
     public static function getHomeSpielerForSelect($dc)
@@ -522,7 +522,7 @@ class DCAHelper
      * Spieler der Gastmannschaft
      * ('options_callback' in tl_spiel)
      *
-     * @param DataContaner|DC_Table $dc
+     * @param DataContainer|DC_Table $dc
      * @return array
      */
     public static function getAwaySpielerForSelect($dc)
@@ -774,7 +774,7 @@ class DCAHelper
     public function getBegegnungenForHighlight()
     {
         $result = [];
-        $begegnungen = \BegegnungModel::findAll(['eager' => true]);
+        $begegnungen = BegegnungModel::findAll(['eager' => true]);
         foreach ($begegnungen as $begegnung) {
             if ($begegnung->getRelated('pid')->aktiv) {
                 $result[$begegnung->id] = $begegnung->getLabel($mode = 'full');
@@ -860,6 +860,7 @@ class DCAHelper
      * @param string $firstname
      * @param string $lastname
      * @param boolean $anonymize
+     * @return string
      */
     public static function makeSpielerNameFromParts($firstname, $lastname, $anonymize)
     {

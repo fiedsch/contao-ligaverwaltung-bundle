@@ -18,6 +18,7 @@ use Contao\System;
 use Contao\PageModel;
 use Contao\ContentElement;
 use Contao\Config;
+use Contao\Controller;
 use Contao\Date;
 use Contao\BackendTemplate;
 use Contao\SaisonModel;

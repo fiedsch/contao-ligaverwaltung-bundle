@@ -24,7 +24,7 @@ class SpielerModel extends Model
     /**
      * Get the full name (lastname, firstname) for a member
      *
-     * @param \MemberModel $member
+     * @param MemberModel $member
      * @return string
      */
     public static function getFullNameFor(MemberModel $member = null)
