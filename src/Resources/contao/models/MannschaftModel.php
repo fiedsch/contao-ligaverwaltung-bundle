@@ -44,8 +44,8 @@ class MannschaftModel extends Model
             if ($saison) {
                 $result .= ', ' . $saison->name;
             }
-            return $result;
         }
+        return $result;
     }
 
     /**
