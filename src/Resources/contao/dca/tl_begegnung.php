@@ -82,7 +82,7 @@ $GLOBALS['TL_DCA']  ['tl_begegnung'] = [
                                           $strPrevious,
                                           $strNext) {
 
-                $spiele = \SpielModel::findByPid($arrRow['id']);
+                $spiele = \Contao\SpielModel::findByPid($arrRow['id']);
                 if ($spiele) {
                     return sprintf('<a href="contao/main.php?%s&rt=%s&id=%d" title="" class="edit">%s</a>',
                         'do=liga.begegnung&table=tl_spiel',

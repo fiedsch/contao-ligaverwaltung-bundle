@@ -40,6 +40,7 @@ class ContentSpielplan extends ContentElement
      * Generate the content element
      *
      * @return string
+     * @throws \Exception
      */
     public function generate()
     {
@@ -51,6 +52,8 @@ class ContentSpielplan extends ContentElement
 
     /**
      * generate the view for the back end
+     *
+     * @throws \Exception
      */
     protected function generateBackendView()
     {
@@ -80,6 +83,8 @@ class ContentSpielplan extends ContentElement
 
     /**
      * Generate the content element
+     *
+     * @throws \Exception
      */
     public function compile()
     {
@@ -107,6 +112,8 @@ class ContentSpielplan extends ContentElement
             return;
         }
 
+        $spiele = [];
+
         foreach ($begegnungen as $begegnung) {
 
             // Nicht fertig eingegebene Spiele ausfiltern
@@ -128,7 +135,9 @@ class ContentSpielplan extends ContentElement
             $linked_score = $begegnung->getLinkedScore();
             $already_played =  $linked_score !== '';
 
+            /** @var MannschaftModel $home */
             $home = $begegnung->getRelated('home');
+            /** @var MannschaftModel $away */
             $away = $begegnung->getRelated('away');
 
             // "(geplant) Spielfrei" oder "Gegner nicht mehr aktiv":

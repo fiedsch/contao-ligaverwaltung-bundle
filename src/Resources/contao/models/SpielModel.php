@@ -8,6 +8,22 @@
 
 namespace Contao;
 
+/**
+ * @property integer $id
+ * @property integer $pid
+ * @property integer $tstamp
+ * @property integer $slot
+ * @property integer $spieltype
+ * @property integer $home
+ * @property integer $home2
+ * @property integer $away
+ * @property integer $away2
+ * @property integer $score_home
+ * @property integer $score_away
+ * @method static SpielModel|null findById($id, array $opt=array())
+ * @method static Model\Collection|SpielModel[]|SpielModel|null findByPid($id, array $opt=array())
+ */
+
 class SpielModel extends Model
 {
 

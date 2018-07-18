@@ -8,6 +8,15 @@
 
 namespace Contao;
 
+/**
+ * @property integer $id
+ * @property integer $pid
+ * @property string $name
+ * @property string $saison
+ * @property string $spielplan
+ * @method static LigaModel|null findById($id, array $opt=array())
+ */
+
 class LigaModel extends Model
 {
 

@@ -30,6 +30,10 @@ class ContentMannschaftsliste extends ContentElement
      */
     protected $strTemplate = 'ce_mannschaftsliste';
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function generate()
     {
         if (TL_MODE == 'BE') {

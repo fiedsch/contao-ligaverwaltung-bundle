@@ -29,7 +29,10 @@ class ContentSpielbericht extends ContentElement
      */
     protected $strTemplate = 'ce_spielbericht';
 
-
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function generate()
     {
         if (TL_MODE == 'BE') {
@@ -48,6 +51,8 @@ class ContentSpielbericht extends ContentElement
 
     /**
      * Generate the content element
+     *
+     * @throws \Exception
      */
     public function compile()
     {

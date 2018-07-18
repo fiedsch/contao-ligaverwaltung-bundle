@@ -3,6 +3,12 @@
 namespace Contao;
 
 /**
+ * @property integer $id
+ * @property integer $pid
+ * @method static HighlightModel|null findById($id, array $opt=array())
+ */
+
+/**
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle-bundle/
  * @license https://opensource.org/licenses/MIT

@@ -61,7 +61,7 @@ class ModuleSpielortseitenReader extends Module
     protected function compile()
     {
         /** @var \Contao\PageModel $objPage */
-        global $objPage;
+        // global $objPage;
 
         // Falls wir einen Back-Link einbauen wollen:
         // $this->Template->referer = 'javascript:history.go(-1)';

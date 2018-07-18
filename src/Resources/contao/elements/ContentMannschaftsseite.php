@@ -30,6 +30,7 @@ class ContentMannschaftsseite extends ContentElement
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function generate()
     {
@@ -74,6 +75,9 @@ class ContentMannschaftsseite extends ContentElement
         $GLOBALS['TL_HEAD'][] = sprintf('<meta name="description" content="%s">', $content);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function compile()
     {
         $mannschaftModel = MannschaftModel::findById($this->mannschaft);

@@ -38,6 +38,10 @@ class ContentHighlightRanking extends ContentElement
      */
     protected $strTemplate = 'ce_highlightranking';
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function generate()
     {
         if (TL_MODE == 'BE') {
@@ -74,6 +78,8 @@ class ContentHighlightRanking extends ContentElement
 
     /**
      * Generate the content element
+     *
+     * @throws \Exception
      */
     public function compile()
     {
@@ -92,6 +98,8 @@ class ContentHighlightRanking extends ContentElement
 
     /**
      * Highlight-"Ranking" aller Mannschaften einer Liga
+     *
+     * @throws \Exception
      */
     protected function compileMannschaftenranking()
     {

@@ -13,8 +13,8 @@ use Contao\BegegnungModel;
 use Contao\SpielortModel;
 use Contao\MannschaftModel;
 use Symfony\Component\HttpFoundation\Response;
-use \Eluceo\iCal\Component\Calendar;
-use \Eluceo\iCal\Component\Event;
+use Eluceo\iCal\Component\Calendar;
+use Eluceo\iCal\Component\Event;
 
 class IcalController
 {

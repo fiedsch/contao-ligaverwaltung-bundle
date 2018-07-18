@@ -8,6 +8,16 @@
 
 namespace Contao;
 
+/**
+ * @property integer $id
+ * @property integer $pid
+ * @property string $name
+ * @property boolean teamcaptain
+ * @property boolean co_teamcaptain
+ * @method static SpielerModel|null findById($id, array $opt=array())
+ * @method static Model\Collection|SpielerModel[]|SpielerModel|null findByPid($id, array $opt=array())
+ */
+
 use \Fiedsch\LigaverwaltungBundle\DCAHelper;
 
 class SpielerModel extends Model
@@ -37,8 +47,7 @@ class SpielerModel extends Model
     }
 
     /**
-     * @param int $id
-     * @ return string
+     * @param integer $id
      * @return string
      */
     public static function getNameById($id) {
@@ -52,6 +61,7 @@ class SpielerModel extends Model
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function getName() {
         $member = $this->getRelated('member_id');
@@ -60,11 +70,13 @@ class SpielerModel extends Model
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function getFullName() {
         $member = $this->getRelated('member_id');
         $membername = self::getFullNameFor($member);
 
+        /** @var MannschaftModel $mannschaft */
         $mannschaft = $this->getRelated('pid');
         if ($mannschaft) {
             $mannschaftsname = $mannschaft->name;
@@ -84,10 +96,12 @@ class SpielerModel extends Model
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function getNameAndMannschaft()
     {
         $result = self::getName();
+        /** @var MannschaftModel $mannschaft */
         $mannschaft = $this->getRelated('pid');
         if ($mannschaft) {
             $result .= ', ' . $mannschaft->name;
@@ -96,8 +110,10 @@ class SpielerModel extends Model
     }
     /**
      * @return string
+     * @throws \Exception
      */
     public function getTcDetails() {
+        /** @var MemberModel $member */
         $member = $this->getRelated('member_id');
 
         $kontaktdaten = [];

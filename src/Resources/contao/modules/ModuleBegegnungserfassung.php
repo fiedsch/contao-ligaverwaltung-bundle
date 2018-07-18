@@ -38,6 +38,9 @@ class ModuleBegegnungserfassung extends BackendModule
      */
     protected $strTemplate = 'be_begegnungserfassung';
 
+    /**
+     * @throws \Exception
+     */
     public function compile()
     {
         // Aufruf über den Menüpunkte
@@ -60,6 +63,8 @@ class ModuleBegegnungserfassung extends BackendModule
      * die alten aber nicht gelöscht werden.
      * Immer erst alle Spiele löschen und dann alles neu anlegen (meist identisch)
      * ist auch nicht schön und erhöht unnötig die tl_spiel.id
+     *
+     * @throws \Exception
      */
     protected function saveFormData()
     {
@@ -76,9 +81,12 @@ class ModuleBegegnungserfassung extends BackendModule
     /**
      * Die (rohen) POST Daten scannen und einen "Datenbaum" aufbauen, der beim
      *  speichern der Spiele in der Datenbank abgearbeit werden kann.
+     *
+     * @throws \Exception
      */
     protected function scanPostData()
     {
+        $data = [];
         foreach ($_POST as $k => $v) {
             switch ($k) {
                 case 'id':
@@ -258,6 +266,8 @@ class ModuleBegegnungserfassung extends BackendModule
      * TODO: die Situation erkennen und behandeln, daß sich inzwischen die Voraussetzungen
      * geändert haben (z.B. verfügbare Spieler gelöscht oder weitere hinzugekommen oder einzelne
      * Spiele einer bereits erfassten Begegnung manuell gelöscht wurden)!
+     *
+     * @throws \Exception
      */
     protected function generateForm()
     {
@@ -352,7 +362,7 @@ class ModuleBegegnungserfassung extends BackendModule
         if (!\Input::get('id')) {
             $jsCodeLines[] = '// ID der Begegnung nicht angegeben';
         } else {
-            $spiele = \SpielModel::findByPid(Input::get('id'));
+            $spiele = SpielModel::findByPid(Input::get('id'));
             if ($spiele) {
                 $jsCodeLines[] = 'window.location = "contao/main.php?do=liga.begegnung";';
             }

@@ -31,6 +31,10 @@ class ContentRanking extends ContentElement
      */
     protected $strTemplate = 'ce_ranking';
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function generate()
     {
         if (TL_MODE == 'BE') {
@@ -65,6 +69,8 @@ class ContentRanking extends ContentElement
 
     /**
      * Generate the content element
+     *
+     * @throws \Exception
      */
     public function compile()
     {
@@ -85,6 +91,8 @@ class ContentRanking extends ContentElement
      *
      * Achtung: Spiele vom spieltype "Doppel" gehen wie "Einzel" mit in die Berechnung
      * ein. (d.h. hier ohne Fallunterscheidung).
+     *
+     * @throws \Exception
      */
     protected function compileMannschaftenranking()
     {
@@ -132,6 +140,7 @@ class ContentRanking extends ContentElement
 
         /** @var \Fiedsch\LigaverwaltungBundle\Begegnung $begegnung */
         foreach ($begegnungen as $key => $begegnung) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
             list($spieltag, $home, $away) = explode(':', $key);
 
             // Begegnungen: Mannschaft gegen Mannschaft

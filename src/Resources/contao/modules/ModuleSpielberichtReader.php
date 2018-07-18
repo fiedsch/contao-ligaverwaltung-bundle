@@ -57,11 +57,13 @@ class ModuleSpielberichtReader extends Module
 
     /**
      * Generate the module
+     *
+     * @throws \Exception
      */
     protected function compile()
     {
         /** @var \PageModel $objPage */
-        global $objPage;
+        // global $objPage;
 
         // Falls wir einen Back-Link einbauen wollen:
         // $this->Template->referer = 'javascript:history.go(-1)';

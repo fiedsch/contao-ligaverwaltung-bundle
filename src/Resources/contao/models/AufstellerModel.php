@@ -7,6 +7,12 @@
 
 namespace Contao;
 
+/**
+ * @property integer $id
+ * @property integer $pid
+ * @method static AufstellerModel|null findById($id, array $opt=array())
+ */
+
 class AufstellerModel extends Model
 {
 

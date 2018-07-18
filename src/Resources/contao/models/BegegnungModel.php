@@ -8,6 +8,17 @@
 
 namespace Contao;
 
+/**
+ * @property integer $id
+ * @property integer $pid
+ * @property integer $home
+ * @property integer $away
+ * @property string $name
+ * @property integer $spiel_am
+ * @method static BegegnungModel|null findById($id, array $opt=array())
+ */
+
+
 class BegegnungModel extends Model
 {
     /**
@@ -28,6 +39,7 @@ class BegegnungModel extends Model
         }
         //$eingesetzte_spieler = ['home'=>[], 'away'=>[]];
         $result = [0, 0];
+        /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
             list($home, $away) = $spiel->getScore();
             $result[0] += $home;
@@ -55,6 +67,7 @@ class BegegnungModel extends Model
         }
         $result = [0, 0];
         $eingesetzte_spieler = ['home'=>[], 'away'=>[]];
+        /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
             list($home, $away) = $spiel->getLegs();
             $result[0] += $home;
@@ -73,6 +86,7 @@ class BegegnungModel extends Model
     /**
      * @param string $mode Art (Ausführlichkeit) des Labels ['full'|'medium'|'short']
      * @return string
+     * @throws \Exception
      */
     public function getLabel($mode = 'full')
     {

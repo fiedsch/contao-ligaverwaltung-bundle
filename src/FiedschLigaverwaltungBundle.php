@@ -10,6 +10,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @author Andreas Fieger
  */
 class FiedschLigaverwaltungBundle extends Bundle
-
 {
 }

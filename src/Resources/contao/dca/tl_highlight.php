@@ -29,9 +29,9 @@ $GLOBALS['TL_DCA']  ['tl_highlight'] = [
             'fields'         => ['spieler_id'],
             'format'         => '%s',
             'label_callback' => function($row) {
-                $options = \HighlightModel::getOptionsArray();
-                $begegnung = \BegegnungModel::findById($row['begegnung_id']);
-                $spieler = \SpielerModel::findById($row['spieler_id']);
+                $options = \Contao\HighlightModel::getOptionsArray();
+                $begegnung = \Contao\BegegnungModel::findById($row['begegnung_id']);
+                $spieler = \Contao\SpielerModel::findById($row['spieler_id']);
 
                 $result = sprintf("<strong>%s: %s</strong>", $options[$row['type']], $row['value']);
                 if ($spieler) {
@@ -112,7 +112,7 @@ $GLOBALS['TL_DCA']  ['tl_highlight'] = [
             'inputType' => 'select',
             'sorting'   => false,
             'filter'    => true,
-            'options'   => \HighlightModel::getOptionsArray(),
+            'options'   => \Contao\HighlightModel::getOptionsArray(),
             'eval'      => ['mandatory' => true, 'includeBlankOption' => true, 'tl_class' => 'w50 clr'],
             'sql'       => "int(10) unsigned NOT NULL default '0'",
         ],

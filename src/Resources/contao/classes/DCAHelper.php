@@ -19,6 +19,7 @@ use Contao\BegegnungModel;
 use Contao\SpielModel;
 use Contao\SpielerModel;
 use Contao\Database;
+use Contao\DC_Table;
 use Contao\Image;
 use Contao\Widget;
 use Contao\DataContainer;
@@ -84,6 +85,7 @@ class DCAHelper
      *
      * @param $arrRow
      * @return string
+     * @throws \Exception
      */
     public static function mannschaftLabelCallback($arrRow)
     {
@@ -182,6 +184,7 @@ class DCAHelper
      * @param array $row
      * @param string $label
      * @return string
+     * @throws \Exception
      */
     public static function labelBegegnungCallback($row, $label='')
     {
@@ -284,6 +287,7 @@ class DCAHelper
      *
      * @param DataContainer $dc
      * @return array
+     * @throws \Exception
      */
     public static function getSpielerForSelect(DataContainer $dc)
     {
@@ -403,6 +407,7 @@ class DCAHelper
      * @param string $value
      * @param DataContainer $dc
      * @return string
+     * @throws \Exception
      */
     public function spielerSaveCallback($value, $dc)
     {
@@ -502,7 +507,7 @@ class DCAHelper
             return $initial;
         }
 
-        $result = []; //$initial;
+        $result = [];
         $spieler = SpielerModel::findByPid($begegnung->home);
         if ($spieler) {
             foreach ($spieler as $sp) {
@@ -696,6 +701,7 @@ class DCAHelper
      *
      * @param DataContainer $dc
      * @return array
+     * @throws \Exception
      */
     public static function getAlleMannschaftenForSelect(DataContainer $dc)
     {
@@ -710,6 +716,7 @@ class DCAHelper
         }
         foreach ($mannschaften as $mannschaft) {
             $liga = $mannschaft->getRelated('liga');
+            $saison = null;
             if ($liga) {
                 $saison = $liga->getRelated('saison');
             }
@@ -747,11 +754,13 @@ class DCAHelper
     }
 
     /**
+     * @param DataContainer|null $dc
      * @return array
      */
     public function getSpielerForHighlight($dc)
     {
         $result = [];
+        $spieler = null;
         if ($dc && $dc->activeRecord) {
             $begegnung = BegegnungModel::findById($dc->activeRecord->begegnung_id);
             $spieler = SpielerModel::findBy(
@@ -785,7 +794,10 @@ class DCAHelper
     }
 
     /**
-     *
+     * @param string $strRegexp
+     * @param string $varValue
+     * @param Widget $objWidget
+     * @return boolean
      */
     public function addCustomRegexp($strRegexp, $varValue, Widget $objWidget)
     {
@@ -826,12 +838,12 @@ class DCAHelper
                     throw new \RuntimeException("Bitte nur die Anzahl eingeben!");
                 }
                 break;
-            case \HighlightModel::TYPE_SHORTLEG:
+            case HighlightModel::TYPE_SHORTLEG:
                 if (array_filter($entries, function($el) { return $el > 20; })) {
                     throw new \RuntimeException("Bitte nur Werte kleiner/gleich 20 eingeben!");
                 }
                 break;
-            case \HighlightModel::TYPE_HIGHFINISH:
+            case HighlightModel::TYPE_HIGHFINISH:
                 if (array_filter($entries, function($el) { return $el < 100; })) {
                     throw new \RuntimeException("Bitte nur Werte größer/gleich 100 eingeben!");
                 }
@@ -847,8 +859,7 @@ class DCAHelper
      * Eine Funktion, die bestimmt, ob wir "Nachname, Vorname" oder "Vorname Nachname"
      * haben wollen
      *
-     * @param MemberModel $member
-
+     * @param MemberModel|Database\Result $member
      * @return string
      */
     public static function makeSpielerName($member)

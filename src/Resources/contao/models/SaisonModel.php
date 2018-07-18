@@ -8,6 +8,13 @@
 
 namespace Contao;
 
+/**
+ * @property integer $id
+ * @property integer $pid
+ * @property string $name
+ * @method static SaisonModel|null findById($id, array $opt=array())
+ */
+
 class SaisonModel extends Model
 {
     /**

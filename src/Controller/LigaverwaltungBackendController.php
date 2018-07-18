@@ -1,4 +1,5 @@
-<?php // -*- coding: utf-8 -*-
+<?php
+/** @noinspection PhpUnusedAliasInspection */
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 

@@ -8,6 +8,16 @@
 
 namespace Contao;
 
+/**
+ * @property integer $id
+ * @property integer $pid
+ * @property string $name
+ * @property boolean $active
+ * @property integer $spielort
+ * @method static MannschaftModel|null findById($id, array $opt=array())
+ * @method static Model\Collection|MannschaftModel[]|MannschaftModel|null findByLiga($id, array $opt=array())
+ */
+
 class MannschaftModel extends Model
 {
     /**
@@ -33,6 +43,7 @@ class MannschaftModel extends Model
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function getFullName()
     {

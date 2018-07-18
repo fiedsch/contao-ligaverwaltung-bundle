@@ -8,6 +8,16 @@
 
 namespace Contao;
 
+/**
+ * @property integer $id
+ * @property integer $pid
+ * @property string $name
+ * @property string $street
+ * @property string $postal
+ * @property string $city
+ * @method static SpielortModel|null findById($id, array $opt=array())
+ */
+
 class SpielortModel extends Model
 {
     /**

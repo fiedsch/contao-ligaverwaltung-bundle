@@ -8,6 +8,12 @@
 
 namespace Contao;
 
+/**
+ * @property integer $id
+ * @property integer $pid
+ * @property string $name
+ * @method static VerbandModel|null findById($id, array $opt=array())
+ */
 class VerbandModel extends Model
 {
     /**

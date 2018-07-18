@@ -106,6 +106,7 @@ class ContentSpielortseite extends ContentElement
         $mannschaften_liste = [];
         $mannschaften_in_ligen_liste = [];
         $gefundene_ligen = [];
+        $ligen_lookup = [];
 
         if ($mannschaften) {
             foreach ($mannschaften as $mannschaft) {
@@ -135,7 +136,6 @@ class ContentSpielortseite extends ContentElement
         $this->Template->show_ligen = $show_ligen;
         $this->Template->ligen_lookup = $ligen_lookup;
         $this->Template->mannschaften_in_ligen_liste = $mannschaften_in_ligen_liste;
-
 
     }
 
