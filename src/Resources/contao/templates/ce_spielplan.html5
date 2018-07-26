@@ -6,7 +6,7 @@
 
 <?php
   $iCalHref = $this->ical_link;
-  $icalName = "www.edart-bayern.de-liga-".$this->liga;
+  $icalName = $this->calendarBaseName."-liga-".$this->liga;
   if ($this->mannschaft) {
     $icalName .= "-mannschaft-".$this->mannschaft;
   }

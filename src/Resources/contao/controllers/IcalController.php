@@ -55,6 +55,18 @@ class IcalController
      */
     public function run()
     {
+        // Name für den Kalender aus der (ersten) Root-Page
+        $rootPages = \Contao\PageModel::findBy(
+            ['type=?'],
+            ['root'],
+            [
+                'order'  => 'id ASC',
+                'limit'  => 1,
+                'return' => 'Model'
+                ]
+        );
+        $calendarBaseName = $rootPages->title;
+
         // Spiele auslesen
 
         $columns = ['pid=?'];
@@ -73,7 +85,7 @@ class IcalController
         );
 
         // Kalender anlegen
-        $vCalendar = new Calendar('www.edart-bayern.de'); // URL parametrisieren!
+        $vCalendar = new Calendar($calendarBaseName);
 
         // Events hinzufügen
         if ($begegnungen) {
@@ -86,7 +98,8 @@ class IcalController
             }
         }
 
-        $calendarName = sprintf("edart-bayern-de-%d-%d.ics",
+        $calendarName = sprintf("%s-%d-%d.ics",
+            $calendarBaseName,
             $this->ligaid,
             $this->mannschaftid ?: 'alle'
         );

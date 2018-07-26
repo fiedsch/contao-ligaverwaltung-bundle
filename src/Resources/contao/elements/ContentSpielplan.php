@@ -91,6 +91,19 @@ class ContentSpielplan extends ContentElement
         if ($this->liga == '') {
             return;
         }
+
+        // Name für den Kalender aus der (ersten) Root-Page
+        $rootPages = \Contao\PageModel::findBy(
+            ['type=?'],
+            ['root'],
+            [
+                'order'  => 'id ASC',
+                'limit'  => 1,
+                'return' => 'Model'
+            ]
+        );
+        $this->Template->calendarBaseName = $rootPages->title;
+
         $columns = ['pid=?'];
         $conditions = [$this->liga];
 
