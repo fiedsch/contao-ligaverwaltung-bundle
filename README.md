@@ -1,18 +1,22 @@
-# Ligaverwaltung (Contao Bundle)
+# Ligaverwaltung für Contao Open Source CMS
 
 ## Überblick 
 
-* Contao 4 Version von https://github.com/fiedsch/contao-ligaverwaltung
-* Zunächst "nur" als Bundle verpackt
-* wird sukzessive an Contao 4 angepasst
-
+* Ligaverwaltung für Sportarten, bei denen bei einer Begegnung zweier Mannschaften einzelne 
+  Spieler gegeneinander antreten und die Summe der Einzelspielergebnisse das Gesamtergebnis 
+  ergibt. Anwendungsfall und Motivation für die Entwicklung: Verwaltung einer 
+  [Dartliga](https://www.edart-bayern.de).  
+* Contao 4 Version der nicht mehr weitererentwickelten Contao 3 Erweiterung 
+https://github.com/fiedsch/contao-ligaverwaltung
 
 ## Dokumentation
 
 * [siehe hier](doc/index.md)
 
-## TODOs
+## Bugs und Fragen
 
-* FIXME: eigene Routen mit `app_dev.php` aufrufen (erzeugt noch "not found"-Fehler)
+* [Github Issue](https://github.com/fiedsch/contao-ligaverwaltung-bundle/issues)
+* [Ping me on Twitter](https://twitter.com/fiedschMuc)
+
 
 
