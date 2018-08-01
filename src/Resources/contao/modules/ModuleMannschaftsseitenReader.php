@@ -18,7 +18,9 @@ use Contao\Module;
 use Contao\BackendTemplate;
 use Contao\MannschaftModel;
 use Contao\ContentModel;
+use Contao\Input;
 use Patchwork\Utf8;
+
 
 class ModuleMannschaftsseitenReader extends Module
 {
@@ -69,12 +71,12 @@ class ModuleMannschaftsseitenReader extends Module
         // $this->Template->referer = 'javascript:history.go(-1)';
         // $this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
 
-        $id = \Input::get('id');
+        $id = Input::get('id');
         if (empty($id)) {
             $this->Template->mannschaft = null;
             return;
         }
-        $mannschaft = MannschaftModel::findById(\Input::get('id'));
+        $mannschaft = MannschaftModel::findById(Input::get('id'));
         if (!$mannschaft || !$mannschaft->active) {
             $this->Template->mannschaft = null;
             return;

@@ -93,7 +93,7 @@ class ContentSpielplan extends ContentElement
         }
 
         // Name für den Kalender aus der (ersten) Root-Page
-        $rootPages = \Contao\PageModel::findBy(
+        $rootPages = PageModel::findBy(
             ['type=?'],
             ['root'],
             [

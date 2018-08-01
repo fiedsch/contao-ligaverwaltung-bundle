@@ -359,7 +359,7 @@ class ModuleBegegnungserfassung extends BackendModule
     {
         $jsCodeLines = [];
 
-        if (!\Input::get('id')) {
+        if (!Input::get('id')) {
             $jsCodeLines[] = '// ID der Begegnung nicht angegeben';
         } else {
             $spiele = SpielModel::findByPid(Input::get('id'));

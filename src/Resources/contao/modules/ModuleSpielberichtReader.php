@@ -18,7 +18,9 @@ use Contao\Module;
 use Contao\BackendTemplate;
 use Contao\BegegnungModel;
 use Contao\ContentModel;
+use Contao\Input;
 use Patchwork\Utf8;
+
 
 class ModuleSpielberichtReader extends Module
 {
@@ -69,12 +71,12 @@ class ModuleSpielberichtReader extends Module
         // $this->Template->referer = 'javascript:history.go(-1)';
         // $this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
 
-        $id = \Input::get('id');
+        $id = Input::get('id');
         if (empty($id)) {
             $this->Template->begegnung = null;
             return;
         }
-        $begegnung = BegegnungModel::findById(\Input::get('id'));
+        $begegnung = BegegnungModel::findById(Input::get('id'));
         if (!$begegnung) {
             $this->Template->begegnung = null;
             return;
