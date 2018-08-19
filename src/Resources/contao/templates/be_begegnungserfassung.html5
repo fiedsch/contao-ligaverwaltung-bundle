@@ -33,18 +33,31 @@
 </div>
 
 <?php
+$changeCss = false;
 switch($this->spielplan) {
-  case \LigaModel::SPIELPLAN_16E2D:
+  case \Contao\LigaModel::SPIELPLAN_16E2D:
     $sp = '16E2D';
     break;
-  case \LigaModel::SPIELPLAN_16E4D:
+  case \Contao\LigaModel::SPIELPLAN_16E4D:
     $sp = '16E4D';
+    break;
+    case \Contao\LigaModel::SPIELPLAN_6E4D:
+    $changeCss = true;
+    $sp = '6E4D';
+    break;
+    case \Contao\LigaModel::SPIELPLAN_16E:
+    $sp = '16E';
     break;
   default:
     $sp = '16E2D';
 }
 ?>
 <script src="bundles/fiedschligaverwaltung/spielplan.<?= $sp ?>.js"></script>
+<?php if ($changeCss): ?>
+  <style>
+    tr:nth-child(4n+1) { border-top: 0px !important; }
+  </style>
+<?php endif; ?>
 
 <script>
 /**
