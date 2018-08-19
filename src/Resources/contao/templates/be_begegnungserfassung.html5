@@ -41,9 +41,9 @@ switch($this->spielplan) {
   case \Contao\LigaModel::SPIELPLAN_16E4D:
     $sp = '16E4D';
     break;
-    case \Contao\LigaModel::SPIELPLAN_6E4D:
+    case \Contao\LigaModel::SPIELPLAN_6E3D:
     $changeCss = true;
-    $sp = '6E4D';
+    $sp = '6E3D';
     break;
     case \Contao\LigaModel::SPIELPLAN_16E:
     $sp = '16E';

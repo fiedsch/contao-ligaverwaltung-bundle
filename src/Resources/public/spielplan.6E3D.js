@@ -14,6 +14,5 @@
  // Doppel
  { home: [0,1], away: [0,1] },
  { home: [2,3], away: [2,3] },
- { home: [4,5], away: [4,5] },
- { home: [1,3], away: [1,3] }
+ { home: [4,5], away: [4,5] }
  ];
