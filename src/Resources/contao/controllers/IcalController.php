@@ -105,8 +105,8 @@ class IcalController
         );
 
         $response = new Response($vCalendar->render());
-        $response->headers->add(['Content-Type', 'text/calendar; charset=utf-8']);
-        $response->headers->add(['Content-Disposition', "attachment; filename=\"$calendarName\""]);
+        $response->headers->add(['Content-Type' => 'text/calendar; charset=utf-8']);
+        $response->headers->add(['Content-Disposition' => "attachment; filename=\"$calendarName\""]);
         return $response;
     }
 
