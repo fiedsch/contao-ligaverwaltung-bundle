@@ -2,6 +2,8 @@
 
 <?php $this->block('content'); ?>
 
+<?php $ranking_model = \Contao\Config::get('ligaverwaltung_ranking_model'); ?>
+
 <?php if ($this->rankingtype === 'mannschaften'): ?>
 
 <?php if ($this->listitems): ?>
@@ -12,12 +14,17 @@
         <th>Platz</th>
         <th>Mannschaft</th>
         <th>Spiele</th>
+        <?php if ($ranking_model == 2): ?>
+          <th>Punkte</th>
+        <?php endif; ?>
         <th>g</th>
         <th>u</th>
         <th>v</th>
         <th>Legs</th>
         <th>Spiele</th>
-        <th>Punkte</th>
+        <?php if ($ranking_model != 2): ?>
+          <th>Punkte</th>
+        <?php endif; ?>
       </tr>
     </thead>
     <tbody>
@@ -26,12 +33,17 @@
           <td><?= $listitem['rang'] ?></td>
           <td><?= $listitem['name'] ?></td>
           <td><?= $listitem['begegnungen'] ?></td>
+          <?php if ($ranking_model == 2): ?>
+          <td><?= $listitem['punkte_self'] ?></td>
+          <?php endif;?>
           <td><?= $listitem['gewonnen'] ?></td>
           <td><?= $listitem['unentschieden'] ?></td>
           <td><?= $listitem['verloren'] ?></td>
           <td><?= $listitem['legs_self'] ?>:<?= $listitem['legs_other'] ?></td>
           <td><?= $listitem['spiele_self'] ?>:<?= $listitem['spiele_other'] ?></td>
-          <td><?= $listitem['punkte_self'] ?>:<?= $listitem['punkte_other'] ?></td>
+          <?php if ($ranking_model != 2): ?>
+            <td><?= $listitem['punkte_self'] ?>:<?= $listitem['punkte_other'] ?></td>
+          <?php endif; ?>
       </tr>
     <?php endforeach; ?>
     </tbody>
@@ -58,7 +70,9 @@
           <?php endif; ?>
           <th>Legs</th>
           <th>Spiele</th>
-          <th>Punkte</th>
+          <?php if ($ranking_model != 2): ?>
+            <th>Punkte</th>
+          <?php endif; ?>
         </tr>
       </thead>
       <tbody>
@@ -71,7 +85,9 @@
           <?php endif; ?>
           <td><?= $listitem['legs_self'] ?> : <?= $listitem['legs_other'] ?></td>
           <td><?= $listitem['spiele_self'] ?> : <?= $listitem['spiele_other'] ?></td>
-          <td><?= $listitem['punkte_self'] ?></td>
+          <?php if ($ranking_model != 2): ?>
+            <td><?= $listitem['punkte_self'] ?></td>
+          <?php endif; ?>
           </tr>
         <?php endforeach; ?>
       </tbody>

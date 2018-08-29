@@ -8,6 +8,8 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
+use Contao\Config;
+
 /**
  * Class Spiel
  * Spiel zweier Spieler gegeneinander (Teil einer Begegnung zweier Mannschaften)
@@ -104,44 +106,76 @@ class Spiel
      */
     public function getPunkte($score)
     {
-        switch ($score) {
-            // mögliche Ergebnisse bei "best of 3"
-            case '2:0':
-                return 3;
-                break;
-            case '2:1':
-                return 2;
-                break;
-            case '1:2':
-                return 1;
-                break;
-            case '0:2':
-                return 0;
+
+        // Wie soll das Ranking ermittelt werden
+        $ranking_model = Config::get('ligaverwaltung_ranking_model');
+        // 'options'   => [ 1 => 'nach Punkten', 2 => 'nach gewonnenen Spielen' ],
+
+        switch ($ranking_model) {
+            case 1: // 'nach Punkten'
+                switch ($score) {
+                    // mögliche Ergebnisse bei "best of 3"
+                    case '2:0':
+                        return 3;
+                        break;
+                    case '2:1':
+                        return 2;
+                        break;
+                    case '1:2':
+                        return 1;
+                        break;
+                    case '0:2':
+                        return 0;
+                        break;
+
+                    // mögliche Ergebnisse bei "best of 5"
+                    case '3:0':
+                        return 5;
+                        break;
+                    case '3:1':
+                        return 4;
+                        break;
+                    case '3:2':
+                        return 3;
+                        break;
+                    case '2:3':
+                        return 2;
+                        break;
+                    case '1:3':
+                        return 1;
+                        break;
+                    case '0:3':
+                        return 0;
+                        break;
+
+                    default:
+                        //\System::log("nicht vorgesehenes Spielergebnis ".$score, __METHOD__, TL_ERROR);
+                        return 0;
+                }
                 break;
 
-            // mögliche Ergebnisse bei "best of 5"
-            case '3:0':
-                return 5;
-                break;
-            case '3:1':
-                return 4;
-                break;
-            case '3:2':
-                return 3;
-                break;
-            case '2:3':
-                return 2;
-                break;
-            case '1:3':
-                return 1;
-                break;
-            case '0:3':
-                return 0;
-                break;
-
+            // case 2: // 'nach gewonnenen Spielen' (als default)
             default:
-                //\System::log("nicht vorgesehenes Spielergebnis ".$score, __METHOD__, TL_ERROR);
-                return 0;
+                switch ($score) {
+                    // mögliche Ergebnisse bei "best of 3" bzw. "best of 5"
+                    case '2:0':
+                    case '2:1':
+                    case '3:0':
+                    case '3:1':
+                    case '3:2':
+                        return 1;
+                        break;
+                    case '1:2':
+                    case '0:2':
+                    case '2:3':
+                    case '1:3':
+                    case '0:3':
+                        return 0;
+                        break;
+                    default:
+                        //\System::log("nicht vorgesehenes Spielergebnis ".$score, __METHOD__, TL_ERROR);
+                        return 0;
+                }
         }
     }
 
@@ -155,8 +189,11 @@ class Spiel
      */
     public static function compareSpielerResults($a, $b)
     {
-        // $a und $b haben bei Speielern und Mannschafren die gleichen Felder und
+        // $a und $b haben bei Spielern und Mannschafren die gleichen Felder und
         // es soll die gleiche Sortierlogik angewandt werden.
+        // Wir sortieren immer nach Punkten. Die eigentliche Sortierlogik
+        // steckt damit in der Punktevergabe also
+        // getPunkteHome() und getPunkteAway()
         return Begegnung::compareMannschaftResults($a, $b);
     }
 }

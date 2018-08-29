@@ -22,3 +22,8 @@ $GLOBALS['TL_LANG']['tl_settings']['spielberichtpage']  = [
     'Spielberichtsseite',
     'Die Seite, auf der das Spielbericht Reader Modul eingebunden ist.',
 ];
+
+$GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model'] =[
+    'Sortierung Ranking ("Punktevergabe")',
+    'Regelt die Punktevergabe und damit die Sortierlogik in den Ranking.'
+];
