@@ -38,3 +38,19 @@ eingebunden ist. In diesem Fall werden Mannschaftsnamen auf diese Seite verlinkt
 
 Hier kann eine Seite angegeben werden, auf der ein Modul vom Typ "Spielbericht Reader"
 eingebunden ist. In diesem Fall werden Spielergebnisse auf diese Seite verlinkt.
+
+### Sortierung Ranking ("Punktevergabe")
+
+Hier kann festgelegt werden, wie bei den Spielerrankings sortiert werden soll.
+
+* nach Punkten: es werden je nach Ergebnis Punkte vergeben. Beipiel für "Best of three":
+  2:0 ergibt 3 Punkte, 2:1 2 Punkte, 1:2 1 Punkt und 0:2 0 Punkte. Spieler die knapp 
+  verlieren sollen mit den Punkten motiviert werden. 
+  
+* nach gewonnenen Spielen: hier zählt nur gewonnen oder verloren. Der Leg-Stand ist 
+  belanglos.
+  
+Je nach gewählter Einstellung wird bei der Frontendausgabe die Spalte "Punkte" 
+ausgegeben ("nach Punkten") oder nicht ("nach gewonnenen Spielen").  
+
+
