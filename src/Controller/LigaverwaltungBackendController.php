@@ -4,7 +4,7 @@
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route; // for annotations!
+use Symfony\Component\Routing\Annotation\Route; // for annotations!
 use Symfony\Component\HttpFoundation\Response;
 use Fiedsch\LigaverwaltungBundle\PlayerHistoryController;
 
