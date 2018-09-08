@@ -51,6 +51,8 @@ Hier kann festgelegt werden, wie bei den Spielerrankings sortiert werden soll.
   belanglos.
   
 Je nach gewählter Einstellung wird bei der Frontendausgabe die Spalte "Punkte" 
-ausgegeben ("nach Punkten") oder nicht ("nach gewonnenen Spielen").  
+ausgegeben ("nach Punkten") oder nicht ("nach gewonnenen Spielen").
+
+[Details zur Berechnung](ranking_aglogithms.md)  
 
 
