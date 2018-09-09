@@ -21,3 +21,8 @@ $GLOBALS['TL_LANG']['tl_member']['anonymize'] = [
     'Anonymisieren',
     'Das Mitglied bei Frontendausgaben anonymisieren, d.h. den Namen nicht ausgeben.'
 ];
+
+$GLOBALS['TL_LANG']['tl_member']['avatar'] = [
+    'Bild',
+    'Bild des Spielers.'
+];

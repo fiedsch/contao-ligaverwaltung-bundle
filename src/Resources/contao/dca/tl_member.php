@@ -42,7 +42,7 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
 $GLOBALS['TL_DCA']['tl_member']['fields']['email']['eval']['mandatory'] = false;
 
 $GLOBALS['TL_DCA']['tl_member']['palettes']['default']
-    = preg_replace("/;{address_legend/", ";{liga_legend},passnummer,haspaidcurrentseason,anonymize;{address_legend", $GLOBALS['TL_DCA']['tl_member']['palettes']['default']);
+    = preg_replace("/;{address_legend/", ";{liga_legend},passnummer,haspaidcurrentseason,avatar,anonymize;{address_legend", $GLOBALS['TL_DCA']['tl_member']['palettes']['default']);
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
     'label'     => &$GLOBALS['TL_LANG']['tl_member']['passnummer'],
@@ -57,7 +57,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['haspaidcurrentseason'] = [
     'label'     => &$GLOBALS['TL_LANG']['tl_member']['haspaidcurrentseason'],
     'inputType' => 'checkbox',
     'filter'    => true,
-    'eval'      => ['tl_class'=>'w50'],
+    'eval'      => ['tl_class'=>'w50  m12'],
     'sql'       => "char(1) NOT NULL default ''",
 ];
 
@@ -65,9 +65,21 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['anonymize'] = [
     'label'     => &$GLOBALS['TL_LANG']['tl_member']['anonymize'],
     'inputType' => 'checkbox',
     'filter'    => true,
-    'eval'      => ['tl_class'=>'w50'],
+    'eval'      => ['tl_class'=>'w50 m12'],
     'sql'       => "char(1) NOT NULL default ''",
 ];
+
+$GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = [
+    'label'     => &$GLOBALS['TL_LANG']['tl_member']['avatar'],
+    'exclude'   => true,
+    'search'    => false,
+    'filter'    => false,
+    'inputType' => 'fileTree',
+    'eval'      => ['tl_class' => 'clr w50', 'fieldType' => 'radio', 'filesOnly' => true, 'extensions' => 'jpg,png', 'icon' => 'pickfile.svg'],
+    'sql'       => "blob NULL",
+];
+
+
 // remove fields we don't need/want
 
 foreach (['company','country','state','fax','website','lang'] as $field) {

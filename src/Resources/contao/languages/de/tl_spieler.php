@@ -68,3 +68,8 @@ $GLOBALS['TL_LANG']['tl_spieler']['ersatzspieler'] = [
     'Ersatzspieler',
     'Der Spieler ist Ersatzspieler. Er kann bei mehreren Mannschaften gleichzeitig "aushelfen".',
 ];
+
+$GLOBALS['TL_LANG']['tl_spieler']['avatar'] = [
+    'Bild',
+    'Bild des Spielers (Bearbeiten im zugehörigen Mitglied!).'
+];

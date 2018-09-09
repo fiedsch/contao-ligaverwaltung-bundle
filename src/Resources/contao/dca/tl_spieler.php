@@ -75,7 +75,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
     ],
 
     'palettes' => [
-        'default' => '{member_legend},member_id;{details_legend},teamcaptain,co_teamcaptain,active,ersatzspieler',
+        'default' => '{member_legend},member_id;{details_legend},teamcaptain,co_teamcaptain,active,ersatzspieler,avatar',
     ],
 
     'fields' => [
@@ -136,8 +136,33 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'sorting'    => false,
             //'eval'       => ['tl_style'=>'w50'],
             'sql'        => "char(1) NOT NULL default ''",
-        ]
+        ],
+
+        'avatar' => [
+            'label'  => &$GLOBALS['TL_LANG']['tl_spieler']['avatar'],
+            'input_field_callback' => function(\Contao\DataContainer $dc) {
+                $member_id = $dc->activeRecord->row()['member_id'];
+                $member = \Contao\MemberModel::findById($member_id);
+                $avatar = $member ? \Contao\FilesModel::findById($member->avatar)->path : null;
+                return '<div class="widget">'
+                    .'<h3>'
+                    .'<label>'
+                    .'<span class="invisible">Nur zur Information </span>'
+                    .$GLOBALS['TL_LANG']['tl_spieler']['avatar'][0]
+                    .'</label>'
+                    .'</h3>'
+                    .'<div>'
+                    .'  <img src="'.$avatar.'" '
+                    .  'height="150" alt="" class="gimage" '
+                    .  'title="'.$member->firstname.' '.$member->lastname.'">'
+                    .'</div>'
+                    .'<p class="tl_help tl_tip" title="">'.$GLOBALS['TL_LANG']['tl_spieler']['avatar'][1].'</p>'
+                    .'</div>' // .widget
+                    ;
+            }
+        ],
     ],
+
 ];
 
 
