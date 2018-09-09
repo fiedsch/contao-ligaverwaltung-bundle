@@ -51,6 +51,20 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
     'sorting'   => true,
     'eval'      => ['rgxp'=>'alnum','tl_class'=>'w50','maxlength'=>32, 'unique'=>true],
     'sql'       => "varchar(32) NOT NULL default ''",
+    'load_callback' => [function($value, \Contao\DataContainer $dc) {
+        // "auto increment" passnummer for new records and consider special cases.
+        // NOTE: if the member with the highest passnumber gets deleted their passnumber
+        // will be assigned to the next new entry in tl_member -- this is something
+        // which we consider an edge case and do not try to catch here.
+        if ($value) { return $value; }
+        // An existing record with empty passnummer? Then leave as is!
+        if ($dc->activeRecord->tstamp > 0) { return $value; }
+        // Do we have non numerical passummmer values? Then MAX() + 1 will not be appropriate!
+        $res = \Contao\Database::getInstance()->prepare("SELECT SUM(passnummer NOT REGEXP '^[0-9]+$') as n FROM tl_member WHERE passnummer <>''")->execute();
+        if ($res->n > 0) { return $value; }
+        $res = \Contao\Database::getInstance()->prepare("SELECT MAX(passnummer * 1) as maxpass FROM tl_member")->execute();
+        return $res->maxpass + 1;
+    }]
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['haspaidcurrentseason'] = [
