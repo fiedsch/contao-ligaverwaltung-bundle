@@ -29,6 +29,10 @@ use Contao\SpielortModel;
  */
 class RechnungsDatenAbzugCommand extends ContainerAwareCommand
 {
+
+    const KEIN_AUFSTELLER = 'kein Auftseller';
+    const KEIN_WIRT       = 'kein Spielort';
+
     /**
      * {@inheritdoc}
      */
@@ -67,8 +71,10 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
         // Ergebnisdaten
 
         $data = [
-            'wirte'      => [],
-            'aufsteller' => [],
+            'wirte'            => [],
+            'wirteModels'      => [],
+            'aufsteller'       => [],
+            'aufstellerModels' => [],
         ];
 
         $output->writeln("## Ligen und Mannschaften\n");
@@ -84,25 +90,30 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
 
             if ($mannschaften) {
                 foreach ($mannschaften as $mannschaft) {
-                    $spielort = $mannschaft->getRelated('spielort')->name ?: 'kein Spielort';
-                    $aufsteller = $mannschaft->getRelated('spielort')->getRelated('aufsteller')->name ?: 'kein Aufsteller';
+                    $wirt = $mannschaft->getRelated('spielort');
+                    $keyWirt = $wirt ? $wirt->name : self::KEIN_WIRT;
+                    $aufsteller = $mannschaft->getRelated('spielort')->getRelated('aufsteller');
+                    $keyAufsteller = $aufsteller ? $aufsteller->name : self::KEIN_AUFSTELLER;
 
-                    if (!isset($data['wirte'][$spielort])) {
-                        $data['wirte'][$spielort] = [];
+                    if (!isset($data['wirte'][$keyWirt])) {
+                        $data['wirte'][$keyWirt] = [];
                     }
-                    if (!isset($data['aufsteller'][$aufsteller])) {
-                        $data['aufsteller'][$aufsteller] = [];
+                    if (!isset($data['aufsteller'][$keyAufsteller])) {
+                        $data['aufsteller'][$keyAufsteller] = [];
                     }
                     $mannschaftsbezeichnung = sprintf("%s, %s",
                         $mannschaft->name,
                         $liga->name
                     );
-                    $data['wirte'][$spielort][] = $mannschaftsbezeichnung;
-                    $data['aufsteller'][$aufsteller][] = $mannschaftsbezeichnung.", $spielort";
-                    $output->writeln(sprintf("* %s (%s, %s)\n",
+                    $data['wirte'][$keyWirt][] = $mannschaftsbezeichnung;
+                    $data['wirteModels'][$keyWirt] = $wirt;
+                    $data['aufsteller'][$keyAufsteller][] = $mannschaftsbezeichnung.", $spielort";
+                    $data['aufstellerModels'][$keyAufsteller] = $aufsteller;
+
+                    $output->writeln(sprintf("\n* %s (%s, %s)\n",
                         $mannschaft->name,
-                        $spielort,
-                        $aufsteller
+                        $keyWirt,
+                        $keyAufsteller
                     ));
                 }
             } else {
@@ -111,17 +122,34 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
         }
 
         $output->writeln("## Wirte\n");
-        foreach($data['wirte'] as $wirt => $d) {
-            $output->writeln("### $wirt\n");
-            foreach($d as $who) {
+        foreach($data['wirteModels'] as $keyWirt => $wirtModel) {
+            $output->writeln("### $keyWirt\n");
+
+            $output->writeln(sprintf("\n%s  \n%s %s\n", // two spaces before \n for al linebreak
+                $wirtModel->street,
+                $wirtModel->postal,
+                $wirtModel->city
+            ));
+
+            foreach($data['wirte'][$keyWirt] as $who) {
                 $output->writeln("* $who\n");
             }
         }
 
         $output->writeln("## Aufsteller\n");
-        foreach($data['aufsteller'] as $aufsteller => $d) {
-            $output->writeln("### $aufsteller");
-            foreach($d as $who) {
+
+        foreach($data['aufstellerModels'] as $keyAufsteller =>$aufstellerModel) {
+            $output->writeln("### $keyAufsteller");
+
+            if ($keyAufsteller !== self::KEIN_AUFSTELLER) {
+                $output->writeln(sprintf("\n%s  \n%s %s\n",
+                    $aufstellerModel->street,
+                    $aufstellerModel->postal,
+                    $aufstellerModel->city
+                ));
+            }
+
+            foreach($data['aufsteller'][$keyAufsteller] as $who) {
                 $output->writeln("* $who\n");
             }
         }
