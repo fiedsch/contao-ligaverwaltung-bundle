@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']  ['tl_begegnung'] = [
                 'pid'  => 'index',
                 'home' => 'index',
                 'away' => 'index',
-                // Jede Mannschaft spielt (in einer Liga) maximal einmal gegen eineandere:
+                // Jede Mannschaft spielt (in einer Liga) maximal einmal gegen eine andere:
                 //'pid,home,away' => 'unique',
             ],
         ],
