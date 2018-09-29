@@ -99,7 +99,6 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
         foreach ($mannschaftIds as $idHome) {
             foreach ($mannschaftIds as $idAway) {
                 if ($idHome === $idAway) { continue; }
-                if ($idHome === self::SPIELFREI_MANNSCHAFT) { continue; }
                 $begegnung = BegegnungModel::findBy(
                         ['pid=?', 'home=?', 'away=?'],
                         [$ligaId, $idHome, $idAway]
@@ -107,6 +106,13 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
                 if ($begegnung) {
                     $output->writeln(sprintf("-> Begegnung '%s:%s' existiert bereits", $idHome, $idAway));
                 } else {
+                    if ($idHome === self::SPIELFREI_MANNSCHAFT) {
+                        // Wir haben zuhause Spielfrei, auch wenn wir technisch
+                        // gesehen zu Spielfrei als Auswärtsspiel fahren.
+                        $temp = $idHome;
+                        $idHome = $idAway;
+                        $idAway = $temp;
+                    }
                     $output->writeln(sprintf("->lege Begegnung '%s:%s' an", $idHome, $idAway));
                     $begegnung = new BegegnungModel();
                     $begegnung->tstamp = time();
