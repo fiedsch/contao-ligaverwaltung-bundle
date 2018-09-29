@@ -29,7 +29,7 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
 {
 
     const DUMMY_SPIELTAG = 999;
-    const SPIELFREI_MANNSCHAFT = 999;
+    const SPIELFREI_MANNSCHAFT = 0;
 
     /**
      * {@inheritdoc}
