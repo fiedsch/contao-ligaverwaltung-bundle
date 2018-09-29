@@ -178,6 +178,7 @@ $GLOBALS['TL_DCA']  ['tl_begegnung'] = [
             'label'     => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_tag'],
             'exclude'   => true,
             'sorting'   => true,
+            'filter'    => true,
             'inputType' => 'text',
             'eval'      => ['rgxp' => 'digit', 'minval'=>1, 'mandatory'=> true, 'tl_class' => 'w50'],
             'sql'       => "int(10) unsigned NOT NULL default '1'",
