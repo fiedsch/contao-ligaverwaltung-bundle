@@ -64,9 +64,9 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
 
         $output->writeln("Erstelle Begegnungen für " . $liga->name . ", " . $saison->name);
 
-        $this->generateBegegnungen($liga->id, $output);
+        $countNew = $this->generateBegegnungen($liga->id, $output);
 
-        $output->writeln("Fertig: Begegnungen sind erstellt");
+        $output->writeln(sprintf("Fertig: %d Begegnungen wurden neu erstellt", $countNew));
 
         return 1;
     }
@@ -74,12 +74,15 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
     /**
      * @param integer $ligaId
      * @param OutputInterface $output
+     * @return integer Anzahl der erstellten Begegnungen
      */
     protected function generateBegegnungen($ligaId, OutputInterface $output)
     {
         $mannschaft = MannschaftModel::findByLiga($ligaId);
 
         $mannschaftIds = [];
+
+        $countGenerated = 0;
 
         while ($mannschaft->next()) {
             $output->writeln("-> Mannschaft " . $mannschaft->name);
@@ -112,9 +115,11 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
                     $begegnung->away = $idAway;
                     $begegnung->spiel_tag = self::DUMMY_SPIELTAG; // ein Marker, der bei der Spielplanerstellung manuell geändert werden muss.
                     $begegnung->save();
+                    $countGenerated++;
                 }
             }
         }
 
+        return $countGenerated;
     }
 }
