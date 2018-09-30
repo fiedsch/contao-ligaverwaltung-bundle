@@ -30,6 +30,7 @@
     <?php endif; ?>
 
     <?php foreach ($this->spiele as $spieltag => $spiele): ?>
+        <?php if ($spieltag >= 999) { continue; } // DUMMY Spieltage nicht anzeigen (siehe BegegnungenErstellenCommand) ?>
         <?php if ($this->mannschaft): ?>
           <?php // keine Zwischenüberschriften bei "Spielplan einer Mannschaft" ?>
         <?php else: ?>
