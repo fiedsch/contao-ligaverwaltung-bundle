@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Contao\Database;
 use Contao\LigaModel;
 use Contao\SaisonModel;
 use Contao\MannschaftModel;
@@ -85,16 +86,11 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
         $countGenerated = 0;
 
         while ($mannschaft->next()) {
-            $output->writeln("-> Mannschaft " . $mannschaft->name);
+            $output->writeln(sprintf("-> Mannschaft %s (%d)",$mannschaft->name, $mannschaft->id));
             $mannschaftIds[] = $mannschaft->id;
         }
 
-        // Ungerade Anzahl von Mannschaften? Dann hat jede ein Mal Spielfrei!
-        if (count($mannschaftIds) % 2) {
-            $mannschaftIds[] = self::SPIELFREI_MANNSCHAFT;
-        }
-
-        // Alle Begegnungen (jeder gegen jeden) erstellen
+        // Alle Begegnungen (jeder gegen jeden) Hin und Rückspiel erstellen
 
         foreach ($mannschaftIds as $idHome) {
             foreach ($mannschaftIds as $idAway) {
@@ -106,13 +102,6 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
                 if ($begegnung) {
                     $output->writeln(sprintf("-> Begegnung '%s:%s' existiert bereits", $idHome, $idAway));
                 } else {
-                    if ($idHome === self::SPIELFREI_MANNSCHAFT) {
-                        // Wir haben zuhause Spielfrei, auch wenn wir technisch
-                        // gesehen zu Spielfrei als Auswärtsspiel fahren.
-                        $temp = $idHome;
-                        $idHome = $idAway;
-                        $idAway = $temp;
-                    }
                     $output->writeln(sprintf("->lege Begegnung '%s:%s' an", $idHome, $idAway));
                     $begegnung = new BegegnungModel();
                     $begegnung->tstamp = time();
@@ -126,6 +115,37 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
             }
         }
 
+        // Bei ungerader Anzahl von Mannschaften hat je Spieltag immer eine Mannschaft
+        // Spielfrei. Diese Begegnungenn nun auch anlegen (Hin und Rückrunde jeweils
+        // als Heimspiel).
+
+        // Ungerade Anzahl von Mannschaften? Dann hat jede ein Mal Spielfrei!
+        if (count($mannschaftIds) % 2) {
+            foreach ($mannschaftIds as $idHome) {
+                $begegnung = BegegnungModel::findBy(
+                    ['pid=?', 'home=?', 'away=?'],
+                    [$ligaId, $idHome, self::SPIELFREI_MANNSCHAFT]
+                );
+                if ($begegnung) {
+                    $output->writeln(sprintf("-> Begegnung '%s:%s' existiert bereits", $idHome, self::SPIELFREI_MANNSCHAFT));
+                } else {
+                    $output->writeln(sprintf("->lege 2 x Spielfrei an '%s:%s' (Hin- und Rückrunde)", $idHome, self::SPIELFREI_MANNSCHAFT));
+                    for ($i=0; $i<2; $i++) {
+                        $begegnung = new BegegnungModel();
+                        $begegnung->tstamp = time();
+                        $begegnung->pid = $ligaId;
+                        $begegnung->home = $idHome;
+                        $begegnung->away = self::SPIELFREI_MANNSCHAFT;
+                        $begegnung->spiel_tag = self::DUMMY_SPIELTAG; // ein Marker, der bei der Spielplanerstellung manuell geändert werden muss.
+                        $begegnung->save();
+                        $countGenerated++;
+                    }
+                }
+            }
+
+            }
+
         return $countGenerated;
     }
+
 }
