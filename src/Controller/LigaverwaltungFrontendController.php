@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route; // for annotations!
 use Symfony\Component\HttpFoundation\Response;
 use Fiedsch\LigaverwaltungBundle\IcalController;
+use Fiedsch\LigaverwaltungBundle\JsonController;
 
 
 /**
@@ -38,6 +39,32 @@ class LigaverwaltungFrontendController extends Controller
     public function icalAction($ligaid, $mannschaftid = 0)
     {
         $controller = new IcalController($ligaid, $mannschaftid);
+        return $controller->run();
+    }
+
+
+    /**
+     * Spielplan als JSON
+     *
+     * @param integer $ligaid
+     * @param integer $mannschaftid
+     * @return JsonResponse
+     *
+     * @Route(
+     *     "/ligaverwaltung/spielplan/json/{ligaid}/{mannschaftid}",
+     *     name="spielplan_json",
+     *     requirements={
+     *       "ligaid":"\d+",
+     *       "mannschaftid":"\d+"
+     *     },
+     *     defaults={
+     *       "mannschaftid":"0"
+     *     }
+     * )
+     */
+    public function jsonAction($ligaid, $mannschaftid = 0)
+    {
+        $controller = new JsonController($ligaid, $mannschaftid);
         return $controller->run();
     }
 
