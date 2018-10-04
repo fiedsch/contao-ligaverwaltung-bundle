@@ -8,6 +8,8 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
+use Contao\Config;
+
 /**
  * Class Begegnung
  *
@@ -187,10 +189,36 @@ class Begegnung
      *
      * @param array $a
      * @param array $b
-     * @return boolean
+     * @return integer
      */
     public static function compareMannschaftResults($a, $b)
     {
+        switch (Config::get('ligaverwaltung_ranking_model_ties')) {
+            case 2: // 'nach absoluten Werten'
+                return self::compareMannschaftResultsAbsolute($a, $b);
+                break;
+            case 1: // 'nach Differenzen'
+            default:
+                return self::compareMannschaftResultsDifferences($a, $b);
+        }
+    }
+
+    /**
+     * This is the "legacy" mode
+     *
+     * @param array $a
+     * @param array $b
+     * @return interger
+     */
+    protected static function compareMannschaftResultsAbsolute($a, $b)
+    {
+        // <=> Operator returns
+        //  -1  0  +1
+        //              when comparison of $a and $b leads to
+        //  <   =  >
+        // daher bei absteigender Sortierung (mehr ist besser) immer $b <=> $a anstelle $a <=> $b
+        // (oder alternativ das Ergebnis von <=> mal -1).
+
         // Bei Punktegleichstand ...
         if ($a['punkte_self'] == $b['punkte_self']) {
             // ... nach eigenen gewonnenen Spielen. Sind diese auch gleich, ...
@@ -200,10 +228,32 @@ class Begegnung
                     // Immer noch gleich, dann nach Legdifferenz
                     return ($b['legs_self']-$b['legs_other'] <=> $a['legs_self']-$a['legs_other']);
                 }
-                return $a['legs_self'] < $b['legs_self'] ? +1 : -1;
+                return $b['legs_self'] <=> $a['legs_self'];
             }
-            return $a['spiele_self'] < $b['spiele_self'] ? +1 : -1;
+            return $b['spiele_self'] <=> $a['spiele_self'];
         }
-        return $a['punkte_self'] < $b['punkte_self'] ? +1 : -1;
+        return $b['punkte_self'] <=> $a['punkte_self'];
     }
+
+    /**
+     * This is the mode that is probably expected by most people
+     *
+     * @param array $a
+     * @param array $b
+     * @return interger
+     */
+    protected static function compareMannschaftResultsDifferences($a, $b)
+    {
+        // Bei Punktegleichstand ...
+        if ($a['punkte_self'] == $b['punkte_self']) {
+            // ... nach Spieledifferenzen. Sind diese auch gleich, ...
+            if ($a['spiele_self'] - $a['spiele_other'] == $b['spiele_self'] - $b['spiele_other']) {
+                // ... dann nach Legdifferenzen
+                return $b['legs_self'] - $b['legs_other'] <=> $a['legs_self'] - $a['legs_other'];
+            }
+            return $b['spiele_self'] - $b['spiele_other'] <=> $a['spiele_self'] - $a['spiele_other'];
+        }
+        return $b['punkte_self'] <=> $a['punkte_self'];
+    }
+
 }

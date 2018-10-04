@@ -9,6 +9,7 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\Database;
+use Contao\Config;
 use Contao\ContentElement;
 use Contao\BackendTemplate;
 use Contao\LigaModel;
@@ -310,9 +311,17 @@ class ContentRanking extends ContentElement
         });
 
         // Berechnung Rang (Tabellenplatz) und Label
-        $lastpunkte = PHP_INT_MAX;
-        $lastlegs_self = PHP_INT_MAX;
-        $lastlegs_other = PHP_INT_MAX;
+
+        // Initialisierung der virtuellen Zeile 0 mit Maximalwerten
+        $lastrow = [
+            'punkte_self'    => PHP_INT_MAX,
+            'punkte_other'   => 0,
+            'spiele_self'    => PHP_INT_MAX,
+            'spiele_other'   => 0,
+            'legs_self'      => PHP_INT_MAX,
+            'legs_other'     => 0,
+        ];
+
         $rang = 0;
         $rang_skip = 1;
 
@@ -328,13 +337,9 @@ class ContentRanking extends ContentElement
 
             $results[$id]['mannschaft'] = $mannschaft->getLinkedName();
 
-            if ($results[$id]['punkte_self'] == $lastpunkte
-                && $results[$id]['legs_self'] == $lastlegs_self
-                && $results[$id]['legs_other'] == $lastlegs_other
-            ) {
-                // we have a "tie", gleicher Rang und beim nächsten einen Rang mehr auslassen
+            if (self::isTie($results[$id], $lastrow)) {
+                // gleicher Rang und beim nächsten einen Rang mehr auslassen
                 $rang_skip++;
-
             } else {
                 // ein Rang weiter und keinen folgenden auslassen,
                 // aber die ggf. vorherige Auslassung berücksichtigen)
@@ -342,9 +347,15 @@ class ContentRanking extends ContentElement
                 $rang_skip = 1;
             }
             $results[$id]['rang'] = $rang;
-            $lastpunkte = $results[$id]['punkte_self'];
-            $lastlegs_self = $results[$id]['legs_self'];
-            $lastlegs_other = $results[$id]['legs_other'];
+
+            $lastrow = [
+                'punkte_self'    => $results[$id]['punkte_self'],
+                'punkte_other'   => $results[$id]['punkte_other'],
+                'spiele_self'    => $results[$id]['spiele_self'],
+                'spiele_other'   => $results[$id]['spiele_other'],
+                'legs_self'      => $results[$id]['legs_self'],
+                'legs_other'     => $results[$id]['legs_other'],
+            ];
         }
 
         $this->Template->rankingtype = 'spieler';
@@ -355,5 +366,32 @@ class ContentRanking extends ContentElement
         }
 
         $this->Template->listitems = $results;
+    }
+
+    /**
+     * @param array   $result         die Daten einer Zeile des sortierten Rankimgs
+     * @param integer $lastresult     die Daten der vorhergehenden Zeile des Rankings
+     * @return boolean
+     */
+    protected function isTie($result, $lastresult)
+    {
+        $tiebreak_mode = Config::get('ligaverwaltung_ranking_model_ties');
+        switch ($tiebreak_mode) {
+            case 2: // nach absoluten Werten
+                return $result['punkte_self'] == $lastresult['punkte']
+                    && $result['spiele_self'] == $lastresult['spiele_self']
+                    && $result['legs_self']   == $lastresult['legs_self']
+                    && $result['legs_other']  == $lastresult['legs_other']
+                    ;
+                break;
+            case 1: // nach Differenzen
+                    // (ausser bei den Punkten, wo nur eigene (gewonnene) betrachtet werden -- weil "isso!")
+            default:
+            return $result['punkte_self']                           == $lastresult['punkte']
+                && $result['spiele_self'] - $result['spiele_other'] == $lastresult['spiele_self'] - $lastresult['spiele_other']
+                && $result['legs_self']   - $result['legs_other']   == $lastresult['legs_self']   - $lastresult['legs_other']
+                ;
+        }
+
     }
 }
