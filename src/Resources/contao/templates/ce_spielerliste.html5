@@ -4,9 +4,9 @@
 
 <?php
   // Ersatzbild (Platzhalter)
-  $placeholderImage = 'files/assets/site/images/Darts_Logo.svg'; // TODO: unten "einkommentieren"
+  $placeholderImage = 'files/assets/site/images/Darts_Logo.svg';
   // Breite des Avatars
-  $avaratWidth = 100;
+  $avatarWidth = 100;
 ?>
 
 <?php if ($this->listitems): ?>
@@ -56,14 +56,18 @@
         <td><?= $teamcaptain_suffix ?></td>
         <?php if ($listitem['member']->anonymize): ?>
           <td>&nbsp;<!-- anonymisieren: Bild nicht ausgeben! --></td>
-          <?php else: ?>
+        <?php else: ?>
           <td>
               <?php $avatar = \Contao\FilesModel::findByUUid($listitem['member']->avatar); ?>
               <?php if ($avatar): ?>
-              <img src="<?= $avatar->path ?>" class="img-thumbnail my-anywidth" width="<?= $avaratWidth ?>px" alt="<?= $listitem['member']->lastname ?>, <?= $listitem['member']->firstname ?>" itemprop="image">
+                <figure class="image_container float_above" style="margin-right:1em;" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="associatedMedia">
+                  <a href="<?= $avatar->path ?>" data-lightbox="lb1" itemprop="contentUrl" class="cboxElement">
+                    <img src="<?= $avatar->path ?>" class="img-thumbnail my-anywidth" width="<?= $avatarWidth ?>px" alt="" itemprop="image">
+                  </a>
+                </figure>
               <?php else: ?>
-              <!-- kein Bild vorhanden! -->
-              <!-- <img src="<?= $placeholderImage ?>" class="img-thumbnail my-anywidth" width="<?= $avaratWidth ?>px" alt="<?= $listitem['member']->lastname ?>, <?= $listitem['member']->firstname ?>" itemprop="image"> -->
+                <!-- kein Bild vorhanden! -->
+                <img src="<?= $placeholderImage ?>" class="img-thumbnail my-anywidth" width="<?= $avatarWidth ?>px" alt="<?= $listitem['member']->lastname ?>, <?= $listitem['member']->firstname ?>" itemprop="image">
               <?php endif; ?>
           </td>
         <?php endif; ?>
