@@ -81,7 +81,7 @@
 <style>
     .my-anywidth {
         /* unset max-width of Bootstrap's .thumbnail */
-        max-width: initial;
+        max-width: initial !important;
     }
 </style>
 
