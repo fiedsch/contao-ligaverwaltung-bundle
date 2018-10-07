@@ -226,7 +226,7 @@ class Begegnung
                 // ... dann nach Legs
                 if ($a['legs_self'] == $b['legs_self']) {
                     // Immer noch gleich, dann nach Legdifferenz
-                    return ($b['legs_self']-$b['legs_other'] <=> $a['legs_self']-$a['legs_other']);
+                    return $b['legs_self']-$b['legs_other'] <=> $a['legs_self']-$a['legs_other'];
                 }
                 return $b['legs_self'] <=> $a['legs_self'];
             }
