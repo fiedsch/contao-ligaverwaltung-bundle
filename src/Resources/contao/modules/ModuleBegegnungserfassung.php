@@ -283,7 +283,7 @@ class ModuleBegegnungserfassung extends BackendModule
     protected function generateForm()
     {
         $GLOBALS['TL_CSS'][] = 'bundles/fiedschligaverwaltung/begegnungserfassung.css|static';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/fiedschligaverwaltung/vue.2.2.0.js|static';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/fiedschligaverwaltung/vue.2.5.17.min.js|static';
 
         $this->Template->NUM_PLAYERS = self::NUM_PLAYERS;
 
