@@ -5,6 +5,10 @@ namespace Contao;
 /**
  * @property integer $id
  * @property integer $pid
+ * @property integer $begegnung_id
+ * @property integer $spieler_id
+ * @property integer $type
+ * @property \String $value
  * @method static HighlightModel|null findById($id, array $opt=array())
  */
 
