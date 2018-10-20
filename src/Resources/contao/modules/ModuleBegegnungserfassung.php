@@ -21,6 +21,7 @@ use Contao\BegegnungModel;
 use Contao\LigaModel;
 use Contao\SpielerModel;
 use Contao\SpielModel;
+use Contao\HighlightModel;
 
 class ModuleBegegnungserfassung extends BackendModule
 {
@@ -71,6 +72,8 @@ class ModuleBegegnungserfassung extends BackendModule
         $data = $this->scanPostData();
 
         $this->saveSpiele($data);
+
+        $this->saveHighlights($data);
 
         Controller::redirect(sprintf('contao/main.php?do=liga.begegnung&table=tl_spiel&id=%s&rt=%s',
             Input::post('id'),
@@ -133,6 +136,14 @@ class ModuleBegegnungserfassung extends BackendModule
                     } else if (preg_match("/^score_(home|away)_(\d+)$/", $k, $matches)) {
                         // Score (Einzel und Doppel)
                         $data['spiele'][$matches[2]][$matches[1]]['score'] = $v;
+                    } else if (preg_match("/^one80_(\d+)$/", $k, $matches)) {
+                        $data['highlights'][$matches[1]]['180'] = $v;
+                    }  else if (preg_match("/^one71_(\d+)$/", $k, $matches)) {
+                        $data['highlights'][$matches[1]]['171'] = $v;
+                    }  else if (preg_match("/^shortleg_(\d+)$/", $k, $matches)) {
+                        $data['highlights'][$matches[1]]['shortleg'] = $v;
+                    }  else if (preg_match("/^highfinish_(\d+)$/", $k, $matches)) {
+                        $data['highlights'][$matches[1]]['highfinish'] = $v;
                     } else {
                         $data['TODO'][] = sprintf("%s = %s\n", $k, $v);
                     }
@@ -344,6 +355,52 @@ class ModuleBegegnungserfassung extends BackendModule
         $this->Template->spielplan = $spielplan;
         $this->generatePatchSpielplanCode();
 
+    }
+
+    /**
+     * @param array $data
+     */
+    protected function saveHighlights($data)
+    {
+        $highlights = $data['highlights'];
+        // print '<pre>'.print_r($highlights, true). '</pre>';exit;
+        if (empty($highlights)) { return; }
+        foreach ($highlights as $spielerId => $highlightsdata) {
+            foreach ($highlightsdata as $type => $value) {
+                if (!$value) { continue; }
+                $highlight = new HighlightModel();
+                $highlight->type = self::getHighlightType($type);
+                $highlight->value = $value;
+                $highlight->begegnung_id = $data['begegnung'];
+                $highlight->spieler_id = $spielerId;
+                $highlight->save();
+            }
+        }
+    }
+
+    /**
+     * @param string $marker
+     * @return int
+     * @throws \Exception
+     */
+    protected static function getHighlightType($marker)
+    {
+        switch ($marker) {
+            case '180':
+                return HighlightModel::TYPE_180;
+                break;
+            case '171':
+                return HighlightModel::TYPE_171;
+                break;
+            case 'shortleg':
+                return HighlightModel::TYPE_SHORTLEG;
+                break;
+            case 'highfinish':
+                return HighlightModel::TYPE_HIGHFINISH;
+                break;
+            default:
+                throw new \Exception("unknown highlight type '$marker");
+        }
     }
 
     /**

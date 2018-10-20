@@ -1,101 +1,76 @@
-<div class="begegnungserfassung" id="app">
-
-<?php if ($this->message): ?>
-
-<div class="tl_messages">
-  <p class="tl_error"><?= $this->message; ?></p>
-</div>
-
-<?php else: ?>
-
-<?php // Aufstellung (slots="..." => Ein Team tritt mit max. slots Spielern an) ?>
-  <!--  <pre style="font-size: 7px">{{ showData }}</pre> -->
-<aufstellung :home="home" :away="away" :slots="<?= $this->NUM_PLAYERS ?>"></aufstellung>
-
-<?php // Datenerfassung ?>
-<form id="spielbericht" method="POST" class="tl_form">
-    <input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
-    <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung">
-    <input type="hidden" name="id" value="<?= $this->begegnung ?>">
-    <input type="hidden" name="homelineup" :value="home.lineup">
-    <input type="hidden" name="awaylineup" :value="away.lineup">
-    <resultstable :home="home" :away="away" :spielplan="spielplan"></resultstable>
-    <div class="row">
-        <div class="">
-            <button class="tl_submit" type="submit">Speichern</button>
-        </div>
+<div class="mod_begegnungserfassung">
+    <?php if ($this->message): ?>
+    <div class="tl_messages">
+        <p class="tl_error"><?= $this->message; ?></p>
     </div>
-</form>
-
-<pre>
-<?php // $this->showTemplateVars(); ?>
-</pre>
+    <?php else: ?>
+    <div id="begegnungserfassung"></div>
 </div>
 
 <?php
 $changeCss = false;
 switch($this->spielplan) {
-  case \Contao\LigaModel::SPIELPLAN_16E2D:
-    $sp = '16E2D';
-    break;
-  case \Contao\LigaModel::SPIELPLAN_16E4D:
-    $sp = '16E4D';
-    break;
-    case \Contao\LigaModel::SPIELPLAN_6E3D:
-    $changeCss = true;
-    $sp = '6E3D';
-    break;
-    case \Contao\LigaModel::SPIELPLAN_16E:
-    $sp = '16E';
-    break;
-  default:
-    $sp = '16E2D';
+case \Contao\LigaModel::SPIELPLAN_16E2D:
+$sp = '16E2D';
+break;
+case \Contao\LigaModel::SPIELPLAN_16E4D:
+$sp = '16E4D';
+break;
+case \Contao\LigaModel::SPIELPLAN_6E3D:
+$changeCss = true;
+$sp = '6E3D';
+break;
+case \Contao\LigaModel::SPIELPLAN_16E:
+$sp = '16E';
+break;
+default:
+$sp = '16E2D';
 }
 ?>
 <script src="bundles/fiedschligaverwaltung/spielplan.<?= $sp ?>.js"></script>
 <?php if ($changeCss): ?>
-  <style>
+<style>
     tr:nth-child(4n+1) { border-top: 0px !important; }
-  </style>
+</style>
 <?php endif; ?>
 
 <script>
-/**
- * Global data objects
- */
-var data = {
-    home: {
-        key: "home",
-        name: "<?= $this->team_home_name ?>",
-        available: [ <?= $this->team_home_players ?> ],
-        lineup: [ <?= $this->team_home_lineup ?> ],
-        played: [ ]
-    },
-    away: {
-        key: "away",
-        name: "<?= $this->team_away_name ?: 'Spielfrei!' ?>",
-        available: [ <?= $this->team_away_players ?> ],
-        lineup: [ <?= $this->team_away_lineup ?> ],
-        played: [ ]
-    },
-    spielplan: spielplan,
-    num_players: <?= $this->NUM_PLAYERS ?>  /* dieser Wert ist in ModuleBegegnungserfassung.php
-    als Konstante NUM_PLAYERS definiert */
-};
-<?php echo $this->patchSpielplanCode; ?>
+    /**
+     * Global data objects
+     */
+    var data = {
+        home: {
+            key: "home",
+            name: "<?= $this->team_home_name ?>",
+            available: [ <?= $this->team_home_players ?> ],
+            lineup: [ <?= $this->team_home_lineup ?> ],
+            played: [ ]
+        },
+        away: {
+            key: "away",
+            name: "<?= $this->team_away_name ?: 'Spielfrei!' ?>",
+            available: [ <?= $this->team_away_players ?> ],
+            lineup: [ <?= $this->team_away_lineup ?> ],
+            played: [ ]
+        },
+        spielplan: spielplan,
+        num_players: <?= $this->NUM_PLAYERS ?>,  /* dieser Wert ist in ModuleBegegnungserfassung.php als Konstante NUM_PLAYERS definiert */
+        requestToken: '<?= REQUEST_TOKEN ?>',
+        begegnungId: <?= $this->begegnung ?>,
+        numSlots: <?= $this->NUM_PLAYERS ?>
+    };
+    <?php echo $this->patchSpielplanCode; ?>
 
 </script>
 
-<script src="bundles/fiedschligaverwaltung/main.js"></script>
+<script src="bundles/fiedschligaverwaltung/begegnungserfassung.umd.min.js"></script>
+<style src="bundles/fiedschligaverwaltung/begegnungserfassung.css"></style>
 
 <style>
-    .begegnungserfassung {
-        padding: 2em;
-    }
-select {
-    -moz-appearance: menulist;
-    -webkit-appearance: menulist;
-}
+<?php if (substr($sp, 0, 3) =='16E'): ?>
+.results-table tr:nth-child(4n+1) { border-top: 20px solid white !important; }
+<?php endif; ?>
 </style>
 
+<?php // $this->showTemplateVars(); ?>
 <?php endif; ?>
