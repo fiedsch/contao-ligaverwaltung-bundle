@@ -68,11 +68,14 @@ class ModuleSpielortseitenReader extends Module
         // $this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
 
         $id = Input::get('id');
+        // spielort.html?id=123 (id Parameter) vs.
+        // spielort/123.html (auto_item)
+        if (!$id) { $id = Input::get('auto_item'); }
         if (empty($id)) {
             $this->Template->spielort = null;
             return;
         }
-        $spielort = SpielortModel::findById(Input::get('id'));
+        $spielort = SpielortModel::findById($id);
         if (!$spielort) {
             $this->Template->spielort = null;
             return;

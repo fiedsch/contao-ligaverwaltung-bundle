@@ -72,11 +72,14 @@ class ModuleSpielberichtReader extends Module
         // $this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
 
         $id = Input::get('id');
+        // spielbericht.html?id=123 (id Parameter) vs.
+        // spielbericht/123.html (auto_item)
+        if (!$id) { $id = Input::get('auto_item'); }
         if (empty($id)) {
             $this->Template->begegnung = null;
             return;
         }
-        $begegnung = BegegnungModel::findById(Input::get('id'));
+        $begegnung = BegegnungModel::findById($id);
         if (!$begegnung) {
             $this->Template->begegnung = null;
             return;

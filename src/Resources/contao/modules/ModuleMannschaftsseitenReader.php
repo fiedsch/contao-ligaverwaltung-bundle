@@ -72,11 +72,14 @@ class ModuleMannschaftsseitenReader extends Module
         // $this->Template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
 
         $id = Input::get('id');
+        // mannschaft.html?id=123 (id Parameter) vs.
+        // mannschaft/123.html (auto_item)
+        if (!$id) { $id = Input::get('auto_item'); }
         if (empty($id)) {
             $this->Template->mannschaft = null;
             return;
         }
-        $mannschaft = MannschaftModel::findById(Input::get('id'));
+        $mannschaft = MannschaftModel::findById($id);
         if (!$mannschaft || !$mannschaft->active) {
             $this->Template->mannschaft = null;
             return;
