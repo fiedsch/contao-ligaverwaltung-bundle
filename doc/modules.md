@@ -23,7 +23,8 @@
 
 ## Backed (nur technisch)
 
-* `ModuleBegegnungserfassung` (Formular mit `Vue.js`; versteckt; wird in Begegnungsansicht verwendet "erfassen")
+* `ModuleBegegnungserfassung` (Formular mit `Vue.js`; versteckt; wird in Begegnungsansicht verwendet "erfassen").
+Siehe das eigenständige [Github Repository](https://github.com/fiedsch/begegnungserfassung) dafür.
 
 * `ModuleSpielerHistory` (versteckt; wird in Mitgliederansicht verwendet "eigener Button")
 

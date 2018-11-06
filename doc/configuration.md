@@ -18,7 +18,7 @@
 ## Systemeinstellungen
 
 
-###  Spielberechtingungen
+###  Spielberechtigungen
 
 In den Contao Systemeinstellungen kann im Bereich "Ligaverwaltung" festgelegt werden, wie einzelne
 Spieler zeitgleich in verscheidenen Mannschaften spielen dürfen. Die dort getroffene Auswahl bestimmt
