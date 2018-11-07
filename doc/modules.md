@@ -17,7 +17,7 @@
   * Konfiguration: keine
   * Dieses Modul ist nur experimentell und wird noch nirgends verwendet!
   * Alternativ: Contao-Standard-Moduel "Auflistung" der Tabelle `tl_spielort` einsetzen
-  (mit Templete `lsit_default_spielorte`).
+  (mit selbst erstelltem/modifizertem Templete `list_default_spielorte`).
  
 
 
