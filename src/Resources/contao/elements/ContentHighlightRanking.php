@@ -6,20 +6,20 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-    namespace Fiedsch\LigaverwaltungBundle;
+namespace Fiedsch\LigaverwaltungBundle;
 
-    use Contao\ContentElement;
-    use Contao\BackendTemplate;
-    use Contao\Database;
-    use Contao\Date;
-    use Contao\Config;
-    use Contao\System;
-    use Contao\LigaModel;
-    use Contao\MannschaftModel;
-    use Contao\HighlightModel;
-    use Patchwork\Utf8;
+use Contao\ContentElement;
+use Contao\BackendTemplate;
+use Contao\Database;
+use Contao\Date;
+use Contao\Config;
+use Contao\System;
+use Contao\LigaModel;
+use Contao\MannschaftModel;
+use Contao\HighlightModel;
+use Patchwork\Utf8;
 
-    /**
+/**
  * Content element "Liste aller Spieler einer Mannaschft".
  *
  * @author Andreas Fieger <https://github.com/fiedsch>

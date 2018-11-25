@@ -17,7 +17,6 @@ use Contao\SpielerModel;
 use Contao\MannschaftModel;
 use Patchwork\Utf8;
 
-
 /**
  * Content element "Liste aller Spieler einer Mannaschft".
  *
@@ -301,8 +300,9 @@ class ContentRanking extends ContentElement
         // zur betrachteten Mannschaft gehören.
         if ($this->mannschaft > 0) {
             foreach ($results as $id => $data) {
-                if ($data['mannschaft_id'] != $this->mannschaft)
+                if ($data['mannschaft_id'] != $this->mannschaft) {
                     unset($results[$id]);
+                }
             }
         }
 
@@ -392,6 +392,6 @@ class ContentRanking extends ContentElement
                 && $result['legs_self']   - $result['legs_other']   == $lastresult['legs_self']   - $lastresult['legs_other']
                 ;
         }
-
     }
+
 }

@@ -78,6 +78,7 @@ class ContentSpielbericht extends ContentElement
 
             // Einzel (und erster Spieler Doppel)
             if ($home = $spiel->getRelated('home')) {
+                /** @var \Contao\MemberModel $member */
                 $member = $home->getRelated('member_id');
                 $homeplayer = DCAHelper::makeSpielerName($member);
             } else {

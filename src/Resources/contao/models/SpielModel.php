@@ -65,4 +65,5 @@ class SpielModel extends Model
             $this->score_away
         ];
     }
+
 }

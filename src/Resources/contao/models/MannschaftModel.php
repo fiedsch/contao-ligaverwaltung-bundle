@@ -84,4 +84,5 @@ class MannschaftModel extends Model
         }
         return $result;
     }
+
 }

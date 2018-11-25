@@ -74,7 +74,6 @@ class ContentMannschaftsliste extends ContentElement
         }
 
         $this->Template->listitems = $listitems;
-
     }
 
 }

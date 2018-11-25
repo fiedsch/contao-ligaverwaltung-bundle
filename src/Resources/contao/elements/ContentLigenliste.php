@@ -72,7 +72,6 @@ class ContentLigenliste extends ContentElement
         }
 
         $this->Template->listitems = $listitems;
-
     }
 
 }

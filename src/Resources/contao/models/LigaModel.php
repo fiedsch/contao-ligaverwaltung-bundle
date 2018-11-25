@@ -31,4 +31,5 @@ class LigaModel extends Model
      * @var string
      */
     protected static $strTable = "tl_liga";
+
 }

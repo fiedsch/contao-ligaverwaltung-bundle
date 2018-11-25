@@ -50,7 +50,8 @@ class SpielerModel extends Model
      * @param integer $id
      * @return string
      */
-    public static function getNameById($id) {
+    public static function getNameById($id)
+    {
         $spieler = self::findById($id);
         if ($spieler) {
             $member = $spieler->getRelated('member_id');
@@ -63,7 +64,9 @@ class SpielerModel extends Model
      * @return string
      * @throws \Exception
      */
-    public function getName() {
+    public function getName()
+    {
+        /** @var \Contao\MemberModel $member */
         $member = $this->getRelated('member_id');
         return self::getFullNameFor($member);
     }
@@ -72,7 +75,9 @@ class SpielerModel extends Model
      * @return string
      * @throws \Exception
      */
-    public function getFullName() {
+    public function getFullName()
+    {
+        /** @var \Contao\MemberModel $member */
         $member = $this->getRelated('member_id');
         $membername = self::getFullNameFor($member);
 
@@ -80,6 +85,7 @@ class SpielerModel extends Model
         $mannschaft = $this->getRelated('pid');
         if ($mannschaft) {
             $mannschaftsname = $mannschaft->name;
+            /** @var \Contao\LigaModel $liga */
             $liga = $mannschaft->getRelated('liga');
             if ($liga) {
                 $mannschaftsname .= ' '. $liga->name;
@@ -112,7 +118,8 @@ class SpielerModel extends Model
      * @return string
      * @throws \Exception
      */
-    public function getTcDetails() {
+    public function getTcDetails()
+    {
         /** @var MemberModel $member */
         $member = $this->getRelated('member_id');
 

@@ -22,4 +22,5 @@ class AufstellerModel extends Model
      * @var string
      */
     protected static $strTable = "tl_aufsteller";
+
 }

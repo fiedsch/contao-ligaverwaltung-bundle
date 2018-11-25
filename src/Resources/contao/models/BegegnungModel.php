@@ -144,4 +144,5 @@ class BegegnungModel extends Model
         }
         return $score;
     }
+
 }

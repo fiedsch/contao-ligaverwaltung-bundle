@@ -189,7 +189,7 @@ class Begegnung
      *
      * @param array $a
      * @param array $b
-     * @return integer
+     * @return int
      */
     public static function compareMannschaftResults($a, $b)
     {
@@ -208,7 +208,7 @@ class Begegnung
      *
      * @param array $a
      * @param array $b
-     * @return interger
+     * @return int
      */
     protected static function compareMannschaftResultsAbsolute($a, $b)
     {
@@ -240,7 +240,7 @@ class Begegnung
      *
      * @param array $a
      * @param array $b
-     * @return interger
+     * @return int
      */
     protected static function compareMannschaftResultsDifferences($a, $b)
     {

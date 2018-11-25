@@ -359,6 +359,7 @@ class ModuleBegegnungserfassung extends BackendModule
 
     /**
      * @param array $data
+     * @throws \Exception
      */
     protected function saveHighlights($data)
     {

@@ -21,7 +21,6 @@ use Contao\ContentModel;
 use Contao\Input;
 use Patchwork\Utf8;
 
-
 class ModuleSpielberichtReader extends Module
 {
 

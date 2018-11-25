@@ -13,7 +13,8 @@
   "require": {
     "php": "^7.0",
     "contao/core-bundle": "^4.4",
-    "eluceo/ical": "^0.13"
+    "eluceo/ical": "^0.13",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {
