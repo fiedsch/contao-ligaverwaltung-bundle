@@ -15,7 +15,7 @@ namespace Contao;
  * @property boolean $active
  * @property integer $spielort
  * @method static MannschaftModel|null findById($id, array $opt=array())
- * @method static Model\Collection|MannschaftModel[]|MannschaftModel|null findByLiga($id, array $opt=array())
+ * @method static Model\Collection|MannschaftModel|null findByLiga($id, array $opt=array())
  */
 
 class MannschaftModel extends Model

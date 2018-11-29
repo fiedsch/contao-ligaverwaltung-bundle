@@ -15,7 +15,8 @@ namespace Contao;
  * @property boolean teamcaptain
  * @property boolean co_teamcaptain
  * @method static SpielerModel|null findById($id, array $opt=array())
- * @method static Model\Collection|SpielerModel[]|SpielerModel|null findByPid($id, array $opt=array())
+ * @method static Model\Collection|SpielerModel|null findByPid($id, array $opt=array())
+ * @method static Model\Collection|Model|null getRelated($tablename)
  */
 
 use \Fiedsch\LigaverwaltungBundle\DCAHelper;

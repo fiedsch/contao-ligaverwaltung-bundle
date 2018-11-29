@@ -21,7 +21,7 @@ namespace Contao;
  * @property integer $score_home
  * @property integer $score_away
  * @method static SpielModel|null findById($id, array $opt=array())
- * @method static Model\Collection|SpielModel[]|SpielModel|null findByPid($id, array $opt=array())
+ * @method static Model\Collection|SpielModel|null findByPid($id, array $opt=array())
  */
 
 class SpielModel extends Model
