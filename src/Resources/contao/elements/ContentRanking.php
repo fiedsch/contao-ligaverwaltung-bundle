@@ -226,6 +226,8 @@ class ContentRanking extends ContentElement
      * ein -- gezählt werden nur die "Einzel".
      *
      * ohne ausgewählte Mannschaft => Ranking aller Spieler der Liga
+     *
+     * @throws \Exception
      */
     protected function compileSpielerranking()
     {
@@ -370,7 +372,7 @@ class ContentRanking extends ContentElement
 
     /**
      * @param array   $result         die Daten einer Zeile des sortierten Rankimgs
-     * @param integer $lastresult     die Daten der vorhergehenden Zeile des Rankings
+     * @param array $lastresult     die Daten der vorhergehenden Zeile des Rankings
      * @return boolean
      */
     protected function isTie($result, $lastresult)

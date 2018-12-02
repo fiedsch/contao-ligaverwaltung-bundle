@@ -52,6 +52,7 @@ class IcalController
 
     /**
      *
+     * @throws \Exception
      */
     public function run()
     {
@@ -113,6 +114,7 @@ class IcalController
     /**
      * @param BegegnungModel $begegnung
      * @return Event
+     * @throws \Exception
      */
     protected function generateIcalEvent(BegegnungModel $begegnung)
     {

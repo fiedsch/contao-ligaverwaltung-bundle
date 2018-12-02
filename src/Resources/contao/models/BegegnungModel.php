@@ -15,6 +15,7 @@ namespace Contao;
  * @property integer $away
  * @property string $name
  * @property integer $spiel_am
+ * @property int tstamp
  * @method static BegegnungModel|null findById($id, array $opt=array())
  */
 

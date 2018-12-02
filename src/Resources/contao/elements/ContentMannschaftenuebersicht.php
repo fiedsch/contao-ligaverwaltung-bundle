@@ -65,7 +65,7 @@ class ContentMannschaftenuebersicht extends ContentElement
 
         foreach ($ligen as $liga) {
             //$mannschaften = MannschaftModel::findByLiga($liga->id, ['order' => 'name ASC']);
-            $mannschaften = MannschaftModel::findBy(['liga=?','active=?'],[$liga->id,'1'], ['order' => 'name ASC']);
+            $mannschaften = MannschaftModel::findBy(['liga=?','active=?'], [$liga->id,'1'], ['order' => 'name ASC']);
             if ($mannschaften === null) {
                 continue;
             }

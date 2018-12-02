@@ -49,7 +49,7 @@ class JsonController
 
 
     /**
-     *
+     * @return JsonResponse
      */
     public function run()
     {

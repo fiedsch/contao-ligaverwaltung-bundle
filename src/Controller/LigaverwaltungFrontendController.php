@@ -6,8 +6,10 @@ namespace Fiedsch\LigaverwaltungBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route; // for annotations!
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Fiedsch\LigaverwaltungBundle\IcalController;
 use Fiedsch\LigaverwaltungBundle\JsonController;
+
 
 
 /**
@@ -35,6 +37,7 @@ class LigaverwaltungFrontendController extends Controller
      *       "mannschaftid":"0"
      *     }
      * )
+     * @throws \Exception
      */
     public function icalAction($ligaid, $mannschaftid = 0)
     {

@@ -60,7 +60,7 @@
           <td>
               <?php $avatar = \Contao\FilesModel::findByUUid($listitem['member']->avatar); ?>
               <?php if ($avatar): ?>
-                <figure class="image_container float_above" style="margin-right:1em;" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="associatedMedia">
+                <figure class="image_container float_above" style="margin-right:1em;" itemscope="" itemtype="https://schema.org/ImageObject" itemprop="associatedMedia">
                   <a href="<?= $avatar->path ?>" data-lightbox="lb1" itemprop="contentUrl" class="cboxElement">
                     <img src="<?= $avatar->path ?>" class="img-thumbnail my-anywidth" width="<?= $avatarWidth ?>px" alt="" itemprop="image">
                   </a>

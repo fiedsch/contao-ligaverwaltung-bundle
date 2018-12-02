@@ -155,6 +155,7 @@ class ModuleBegegnungserfassung extends BackendModule
     /**
      * @param int $id
      * @return string
+     * @throws \Exception
      */
     protected function getSpielerName($id)
     {
@@ -162,6 +163,7 @@ class ModuleBegegnungserfassung extends BackendModule
         if (!$spieler) {
             return "Spieler mit der ID $id nicht gefunden";
         }
+        /** @var \MemberModel $member */
         $member = $spieler->getRelated('member_id');
         if (!$member) {
             return "Mitglied zum Spieler mit der ID $id nicht gefunden";

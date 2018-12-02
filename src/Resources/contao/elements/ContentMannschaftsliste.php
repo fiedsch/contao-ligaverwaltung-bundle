@@ -7,13 +7,6 @@
  */
 
 namespace Fiedsch\LigaverwaltungBundle;
-/**
- * Content element "Liste aller Mannschaften einer Liga".
- *
- * @author Andreas Fieger <https://github.com/fiedsch>
- */
-
-namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\ContentElement;
 use Contao\BackendTemplate;
@@ -21,6 +14,11 @@ use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Patchwork\Utf8;
 
+/**
+ * Content element "Liste aller Mannschaften einer Liga".
+ *
+ * @author Andreas Fieger <https://github.com/fiedsch>
+ */
 class ContentMannschaftsliste extends ContentElement
 {
     /**

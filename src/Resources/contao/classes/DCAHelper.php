@@ -564,6 +564,7 @@ class DCAHelper
      *
      * @param array $row
      * @return string
+     * @throws \Exception
      */
     public static function listSpielCallback($row)
     {
@@ -574,7 +575,9 @@ class DCAHelper
             case 1:
                 $spielerHome = SpielerModel::findById($row['home']);
                 $spielerAway = SpielerModel::findById($row['away']);
+                /** @var MemberModel $memberHome */
                 $memberHome = $spielerHome ? $spielerHome->getRelated('member_id') : null;
+                /** @var MemberModel $memberAway */
                 $memberAway = $spielerAway ? $spielerAway->getRelated('member_id') : null;
                 if ($memberHome) {
                     $memberHomeDisplayname = self::makeSpielerName($memberHome);
@@ -598,12 +601,16 @@ class DCAHelper
                 break;
             case 2:
                 $spielerHome = SpielerModel::findById($row['home']);
+                /** @var MemberModel $memberHome */
                 $memberHome = $spielerHome ? $spielerHome->getRelated('member_id') : null;
                 $spielerHome2 = SpielerModel::findById($row['home2']);
+                /** @var MemberModel $memberHome2 */
                 $memberHome2 = $spielerHome2 ? $spielerHome2->getRelated('member_id') : null;
                 $spielerAway = SpielerModel::findById($row['away']);
+                /** @var MemberModel $memberAway */
                 $memberAway = $spielerAway ? $spielerAway->getRelated('member_id') : null;
                 $spielerAway2 = SpielerModel::findById($row['away2']);
+                /** @var MemberModel $memberAway2 */
                 $memberAway2 = $spielerAway2 ? $spielerAway2->getRelated('member_id') : null;
 
                 if ($memberHome) {
