@@ -103,7 +103,7 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
                     );
                     $data['wirte'][$keyWirt][] = $mannschaftsbezeichnung;
                     $data['wirteModels'][$keyWirt] = $wirt;
-                    $data['aufsteller'][$keyAufsteller][] = $mannschaftsbezeichnung.", $spielort";
+                    $data['aufsteller'][$keyAufsteller][] = $mannschaftsbezeichnung;
                     $data['aufstellerModels'][$keyAufsteller] = $aufsteller;
 
                     $output->writeln(sprintf("\n* %s (%s, %s)\n",
