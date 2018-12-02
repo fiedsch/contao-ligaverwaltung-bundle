@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Contao\LigaModel;
+use Contao\MannschaftModel;
 
 /**
  * Test being a command.
@@ -78,7 +79,7 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
 
             $output->writeln(sprintf("### %s\n", $liga->name));
 
-            $mannschaften = \MannschaftModel::findBy(
+            $mannschaften = MannschaftModel::findBy(
                 ['liga=?'],
                 [$liga->id]
             );
