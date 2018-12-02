@@ -141,7 +141,7 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
                 }
             }
 
-            }
+        }
 
         return $countGenerated;
     }
