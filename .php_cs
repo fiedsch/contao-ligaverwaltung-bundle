@@ -18,6 +18,7 @@ $finder = PhpCsFixer\Finder::create()
 return PhpCsFixer\Config::create()
     ->setRules([
         '@Symfony' => true,
+        'function_declaration' => false, // af. override corresponding setting in @Symfony
         '@Symfony:risky' => true,
         '@PHPUnit60Migration:risky' => true,
         'align_multiline_comment' => true,

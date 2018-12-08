@@ -1,43 +1,50 @@
 <?php
-/**
- * Backendmodule
+
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
  */
+
 array_insert($GLOBALS['BE_MOD'], 2, [
     'liga' => [
-        'liga.spielort'   => [
+        'liga.spielort' => [
             'tables' => ['tl_spielort'],
         ],
-        'liga.aufsteller'   => [
+        'liga.aufsteller' => [
             'tables' => ['tl_aufsteller'],
         ],
-        'liga.saison'     => [
+        'liga.saison' => [
             'tables' => ['tl_saison'],
         ],
-        'liga.verband'    => [
+        'liga.verband' => [
             'tables' => ['tl_verband', 'tl_liga', 'tl_begegnung', 'tl_spiel'],
         ],
         'liga.mannschaft' => [
             'tables' => ['tl_mannschaft', 'tl_spieler'],
         ],
-        'liga.begegnung'  => [
+        'liga.begegnung' => [
             'tables' => ['tl_begegnung', 'tl_spiel'],
         ],
-        'liga.highlight'  => [
+        'liga.highlight' => [
             'tables' => ['tl_highlight'],
             'javascript' => 'bundles/fiedschligaverwaltung/tl_highlight.js',
             'stylesheet' => 'bundles/fiedschligaverwaltung/tl_highlight.css',
-
         ],
         // In ModuleBegegnungserfassung als ::redirect() auf 'liga.begegnung' falls
         // keine id angegeben ist.
         // TODO: eigene Backend-Route
-        'liga.begegnungserfassung'  => [
+        'liga.begegnungserfassung' => [
             'callback' => 'Fiedsch\LigaverwaltungBundle\ModuleBegegnungserfassung',
-        ]
+        ],
     ],
 ]);
 
-/**
+/*
  * Contentelemente
  */
 $GLOBALS['TL_CTE']['ligaverwaltung']['ligenliste'] = 'ContentLigenliste';
@@ -52,17 +59,17 @@ $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsseite'] = '\Fiedsch\Ligaverwalt
 $GLOBALS['TL_CTE']['ligaverwaltung']['spielortseite'] = '\Fiedsch\LigaverwaltungBundle\ContentSpielortseite';
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftenuebersicht'] = '\Fiedsch\LigaverwaltungBundle\ContentMannschaftenuebersicht';
 
-/**
+/*
  * Module
  */
 $GLOBALS['FE_MOD']['ligaverwaltung']['mannschaftsseitenreader'] = '\Fiedsch\LigaverwaltungBundle\ModuleMannschaftsseitenReader';
 $GLOBALS['FE_MOD']['ligaverwaltung']['spielortseitenreader'] = '\Fiedsch\LigaverwaltungBundle\ModuleSpielortseitenReader';
 $GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = '\Fiedsch\LigaverwaltungBundle\ModuleSpielberichtReader';
 
-/**
+/*
  * Hooks
  */
-$GLOBALS['TL_HOOKS']['addCustomRegexp'][] = array('\Fiedsch\LigaverwaltungBundle\DCAHelper', 'addCustomRegexp');
+$GLOBALS['TL_HOOKS']['addCustomRegexp'][] = ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'addCustomRegexp'];
 
 /* Add to Backend CSS */
 if (TL_MODE === 'BE') {

@@ -1,23 +1,25 @@
 <?php
 
 /*
- * This file is part of Contao.
+ * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) Leo Feyer
+ * (c) 2016-2018 Andreas Fieger
  *
- * @license LGPL-3.0-or-later
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
  */
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
+use Contao\BegegnungModel;
+use Contao\LigaModel;
+use Contao\MannschaftModel;
+use Contao\SaisonModel;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Contao\LigaModel;
-use Contao\SaisonModel;
-use Contao\MannschaftModel;
-use Contao\BegegnungModel;
 
 /**
  * Test being a command.
@@ -26,7 +28,6 @@ use Contao\BegegnungModel;
  */
 class BegegnungenErstellenCommand extends ContainerAwareCommand
 {
-
     const DUMMY_SPIELTAG = 999;
     const SPIELFREI_MANNSCHAFT = 0;
 
@@ -51,29 +52,30 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
         $framework = $this->getContainer()->get('contao.framework');
         $framework->initialize();
 
-
         $ligaParameter = $input->getArgument('liga');
         $liga = LigaModel::findBy('id', $ligaParameter);
         if (null === $liga) {
             $output->writeln("Liga '$ligaParameter' nicht gefunden!");
+
             return 0;
         }
 
         $saison = SaisonModel::findBy('id', $liga->saison);
 
-        $output->writeln("Erstelle Begegnungen für " . $liga->name . ", " . $saison->name);
+        $output->writeln('Erstelle Begegnungen für '.$liga->name.', '.$saison->name);
 
         $countNew = $this->generateBegegnungen($liga->id, $output);
 
-        $output->writeln(sprintf("Fertig: %d Begegnungen wurden neu erstellt", $countNew));
+        $output->writeln(sprintf('Fertig: %d Begegnungen wurden neu erstellt', $countNew));
 
         return 1;
     }
 
     /**
-     * @param integer $ligaId
+     * @param int             $ligaId
      * @param OutputInterface $output
-     * @return integer Anzahl der erstellten Begegnungen
+     *
+     * @return int Anzahl der erstellten Begegnungen
      */
     protected function generateBegegnungen($ligaId, OutputInterface $output)
     {
@@ -84,7 +86,7 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
         $countGenerated = 0;
 
         while ($mannschaft->next()) {
-            $output->writeln(sprintf("-> Mannschaft %s (%d)",$mannschaft->name, $mannschaft->id));
+            $output->writeln(sprintf('-> Mannschaft %s (%d)', $mannschaft->name, $mannschaft->id));
             $mannschaftIds[] = $mannschaft->id;
         }
 
@@ -92,7 +94,9 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
 
         foreach ($mannschaftIds as $idHome) {
             foreach ($mannschaftIds as $idAway) {
-                if ($idHome === $idAway) { continue; }
+                if ($idHome === $idAway) {
+                    continue;
+                }
                 $begegnung = BegegnungModel::findBy(
                         ['pid=?', 'home=?', 'away=?'],
                         [$ligaId, $idHome, $idAway]
@@ -108,7 +112,7 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
                     $begegnung->away = $idAway;
                     $begegnung->spiel_tag = self::DUMMY_SPIELTAG; // ein Marker, der bei der Spielplanerstellung manuell geändert werden muss.
                     $begegnung->save();
-                    $countGenerated++;
+                    ++$countGenerated;
                 }
             }
         }
@@ -118,7 +122,7 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
         // als Heimspiel).
 
         // Ungerade Anzahl von Mannschaften? Dann hat jede ein Mal Spielfrei!
-        if (count($mannschaftIds) % 2) {
+        if (\count($mannschaftIds) % 2) {
             foreach ($mannschaftIds as $idHome) {
                 $begegnung = BegegnungModel::findBy(
                     ['pid=?', 'home=?', 'away=?'],
@@ -128,7 +132,7 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
                     $output->writeln(sprintf("-> Begegnung '%s:%s' existiert bereits", $idHome, self::SPIELFREI_MANNSCHAFT));
                 } else {
                     $output->writeln(sprintf("->lege 2 x Spielfrei an '%s:%s' (Hin- und Rückrunde)", $idHome, self::SPIELFREI_MANNSCHAFT));
-                    for ($i=0; $i<2; $i++) {
+                    for ($i = 0; $i < 2; ++$i) {
                         $begegnung = new BegegnungModel();
                         $begegnung->tstamp = time();
                         $begegnung->pid = $ligaId;
@@ -136,14 +140,12 @@ class BegegnungenErstellenCommand extends ContainerAwareCommand
                         $begegnung->away = self::SPIELFREI_MANNSCHAFT;
                         $begegnung->spiel_tag = self::DUMMY_SPIELTAG; // ein Marker, der bei der Spielplanerstellung manuell geändert werden muss.
                         $begegnung->save();
-                        $countGenerated++;
+                        ++$countGenerated;
                     }
                 }
             }
-
         }
 
         return $countGenerated;
     }
-
 }

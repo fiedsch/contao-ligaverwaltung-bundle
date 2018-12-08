@@ -1,22 +1,24 @@
 <?php
 
 /*
- * This file is part of Contao.
+ * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) Leo Feyer
+ * (c) 2016-2018 Andreas Fieger
  *
- * @license LGPL-3.0-or-later
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
  */
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
+use Contao\LigaModel;
+use Contao\MannschaftModel;
+use Contao\SaisonModel;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Contao\LigaModel;
-use Contao\SaisonModel;
-use Contao\MannschaftModel;
 
 /**
  * Test being a command.
@@ -25,9 +27,8 @@ use Contao\MannschaftModel;
  */
 class RechnungsDatenAbzugCommand extends ContainerAwareCommand
 {
-
     const KEIN_AUFSTELLER = 'kein Auftseller';
-    const KEIN_WIRT       = 'kein Spielort';
+    const KEIN_WIRT = 'kein Spielort';
 
     /**
      * {@inheritdoc}
@@ -50,11 +51,11 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
         $framework = $this->getContainer()->get('contao.framework');
         $framework->initialize();
 
-
         $saisonParameter = $input->getArgument('saison');
         $saison = SaisonModel::findBy('name', $saisonParameter);
         if (null === $saison) {
             $output->writeln("Saison '$saisonParameter' nicht gefunden!");
+
             return 0;
         }
 
@@ -67,16 +68,15 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
         // Ergebnisdaten
 
         $data = [
-            'wirte'            => [],
-            'wirteModels'      => [],
-            'aufsteller'       => [],
+            'wirte' => [],
+            'wirteModels' => [],
+            'aufsteller' => [],
             'aufstellerModels' => [],
         ];
 
         $output->writeln("## Ligen und Mannschaften\n");
 
         foreach ($ligen as $liga) {
-
             $output->writeln(sprintf("### %s\n", $liga->name));
 
             $mannschaften = MannschaftModel::findBy(
@@ -97,7 +97,7 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
                     if (!isset($data['aufsteller'][$keyAufsteller])) {
                         $data['aufsteller'][$keyAufsteller] = [];
                     }
-                    $mannschaftsbezeichnung = sprintf("%s, %s",
+                    $mannschaftsbezeichnung = sprintf('%s, %s',
                         $mannschaft->name,
                         $liga->name
                     );
@@ -113,12 +113,12 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
                     ));
                 }
             } else {
-                $output->writeln("keine Mannschaften in der Liga '" . $liga->name . "'\n");
+                $output->writeln("keine Mannschaften in der Liga '".$liga->name."'\n");
             }
         }
 
         $output->writeln("## Wirte\n");
-        foreach($data['wirteModels'] as $keyWirt => $wirtModel) {
+        foreach ($data['wirteModels'] as $keyWirt => $wirtModel) {
             $output->writeln("### $keyWirt\n");
 
             $output->writeln(sprintf("\n%s  \n%s %s\n", // two spaces before \n for al linebreak
@@ -127,17 +127,17 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
                 $wirtModel->city
             ));
 
-            foreach($data['wirte'][$keyWirt] as $who) {
+            foreach ($data['wirte'][$keyWirt] as $who) {
                 $output->writeln("* $who\n");
             }
         }
 
         $output->writeln("## Aufsteller\n");
 
-        foreach($data['aufstellerModels'] as $keyAufsteller =>$aufstellerModel) {
+        foreach ($data['aufstellerModels'] as $keyAufsteller => $aufstellerModel) {
             $output->writeln("### $keyAufsteller");
 
-            if ($keyAufsteller !== self::KEIN_AUFSTELLER) {
+            if (self::KEIN_AUFSTELLER !== $keyAufsteller) {
                 $output->writeln(sprintf("\n%s  \n%s %s\n",
                     $aufstellerModel->street,
                     $aufstellerModel->postal,
@@ -145,7 +145,7 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
                 ));
             }
 
-            foreach($data['aufsteller'][$keyAufsteller] as $who) {
+            foreach ($data['aufsteller'][$keyAufsteller] as $who) {
                 $output->writeln("* $who\n");
             }
         }
