@@ -1,16 +1,18 @@
 <?php
 
-$header = <<<EOF
+$header = <<<'EOF'
 This file is part of fiedsch/ligaverwaltung-bundle.
 
-(c) Andreas Fieger
+(c) 2016-2018 Andreas Fieger
 
-@license MIT
+@package Ligaverwaltung
+@link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+@license https://opensource.org/licenses/MIT
 EOF;
 
 $finder = PhpCsFixer\Finder::create()
     ->exclude('Resources')
-    ->in([__DIR__.'/src', __DIR__.'/tests'])
+    ->in([__DIR__.'/src'])
 ;
 
 return PhpCsFixer\Config::create()
@@ -49,9 +51,9 @@ return PhpCsFixer\Config::create()
         // Remove when https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/3222 has been merged
         // 'LeoFeyer/optimize_native_functions' => true,
     ])
-    ->registerCustomFixers([
-        new LeoFeyer\PhpCsFixer\OptimizeNativeFunctionsFixer()
-    ])
+    //->registerCustomFixers([
+    //    new LeoFeyer\PhpCsFixer\OptimizeNativeFunctionsFixer()
+    //])
     ->setFinder($finder)
     ->setRiskyAllowed(true)
     ->setUsingCache(false)
