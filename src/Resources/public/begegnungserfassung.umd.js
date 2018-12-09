@@ -1796,6 +1796,13 @@ module.exports = function (done, value) {
 
 /***/ }),
 
+/***/ "d56e":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "d8e8":
 /***/ (function(module, exports) {
 
@@ -1832,6 +1839,28 @@ module.exports = (
 
 /***/ }),
 
+/***/ "e58b":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberListInput_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("f67f");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberListInput_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberListInput_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberListInput_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "e86a":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberInput_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("d56e");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberInput_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberInput_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NumberInput_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "ea7f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1863,6 +1892,13 @@ module.exports = function (object, index, value) {
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LineupPlayerSelect_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LineupPlayerSelect_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_index_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LineupPlayerSelect_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "f67f":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -3048,12 +3084,12 @@ var ResultsTable_component = normalizeComponent(
 
 ResultsTable_component.options.__file = "ResultsTable.vue"
 /* harmony default export */ var ResultsTable = (ResultsTable_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/HighlightsEntry.vue?vue&type=template&id=61834930&
-var HighlightsEntryvue_type_template_id_61834930_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.available.length>0)?_c('div',{staticClass:"highlights"},[_c('h2',[_vm._v("Highlights")]),_c('table',[_vm._m(0),_c('tbody',_vm._l((_vm.sortedAvailable),function(player,i){return _c('tr',{key:'pr_'+i},[_c('td',[_vm._v("("+_vm._s(player.abbrev)+") "+_vm._s(player.name))]),_c('td',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.highlights[i].scores.one80),expression:"highlights[i].scores.one80"}],attrs:{"name":'one80_'+player.id,"placeholder":"180er"},domProps:{"value":(_vm.highlights[i].scores.one80)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.highlights[i].scores, "one80", $event.target.value)}}})]),_c('td',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.highlights[i].scores.one71),expression:"highlights[i].scores.one71"}],attrs:{"name":'one71_'+player.id,"placeholder":"171er"},domProps:{"value":(_vm.highlights[i].scores.one71)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.highlights[i].scores, "one71", $event.target.value)}}})]),_c('td',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.highlights[i].scores.highfinish),expression:"highlights[i].scores.highfinish"}],attrs:{"name":'highfinish_'+player.id,"placeholder":"Highfinish"},domProps:{"value":(_vm.highlights[i].scores.highfinish)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.highlights[i].scores, "highfinish", $event.target.value)}}})]),_c('td',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.highlights[i].scores.shortleg),expression:"highlights[i].scores.shortleg"}],attrs:{"name":'shortleg_'+player.id,"placeholder":"Shortlegs"},domProps:{"value":(_vm.highlights[i].scores.shortleg)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.highlights[i].scores, "shortleg", $event.target.value)}}})])])}))])]):_vm._e()}
-var HighlightsEntryvue_type_template_id_61834930_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('thead',[_c('tr',[_c('th',[_vm._v("Spieler")]),_c('th',[_vm._v("180er")]),_c('th',[_vm._v("171er")]),_c('th',[_vm._v("Highfinish")]),_c('th',[_vm._v("Shortleg")])])])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/HighlightsEntry.vue?vue&type=template&id=241bdace&
+var HighlightsEntryvue_type_template_id_241bdace_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.available.length>0)?_c('div',{staticClass:"highlights"},[_c('h2',[_vm._v("Highlights")]),_c('table',[_vm._m(0),_c('tbody',_vm._l((_vm.sortedAvailable),function(player,i){return _c('tr',{key:'pr_'+i},[_c('td',[_vm._v("("+_vm._s(player.abbrev)+") "+_vm._s(player.name))]),_c('td',[_c('NumberInput',{attrs:{"inputname":'one80_'+player.id,"placeholder":'180er',"value":_vm.highlights[i].scores.one80}})],1),_c('td',[_c('NumberInput',{attrs:{"inputname":'one71_'+player.id,"placeholder":'171er',"value":_vm.highlights[i].scores.one71}})],1),_c('td',[_c('NumberListInput',{attrs:{"inputname":'highfinish_'+player.id,"placeholder":'Highfinishes',"value":_vm.highlights[i].scores.highfinish}})],1),_c('td',[_c('NumberListInput',{attrs:{"inputname":'shortleg_'+player.id,"placeholder":'Shortlegs',"value":_vm.highlights[i].scores.shortleg}})],1)])}))])]):_vm._e()}
+var HighlightsEntryvue_type_template_id_241bdace_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('thead',[_c('tr',[_c('th',[_vm._v("Spieler")]),_c('th',[_vm._v("180er")]),_c('th',[_vm._v("171er")]),_c('th',[_vm._v("Highfinish")]),_c('th',[_vm._v("Shortleg")])])])}]
 
 
-// CONCATENATED MODULE: ./src/components/HighlightsEntry.vue?vue&type=template&id=61834930&
+// CONCATENATED MODULE: ./src/components/HighlightsEntry.vue?vue&type=template&id=241bdace&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.match.js
 var es6_regexp_match = __webpack_require__("4917");
@@ -3061,6 +3097,148 @@ var es6_regexp_match = __webpack_require__("4917");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.sort.js
 var es6_array_sort = __webpack_require__("55dd");
 
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/NumberInput.vue?vue&type=template&id=80d404c6&
+var NumberInputvue_type_template_id_80d404c6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.val),expression:"val"}],staticClass:"form-control number-input",class:{'valid':_vm.isValid, 'invalid':!_vm.isValid},attrs:{"name":_vm.inputname,"placeholder":_vm.placeholder,"autocomplete":"off"},domProps:{"value":(_vm.val)},on:{"input":function($event){if($event.target.composing){ return; }_vm.val=$event.target.value}}})}
+var NumberInputvue_type_template_id_80d404c6_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/NumberInput.vue?vue&type=template&id=80d404c6&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/NumberInput.vue?vue&type=script&lang=js&
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var NumberInputvue_type_script_lang_js_ = ({
+  name: 'NumberInput',
+  props: {
+    inputname: {
+      type: String,
+      required: true
+    },
+    placeholder: {
+      type: String,
+      default: ""
+    },
+    value: {
+      type: String
+    }
+  },
+  data: function data() {
+    return {
+      val: this.value
+    };
+  },
+  computed: {
+    isValid: function isValid() {
+      return String(this.val).match(/^\d*$/);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/NumberInput.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_NumberInputvue_type_script_lang_js_ = (NumberInputvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/components/NumberInput.vue?vue&type=style&index=0&lang=css&
+var NumberInputvue_type_style_index_0_lang_css_ = __webpack_require__("e86a");
+
+// CONCATENATED MODULE: ./src/components/NumberInput.vue
+
+
+
+
+
+
+/* normalize component */
+
+var NumberInput_component = normalizeComponent(
+  components_NumberInputvue_type_script_lang_js_,
+  NumberInputvue_type_template_id_80d404c6_render,
+  NumberInputvue_type_template_id_80d404c6_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+NumberInput_component.options.__file = "NumberInput.vue"
+/* harmony default export */ var NumberInput = (NumberInput_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/NumberListInput.vue?vue&type=template&id=3d3446d5&
+var NumberListInputvue_type_template_id_3d3446d5_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.val),expression:"val"}],staticClass:"form-control numberlist-input",class:{'valid':_vm.isValid, 'invalid':!_vm.isValid},attrs:{"name":_vm.inputname,"placeholder":_vm.placeholder,"autocomplete":"off"},domProps:{"value":(_vm.val)},on:{"input":function($event){if($event.target.composing){ return; }_vm.val=$event.target.value}}})}
+var NumberListInputvue_type_template_id_3d3446d5_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/NumberListInput.vue?vue&type=template&id=3d3446d5&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/NumberListInput.vue?vue&type=script&lang=js&
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var NumberListInputvue_type_script_lang_js_ = ({
+  name: 'NumberListInput',
+  props: {
+    inputname: {
+      type: String,
+      required: true
+    },
+    placeholder: {
+      type: String,
+      default: ""
+    },
+    value: {
+      type: String
+    }
+  },
+  data: function data() {
+    return {
+      val: this.value
+    };
+  },
+  computed: {
+    isValid: function isValid() {
+      return String(this.val).match(/^(\d+,{0,1})*$/);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/NumberListInput.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_NumberListInputvue_type_script_lang_js_ = (NumberListInputvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/components/NumberListInput.vue?vue&type=style&index=0&lang=css&
+var NumberListInputvue_type_style_index_0_lang_css_ = __webpack_require__("e58b");
+
+// CONCATENATED MODULE: ./src/components/NumberListInput.vue
+
+
+
+
+
+
+/* normalize component */
+
+var NumberListInput_component = normalizeComponent(
+  components_NumberListInputvue_type_script_lang_js_,
+  NumberListInputvue_type_template_id_3d3446d5_render,
+  NumberListInputvue_type_template_id_3d3446d5_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+NumberListInput_component.options.__file = "NumberListInput.vue"
+/* harmony default export */ var NumberListInput = (NumberListInput_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/HighlightsEntry.vue?vue&type=script&lang=js&
 
 
@@ -3091,12 +3269,19 @@ var es6_array_sort = __webpack_require__("55dd");
 //
 //
 //
+//
 
 /**
  * Eingabe von Highhlights für einzelne Spieler
  */
+
+
 /* harmony default export */ var HighlightsEntryvue_type_script_lang_js_ = ({
   name: 'HighlightsEntry',
+  components: {
+    NumberInput: NumberInput,
+    NumberListInput: NumberListInput
+  },
   props: {
     // Verfügbare Spieler: Array von Objekten, jeweils ID und Name der verfügbaren Spieler
     available: {
@@ -3156,8 +3341,8 @@ var HighlightsEntryvue_type_style_index_0_lang_css_ = __webpack_require__("4f4b"
 
 var HighlightsEntry_component = normalizeComponent(
   components_HighlightsEntryvue_type_script_lang_js_,
-  HighlightsEntryvue_type_template_id_61834930_render,
-  HighlightsEntryvue_type_template_id_61834930_staticRenderFns,
+  HighlightsEntryvue_type_template_id_241bdace_render,
+  HighlightsEntryvue_type_template_id_241bdace_staticRenderFns,
   false,
   null,
   null,
