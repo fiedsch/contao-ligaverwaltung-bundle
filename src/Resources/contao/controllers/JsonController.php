@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -8,28 +12,28 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\LigaModel;
 use Contao\BegegnungModel;
+use Contao\LigaModel;
+use Contao\MannschaftModel;
 use Contao\SaisonModel;
 use Contao\SpielortModel;
-use Contao\MannschaftModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class JsonController
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $ligaid;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $mannschaftid;
 
     /**
-     * @param integer $ligaid
-     * @param integer $mannschaftid
+     * @param int $ligaid
+     * @param int $mannschaftid
      */
     public function __construct($ligaid, $mannschaftid)
     {
@@ -37,16 +41,6 @@ class JsonController
         $this->mannschaftid = $mannschaftid;
         $this->initialize();
     }
-
-    /**
-     *
-     */
-    protected function initialize()
-    {
-        $tz = 'Europe/Berlin';
-        date_default_timezone_set($tz);
-    }
-
 
     /**
      * @return JsonResponse
@@ -86,13 +80,19 @@ class JsonController
         return new JsonResponse($responseData);
     }
 
+    protected function initialize()
+    {
+        $tz = 'Europe/Berlin';
+        date_default_timezone_set($tz);
+    }
+
     /**
      * @param BegegnungModel $begegnung
+     *
      * @return array
      */
     protected function generateEventData(BegegnungModel $begegnung)
     {
-
         $liga = LigaModel::findById($begegnung->pid);
         $saison = SaisonModel::findById($liga->saison);
 
@@ -100,24 +100,24 @@ class JsonController
         $away = MannschaftModel::findById($begegnung->away);
         $spielort = SpielortModel::findById($home->spielort);
 
-        $title = sprintf("%s vs. %s",
+        $title = sprintf('%s vs. %s',
             $home->name,
             $away->name
         );
 
-        $address = sprintf("%s, %s %s",
+        $address = sprintf('%s, %s %s',
                 $spielort->street,
                 $spielort->postal,
                 $spielort->city
         );
 
         $result = [
-            'title'          => $title,
-            'location'       => ['name' =>$spielort->name,  'address' => $address ],
-            'startDateTime'  => $begegnung->spiel_am,
-            'datetime_local' => date("d.m.Y H:i", $begegnung->spiel_am), // visual debug
-            'liga'           => $liga->name,
-            'saison'         => $saison->name,
+            'title' => $title,
+            'location' => ['name' => $spielort->name,  'address' => $address],
+            'startDateTime' => $begegnung->spiel_am,
+            'datetime_local' => date('d.m.Y H:i', $begegnung->spiel_am), // visual debug
+            'liga' => $liga->name,
+            'saison' => $saison->name,
         ];
 
         if ($this->mannschaftid) {
@@ -128,5 +128,4 @@ class JsonController
 
         return $result;
     }
-
 }

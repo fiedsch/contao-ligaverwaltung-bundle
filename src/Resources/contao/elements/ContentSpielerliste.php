@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -20,25 +24,25 @@ use Contao\SpielerModel;
 class ContentSpielerliste extends ContentElement
 {
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
     protected $strTemplate = 'ce_spielerliste';
 
     /**
-     * Generate the content element
+     * Generate the content element.
      */
     public function compile()
     {
-            $allespieler = SpielerModel::findAll([
+        $allespieler = SpielerModel::findAll([
                 'column' => ['pid=?', 'tl_spieler.active=?'],
-                'value'  => [$this->mannschaft, '1'],
+                'value' => [$this->mannschaft, '1'],
                 //'order'  => 'teamcaptain DESC, co_teamcaptain DESC, lastname ASC, firstname ASC',
-                'order'  => 'teamcaptain DESC, co_teamcaptain DESC, firstname ASC, lastname ASC',
+                'order' => 'teamcaptain DESC, co_teamcaptain DESC, firstname ASC, lastname ASC',
             ]);
 
-        if ($allespieler === null) {
+        if (null === $allespieler) {
             return;
         }
 
@@ -48,9 +52,8 @@ class ContentSpielerliste extends ContentElement
             $listitems[] = ['member' => $member, 'spieler' => $spieler];
         }
 
-        $this->Template->mannschaft  = $this->mannschaft;
-        $this->Template->listitems   = $listitems;
+        $this->Template->mannschaft = $this->mannschaft;
+        $this->Template->listitems = $listitems;
         $this->Template->showdetails = $this->showdetails;
     }
-
 }

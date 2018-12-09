@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -8,49 +12,52 @@
 
 namespace Contao;
 
-use \Fiedsch\LigaverwaltungBundle\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\DCAHelper;
 
 /**
- * @property integer $id
- * @property integer $pid
+ * @property int    $id
+ * @property int    $pid
  * @property string $name
- * @property boolean teamcaptain
- * @property boolean co_teamcaptain
+ * @property bool teamcaptain
+ * @property bool co_teamcaptain
+ *
  * @method static SpielerModel|null findById($id, array $opt=array())
  * @method static Model\Collection|SpielerModel|null findByPid($id, array $opt=array())
  * @method static Model\Collection|Model|null getRelated($tablename)
  */
-
 class SpielerModel extends Model
 {
     const ANONYM_LABEL = '*****';
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
-    protected static $strTable = "tl_spieler";
+    protected static $strTable = 'tl_spieler';
 
     /**
-     * Get the full name (lastname, firstname) for a member
+     * Get the full name (lastname, firstname) for a member.
      *
      * @param MemberModel $member
+     *
      * @return string
      */
     public static function getFullNameFor(MemberModel $member = null)
     {
         if ($member) {
             return DCAHelper::makeSpielerName($member);
-        } else {
-            return "Kein Member";
         }
+
+        return 'Kein Member';
     }
 
     /**
-     * @param integer $id
-     * @return string
+     * @param int $id
+     *
      * @throws \Exception
+     *
+     * @return string
      */
     public static function getNameById($id)
     {
@@ -58,25 +65,30 @@ class SpielerModel extends Model
         if ($spieler) {
             /** @var MemberModel $member */
             $member = $spieler->getRelated('member_id');
+
             return self::getFullNameFor($member);
         }
-        return "kein Name für Spieler " . $id;
+
+        return 'kein Name für Spieler '.$id;
     }
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getName()
     {
         /** @var MemberModel $member */
         $member = $this->getRelated('member_id');
+
         return self::getFullNameFor($member);
     }
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getFullName()
     {
@@ -91,21 +103,23 @@ class SpielerModel extends Model
             /** @var \Contao\LigaModel $liga */
             $liga = $mannschaft->getRelated('liga');
             if ($liga) {
-                $mannschaftsname .= ' '. $liga->name;
+                $mannschaftsname .= ' '.$liga->name;
                 $saison = $liga->getRelated('saison');
                 if ($saison) {
-                    $mannschaftsname .= ', ' . $saison->name;
+                    $mannschaftsname .= ', '.$saison->name;
                 }
             }
         } else {
-            $mannschaftsname = "Mannschaft ex. nicht (mehr)";
+            $mannschaftsname = 'Mannschaft ex. nicht (mehr)';
         }
-        return $membername . ', ' . $mannschaftsname;
+
+        return $membername.', '.$mannschaftsname;
     }
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getNameAndMannschaft()
     {
@@ -113,13 +127,16 @@ class SpielerModel extends Model
         /** @var MannschaftModel $mannschaft */
         $mannschaft = $this->getRelated('pid');
         if ($mannschaft) {
-            $result .= ', ' . $mannschaft->name;
+            $result .= ', '.$mannschaft->name;
         }
+
         return $result;
     }
+
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getTcDetails()
     {
@@ -139,9 +156,9 @@ class SpielerModel extends Model
                 StringUtil::encodeEmail($member->email)
             );
         }
-        $kontaktdaten = join(', ', $kontaktdaten);
+        $kontaktdaten = implode(', ', $kontaktdaten);
 
-        return sprintf("%s%s %s%s%s",
+        return sprintf('%s%s %s%s%s',
             $this->teamcaptain ? 'TC' : '',
             $this->co_teamcaptain ? 'Co-TC' : '',
             self::getFullNameFor($member),
@@ -149,5 +166,4 @@ class SpielerModel extends Model
             $kontaktdaten
             );
     }
-
 }

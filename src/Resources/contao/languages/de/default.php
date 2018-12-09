@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -59,7 +63,7 @@ $GLOBALS['TL_LANG']['CTE']['spielortseite'] = [
 ];
 $GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'] = [
     'Mannschaftenübersicht',
-    'Übersicht der Mannschaften einer Saison und je Mannschart die Teamcaptains'
+    'Übersicht der Mannschaften einer Saison und je Mannschart die Teamcaptains',
 ];
 
 $GLOBALS['TL_LANG']['FMD']['mannschaftsseitenreader'] = [

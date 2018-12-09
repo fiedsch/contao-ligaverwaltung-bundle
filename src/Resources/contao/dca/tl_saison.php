@@ -1,63 +1,67 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
 
-$GLOBALS['TL_DCA']  ['tl_saison'] = [
+$GLOBALS['TL_DCA']['tl_saison'] = [
     'config' => [
-        'dataContainer'    => 'Table',
+        'dataContainer' => 'Table',
         'enableVersioning' => true,
-        'sql'              => [
+        'sql' => [
             'keys' => [
-                'id'   => 'primary',
+                'id' => 'primary',
                 'name' => 'unique',
             ],
         ],
     ],
 
     'list' => [
-        'sorting'           => [
-            'mode'        => 0,
+        'sorting' => [
+            'mode' => 0,
             //'flag'        => 11,
-            'fields'      => ['name'],
+            'fields' => ['name'],
             'panelLayout' => 'sort,filter;search,limit',
         ],
-        'label'             => [
+        'label' => [
             'fields' => ['name'],
             'format' => '%s',
         ],
         'global_operations' => [
             'all' => [
-                'label'      => &$GLOBALS['TL_LANG']['MSC']['all'],
-                'href'       => 'act=select',
-                'class'      => 'header_edit_all',
+                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
+                'href' => 'act=select',
+                'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
             ],
         ],
-        'operations'        => [
-            'edit'   => [
+        'operations' => [
+            'edit' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_saison']['edit'],
-                'href'  => 'act=edit',
-                'icon'  => 'edit.svg',
+                'href' => 'act=edit',
+                'icon' => 'edit.svg',
             ],
-            'copy'   => [
+            'copy' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_saison']['copy'],
-                'href'  => 'act=copy',
-                'icon'  => 'copy.svg',
+                'href' => 'act=copy',
+                'icon' => 'copy.svg',
             ],
             'delete' => [
-                'label'      => &$GLOBALS['TL_LANG']['tl_saison']['delete'],
-                'href'       => 'act=delete',
-                'icon'       => 'delete.svg',
-                'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
+                'label' => &$GLOBALS['TL_LANG']['tl_saison']['delete'],
+                'href' => 'act=delete',
+                'icon' => 'delete.svg',
+                'attributes' => 'onclick="if(!confirm(\''.$GLOBALS['TL_LANG']['MSC']['deleteConfirm'].'\'))return false;Backend.getScrollOffset()"',
             ],
-            'show'   => [
+            'show' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_saison']['show'],
-                'href'  => 'act=show',
-                'icon'  => 'show.svg',
+                'href' => 'act=show',
+                'icon' => 'show.svg',
             ],
         ],
     ],
@@ -67,21 +71,20 @@ $GLOBALS['TL_DCA']  ['tl_saison'] = [
     ],
 
     'fields' => [
-        'id'     => [
+        'id' => [
             'sql' => 'int(10) unsigned NOT NULL auto_increment',
         ],
         'tstamp' => [
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
-        'name'   => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_saison']['name'],
-            'sorting'   => true,
-            'exclude'   => true,
-            'flag'      => 11, // sort ascending
+        'name' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_saison']['name'],
+            'sorting' => true,
+            'exclude' => true,
+            'flag' => 11, // sort ascending
             'inputType' => 'text',
-            'eval'      => ['maxlength' => 128, 'tl_class' => 'w50'],
-            'sql'       => "varchar(128) NOT NULL default ''",
+            'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],
+            'sql' => "varchar(128) NOT NULL default ''",
         ],
-
     ],
 ];

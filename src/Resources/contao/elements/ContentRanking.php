@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -8,13 +12,13 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\Database;
+use Contao\BackendTemplate;
 use Contao\Config;
 use Contao\ContentElement;
-use Contao\BackendTemplate;
+use Contao\Database;
 use Contao\LigaModel;
-use Contao\SpielerModel;
 use Contao\MannschaftModel;
+use Contao\SpielerModel;
 use Patchwork\Utf8;
 
 /**
@@ -25,22 +29,23 @@ use Patchwork\Utf8;
 class ContentRanking extends ContentElement
 {
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
     protected $strTemplate = 'ce_ranking';
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
-            if ($this->rankingtype == 1) {
+            if (1 === $this->rankingtype) {
                 $suffix = 'Mannschaften';
                 $subject = sprintf('%s %s %s',
                     $liga->getRelated('pid')->name,
@@ -51,24 +56,25 @@ class ContentRanking extends ContentElement
                 $suffix = 'Spieler';
                 $mannschaft = MannschaftModel::findById($this->mannschaft);
                 $subject = sprintf('%s %s %s',
-                    'Mannschaft ' . ($mannschaft->name ?: 'alle'),
+                    'Mannschaft '.($mannschaft->name ?: 'alle'),
                     $liga->name,
                     $liga->getRelated('saison')->name
                 );
             }
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = "### " . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['ranking'][0]) . " $suffix $subject ###";
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['ranking'][0])." $suffix $subject ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
 
             return $objTemplate->parse();
         }
+
         return parent::generate();
     }
 
     /**
-     * Generate the content element
+     * Generate the content element.
      *
      * @throws \Exception
      */
@@ -82,12 +88,12 @@ class ContentRanking extends ContentElement
                 $this->compileSpielerranking();
                 break;
             default:
-                $this->Template->subject = 'Undefined ' . $this->rankingtype;
+                $this->Template->subject = 'Undefined '.$this->rankingtype;
         }
     }
 
     /**
-     * Ranking aller Mannschaften einer Liga
+     * Ranking aller Mannschaften einer Liga.
      *
      * Achtung: Spiele vom spieltype "Doppel" gehen wie "Einzel" mit in die Berechnung
      * ein. (d.h. hier ohne Fallunterscheidung).
@@ -129,7 +135,7 @@ class ContentRanking extends ContentElement
         $begegnungen = [];
 
         while ($spiele->next()) {
-            $key = sprintf("%d:%d:%d", $spiele->spieltag, $spiele->team_home, $spiele->team_away);
+            $key = sprintf('%d:%d:%d', $spiele->spieltag, $spiele->team_home, $spiele->team_away);
             if (!isset($begegnungen[$key])) {
                 $begegnungen[$key] = new Begegnung();
             }
@@ -140,13 +146,13 @@ class ContentRanking extends ContentElement
 
         /** @var \Fiedsch\LigaverwaltungBundle\Begegnung $begegnung */
         foreach ($begegnungen as $key => $begegnung) {
-            /** @noinspection PhpUnusedLocalVariableInspection */
+            /* @noinspection PhpUnusedLocalVariableInspection */
             list($spieltag, $home, $away) = explode(':', $key);
 
             // Begegnungen: Mannschaft gegen Mannschaft
 
-            $results[$home]['begegnungen'] += 1;
-            $results[$away]['begegnungen'] += 1;
+            ++$results[$home]['begegnungen'];
+            ++$results[$away]['begegnungen'];
 
             // Legs (Ergebnis von Spieler gegen Spieler)
 
@@ -178,7 +184,7 @@ class ContentRanking extends ContentElement
             $results[$away]['verloren'] += $begegnung->isVerlorenAway() ? 1 : 0;
         }
 
-        uasort($results, function($a, $b) {
+        uasort($results, function ($a, $b) {
             return Begegnung::compareMannschaftResults($a, $b);
         });
 
@@ -191,7 +197,7 @@ class ContentRanking extends ContentElement
         foreach ($results as $id => $data) {
             $mannschaft = MannschaftModel::findById($id);
 
-            if (!$mannschaft || $mannschaft->active !=='1') {
+            if (!$mannschaft || '1' !== $mannschaft->active) {
                 unset($results[$id]);
                 continue;
             }
@@ -199,12 +205,12 @@ class ContentRanking extends ContentElement
             $mannschaftlabel = $mannschaft->getLinkedName();
 
             $results[$id]['name'] = $mannschaftlabel;
-            if ($results[$id]['punkte_self'] == $lastpunkte
-                && $results[$id]['legs_self'] == $lastlegs_self
-                && $results[$id]['legs_other'] == $lastlegs_other
+            if ($results[$id]['punkte_self'] === $lastpunkte
+                && $results[$id]['legs_self'] === $lastlegs_self
+                && $results[$id]['legs_other'] === $lastlegs_other
             ) {
                 // we have a "tie"
-                $rang_skip++;
+                ++$rang_skip;
             } else {
                 $rang += $rang_skip;
                 $rang_skip = 1;
@@ -220,7 +226,7 @@ class ContentRanking extends ContentElement
     }
 
     /**
-     * Ranking aller Spieler einer Mannschaft (in einer liga)
+     * Ranking aller Spieler einer Mannschaft (in einer liga).
      *
      * Achtung: Spiele vom spieltype "Doppel" gehen *nicht* mit in die Berechnung
      * ein -- gezählt werden nur die "Einzel".
@@ -254,12 +260,11 @@ class ContentRanking extends ContentElement
                           AND m2.active='1'
                           ";
 
-
         if ($this->mannschaft > 0) {
             // eine bestimmte Mannschaft
             $mannschaft = MannschaftModel::findById($this->mannschaft);
-            $this->Template->subject = 'Ranking aller Spieler der Mannschaft ' . $mannschaft->name;
-            $sql .= " AND (b.home=? OR b.away=?)";
+            $this->Template->subject = 'Ranking aller Spieler der Mannschaft '.$mannschaft->name;
+            $sql .= ' AND (b.home=? OR b.away=?)';
             $spiele = Database::getInstance()
                 ->prepare($sql)->execute($this->liga, $this->mannschaft, $this->mannschaft);
         } else {
@@ -277,7 +282,7 @@ class ContentRanking extends ContentElement
             $results[$spiele->player_home]['mannschaft_id'] = $spiele->team_home;
             $results[$spiele->player_away]['mannschaft_id'] = $spiele->team_away;
 
-            $results[$spiele->player_home]['spiele'] += 1;
+            ++$results[$spiele->player_home]['spiele'];
             $results[$spiele->player_home]['spiele_self'] += $spiel->getScoreHome();
             $results[$spiele->player_home]['spiele_other'] += $spiel->getScoreAway();
             $results[$spiele->player_home]['legs_self'] += $spiel->getLegsHome();
@@ -285,7 +290,7 @@ class ContentRanking extends ContentElement
             $results[$spiele->player_home]['punkte_self'] += $spiel->getPunkteHome();
             $results[$spiele->player_home]['punkte_other'] += $spiel->getPunkteAway();
 
-            $results[$spiele->player_away]['spiele'] += 1;
+            ++$results[$spiele->player_away]['spiele'];
             $results[$spiele->player_away]['spiele_self'] += $spiel->getScoreAway();
             $results[$spiele->player_away]['spiele_other'] += $spiel->getScoreHome();
             $results[$spiele->player_away]['legs_self'] += $spiel->getLegsAway();
@@ -302,13 +307,13 @@ class ContentRanking extends ContentElement
         // zur betrachteten Mannschaft gehören.
         if ($this->mannschaft > 0) {
             foreach ($results as $id => $data) {
-                if ($data['mannschaft_id'] != $this->mannschaft) {
+                if ($data['mannschaft_id'] !== $this->mannschaft) {
                     unset($results[$id]);
                 }
             }
         }
 
-        uasort($results, function($a, $b) {
+        uasort($results, function ($a, $b) {
             return Spiel::compareSpielerResults($a, $b);
         });
 
@@ -316,12 +321,12 @@ class ContentRanking extends ContentElement
 
         // Initialisierung der virtuellen Zeile 0 mit Maximalwerten
         $lastrow = [
-            'punkte_self'    => PHP_INT_MAX,
-            'punkte_other'   => 0,
-            'spiele_self'    => PHP_INT_MAX,
-            'spiele_other'   => 0,
-            'legs_self'      => PHP_INT_MAX,
-            'legs_other'     => 0,
+            'punkte_self' => PHP_INT_MAX,
+            'punkte_other' => 0,
+            'spiele_self' => PHP_INT_MAX,
+            'spiele_other' => 0,
+            'legs_self' => PHP_INT_MAX,
+            'legs_other' => 0,
         ];
 
         $rang = 0;
@@ -331,7 +336,7 @@ class ContentRanking extends ContentElement
             $spieler = SpielerModel::findById($id);
             $mannschaft = MannschaftModel::findById($results[$id]['mannschaft_id']);
 
-            if (!$spieler || $spieler->active !== '1' || !$mannschaft || $mannschaft->active !== '1') {
+            if (!$spieler || '1' !== $spieler->active || !$mannschaft || '1' !== $mannschaft->active) {
                 unset($results[$id]);
                 continue;
             }
@@ -341,7 +346,7 @@ class ContentRanking extends ContentElement
 
             if (self::isTie($results[$id], $lastrow)) {
                 // gleicher Rang und beim nächsten einen Rang mehr auslassen
-                $rang_skip++;
+                ++$rang_skip;
             } else {
                 // ein Rang weiter und keinen folgenden auslassen,
                 // aber die ggf. vorherige Auslassung berücksichtigen)
@@ -351,12 +356,12 @@ class ContentRanking extends ContentElement
             $results[$id]['rang'] = $rang;
 
             $lastrow = [
-                'punkte_self'    => $results[$id]['punkte_self'],
-                'punkte_other'   => $results[$id]['punkte_other'],
-                'spiele_self'    => $results[$id]['spiele_self'],
-                'spiele_other'   => $results[$id]['spiele_other'],
-                'legs_self'      => $results[$id]['legs_self'],
-                'legs_other'     => $results[$id]['legs_other'],
+                'punkte_self' => $results[$id]['punkte_self'],
+                'punkte_other' => $results[$id]['punkte_other'],
+                'spiele_self' => $results[$id]['spiele_self'],
+                'spiele_other' => $results[$id]['spiele_other'],
+                'legs_self' => $results[$id]['legs_self'],
+                'legs_other' => $results[$id]['legs_other'],
             ];
         }
 
@@ -371,29 +376,29 @@ class ContentRanking extends ContentElement
     }
 
     /**
-     * @param array   $result         die Daten einer Zeile des sortierten Rankimgs
-     * @param array $lastresult     die Daten der vorhergehenden Zeile des Rankings
-     * @return boolean
+     * @param array $result     die Daten einer Zeile des sortierten Rankimgs
+     * @param array $lastresult die Daten der vorhergehenden Zeile des Rankings
+     *
+     * @return bool
      */
     protected function isTie($result, $lastresult)
     {
         $tiebreak_mode = Config::get('ligaverwaltung_ranking_model_ties');
         switch ($tiebreak_mode) {
             case 2: // nach absoluten Werten
-                return $result['punkte_self'] == $lastresult['punkte']
-                    && $result['spiele_self'] == $lastresult['spiele_self']
-                    && $result['legs_self']   == $lastresult['legs_self']
-                    && $result['legs_other']  == $lastresult['legs_other']
+                return $result['punkte_self'] === $lastresult['punkte']
+                    && $result['spiele_self'] === $lastresult['spiele_self']
+                    && $result['legs_self'] === $lastresult['legs_self']
+                    && $result['legs_other'] === $lastresult['legs_other']
                     ;
                 break;
             case 1: // nach Differenzen
                     // (ausser bei den Punkten, wo nur eigene (gewonnene) betrachtet werden -- weil "isso!")
             default:
-            return $result['punkte_self']                           == $lastresult['punkte']
-                && $result['spiele_self'] - $result['spiele_other'] == $lastresult['spiele_self'] - $lastresult['spiele_other']
-                && $result['legs_self']   - $result['legs_other']   == $lastresult['legs_self']   - $lastresult['legs_other']
+            return $result['punkte_self'] === $lastresult['punkte']
+                && $result['spiele_self'] - $result['spiele_other'] === $lastresult['spiele_self'] - $lastresult['spiele_other']
+                && $result['legs_self'] - $result['legs_other'] === $lastresult['legs_self'] - $lastresult['legs_other']
                 ;
         }
     }
-
 }

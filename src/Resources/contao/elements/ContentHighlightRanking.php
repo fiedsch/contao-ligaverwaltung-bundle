@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -8,15 +12,15 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\ContentElement;
 use Contao\BackendTemplate;
+use Contao\Config;
+use Contao\ContentElement;
 use Contao\Database;
 use Contao\Date;
-use Contao\Config;
-use Contao\System;
+use Contao\HighlightModel;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
-use Contao\HighlightModel;
+use Contao\System;
 use Patchwork\Utf8;
 
 /**
@@ -26,29 +30,29 @@ use Patchwork\Utf8;
  */
 class ContentHighlightRanking extends ContentElement
 {
-
     /**
-     * alles bis inkl. 20 Darts ist ein Shortleg
+     * alles bis inkl. 20 Darts ist ein Shortleg.
      */
     const MAX_SHORTLEG_DARTS = 20;
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
     protected $strTemplate = 'ce_highlightranking';
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             /** @var \BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
-            if ($this->rankingtype == 1) {
+            if (1 === $this->rankingtype) {
                 $suffix = 'Mannschaften';
                 $subject = sprintf('%s %s %s',
                     $liga->getRelated('pid')->name,
@@ -59,25 +63,26 @@ class ContentHighlightRanking extends ContentElement
                 $suffix = 'Spieler';
                 $mannschaft = MannschaftModel::findById($this->mannschaft);
                 $subject = sprintf('%s %s %s %s',
-                    'Mannschaft ' . ($mannschaft->name ?: 'alle'),
+                    'Mannschaft '.($mannschaft->name ?: 'alle'),
                     $liga->getRelated('pid')->name,
                     $liga->name,
                     $liga->getRelated('saison')->name
                 );
             }
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = "### " . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['highlightranking'][0]) . ", $suffix, $subject ###";
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['highlightranking'][0]).", $suffix, $subject ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
 
             return $objTemplate->parse();
         }
+
         return parent::generate();
     }
 
     /**
-     * Generate the content element
+     * Generate the content element.
      *
      * @throws \Exception
      */
@@ -91,13 +96,13 @@ class ContentHighlightRanking extends ContentElement
                 $this->compileSpielerranking();
                 break;
             default:
-                $this->Template->subject = 'Undefined ' . $this->rankingtype;
+                $this->Template->subject = 'Undefined '.$this->rankingtype;
         }
         $this->Template->rankingfield = $this->rankingfield;
     }
 
     /**
-     * Highlight-"Ranking" aller Mannschaften einer Liga
+     * Highlight-"Ranking" aller Mannschaften einer Liga.
      *
      * @throws \Exception
      */
@@ -127,7 +132,7 @@ class ContentHighlightRanking extends ContentElement
                           AND s.active='1'
                           AND me.id IS NOT NULL"; // keine gelöschten Spieler
 
-        $sql .= " AND " . $this->getRankingTypeFilter('h');
+        $sql .= ' AND '.$this->getRankingTypeFilter('h');
 
         $highlights = Database::getInstance()
             ->prepare($sql)
@@ -138,19 +143,19 @@ class ContentHighlightRanking extends ContentElement
         while ($highlights->next()) {
             //print "<pre>".print_r($highlights->row(), true)."</pre>";
             $results[] = [
-                'datum'         => Date::parse(Config::get('dateFormat'), $highlights->spiel_am),
-                'mannschaft'    => $highlights->mannschaft,
-                'hl_171'        => $highlights->type == HighlightModel::TYPE_171 ? $highlights->value : '',
-                'hl_180'        => $highlights->type == HighlightModel::TYPE_180 ? $highlights->value : '',
-                'hl_highfinish' => $highlights->type == HighlightModel::TYPE_HIGHFINISH ? $highlights->value : '',
-                'hl_shortleg'   => $highlights->type == HighlightModel::TYPE_SHORTLEG ? $highlights->value : '',
-                'hl_punkte'     => [],
-                'hl_rang'       => 0,
+                'datum' => Date::parse(Config::get('dateFormat'), $highlights->spiel_am),
+                'mannschaft' => $highlights->mannschaft,
+                'hl_171' => HighlightModel::TYPE_171 === $highlights->type ? $highlights->value : '',
+                'hl_180' => HighlightModel::TYPE_180 === $highlights->type ? $highlights->value : '',
+                'hl_highfinish' => HighlightModel::TYPE_HIGHFINISH === $highlights->type ? $highlights->value : '',
+                'hl_shortleg' => HighlightModel::TYPE_SHORTLEG === $highlights->type ? $highlights->value : '',
+                'hl_punkte' => [],
+                'hl_rang' => 0,
             ];
         }
 
         // TODO analog compileSpielerranking() aufbereiten
-        System::log("Methode noch nicht vollständig implementiert!", __METHOD__, TL_ERROR);
+        System::log('Methode noch nicht vollständig implementiert!', __METHOD__, TL_ERROR);
 
         $this->Template->rankingtype = 'mannschaften';
         $this->Template->listitems = $results;
@@ -158,6 +163,7 @@ class ContentHighlightRanking extends ContentElement
 
     /**
      * @param string $tablealias
+     *
      * @return string
      */
     protected function getRankingTypeFilter($tablealias)
@@ -185,11 +191,12 @@ class ContentHighlightRanking extends ContentElement
             default:
                 $result = '1=1'; // alle Records, aber zusammen mit AND ... sinnvolles SQL
         }
+
         return $result;
     }
 
     /**
-     * Highlight-"Ranking" aller Spieler einer Mannschaft (in einer liga)
+     * Highlight-"Ranking" aller Spieler einer Mannschaft (in einer liga).
      *
      * ohne ausgewählte Mannschaft => Ranking aller Spieler der Liga
      */
@@ -218,17 +225,17 @@ class ContentHighlightRanking extends ContentElement
         if ($this->mannschaft > 0) {
             // eine bestimmte Mannschaft
             $mannschaft = MannschaftModel::findById($this->mannschaft);
-            $this->Template->subject = 'Highlight-Ranking aller Spieler der Mannschaft ' . $mannschaft->name;
-            $sql .= " AND s.pid=?";
-            $sql .= " AND " . $this->getRankingTypeFilter('h');
+            $this->Template->subject = 'Highlight-Ranking aller Spieler der Mannschaft '.$mannschaft->name;
+            $sql .= ' AND s.pid=?';
+            $sql .= ' AND '.$this->getRankingTypeFilter('h');
             $sql .= " AND s.active='1'"; // nur aktive Spieler dieser Mannschaft
-            $sql .= " ORDER BY spiel_am DESC";
+            $sql .= ' ORDER BY spiel_am DESC';
             $highlights = Database::getInstance()
                 ->prepare($sql)->execute($this->liga, $this->mannschaft);
         } else {
             // alle Mannschaften
-            $sql .= " AND " . $this->getRankingTypeFilter('h');
-            $sql .= " ORDER BY spiel_am DESC";
+            $sql .= ' AND '.$this->getRankingTypeFilter('h');
+            $sql .= ' ORDER BY spiel_am DESC';
             $this->Template->subject = 'Highlight-Ranking aller Spieler';
             $highlights = Database::getInstance()
                 ->prepare($sql)->execute($this->liga);
@@ -249,21 +256,21 @@ class ContentHighlightRanking extends ContentElement
             // Initialisieren
             if (!isset($results[$credit_to])) {
                 $results[$credit_to] = [
-                    'name'          => DCAHelper::makeSpielerNameFromParts($highlights->member_firstname, $highlights->member_lastname, $highlights->member_anonymize),
-                    'mannschaft'    => [$highlights->mannschaft=>0], // bei Wechsel der Mannschaft eines Spielers innerhalb der Saison können es mehrere Mannschaften sein!
-                    'hl_171'        => 0,  // Anzahl
-                    'hl_180'        => 0,  // dito
+                    'name' => DCAHelper::makeSpielerNameFromParts($highlights->member_firstname, $highlights->member_lastname, $highlights->member_anonymize),
+                    'mannschaft' => [$highlights->mannschaft => 0], // bei Wechsel der Mannschaft eines Spielers innerhalb der Saison können es mehrere Mannschaften sein!
+                    'hl_171' => 0,  // Anzahl
+                    'hl_180' => 0,  // dito
                     'hl_highfinish' => [], // Liste der Highfinishes
-                    'hl_shortleg'   => [], // dito
-                    'hl_punkte'     => [], // List der einzelnen Punkte
-                    'hl_rang'       => 0,
-                    'member_id'     => $highlights->member_id,
-                    'spieler_id'    => $highlights->spieler_id,
-                    'active'        => false,
+                    'hl_shortleg' => [], // dito
+                    'hl_punkte' => [], // List der einzelnen Punkte
+                    'hl_rang' => 0,
+                    'member_id' => $highlights->member_id,
+                    'spieler_id' => $highlights->spieler_id,
+                    'active' => false,
                 ];
             }
             // Spieler hat in versch. Mannschaften gespielt?
-            $results[$credit_to]['mannschaft'][$highlights->mannschaft]++;
+            ++$results[$credit_to]['mannschaft'][$highlights->mannschaft];
             // Spieler ist (noch) aktiv?
             $results[$credit_to]['active'] |= $highlights->sactive && $highlights->mactive; // aktiver Spieler in einer aktiven Mannschaft
 
@@ -311,8 +318,8 @@ class ContentHighlightRanking extends ContentElement
                     $results[$id]['hl_punkte'] = static::flattenToIntArray($results[$id]['hl_punkte']);
                     $results[$id]['hl_shortleg'] = static::prettyPrintSorted($results[$id]['hl_shortleg'], 'ASC');
                     // Mapping
-                    $results[$id]['hl_punkte'] = array_map(function($val) {
-                        $val = (int)$val;
+                    $results[$id]['hl_punkte'] = array_map(function ($val) {
+                        $val = (int) $val;
                         // Wert > self::MAX_SHORTLEG_DARTS via 0 Punkte nicht berücksichtigen
                         if (self::MAX_SHORTLEG_DARTS < $val) {
                             return 0;
@@ -341,13 +348,13 @@ class ContentHighlightRanking extends ContentElement
 
         // print '<pre>'.print_r(['rankingtype'=>$this->rankingtype, $results], true) .'</pre>';
 
-        if ($this->rankingfield == HighlightModel::TYPE_ALL) {
-            uasort($results, function($a, $b) {
+        if (HighlightModel::TYPE_ALL === $this->rankingfield) {
+            uasort($results, function ($a, $b) {
                 // ohne spezielle Punkteregel: nach Namen sortieren
                 return $a['name'] <=> $b['name'];
             });
         } else {
-            uasort($results, function($a, $b) {
+            uasort($results, function ($a, $b) {
                 // Bei Shortleg und Highfinish können wir die sortierten Werte (== ['hl_punkte']-Eintrag)
                 // aneinander hängen und als String sortieren, weil:
                 // * bei Shortleg oben bereits "gemap" wurde (kurze Legs -> hohe Werte) und
@@ -355,7 +362,7 @@ class ContentHighlightRanking extends ContentElement
                 // * bei Highfinish die Nebenbedingung gilt, daß die Werte > 100 und <180 sind!
                 //   Es kann also nicht das "Zahlen als Strings sortiert"-Problem auftauchen --
                 //   falsch: "1", "11", "2" vs. korrekt: 1, 2, 11.
-                if ($this->rankingfield == HighlightModel::TYPE_SHORTLEG || $this->rankingfield == HighlightModel::TYPE_HIGHFINISH) {
+                if (HighlightModel::TYPE_SHORTLEG === $this->rankingfield || HighlightModel::TYPE_HIGHFINISH === $this->rankingfield) {
                     return strcmp(implode('', $b['hl_punkte']), implode('', $a['hl_punkte']));
                 }
                 // Bei allen anderen Rankings hat ['hl_punkte'] nur einene numerischen Eintrag, nach dem
@@ -373,9 +380,9 @@ class ContentHighlightRanking extends ContentElement
             // ob ein Tie vorliegt. Denn: nur, wenn zwei aufeinanderfolgende Prüfstrings
             // identisch sind haben wir bei der Rangvergabe einen "Tie"!
             $punkte = implode('', $results[$i]['hl_punkte']);
-            if ($punkte == $lastpunkte) {
+            if ($punkte === $lastpunkte) {
                 // we have a "tie"
-                $rang_skip++;
+                ++$rang_skip;
             } else {
                 $rang += $rang_skip;
                 $rang_skip = 1;
@@ -399,6 +406,7 @@ class ContentHighlightRanking extends ContentElement
      * Additionally the array elements will be casted to integers.
      *
      * @param array $a
+     *
      * @return array (of integers)
      */
     protected static function flattenToIntArray(array $a)
@@ -406,21 +414,23 @@ class ContentHighlightRanking extends ContentElement
         $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($a));
         $result = [];
         foreach ($it as $v) {
-            $result[] = (int)$v;
+            $result[] = (int) $v;
         }
+
         return $result;
     }
 
     /**
-     * TODO (?): "13,13,13,14,14" als "13 (3x), 14 (2x)" ausgeben
+     * TODO (?): "13,13,13,14,14" als "13 (3x), 14 (2x)" ausgeben.
      *
      * @param string|array $value
-     * @param string $order
+     * @param string       $order
+     *
      * @return string
      */
     protected static function prettyPrintSorted($value, $order)
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             $data = $value;
         } else {
             $data = explode(',', $value);
@@ -429,7 +439,7 @@ class ContentHighlightRanking extends ContentElement
         // i.e. make it ['1','2','3','4',5']
         // i.e. split '3,4' into '3','4'
         $data = explode(',', implode(',', $data));
-        if ($order === 'ASC') {
+        if ('ASC' === $order) {
             asort($data);
         } else {
             arsort($data);
@@ -441,9 +451,10 @@ class ContentHighlightRanking extends ContentElement
 
     /**
      * Compress an array of results
-     * i.e. display "15,15,15,16,..." as "3x15,16,..."
-    *
+     * i.e. display "15,15,15,16,..." as "3x15,16,...".
+     *
      * @param array $data
+     *
      * @return string
      */
     protected static function compressResultsArray($data)
@@ -455,17 +466,17 @@ class ContentHighlightRanking extends ContentElement
                 $current = $entry;
                 $aggregated[$current] = 0;
             }
-            $aggregated[$current]++;
+            ++$aggregated[$current];
         }
         $result = [];
         foreach ($aggregated as $k => $v) {
-            if ($v == 1) {
+            if (1 === $v) {
                 $result[] = $k;
             } else {
-                $result[] = sprintf("<small>%d&times;</small>%s", $v, $k);
+                $result[] = sprintf('<small>%d&times;</small>%s', $v, $k);
             }
         }
+
         return implode(', ', $result);
     }
-
 }

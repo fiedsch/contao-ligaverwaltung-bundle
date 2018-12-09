@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -8,24 +12,24 @@
 
 /**
  * Module "Begegnungserfassung". Vue.js Formular anzeigen und die gePOSTeten Daten
- * in tl_spiel (child records von tl_begegnug) abspeichern
+ * in tl_spiel (child records von tl_begegnug) abspeichern.
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
+
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendModule;
-use Contao\Input;
-use Contao\Controller;
 use Contao\BegegnungModel;
+use Contao\Controller;
+use Contao\HighlightModel;
+use Contao\Input;
 use Contao\LigaModel;
 use Contao\SpielerModel;
 use Contao\SpielModel;
-use Contao\HighlightModel;
 
 class ModuleBegegnungserfassung extends BackendModule
 {
-
     /**
      * Anzahl der Spieler pro Mannschaft (inkl. Austauschspieler) wie sie von der
      * Vue.js App erwartet wird (vgl. :slots="8").
@@ -33,7 +37,7 @@ class ModuleBegegnungserfassung extends BackendModule
     const NUM_PLAYERS = 8;
 
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
@@ -63,7 +67,7 @@ class ModuleBegegnungserfassung extends BackendModule
      * durch geänderte Spielerreihenfolge andere (neue!) Spiele erzeugt werden,
      * die alten aber nicht gelöscht werden.
      * Immer erst alle Spiele löschen und dann alles neu anlegen (meist identisch)
-     * ist auch nicht schön und erhöht unnötig die tl_spiel.id
+     * ist auch nicht schön und erhöht unnötig die tl_spiel.id.
      *
      * @throws \Exception
      */
@@ -99,11 +103,11 @@ class ModuleBegegnungserfassung extends BackendModule
                     if ($begegnung) {
                         $data['home'] = [
                             'name' => $begegnung->getRelated('home')->name,
-                            'id'   => $begegnung->getRelated('home')->id,
+                            'id' => $begegnung->getRelated('home')->id,
                         ];
                         $data['away'] = [
                             'name' => $begegnung->getRelated('away')->name,
-                            'id'   => $begegnung->getRelated('away')->id,
+                            'id' => $begegnung->getRelated('away')->id,
                         ];
                     }
                     break;
@@ -111,7 +115,7 @@ class ModuleBegegnungserfassung extends BackendModule
                     $data['lineup']['home'] = explode(',', $v);
                     break;
                 case 'awaylineup':
-                    $data['lineup']['away'] =  explode(',', $v);
+                    $data['lineup']['away'] = explode(',', $v);
                     break;
                 case 'REQUEST_TOKEN':
                 case 'FORM_SUBMIT':
@@ -124,38 +128,41 @@ class ModuleBegegnungserfassung extends BackendModule
                         $mapped_id = $data['lineup'][$matches[1]][$v];
                         $data['spiele'][$matches[2]][$matches[1]]['spieler'] = [
                             'name' => $this->getSpielerName($mapped_id),
-                            'id'   => $mapped_id,
+                            'id' => $mapped_id,
                         ];
-                    } else if (preg_match("/^spieler_(home|away)_(\d+)_(\d+)$/", $k, $matches)) {
+                    } elseif (preg_match("/^spieler_(home|away)_(\d+)_(\d+)$/", $k, $matches)) {
                         // Doppel (Spieler)
                         $mapped_id = $data['lineup'][$matches[1]][$v];
                         $data['spiele'][$matches[2]][$matches[1]]['spieler'][$matches[3]] = [
                             'name' => $this->getSpielerName($mapped_id),
-                            'id'   => $mapped_id,
+                            'id' => $mapped_id,
                         ];
-                    } else if (preg_match("/^score_(home|away)_(\d+)$/", $k, $matches)) {
+                    } elseif (preg_match("/^score_(home|away)_(\d+)$/", $k, $matches)) {
                         // Score (Einzel und Doppel)
                         $data['spiele'][$matches[2]][$matches[1]]['score'] = $v;
-                    } else if (preg_match("/^one80_(\d+)$/", $k, $matches)) {
+                    } elseif (preg_match("/^one80_(\d+)$/", $k, $matches)) {
                         $data['highlights'][$matches[1]]['180'] = $v;
-                    }  else if (preg_match("/^one71_(\d+)$/", $k, $matches)) {
+                    } elseif (preg_match("/^one71_(\d+)$/", $k, $matches)) {
                         $data['highlights'][$matches[1]]['171'] = $v;
-                    }  else if (preg_match("/^shortleg_(\d+)$/", $k, $matches)) {
+                    } elseif (preg_match("/^shortleg_(\d+)$/", $k, $matches)) {
                         $data['highlights'][$matches[1]]['shortleg'] = $v;
-                    }  else if (preg_match("/^highfinish_(\d+)$/", $k, $matches)) {
+                    } elseif (preg_match("/^highfinish_(\d+)$/", $k, $matches)) {
                         $data['highlights'][$matches[1]]['highfinish'] = $v;
                     } else {
                         $data['TODO'][] = sprintf("%s = %s\n", $k, $v);
                     }
             }
         }
+
         return $data;
     }
 
     /**
      * @param int $id
-     * @return string
+     *
      * @throws \Exception
+     *
+     * @return string
      */
     protected function getSpielerName($id)
     {
@@ -168,6 +175,7 @@ class ModuleBegegnungserfassung extends BackendModule
         if (!$member) {
             return "Mitglied zum Spieler mit der ID $id nicht gefunden";
         }
+
         return DCAHelper::makeSpielerName($member);
     }
 
@@ -187,7 +195,7 @@ class ModuleBegegnungserfassung extends BackendModule
         // * die negative ID abspeichern (sollte gehen, denn tl_spiel.home und tl_spiel.away
         //   sind "int(10) NOT NULL default '0'".
 
-        if (!$data['spiele'] || !is_array($data['spiele'])) {
+        if (!$data['spiele'] || !\is_array($data['spiele'])) {
             return;
         }
 
@@ -205,8 +213,8 @@ class ModuleBegegnungserfassung extends BackendModule
     }
 
     /**
-     * @param int $begegnung
-     * @param int $slot
+     * @param int   $begegnung
+     * @param int   $slot
      * @param array $spielData
      */
     protected function checkAndSaveDoppel($begegnung, $slot, $spielData)
@@ -226,8 +234,8 @@ class ModuleBegegnungserfassung extends BackendModule
 
         $spiel->spieltype = SpielModel::TYPE_DOPPEL;
 
-        $spiel->home  = $spielData['home']['spieler'][1]['id'];
-        $spiel->away  = $spielData['away']['spieler'][1]['id'];
+        $spiel->home = $spielData['home']['spieler'][1]['id'];
+        $spiel->away = $spielData['away']['spieler'][1]['id'];
         $spiel->home2 = $spielData['home']['spieler'][2]['id'];
         $spiel->away2 = $spielData['away']['spieler'][2]['id'];
 
@@ -240,8 +248,8 @@ class ModuleBegegnungserfassung extends BackendModule
     }
 
     /**
-     * @param int $begegnung
-     * @param int $slot
+     * @param int   $begegnung
+     * @param int   $slot
      * @param array $spielData
      */
     protected function checkAndSaveEinzel($begegnung, $slot, $spielData)
@@ -294,7 +302,6 @@ class ModuleBegegnungserfassung extends BackendModule
         // Teams belegen
         $begegnung = BegegnungModel::findById(Input::get('id'));
         if (null !== $begegnung) {
-
             $spielplan = $begegnung->getRelated('pid')->spielplan;
 
             $this->Template->begegnung = $begegnung->id;
@@ -311,7 +318,7 @@ class ModuleBegegnungserfassung extends BackendModule
             foreach (['home', 'away'] as $homeaway) {
                 $spieler = SpielerModel::findBy(
                     ['pid=?', 'tl_spieler.active=?'],
-                    [$begegnung->$homeaway,'1'],
+                    [$begegnung->$homeaway, '1'],
                     ['order' => 'id ASC']
                 );
                 if ($spieler) {
@@ -320,7 +327,7 @@ class ModuleBegegnungserfassung extends BackendModule
                         $player_name = addslashes(DCAHelper::makeSpielerName(
                             $s->getRelated('member_id')
                         ));
-                        if ($homeaway === 'home') {
+                        if ('home' === $homeaway) {
                             $team_home[] = sprintf("{name: '%s', id: %d}", html_entity_decode($player_name), $s->id);
                         } else {
                             $team_away[] = sprintf("{name: '%s', id: %d}", html_entity_decode($player_name), $s->id);
@@ -340,8 +347,8 @@ class ModuleBegegnungserfassung extends BackendModule
 
             // Die zu sortierenden JSON-Daten sind strings, bei denen der Name
             // vorne steht. Daher passt eine String-Sortierung ;-)
-            usort($team_home, function($a, $b) { return $a <=> $b; });
-            usort($team_away, function($a, $b) { return $a <=> $b; });
+            usort($team_home, function ($a, $b) { return $a <=> $b; });
+            usort($team_away, function ($a, $b) { return $a <=> $b; });
 
             // Immer noch zusätzlich einen "Spieler", der ausgewählt werden kann,
             // wenn z.B. 6 Spieler gemeldet sind, aber am konkreten Spieltag nur
@@ -350,27 +357,31 @@ class ModuleBegegnungserfassung extends BackendModule
             $team_home[] = sprintf("{name: '%s',id: 0}", 'kein Spieler');
             $team_away[] = sprintf("{name: '%s',id: 0}", 'kein Spieler');
 
-            $this->Template->team_home_players = join(',', $team_home);
-            $this->Template->team_away_players = join(',', $team_away);
+            $this->Template->team_home_players = implode(',', $team_home);
+            $this->Template->team_away_players = implode(',', $team_away);
         }
 
         $this->Template->spielplan = $spielplan;
         $this->generatePatchSpielplanCode();
-
     }
 
     /**
      * @param array $data
+     *
      * @throws \Exception
      */
     protected function saveHighlights($data)
     {
         $highlights = $data['highlights'];
         // print '<pre>'.print_r($highlights, true). '</pre>';exit;
-        if (empty($highlights)) { return; }
+        if (empty($highlights)) {
+            return;
+        }
         foreach ($highlights as $spielerId => $highlightsdata) {
             foreach ($highlightsdata as $type => $value) {
-                if (!$value) { continue; }
+                if (!$value) {
+                    continue;
+                }
                 $highlight = new HighlightModel();
                 $highlight->type = self::getHighlightType($type);
                 $highlight->value = $value;
@@ -383,8 +394,10 @@ class ModuleBegegnungserfassung extends BackendModule
 
     /**
      * @param string $marker
-     * @return int
+     *
      * @throws \Exception
+     *
+     * @return int
      */
     protected static function getHighlightType($marker)
     {
@@ -408,7 +421,7 @@ class ModuleBegegnungserfassung extends BackendModule
 
     /**
      * TODO: neu implementieren, da sich das zugrundelegende Datenmodell geändert hat
-     * Siehe linup mit den tl_spieler IDs und played mit den Index-Positionen aus lineup
+     * Siehe linup mit den tl_spieler IDs und played mit den Index-Positionen aus lineup.
      *
      * Frage: wie können wir das lineup aus den Ergebnissen aus played rekonstruieren?
      * Oder: müssen wir den zugehörigen spielplan auch speichern? Dieser ist keine
@@ -428,7 +441,6 @@ class ModuleBegegnungserfassung extends BackendModule
             }
         }
 
-        $this->Template->patchSpielplanCode = join("\n", $jsCodeLines) . "\n";
+        $this->Template->patchSpielplanCode = implode("\n", $jsCodeLines)."\n";
     }
-
 }

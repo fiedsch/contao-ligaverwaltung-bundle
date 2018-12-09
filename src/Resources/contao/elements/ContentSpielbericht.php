@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -14,43 +18,45 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\ContentElement;
 use Contao\BackendTemplate;
 use Contao\BegegnungModel;
+use Contao\ContentElement;
 use Contao\SpielModel;
 use Patchwork\Utf8;
 
 class ContentSpielbericht extends ContentElement
 {
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
     protected $strTemplate = 'ce_spielbericht';
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
             $begegnunglabel = BegegnungModel::findById($this->begegnung) ? BegegnungModel::findById($this->begegnung)->getLabel('full') : 'Begegnung nicht gefunden!';
-            $objTemplate->wildcard = "### " . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielbericht'][0]) . " $begegnunglabel ###";
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielbericht'][0])." $begegnunglabel ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
 
             return $objTemplate->parse();
         }
+
         return parent::generate();
     }
 
     /**
-     * Generate the content element
+     * Generate the content element.
      *
      * @throws \Exception
      */
@@ -75,7 +81,6 @@ class ContentSpielbericht extends ContentElement
         }
         $spielergebnisse = [];
         foreach ($spiele as $spiel) {
-
             // Einzel (und erster Spieler Doppel)
             if ($home = $spiel->getRelated('home')) {
                 /** @var \Contao\MemberModel $member */
@@ -90,17 +95,17 @@ class ContentSpielbericht extends ContentElement
             } else {
                 $awayplayer = '-';
             }
-            if ($spiel->spieltype == SpielModel::TYPE_DOPPEL) {
+            if (SpielModel::TYPE_DOPPEL === $spiel->spieltype) {
                 // Doppel (zweiter Spieler)
                 if ($home = $spiel->getRelated('home2')) {
                     $member = $home->getRelated('member_id');
-                    $homeplayer .= '/' . DCAHelper::makeSpielerName($member);
+                    $homeplayer .= '/'.DCAHelper::makeSpielerName($member);
                 } else {
                     $homeplayer .= '/-';
                 }
                 if ($away = $spiel->getRelated('away2')) {
                     $member = $away->getRelated('member_id');
-                    $awayplayer .= '/' . DCAHelper::makeSpielerName($member);
+                    $awayplayer .= '/'.DCAHelper::makeSpielerName($member);
                 } else {
                     $awayplayer .= '/-';
                 }
@@ -109,20 +114,19 @@ class ContentSpielbericht extends ContentElement
             $homeCssClass = 'draw';
             $awayCssClass = 'draw';
             $score = '-';
-            if ($spiel->score_home>0 || $spiel->score_away>0) {
+            if ($spiel->score_home > 0 || $spiel->score_away > 0) {
                 $homeCssClass = $spiel->score_home > $spiel->score_away ? 'winner' : 'loser';
                 $awayCssClass = $spiel->score_home > $spiel->score_away ? 'loser' : 'winner';
-                $score = sprintf("%d:%d", $spiel->score_home, $spiel->score_away);
+                $score = sprintf('%d:%d', $spiel->score_home, $spiel->score_away);
             }
 
             $spielergebnisse[] = [
-                'home'  => sprintf('<span class="%s">%s</span>', $homeCssClass, $homeplayer),
-                'away'  => sprintf('<span class="%s">%s</span>', $awayCssClass, $awayplayer),
-                'type'  => $spiel->spieltype == SpielModel::TYPE_EINZEL ? 'einzel' : 'doppel',
-                'score' => $score
+                'home' => sprintf('<span class="%s">%s</span>', $homeCssClass, $homeplayer),
+                'away' => sprintf('<span class="%s">%s</span>', $awayCssClass, $awayplayer),
+                'type' => SpielModel::TYPE_EINZEL === $spiel->spieltype ? 'einzel' : 'doppel',
+                'score' => $score,
             ];
         }
         $this->Template->spielergebnisse = $spielergebnisse;
     }
-
 }

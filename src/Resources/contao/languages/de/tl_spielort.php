@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -66,7 +70,7 @@ $GLOBALS['TL_LANG']['tl_spielort']['city'] = [
 
 $GLOBALS['TL_LANG']['tl_spielort']['spielortpage'] = [
     'Spielort-Seite',
-    'Optionale Seite mit Informationen zu diesem Spielort'
+    'Optionale Seite mit Informationen zu diesem Spielort',
 ];
 
 $GLOBALS['TL_LANG']['tl_spielort']['aufsteller'] = [

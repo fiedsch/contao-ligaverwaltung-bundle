@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -66,5 +70,5 @@ $GLOBALS['TL_LANG']['tl_mannschaft']['teampage'] = [
 
 $GLOBALS['TL_LANG']['tl_mannschaft']['active'] = [
   'Aktiv',
-  'Diese Mannschaft nimmt aktiv am Spielbetrieb der zugeordneten Liga teil'
+  'Diese Mannschaft nimmt aktiv am Spielbetrieb der zugeordneten Liga teil',
 ];

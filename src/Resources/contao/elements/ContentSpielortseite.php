@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -14,18 +18,18 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\ContentElement;
 use Contao\BackendTemplate;
-use Contao\SpielortModel;
+use Contao\ContentElement;
 use Contao\ContentModel;
-use Contao\MannschaftModel;
 use Contao\LigaModel;
+use Contao\MannschaftModel;
+use Contao\SpielortModel;
 use Patchwork\Utf8;
 
 class ContentSpielortseite extends ContentElement
 {
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
@@ -36,7 +40,7 @@ class ContentSpielortseite extends ContentElement
      */
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $headline = $this->headline;
@@ -45,7 +49,7 @@ class ContentSpielortseite extends ContentElement
                 $headline = $spielortModel->name;
             }
 
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielortseite'][0]) . ' ###';
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielortseite'][0]).' ###';
             $objTemplate->id = $this->id;
             $objTemplate->link = $headline;
 
@@ -55,33 +59,11 @@ class ContentSpielortseite extends ContentElement
         return parent::generate();
     }
 
-    /**
-     * Add the following to fe_page.html5 or (if using Bootsrap for Contao) to fe_bootstrap_xx.html5:
-     * ```
-     * <?php if (!strpos($head, "description") === false): ?>
-     * <meta name="description" content="<?php echo $this->description; ?>">
-     * <?php endif; ?>
-     * ```
-     *
-     * @param string $content
-     */
-    protected function addDescriptionToTlHead($content)
-    {
-        if ($GLOBALS['TL_HEAD']) {
-            foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {
-                if (preg_match("/description/", $entry)) {
-                    unset($GLOBALS['TL_HEAD'][$i]);
-                }
-            }
-        }
-        $GLOBALS['TL_HEAD'][] = sprintf('<meta name="description" content="%s">', $content);
-    }
-
     public function compile()
     {
         $spielortModel = SpielortModel::findById($this->spielort);
 
-        $this->addDescriptionToTlHead("Alles zum Spielort " . $spielortModel->name);
+        $this->addDescriptionToTlHead('Alles zum Spielort '.$spielortModel->name);
 
         // Spielortinfo
         $contentModel = new ContentModel();
@@ -97,7 +79,7 @@ class ContentSpielortseite extends ContentElement
 
         $this->Template->spielort_name = $spielortModel->name;
 
-        $mannschaften = MannschaftModel::findBy(['spielort=?'],[$spielortModel->id]);
+        $mannschaften = MannschaftModel::findBy(['spielort=?'], [$spielortModel->id]);
 
         // Alle Mannschaften ermitteln, die "hier spielen"
         // nach Ligen gemäß Auswahl in der CE-Konfiguration filtern
@@ -110,11 +92,11 @@ class ContentSpielortseite extends ContentElement
 
         if ($mannschaften) {
             foreach ($mannschaften as $mannschaft) {
-                if (in_array($mannschaft->liga, deserialize($this->ligen))) {
+                if (\in_array($mannschaft->liga, deserialize($this->ligen), true)) {
                     $mannschaften_liste[] = $mannschaft->name;
                     // $mannschaften_in_ligen_liste[$mannschaft->liga][] = $mannschaft->name;
                     $mannschaften_in_ligen_liste[$mannschaft->liga][] = $mannschaft->getLinkedName();
-                    $gefundene_ligen[$mannschaft->liga]++;
+                    ++$gefundene_ligen[$mannschaft->liga];
                 }
             }
             $gefundene_ligen = array_keys($gefundene_ligen);
@@ -122,8 +104,8 @@ class ContentSpielortseite extends ContentElement
 
         // nach in der Konfiguration ausgewählten Saisons filtern
 
-        $show_ligen = array_filter(deserialize($this->ligen, true), function($el) use ($gefundene_ligen) {
-           return in_array($el, $gefundene_ligen);
+        $show_ligen = array_filter(deserialize($this->ligen, true), function ($el) use ($gefundene_ligen) {
+            return \in_array($el, $gefundene_ligen, true);
         });
 
         foreach ($show_ligen as $ligaId) {
@@ -136,7 +118,27 @@ class ContentSpielortseite extends ContentElement
         $this->Template->show_ligen = $show_ligen;
         $this->Template->ligen_lookup = $ligen_lookup;
         $this->Template->mannschaften_in_ligen_liste = $mannschaften_in_ligen_liste;
-
     }
 
+    /**
+     * Add the following to fe_page.html5 or (if using Bootsrap for Contao) to fe_bootstrap_xx.html5:
+     * ```
+     * <?php if (!strpos($head, "description") === false): ?>
+     * <meta name="description" content="<?php echo $this->description; ?>">
+     * <?php endif; ?>
+     * ```.
+     *
+     * @param string $content
+     */
+    protected function addDescriptionToTlHead($content)
+    {
+        if ($GLOBALS['TL_HEAD']) {
+            foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {
+                if (preg_match('/description/', $entry)) {
+                    unset($GLOBALS['TL_HEAD'][$i]);
+                }
+            }
+        }
+        $GLOBALS['TL_HEAD'][] = sprintf('<meta name="description" content="%s">', $content);
+    }
 }

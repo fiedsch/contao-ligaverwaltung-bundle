@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -11,6 +15,7 @@
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
+
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
@@ -22,19 +27,20 @@ use Patchwork\Utf8;
 class ContentMannschaftsseite extends ContentElement
 {
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
     protected $strTemplate = 'ce_mannschaftsseite';
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $headline = $this->headline;
@@ -43,7 +49,7 @@ class ContentMannschaftsseite extends ContentElement
                 $headline = $mannschaftModel->getFullName();
             }
 
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftsseite'][0]) . ' ###';
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftsseite'][0]).' ###';
             $objTemplate->id = $this->id;
             $objTemplate->link = $headline;
 
@@ -54,43 +60,21 @@ class ContentMannschaftsseite extends ContentElement
     }
 
     /**
-     * Add the following to fe_page.html5 or (if using Bootsrap for Contao) to fe_bootstrap_xx.html5:
-     * ```
-     * <?php if (!strpos($head, "description") === false): ?>
-     * <meta name="description" content="<?php echo $this->description; ?>">
-     * <?php endif; ?>
-     * ```
-     *
-     * @param string $content
-     */
-    protected function addDescriptionToTlHead($content)
-    {
-        if ($GLOBALS['TL_HEAD']) {
-            foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {
-                if (preg_match("/description/", $entry)) {
-                    unset($GLOBALS['TL_HEAD'][$i]);
-                }
-            }
-        }
-        $GLOBALS['TL_HEAD'][] = sprintf('<meta name="description" content="%s">', $content);
-    }
-
-    /**
      * @throws \Exception
      */
     public function compile()
     {
         $mannschaftModel = MannschaftModel::findById($this->mannschaft);
 
-        $this->addDescriptionToTlHead("Alles zur Mannschaft " . $mannschaftModel->name);
+        $this->addDescriptionToTlHead('Alles zur Mannschaft '.$mannschaftModel->name);
 
         // Spielortinfo
         $contentModel = new ContentModel();
         $contentModel->type = 'spielortinfo';
         $contentModel->spielort = $mannschaftModel->spielort;
         $contentModel->headline = [
-            'value' => 'Spielort ' . $mannschaftModel->name,
-            'unit'  => 'h2',
+            'value' => 'Spielort '.$mannschaftModel->name,
+            'unit' => 'h2',
         ];
         $contentElement = new ContentSpielortinfo($contentModel);
         $this->Template->spielortinfo = $contentElement->generate();
@@ -101,8 +85,8 @@ class ContentMannschaftsseite extends ContentElement
         $contentModel->mannschaft = $this->mannschaft;
         $contentModel->showdetails = '1';
         $contentModel->headline = [
-            'value' => 'Spielerliste ' . $mannschaftModel->name,
-            'unit'  => 'h2',
+            'value' => 'Spielerliste '.$mannschaftModel->name,
+            'unit' => 'h2',
         ];
         $contentElement = new ContentSpielerliste($contentModel);
         $this->Template->spielerliste = $contentElement->generate();
@@ -113,8 +97,8 @@ class ContentMannschaftsseite extends ContentElement
         $contentModel->liga = $mannschaftModel->liga;
         $contentModel->mannschaft = $mannschaftModel->id;
         $contentModel->headline = [
-            'value' => 'Spielplan ' . $mannschaftModel->name,
-            'unit'  => 'h2',
+            'value' => 'Spielplan '.$mannschaftModel->name,
+            'unit' => 'h2',
         ];
         $contentElement = new ContentSpielplan($contentModel);
         $this->Template->spielplan = $contentElement->generate();
@@ -126,8 +110,8 @@ class ContentMannschaftsseite extends ContentElement
         $contentModel->mannschaft = $mannschaftModel->id;
         $contentModel->rankingtype = 2; // 'Spieler'
         $contentModel->headline = [
-            'value' => 'Einzelspieler Ranking ' . $mannschaftModel->name,
-            'unit'  => 'h2',
+            'value' => 'Einzelspieler Ranking '.$mannschaftModel->name,
+            'unit' => 'h2',
         ];
         $contentElement = new ContentRanking($contentModel);
         $this->Template->ranking = $contentElement->generate();
@@ -140,14 +124,34 @@ class ContentMannschaftsseite extends ContentElement
         $contentModel->rankingfield = 99; // alle zusammen
         $contentModel->mannschaft = $mannschaftModel->id;
         $contentModel->headline = [
-            'value' => 'Highlights ' . $mannschaftModel->name,
-            'unit'  => 'h2',
+            'value' => 'Highlights '.$mannschaftModel->name,
+            'unit' => 'h2',
         ];
         $contentElement = new ContentHighlightRanking($contentModel);
         $this->Template->highlightranking = $contentElement->generate();
 
         $this->Template->mannschaft_name = $mannschaftModel->name;
-
     }
 
+    /**
+     * Add the following to fe_page.html5 or (if using Bootsrap for Contao) to fe_bootstrap_xx.html5:
+     * ```
+     * <?php if (!strpos($head, "description") === false): ?>
+     * <meta name="description" content="<?php echo $this->description; ?>">
+     * <?php endif; ?>
+     * ```.
+     *
+     * @param string $content
+     */
+    protected function addDescriptionToTlHead($content)
+    {
+        if ($GLOBALS['TL_HEAD']) {
+            foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {
+                if (preg_match('/description/', $entry)) {
+                    unset($GLOBALS['TL_HEAD'][$i]);
+                }
+            }
+        }
+        $GLOBALS['TL_HEAD'][] = sprintf('<meta name="description" content="%s">', $content);
+    }
 }

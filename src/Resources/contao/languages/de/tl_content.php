@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -46,30 +50,30 @@ $GLOBALS['TL_LANG']['tl_content']['spielort'] = [
 
 $GLOBALS['TL_LANG']['tl_content']['showdetails'] = [
     'Details anzeigen',
-    'Details wie E-Mail-Adresse oder Telefonnummer anzeigen'
+    'Details wie E-Mail-Adresse oder Telefonnummer anzeigen',
 ];
 
 $GLOBALS['TL_LANG']['tl_content']['rankingtype'] = [
     'Art des Rankings',
-    'Mannschaftsranking: Ranking aller Mannschaften der Liga, Spielerranking: Ranking der Spieler einer Mannschaft.'
+    'Mannschaftsranking: Ranking aller Mannschaften der Liga, Spielerranking: Ranking der Spieler einer Mannschaft.',
 ];
 
 $GLOBALS['TL_LANG']['tl_content']['begegnung'] = [
     'Begegnung',
-    'Begegnung (Spiel zwischen zwei Mannschaften).'
+    'Begegnung (Spiel zwischen zwei Mannschaften).',
 ];
 
 $GLOBALS['TL_LANG']['tl_content']['rankingfield'] = [
     'Highlight anzeigen',
-    'Typ des Highlights für das das Ranking erstellt werden soll'
+    'Typ des Highlights für das das Ranking erstellt werden soll',
 ];
 
 $GLOBALS['TL_LANG']['tl_content']['liga'] = [
     'Liga',
-    'Liga, die in diesem CE berücksichtigt werden soll'
+    'Liga, die in diesem CE berücksichtigt werden soll',
 ];
 
 $GLOBALS['TL_LANG']['tl_content']['ligen'] = [
     'Ligen',
-    'Ligen, die in diesem CE berücksichtigt werden sollen'
+    'Ligen, die in diesem CE berücksichtigt werden sollen',
 ];

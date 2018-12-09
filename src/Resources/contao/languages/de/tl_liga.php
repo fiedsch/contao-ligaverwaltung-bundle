@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -66,10 +70,10 @@ $GLOBALS['TL_LANG']['tl_liga']['toggle'] = [
 
 $GLOBALS['TL_LANG']['tl_liga']['spielstaerke'] = [
     'Spielstärke',
-    'Die Spielstärke wird verwendet, um ggf. Ligen zu sortieren. (1=höchste Spielstärke).'
+    'Die Spielstärke wird verwendet, um ggf. Ligen zu sortieren. (1=höchste Spielstärke).',
 ];
 
 $GLOBALS['TL_LANG']['tl_liga']['spielplan'] = [
     'Spielplan',
-    'Der Spielplan bestimmt, welche Spieler wann gegeneinander spielen'
+    'Der Spielplan bestimmt, welche Spieler wann gegeneinander spielen',
 ];

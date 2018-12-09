@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -15,26 +19,26 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\ContentElement;
+use Contao\Controller;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\PageModel;
-use Contao\Controller;
 
 class ContentLigenliste extends ContentElement
 {
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
     protected $strTemplate = 'ce_ligenliste';
 
     /**
-     * Generate the content element
+     * Generate the content element.
      */
     public function compile()
     {
-        if ($this->verband == '') {
+        if ('' === $this->verband) {
             return;
         }
         $saisonIds = deserialize($this->saison);
@@ -42,20 +46,20 @@ class ContentLigenliste extends ContentElement
         $saisonFilter = sprintf('saison IN (%s)', implode(',', $saisonIds));
         $ligen = LigaModel::findAll([
             'column' => ['pid=?', 'aktiv=?', $saisonFilter],
-            'value'  => [$this->verband, '1'],
-            'order'  => 'spielstaerke ASC',
+            'value' => [$this->verband, '1'],
+            'order' => 'spielstaerke ASC',
         ]);
-        if ($ligen === null) {
+        if (null === $ligen) {
             return;
         }
 
         $listitems = [];
         foreach ($ligen as $liga) {
-            $listitems[] = sprintf("%s %s",
+            $listitems[] = sprintf('%s %s',
                 $liga->name,
-                $liga->getRelated("saison")->name
+                $liga->getRelated('saison')->name
             );
-            $mannschaften = MannschaftModel::findByLiga($liga->id, ['order'=>'name ASC']);
+            $mannschaften = MannschaftModel::findByLiga($liga->id, ['order' => 'name ASC']);
             $temp = [];
             foreach ($mannschaften as $mannschaft) {
                 if ($mannschaft->teampage) {
@@ -73,5 +77,4 @@ class ContentLigenliste extends ContentElement
 
         $this->Template->listitems = $listitems;
     }
-
 }

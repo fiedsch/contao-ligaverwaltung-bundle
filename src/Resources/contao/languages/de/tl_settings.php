@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -18,14 +22,14 @@ $GLOBALS['TL_LANG']['tl_settings']['teampage'] = [
     'Die Seite, auf der das Mannschaftsseiten Reader Modul eingebunden ist.',
 ];
 
-$GLOBALS['TL_LANG']['tl_settings']['spielberichtpage']  = [
+$GLOBALS['TL_LANG']['tl_settings']['spielberichtpage'] = [
     'Spielberichtsseite',
     'Die Seite, auf der das Spielbericht Reader Modul eingebunden ist.',
 ];
 
 $GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model'] = [
     'Sortierung Ranking ("Punktevergabe")',
-    'Regelt die Punktevergabe und damit die Sortierlogik in den Ranking.'
+    'Regelt die Punktevergabe und damit die Sortierlogik in den Ranking.',
 ];
 
 $GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model_ties'] = [

@@ -1,21 +1,31 @@
 <?php
 
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
+ */
+
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Symfony\Component\HttpFoundation\Response;
 use Contao\SpielerModel;
+use Symfony\Component\HttpFoundation\Response;
 
 class PlayerHistoryController
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $memberid;
 
     /**
      * PlayerHistoryController constructor.
      *
-     * @param integer $memberid
+     * @param int $memberid
      */
     public function __construct($memberid)
     {
@@ -29,13 +39,14 @@ class PlayerHistoryController
     {
         $template = new \BackendTemplate('be_spielerhistory');
         $template->history = $this->getHistory();
+
         return new Response($template->parse());
     }
 
     /**
      * @return array
      */
-    protected  function getHistory()
+    protected function getHistory()
     {
         $history = [];
         $spieler = SpielerModel::findBy(['member_id=?'], [$this->memberid], ['pid ASC']);
@@ -44,11 +55,11 @@ class PlayerHistoryController
                 $liga = $sp->getRelated('pid')->getRelated('liga');
                 $history[] = [
                     'mannschaft' => $sp->getRelated('pid')->name,
-                    'saison' => $liga->name . ' '. $liga->getRelated('saison')->name,
+                    'saison' => $liga->name.' '.$liga->getRelated('saison')->name,
                 ];
             }
         }
+
         return $history;
     }
-
 }

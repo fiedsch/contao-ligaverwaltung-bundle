@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -18,7 +22,6 @@ $GLOBALS['TL_LANG']['tl_spieler']['cut'] = [
     'ausschneiden',
     'ausschneiden und an anderer Stelle einfügen',
 ];
-
 
 $GLOBALS['TL_LANG']['tl_spieler']['copy'] = [
     'kopieren',
@@ -61,7 +64,7 @@ $GLOBALS['TL_LANG']['tl_spieler']['co_teamcaptain'] = [
 
 $GLOBALS['TL_LANG']['tl_spieler']['active'] = [
     'Aktiv',
-    'Dieser Spieler nimmt aktiv am Spielbetrieb der Mannschaft teil'
+    'Dieser Spieler nimmt aktiv am Spielbetrieb der Mannschaft teil',
 ];
 
 $GLOBALS['TL_LANG']['tl_spieler']['ersatzspieler'] = [
@@ -71,5 +74,5 @@ $GLOBALS['TL_LANG']['tl_spieler']['ersatzspieler'] = [
 
 $GLOBALS['TL_LANG']['tl_spieler']['avatar'] = [
     'Bild',
-    'Bild des Spielers (Bearbeiten im zugehörigen Mitglied!).'
+    'Bild des Spielers (Bearbeiten im zugehörigen Mitglied!).',
 ];

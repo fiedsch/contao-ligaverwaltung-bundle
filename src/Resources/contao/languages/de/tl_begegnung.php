@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -51,15 +55,15 @@ $GLOBALS['TL_LANG']['tl_begegnung']['away'] = [
 
 $GLOBALS['TL_LANG']['tl_begegnung']['spiel_tag'] = [
     'Spieltag',
-    'Spieltag (Zahl): x-ter Spieltag.'
+    'Spieltag (Zahl): x-ter Spieltag.',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'] = [
     'Begegnung findet statt am/um',
-    'Datum und Uhrzeit, an dem die Begegnung statt findet.'
+    'Datum und Uhrzeit, an dem die Begegnung statt findet.',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['kommentar'] = [
     'Kommentar',
-    'Kommentar zum Spiel. Z.B. zu Spielverlegung oder Protest etc.'
+    'Kommentar zum Spiel. Z.B. zu Spielverlegung oder Protest etc.',
 ];

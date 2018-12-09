@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -14,39 +18,37 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\Input;
-use Contao\Module;
 use Contao\BackendTemplate;
 use Contao\ContentModel;
+use Contao\Input;
+use Contao\Module;
 use Contao\SpielortModel;
 use Patchwork\Utf8;
 
 class ModuleSpielortseitenReader extends Module
 {
-
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
     protected $strTemplate = 'mod_spielortseitenreader';
 
-
     /**
-     * Display a wildcard in the back end
+     * Display a wildcard in the back end.
      *
      * @return string
      */
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['spielortseitenreader'][0]) . ' ###';
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['spielortseitenreader'][0]).' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
-            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+            $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id='.$this->id;
 
             return $objTemplate->parse();
         }
@@ -54,9 +56,8 @@ class ModuleSpielortseitenReader extends Module
         return parent::generate();
     }
 
-
     /**
-     * Generate the module
+     * Generate the module.
      */
     protected function compile()
     {
@@ -70,14 +71,18 @@ class ModuleSpielortseitenReader extends Module
         $id = Input::get('id');
         // spielort.html?id=123 (id Parameter) vs.
         // spielort/123.html (auto_item)
-        if (!$id) { $id = Input::get('auto_item'); }
+        if (!$id) {
+            $id = Input::get('auto_item');
+        }
         if (empty($id)) {
             $this->Template->spielort = null;
+
             return;
         }
         $spielort = SpielortModel::findById($id);
         if (!$spielort) {
             $this->Template->spielort = null;
+
             return;
         }
 
@@ -89,6 +94,5 @@ class ModuleSpielortseitenReader extends Module
         $contentModel->ligen = $this->ligen;
         $contentElement = new ContentSpielortseite($contentModel);
         $this->Template->spielortseite = $contentElement->generate();
-
     }
 }

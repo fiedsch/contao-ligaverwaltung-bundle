@@ -1,16 +1,23 @@
 <?php
-/** @noinspection PhpUnusedAliasInspection */
+
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
+ */
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route; // for annotations!
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Fiedsch\LigaverwaltungBundle\IcalController;
-use Fiedsch\LigaverwaltungBundle\JsonController;
-
-
+use Fiedsch\LigaverwaltungBundle\JsonController; // for annotations!
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Handles the bundle's frontend routes.
@@ -20,10 +27,13 @@ use Fiedsch\LigaverwaltungBundle\JsonController;
 class LigaverwaltungFrontendController extends Controller
 {
     /**
-     * Spielplan als Ical
+     * Spielplan als Ical.
      *
-     * @param integer $ligaid
-     * @param integer $mannschaftid
+     * @param int $ligaid
+     * @param int $mannschaftid
+     *
+     * @throws \Exception
+     *
      * @return Response
      *
      * @Route(
@@ -37,20 +47,20 @@ class LigaverwaltungFrontendController extends Controller
      *       "mannschaftid":"0"
      *     }
      * )
-     * @throws \Exception
      */
     public function icalAction($ligaid, $mannschaftid = 0)
     {
         $controller = new IcalController($ligaid, $mannschaftid);
+
         return $controller->run();
     }
 
-
     /**
-     * Spielplan als JSON
+     * Spielplan als JSON.
      *
-     * @param integer $ligaid
-     * @param integer $mannschaftid
+     * @param int $ligaid
+     * @param int $mannschaftid
+     *
      * @return JsonResponse
      *
      * @Route(
@@ -68,7 +78,7 @@ class LigaverwaltungFrontendController extends Controller
     public function jsonAction($ligaid, $mannschaftid = 0)
     {
         $controller = new JsonController($ligaid, $mannschaftid);
+
         return $controller->run();
     }
-
 }

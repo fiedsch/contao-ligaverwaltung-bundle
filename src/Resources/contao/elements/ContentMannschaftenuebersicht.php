@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -14,8 +18,8 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\ContentElement;
 use Contao\BackendTemplate;
+use Contao\ContentElement;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SpielerModel;
@@ -24,7 +28,7 @@ use Patchwork\Utf8;
 class ContentMannschaftenuebersicht extends ContentElement
 {
     /**
-     * Template
+     * Template.
      *
      * @var string
      */
@@ -32,10 +36,10 @@ class ContentMannschaftenuebersicht extends ContentElement
 
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = "### " . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'][0]) . " ###";
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'][0]).' ###';
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
@@ -47,7 +51,7 @@ class ContentMannschaftenuebersicht extends ContentElement
     }
 
     /**
-     * Generate the content element
+     * Generate the content element.
      */
     public function compile()
     {
@@ -55,7 +59,7 @@ class ContentMannschaftenuebersicht extends ContentElement
             return;
         }
         $ligen = LigaModel::findBy(
-            ['saison IN (' . join(",", array_map('intval', deserialize($this->saison))) . ')'],
+            ['saison IN ('.implode(',', array_map('intval', deserialize($this->saison))).')'],
             [],
             ['order' => 'tl_liga.spielstaerke ASC, tl_liga.name ASC']
         );
@@ -65,8 +69,8 @@ class ContentMannschaftenuebersicht extends ContentElement
 
         foreach ($ligen as $liga) {
             //$mannschaften = MannschaftModel::findByLiga($liga->id, ['order' => 'name ASC']);
-            $mannschaften = MannschaftModel::findBy(['liga=?','active=?'], [$liga->id,'1'], ['order' => 'name ASC']);
-            if ($mannschaften === null) {
+            $mannschaften = MannschaftModel::findBy(['liga=?', 'active=?'], [$liga->id, '1'], ['order' => 'name ASC']);
+            if (null === $mannschaften) {
                 continue;
             }
             $arrLigen[$liga->id] = $liga->name;
@@ -87,10 +91,10 @@ class ContentMannschaftenuebersicht extends ContentElement
                 $spielort = $mannschaft->getRelated('spielort');
                 $arrDetails[$liga->id][] = [
                     'mannschaft' => $mannschaft->getLinkedName(),
-                    'tc'         => $arrTc,
-                    'spielort'   => [
-                        'name'    => $spielort->name,
-                        'phone'   => $spielort->phone,
+                    'tc' => $arrTc,
+                    'spielort' => [
+                        'name' => $spielort->name,
+                        'phone' => $spielort->phone,
                         'website' => $spielort->website,
                     ],
                 ];
@@ -100,5 +104,4 @@ class ContentMannschaftenuebersicht extends ContentElement
         $this->Template->ligen = $arrLigen;
         $this->Template->details = $arrDetails;
     }
-
 }

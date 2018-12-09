@@ -1,6 +1,10 @@
 <?php
 
-/**
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
@@ -8,29 +12,29 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\LigaModel;
 use Contao\BegegnungModel;
-use Contao\SpielortModel;
+use Contao\LigaModel;
 use Contao\MannschaftModel;
-use Symfony\Component\HttpFoundation\Response;
+use Contao\SpielortModel;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
+use Symfony\Component\HttpFoundation\Response;
 
 class IcalController
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $ligaid;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $mannschaftid;
 
     /**
-     * @param integer $ligaid
-     * @param integer $mannschaftid
+     * @param int $ligaid
+     * @param int $mannschaftid
      */
     public function __construct($ligaid, $mannschaftid)
     {
@@ -40,18 +44,6 @@ class IcalController
     }
 
     /**
-     *
-     */
-    protected function initialize()
-    {
-        $tz = 'Europe/Berlin';
-        // $dtz = new \DateTimeZone($tz);
-        date_default_timezone_set($tz);
-    }
-
-
-    /**
-     *
      * @throws \Exception
      */
     public function run()
@@ -61,9 +53,9 @@ class IcalController
             ['type=?'],
             ['root'],
             [
-                'order'  => 'id ASC',
-                'limit'  => 1,
-                'return' => 'Model'
+                'order' => 'id ASC',
+                'limit' => 1,
+                'return' => 'Model',
                 ]
         );
         $calendarBaseName = $rootPages->title;
@@ -99,7 +91,7 @@ class IcalController
             }
         }
 
-        $calendarName = sprintf("%s-%d-%d.ics",
+        $calendarName = sprintf('%s-%d-%d.ics',
             $calendarBaseName,
             $this->ligaid,
             $this->mannschaftid ?: 'alle'
@@ -108,13 +100,23 @@ class IcalController
         $response = new Response($vCalendar->render());
         $response->headers->add(['Content-Type' => 'text/calendar; charset=utf-8']);
         $response->headers->add(['Content-Disposition' => "attachment; filename=\"$calendarName\""]);
+
         return $response;
+    }
+
+    protected function initialize()
+    {
+        $tz = 'Europe/Berlin';
+        // $dtz = new \DateTimeZone($tz);
+        date_default_timezone_set($tz);
     }
 
     /**
      * @param BegegnungModel $begegnung
-     * @return Event
+     *
      * @throws \Exception
+     *
+     * @return Event
      */
     protected function generateIcalEvent(BegegnungModel $begegnung)
     {
@@ -126,25 +128,24 @@ class IcalController
         $away = MannschaftModel::findById($begegnung->away);
         $spielort = SpielortModel::findById($home->spielort);
 
-        $summary = sprintf("%s: %s vs. %s (%s)",
+        $summary = sprintf('%s: %s vs. %s (%s)',
             $liga->name,
             $home->name,
             $away->name,
             $spielort->name
         );
 
-        $location = sprintf("%s, %s %s",
+        $location = sprintf('%s, %s %s',
                 $spielort->street,
                 $spielort->postal,
                 $spielort->city
         );
 
         $vEvent
-            ->setDtStart(new \DateTime(date("Y-m-d H:i:s", $begegnung->spiel_am)))
+            ->setDtStart(new \DateTime(date('Y-m-d H:i:s', $begegnung->spiel_am)))
             ->setSummary($summary)
             ->setLocation($location);
 
         return $vEvent;
     }
-
 }

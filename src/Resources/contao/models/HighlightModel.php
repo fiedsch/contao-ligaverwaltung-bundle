@@ -1,25 +1,35 @@
 <?php
 
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
+ */
+
 namespace Contao;
 
 /**
- * @property integer $id
- * @property integer $pid
- * @property integer $begegnung_id
- * @property integer $spieler_id
- * @property integer $type
+ * @property int     $id
+ * @property int     $pid
+ * @property int     $begegnung_id
+ * @property int     $spieler_id
+ * @property int     $type
  * @property \String $value
+ *
  * @method static HighlightModel|null findById($id, array $opt=array())
  */
 
 /**
- * @package Ligaverwaltung
- * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle-bundle/
+ * @see https://github.com/fiedsch/contao-ligaverwaltung-bundle-bundle/
+ *
  * @license https://opensource.org/licenses/MIT
  */
 class HighlightModel extends Model
 {
-
     const TYPE_180 = 1;
     const TYPE_SHORTLEG = 2;
     const TYPE_HIGHFINISH = 3;
@@ -27,11 +37,11 @@ class HighlightModel extends Model
     const TYPE_ALL = 99;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
-    protected static $strTable = "tl_highlight";
+    protected static $strTable = 'tl_highlight';
 
     /**
      * @return array
@@ -39,11 +49,10 @@ class HighlightModel extends Model
     public static function getOptionsArray()
     {
         return [
-            self::TYPE_180        => '180',
-            self::TYPE_171        => '171',
-            self::TYPE_SHORTLEG   => 'Short Leg',
+            self::TYPE_180 => '180',
+            self::TYPE_171 => '171',
+            self::TYPE_SHORTLEG => 'Short Leg',
             self::TYPE_HIGHFINISH => 'High Finish',
         ];
     }
-
 }
