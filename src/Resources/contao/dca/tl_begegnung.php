@@ -190,7 +190,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'],
             'exclude' => true,
             'inputType' => 'text',
-            'eval' => ['rgxp' => 'datim', 'datxepicker' => true, 'tl_class' => 'w50 wizard'],
+            'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
             'sql' => "varchar(11) NOT NULL default ''",
         ],
         'kommentar' => [
