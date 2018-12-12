@@ -324,7 +324,7 @@ class ContentHighlightRanking extends ContentElement
                         if (self::MAX_SHORTLEG_DARTS < $val) {
                             return 0;
                         }
-                        // mapping: kürzeres Leg === besser
+                        // mapping: kürzeres Leg == besser
                         $result = self::MAX_SHORTLEG_DARTS - $val + 1;
                         // "12" (9 Darter) bis "01" (20 Darts) für String-Sortierung
                         return $result < 10 ? "0$result" : "$result";
