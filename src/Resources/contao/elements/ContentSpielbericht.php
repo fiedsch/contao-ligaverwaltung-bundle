@@ -64,7 +64,7 @@ class ContentSpielbericht extends ContentElement
     {
         $begegnung = BegegnungModel::findById($this->begegnung);
 
-        if (null === $begegnung) {
+        if (!$begegnung) {
             return;
         }
 
@@ -76,7 +76,7 @@ class ContentSpielbericht extends ContentElement
         $this->Template->spielergebnisse = [];
 
         $spiele = SpielModel::findByPid($this->begegnung, ['order' => 'slot ASC']);
-        if (null === $spiele) {
+        if (!$spiele) {
             return;
         }
         $spielergebnisse = [];

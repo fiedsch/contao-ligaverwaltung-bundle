@@ -62,11 +62,11 @@ class ContentMannschaftsliste extends ContentElement
      */
     public function compile()
     {
-        if ('' === $this->liga) {
+        if (!$this->liga) {
             return;
         }
         $mannschaften = MannschaftModel::findByLiga($this->liga, ['order' => 'name ASC']);
-        if (null === $mannschaften) {
+        if (!$mannschaften) {
             return;
         }
 

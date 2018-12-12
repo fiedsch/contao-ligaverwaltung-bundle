@@ -42,8 +42,8 @@ class ContentSpielerliste extends ContentElement
                 'order' => 'teamcaptain DESC, co_teamcaptain DESC, firstname ASC, lastname ASC',
             ]);
 
-        if (null === $allespieler) {
             return;
+        if (!$allespieler) {
         }
 
         $listitems = [];

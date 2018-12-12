@@ -63,7 +63,7 @@ class ContentSpielplan extends ContentElement
      */
     public function compile()
     {
-        if ('' === $this->liga) {
+        if (!$this->liga) {
             return;
         }
 
