@@ -211,11 +211,11 @@ class DCAHelper
             // kein Eintrag bei away === kein Gegner === "Spielfrei"
             $away = null;
         }
+        $eingesetzte_spieler = ['home'=>[], 'away'=> []];
         $spiele = SpielModel::findByPid($row['id']);
-        $spieleHinterlegt = \count($spiele) > 0 ? sprintf('(%d Spiele)', \count($spiele)) : '';
-        $punkte_home = $punkte_away = 0;
-        $eingesetzte_spieler = ['home' => [], 'away' => []];
         if ($spiele) {
+            $spieleHinterlegt = \count($spiele) > 0 ? sprintf('(%d Spiele)', \count($spiele)) : '';
+            $punkte_home = $punkte_away = 0;
             foreach ($spiele as $spiel) {
                 $punkte_home += $spiel->score_home > $spiel->score_away ? 1 : 0;
                 $punkte_away += $spiel->score_home < $spiel->score_away ? 1 : 0;
@@ -223,7 +223,7 @@ class DCAHelper
                 ++$eingesetzte_spieler['away'][$spiel->away];
             }
         }
-        // nicht angetreten?
+        // nicht angetreten? (Mannschaft nur mit virtuellm Spieler '0' (='kein Spieler') angetreten).
         $is_noshow_home = 1 === \count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
         $is_noshow_away = 1 === \count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
 
