@@ -14,11 +14,13 @@ namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
 use Contao\Config;
+use Contao\System;
 use Contao\ContentElement;
 use Contao\Database;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
 use Patchwork\Utf8;
 
 /**
@@ -184,8 +186,10 @@ class ContentRanking extends ContentElement
             $results[$away]['verloren'] += $begegnung->isVerlorenAway() ? 1 : 0;
         }
 
-        uasort($results, function ($a, $b) {
-            return Begegnung::compareMannschaftResults($a, $b);
+        /** @var RankingHelperInterface */
+        $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
+        uasort($results, function ($a, $b) use ($helper) {
+            return $helper->compareResults($a, $b);
         });
 
         // Berechnung Rang (Tabellenplatz) und Label
@@ -313,8 +317,10 @@ class ContentRanking extends ContentElement
             }
         }
 
-        uasort($results, function ($a, $b) {
-            return Spiel::compareSpielerResults($a, $b);
+        /** @var RankingHelperInterface */
+        $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
+        uasort($results, function ($a, $b) use ($helper) {
+            return $helper->compareResults($a, $b);
         });
 
         // Berechnung Rang (Tabellenplatz) und Label
@@ -386,7 +392,7 @@ class ContentRanking extends ContentElement
         $tiebreak_mode = Config::get('ligaverwaltung_ranking_model_ties');
         switch ($tiebreak_mode) {
             case 2: // nach absoluten Werten
-                return $result['punkte_self'] === $lastresult['punkte']
+                return $result['punkte_self'] === $lastresult['punkte_self']
                     && $result['spiele_self'] === $lastresult['spiele_self']
                     && $result['legs_self'] === $lastresult['legs_self']
                     && $result['legs_other'] === $lastresult['legs_other']
@@ -395,9 +401,10 @@ class ContentRanking extends ContentElement
             case 1: // nach Differenzen
                     // (ausser bei den Punkten, wo nur eigene (gewonnene) betrachtet werden -- weil "isso!")
             default:
-            return $result['punkte_self'] === $lastresult['punkte']
+            return $result['punkte_self'] === $lastresult['punkte_self']
                 && $result['spiele_self'] - $result['spiele_other'] === $lastresult['spiele_self'] - $lastresult['spiele_other']
                 && $result['legs_self'] - $result['legs_other'] === $lastresult['legs_self'] - $lastresult['legs_other']
+                && $result['legs_self']  === $lastresult['legs_self']
                 ;
         }
     }

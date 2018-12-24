@@ -28,11 +28,13 @@ $GLOBALS['TL_LANG']['tl_settings']['spielberichtpage'] = [
 ];
 
 $GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model'] = [
-    'Sortierung Ranking ("Punktevergabe")',
-    'Regelt die Punktevergabe und damit die Sortierlogik in den Ranking.',
+    'Sortierung Spieler-Ranking ("Punktevergabe")',
+    'Regelt die Punktevergabe und damit die Sortierlogik in den Spieler-Rankings.',
 ];
 
+/*
 $GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model_ties'] = [
     'Sortierung Ranking bei Gleichstand',
     'Regelt, wie bei Gleichstand weiter entschieden wird (betrachten der nächsten "Dimension", d.h. gleiche Punkte → Spiele betrachten, gleiche Spiele → Legs betrachten).',
 ];
+*/

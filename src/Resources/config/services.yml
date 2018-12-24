@@ -1,0 +1,5 @@
+services:
+
+    fiedsch_ligaverwaltung.rankinghelper:
+        class: Fiedsch\LigaverwaltungBundle\Helper\RankingHelper
+        public: true

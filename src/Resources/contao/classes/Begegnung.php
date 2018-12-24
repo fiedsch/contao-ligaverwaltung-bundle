@@ -12,7 +12,8 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\Config;
+use Contao\System;
+use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
 
 /**
  * Class Begegnung.
@@ -21,9 +22,10 @@ use Contao\Config;
  */
 class Begegnung
 {
-    const PUNKTE_GEWONNEN = 3;
-    const PUNKTE_UNENTSCHIEDEN = 1;
-    const PUNKTE_VERLOREN = 0;
+    /**
+     * @var RankingHelperInterface
+     */
+    protected $rankingHelper;
 
     /**
      * @var array
@@ -35,6 +37,7 @@ class Begegnung
      */
     public function __construct()
     {
+        $this->rankingHelper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
     }
 
     /**
@@ -115,10 +118,10 @@ class Begegnung
             $punkte_away += $spiel->getLegsHome() > $spiel->getLegsAway() ? 0 : 1;
         }
         if ($punkte_home === $punkte_away) {
-            return self::PUNKTE_UNENTSCHIEDEN;
+            return $this->rankingHelper::PUNKTE_UNENTSCHIEDEN;
         }
 
-        return $punkte_home > $punkte_away ? self::PUNKTE_GEWONNEN : self::PUNKTE_VERLOREN;
+        return $punkte_home > $punkte_away ? $this->rankingHelper::PUNKTE_GEWONNEN : $this->rankingHelper::PUNKTE_VERLOREN;
     }
 
     /**
@@ -135,10 +138,10 @@ class Begegnung
             $punkte_away += $spiel->getLegsHome() > $spiel->getLegsAway() ? 0 : 1;
         }
         if ($punkte_home === $punkte_away) {
-            return self::PUNKTE_UNENTSCHIEDEN;
+            return $this->rankingHelper::PUNKTE_UNENTSCHIEDEN;
         }
 
-        return $punkte_home > $punkte_away ? self::PUNKTE_VERLOREN : self::PUNKTE_GEWONNEN;
+        return $punkte_home > $punkte_away ? $this->rankingHelper::PUNKTE_VERLOREN : $this->rankingHelper::PUNKTE_GEWONNEN;
     }
 
     /**
@@ -154,7 +157,7 @@ class Begegnung
      */
     public function isGewonnenHome()
     {
-        return self::PUNKTE_GEWONNEN === $this->getPunkteHome();
+        return $this->rankingHelper::PUNKTE_GEWONNEN === $this->getPunkteHome();
     }
 
     /**
@@ -162,7 +165,7 @@ class Begegnung
      */
     public function isGewonnenAway()
     {
-        return self::PUNKTE_GEWONNEN === $this->getPunkteAway();
+        return $this->rankingHelper::PUNKTE_GEWONNEN === $this->getPunkteAway();
     }
 
     /**
@@ -170,7 +173,7 @@ class Begegnung
      */
     public function isUnentschieden()
     {
-        return self::PUNKTE_UNENTSCHIEDEN === $this->getPunkteHome();
+        return $this->rankingHelper::PUNKTE_UNENTSCHIEDEN === $this->getPunkteHome();
     }
 
     /**
@@ -178,7 +181,7 @@ class Begegnung
      */
     public function isVerlorenHome()
     {
-        return self::PUNKTE_VERLOREN === $this->getPunkteHome();
+        return $this->rankingHelper::PUNKTE_VERLOREN === $this->getPunkteHome();
     }
 
     /**
@@ -186,86 +189,7 @@ class Begegnung
      */
     public function isVerlorenAway()
     {
-        return self::PUNKTE_VERLOREN === $this->getPunkteAway();
+        return $this->rankingHelper::PUNKTE_VERLOREN === $this->getPunkteAway();
     }
 
-    /**
-     * Compare results $a and $b for sorting, i.e. return -1, 0 or +1.
-     *
-     * @param array $a
-     * @param array $b
-     *
-     * @return int
-     */
-    public static function compareMannschaftResults($a, $b)
-    {
-        switch (Config::get('ligaverwaltung_ranking_model_ties')) {
-            case 2: // 'nach absoluten Werten'
-                return self::compareMannschaftResultsAbsolute($a, $b);
-                break;
-            case 1: // 'nach Differenzen'
-            default:
-                return self::compareMannschaftResultsDifferences($a, $b);
-        }
-    }
-
-    /**
-     * This is the "legacy" mode.
-     *
-     * @param array $a
-     * @param array $b
-     *
-     * @return int
-     */
-    protected static function compareMannschaftResultsAbsolute($a, $b)
-    {
-        // <=> Operator returns
-        //  -1  0  +1
-        //              when comparison of $a and $b leads to
-        //  <   =  >
-        // daher bei absteigender Sortierung (mehr ist besser) immer $b <=> $a anstelle $a <=> $b
-        // (oder alternativ das Ergebnis von <=> mal -1).
-
-        // Bei Punktegleichstand ...
-        if ($a['punkte_self'] === $b['punkte_self']) {
-            // ... nach eigenen gewonnenen Spielen. Sind diese auch gleich, ...
-            if ($a['spiele_self'] === $b['spiele_self']) {
-                // ... dann nach Legs
-                if ($a['legs_self'] === $b['legs_self']) {
-                    // Immer noch gleich, dann nach Legdifferenz
-                    return $b['legs_self'] - $b['legs_other'] <=> $a['legs_self'] - $a['legs_other'];
-                }
-
-                return $b['legs_self'] <=> $a['legs_self'];
-            }
-
-            return $b['spiele_self'] <=> $a['spiele_self'];
-        }
-
-        return $b['punkte_self'] <=> $a['punkte_self'];
-    }
-
-    /**
-     * This is the mode that is probably expected by most people.
-     *
-     * @param array $a
-     * @param array $b
-     *
-     * @return int
-     */
-    protected static function compareMannschaftResultsDifferences($a, $b)
-    {
-        // Bei Punktegleichstand ...
-        if ($a['punkte_self'] === $b['punkte_self']) {
-            // ... nach Spieledifferenzen. Sind diese auch gleich, ...
-            if ($a['spiele_self'] - $a['spiele_other'] === $b['spiele_self'] - $b['spiele_other']) {
-                // ... dann nach Legdifferenzen
-                return $b['legs_self'] - $b['legs_other'] <=> $a['legs_self'] - $a['legs_other'];
-            }
-
-            return $b['spiele_self'] - $b['spiele_other'] <=> $a['spiele_self'] - $a['spiele_other'];
-        }
-
-        return $b['punkte_self'] <=> $a['punkte_self'];
-    }
 }
