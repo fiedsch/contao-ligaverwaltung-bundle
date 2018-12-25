@@ -145,10 +145,10 @@ class ContentHighlightRanking extends ContentElement
             $results[] = [
                 'datum' => Date::parse(Config::get('dateFormat'), $highlights->spiel_am),
                 'mannschaft' => $highlights->mannschaft,
-                'hl_171' => HighlightModel::TYPE_171 === $highlights->type ? $highlights->value : '',
-                'hl_180' => HighlightModel::TYPE_180 === $highlights->type ? $highlights->value : '',
-                'hl_highfinish' => HighlightModel::TYPE_HIGHFINISH === $highlights->type ? $highlights->value : '',
-                'hl_shortleg' => HighlightModel::TYPE_SHORTLEG === $highlights->type ? $highlights->value : '',
+                'hl_171' => HighlightModel::TYPE_171 == $highlights->type ? $highlights->value : '',
+                'hl_180' => HighlightModel::TYPE_180 == $highlights->type ? $highlights->value : '',
+                'hl_highfinish' => HighlightModel::TYPE_HIGHFINISH == $highlights->type ? $highlights->value : '',
+                'hl_shortleg' => HighlightModel::TYPE_SHORTLEG == $highlights->type ? $highlights->value : '',
                 'hl_punkte' => [],
                 'hl_rang' => 0,
             ];
@@ -348,7 +348,7 @@ class ContentHighlightRanking extends ContentElement
 
         // print '<pre>'.print_r(['rankingtype'=>$this->rankingtype, $results], true) .'</pre>';
 
-        if (HighlightModel::TYPE_ALL === $this->rankingfield) {
+        if (HighlightModel::TYPE_ALL == $this->rankingfield) {
             uasort($results, function ($a, $b) {
                 // ohne spezielle Punkteregel: nach Namen sortieren
                 return $a['name'] <=> $b['name'];
@@ -362,7 +362,7 @@ class ContentHighlightRanking extends ContentElement
                 // * bei Highfinish die Nebenbedingung gilt, daß die Werte > 100 und <180 sind!
                 //   Es kann also nicht das "Zahlen als Strings sortiert"-Problem auftauchen --
                 //   falsch: "1", "11", "2" vs. korrekt: 1, 2, 11.
-                if (HighlightModel::TYPE_SHORTLEG === $this->rankingfield || HighlightModel::TYPE_HIGHFINISH === $this->rankingfield) {
+                if (HighlightModel::TYPE_SHORTLEG == $this->rankingfield || HighlightModel::TYPE_HIGHFINISH == $this->rankingfield) {
                     return strcmp(implode('', $b['hl_punkte']), implode('', $a['hl_punkte']));
                 }
                 // Bei allen anderen Rankings hat ['hl_punkte'] nur einene numerischen Eintrag, nach dem
