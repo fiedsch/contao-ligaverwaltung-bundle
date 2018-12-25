@@ -1,7 +1,7 @@
 # Rankings (Methodik)
 
 Zunächst die Beschreibung der hinterlegten "Standards". Wie diese überschrieben werden
-können wird im Anschlus erklärtr. 
+können wird im Anschlus erklärt. 
 
 ## Spielerrankings
 
@@ -9,8 +9,8 @@ Für die Ermittlung der Spielerrankings werden jedem Spieler pro gespieltem
 Spiel Punkte vergeben. Nach diesen Punkten wird sortiert. Bei Punktgleichheit
 wird wie folgt unterschieden:
 
-1. nach Spielen (gewonnen - verloren). Sind diese auch gleich, 
-2. nach Legs (gewonnen - verloren).
+1. nach Spielen (gewonnen − verloren). Sind diese auch gleich, 
+2. nach Legs (gewonnen − verloren).
 
 
 ### Ranking nach Punkten 
