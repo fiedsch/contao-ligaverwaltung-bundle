@@ -211,7 +211,7 @@ class DCAHelper
             // kein Eintrag bei away === kein Gegner === "Spielfrei"
             $away = null;
         }
-        $eingesetzte_spieler = ['home'=>[], 'away'=> []];
+        $eingesetzte_spieler = ['home' => [], 'away' => []];
         $spiele = SpielModel::findByPid($row['id']);
         if ($spiele) {
             $spieleHinterlegt = \count($spiele) > 0 ? sprintf('(%d Spiele)', \count($spiele)) : '';

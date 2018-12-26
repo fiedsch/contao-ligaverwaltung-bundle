@@ -191,5 +191,4 @@ class Begegnung
     {
         return $this->rankingHelper::PUNKTE_VERLOREN === $this->getPunkteAway();
     }
-
 }

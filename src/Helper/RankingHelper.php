@@ -2,6 +2,16 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2018 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
+ */
+
 namespace Fiedsch\LigaverwaltungBundle\Helper;
 
 class RankingHelper implements RankingHelperInterface
@@ -12,7 +22,8 @@ class RankingHelper implements RankingHelperInterface
 
     /**
      * @param string $score
-     * @param int $ranking_model
+     * @param int    $ranking_model
+     *
      * @return int
      */
     public function getPunkte(string $score, int $ranking_model = 1): int
@@ -103,10 +114,11 @@ class RankingHelper implements RankingHelperInterface
      *    'spiele_other' => verlorene Spiele
      *    'legs_self' => gewonnene Legs
      *    'legs_other' => verlorene Legs
-     * ]
+     * ].
      *
      * @param array $a
      * @param array $b
+     *
      * @return int
      */
     public function compareResults(array $a, array $b): int
@@ -119,7 +131,7 @@ class RankingHelper implements RankingHelperInterface
                 // ... dann nach Legdifferenzen. Sind diese auch gleich, ...
                 if ($a['legs_self'] - $a['legs_other'] === $b['legs_self'] - $b['legs_other']) {
                     // ... dann nach gewonnenen Legs
-                    return $b['legs_self']  <=> $a['legs_self'];
+                    return $b['legs_self'] <=> $a['legs_self'];
                 }
 
                 return $b['legs_self'] - $b['legs_other'] <=> $a['legs_self'] - $a['legs_other'];
@@ -130,5 +142,4 @@ class RankingHelper implements RankingHelperInterface
 
         return $b['punkte_self'] <=> $a['punkte_self'];
     }
-
 }

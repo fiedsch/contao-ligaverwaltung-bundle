@@ -14,12 +14,12 @@ namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
 use Contao\Config;
-use Contao\System;
 use Contao\ContentElement;
 use Contao\Database;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SpielerModel;
+use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
 use Patchwork\Utf8;
 
@@ -404,7 +404,7 @@ class ContentRanking extends ContentElement
             return $result['punkte_self'] === $lastresult['punkte_self']
                 && $result['spiele_self'] - $result['spiele_other'] === $lastresult['spiele_self'] - $lastresult['spiele_other']
                 && $result['legs_self'] - $result['legs_other'] === $lastresult['legs_self'] - $lastresult['legs_other']
-                && $result['legs_self']  === $lastresult['legs_self']
+                && $result['legs_self'] === $lastresult['legs_self']
                 ;
         }
     }

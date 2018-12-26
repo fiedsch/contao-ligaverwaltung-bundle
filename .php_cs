@@ -47,7 +47,7 @@ return PhpCsFixer\Config::create()
             'null_adjustment' => 'always_last',
             'sort_algorithm' => 'none',
         ],
-        'strict_comparison' => true,
+        'strict_comparison' => false, // af. Contao uses true (for new code?!), but this is a 'Risky rule' and we have legacy code
         'strict_param' => true,
         // Remove when https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/3222 has been merged
         // 'LeoFeyer/optimize_native_functions' => true,

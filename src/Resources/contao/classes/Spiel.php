@@ -117,7 +117,7 @@ class Spiel
 
         /** @var RankingHelperInterface */
         $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
+
         return $helper->getPunkte($score, $ranking_model);
     }
-
 }
