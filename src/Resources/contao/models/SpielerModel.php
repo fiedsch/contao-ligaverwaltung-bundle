@@ -18,8 +18,8 @@ use Fiedsch\LigaverwaltungBundle\DCAHelper;
  * @property int    $id
  * @property int    $pid
  * @property string $name
- * @property bool teamcaptain
- * @property bool co_teamcaptain
+ * @property bool   $teamcaptain
+ * @property bool   $co_teamcaptain
  *
  * @method static SpielerModel|null findById($id, array $opt=array())
  * @method static Model\Collection|SpielerModel|null findByPid($id, array $opt=array())

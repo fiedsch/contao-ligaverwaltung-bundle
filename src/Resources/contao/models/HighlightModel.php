@@ -18,7 +18,7 @@ namespace Contao;
  * @property int     $begegnung_id
  * @property int     $spieler_id
  * @property int     $type
- * @property \String $value
+ * @property string  $value
  *
  * @method static HighlightModel|null findById($id, array $opt=array())
  */
