@@ -28,6 +28,7 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'fields' => ['spieler_id', 'type'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['name'],
+            'filter' => [['begegnung_id IN (SELECT b.id FROM tl_begegnung b LEFT JOIN tl_liga l ON (b.pid=l.id) WHERE l.aktiv=?)', '1']],
         ],
         'label' => [
             'fields' => ['spieler_id'],

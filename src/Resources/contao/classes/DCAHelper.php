@@ -826,6 +826,11 @@ class DCAHelper
         $result = [];
         $begegnungen = BegegnungModel::findAll(['eager' => true]);
         foreach ($begegnungen as $begegnung) {
+            // Dieser Filter reduziert zwar bei Neueingaben die Anzahl
+            // der Optionen im Drop-Down, führt aber beim Bearbeiten alter
+            // Records (abgeschlossenen Ligen) dazu, daß das Dropdown nicht
+            // korrekt zum bereits erfassten Wert gesetzt ist (werden kann).
+            // Workaround: 'filter' in tl_highlight setzen!
             if ($begegnung->getRelated('pid')->aktiv) {
                 $result[$begegnung->id] = $begegnung->getLabel($mode = 'full');
             }
