@@ -96,6 +96,11 @@ class ContentMannschaftenuebersicht extends ContentElement
                         'name' => $spielort->name,
                         'phone' => $spielort->phone,
                         'website' => $spielort->website,
+                        'address' => [
+                            'street' => $spielort->street,
+                            'postal' => $spielort->postal,
+                            'city' => $spielort->city,
+                            ],
                     ],
                 ];
             }
