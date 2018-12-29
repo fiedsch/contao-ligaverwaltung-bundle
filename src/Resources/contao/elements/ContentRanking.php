@@ -193,9 +193,16 @@ class ContentRanking extends ContentElement
         });
 
         // Berechnung Rang (Tabellenplatz) und Label
-        $lastpunkte = PHP_INT_MAX;
-        $lastlegs_self = PHP_INT_MAX;
-        $lastlegs_other = PHP_INT_MAX;
+
+        $lastresult = [
+            'punkte_self' => PHP_INT_MAX,
+            'punkte_other' => 0,
+            'spiele_self' => PHP_INT_MAX,
+            'spiele_other' => 0,
+            'legs_self' => PHP_INT_MAX,
+            'legs_other' => 0,
+        ];
+
         $rang = 0;
         $rang_skip = 1;
         foreach ($results as $id => $data) {
@@ -209,20 +216,14 @@ class ContentRanking extends ContentElement
             $mannschaftlabel = $mannschaft->getLinkedName();
 
             $results[$id]['name'] = $mannschaftlabel;
-            if ($results[$id]['punkte_self'] === $lastpunkte
-                && $results[$id]['legs_self'] === $lastlegs_self
-                && $results[$id]['legs_other'] === $lastlegs_other
-            ) {
-                // we have a "tie"
+            if (self::isTie($results[$id], $lastresult)) {
                 ++$rang_skip;
             } else {
                 $rang += $rang_skip;
                 $rang_skip = 1;
             }
             $results[$id]['rang'] = $rang;
-            $lastpunkte = $results[$id]['punkte_self'];
-            $lastlegs_self = $results[$id]['legs_self'];
-            $lastlegs_other = $results[$id]['legs_other'];
+            $lastresult = $results[$id];
         }
 
         $this->Template->rankingtype = 'mannschaften';
