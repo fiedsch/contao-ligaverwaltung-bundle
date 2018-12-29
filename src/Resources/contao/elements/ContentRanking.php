@@ -13,7 +13,6 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
-use Contao\Config;
 use Contao\ContentElement;
 use Contao\Database;
 use Contao\LigaModel;
