@@ -50,7 +50,7 @@ $GLOBALS['TL_LANG']['tl_begegnung']['home'] = [
 
 $GLOBALS['TL_LANG']['tl_begegnung']['away'] = [
     'Auswärtsmannschaft',
-    'Auswärtsmannschaft',
+    'Auswärtsmannschaft (leer lassen, wenn die Heimmannschaft spielfrei hat).',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['spiel_tag'] = [
