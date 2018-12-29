@@ -213,9 +213,8 @@ class ContentRanking extends ContentElement
                 continue;
             }
 
-            $mannschaftlabel = $mannschaft->getLinkedName();
+            $results[$id]['name'] = $mannschaft->getLinkedName();
 
-            $results[$id]['name'] = $mannschaftlabel;
             if (self::isTie($results[$id], $lastresult)) {
                 ++$rang_skip;
             } else {
