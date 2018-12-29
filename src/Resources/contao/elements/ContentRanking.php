@@ -383,6 +383,8 @@ class ContentRanking extends ContentElement
     }
 
     /**
+     * TODO (?): in Helper\RankingHelper auslagern
+     *
      * @param array $result     die Daten einer Zeile des sortierten Rankimgs
      * @param array $lastresult die Daten der vorhergehenden Zeile des Rankings
      *
@@ -390,23 +392,10 @@ class ContentRanking extends ContentElement
      */
     protected function isTie($result, $lastresult)
     {
-        $tiebreak_mode = Config::get('ligaverwaltung_ranking_model_ties');
-        switch ($tiebreak_mode) {
-            case 2: // nach absoluten Werten
-                return $result['punkte_self'] === $lastresult['punkte_self']
-                    && $result['spiele_self'] === $lastresult['spiele_self']
-                    && $result['legs_self'] === $lastresult['legs_self']
-                    && $result['legs_other'] === $lastresult['legs_other']
-                    ;
-                break;
-            case 1: // nach Differenzen
-                    // (ausser bei den Punkten, wo nur eigene (gewonnene) betrachtet werden -- weil "isso!")
-            default:
             return $result['punkte_self'] === $lastresult['punkte_self']
                 && $result['spiele_self'] - $result['spiele_other'] === $lastresult['spiele_self'] - $lastresult['spiele_other']
                 && $result['legs_self'] - $result['legs_other'] === $lastresult['legs_self'] - $lastresult['legs_other']
                 && $result['legs_self'] === $lastresult['legs_self']
                 ;
-        }
     }
 }
