@@ -1,7 +1,7 @@
 # Rankings (Methodik)
 
 Zunächst die Beschreibung der hinterlegten "Standards". Wie diese überschrieben werden
-können wird im Anschlus erklärt. 
+können wird im Anschluss erklärt.
 
 ## Spielerrankings
 
@@ -9,14 +9,15 @@ Für die Ermittlung der Spielerrankings werden jedem Spieler pro gespieltem
 Spiel Punkte vergeben. Nach diesen Punkten wird sortiert. Bei Punktgleichheit
 wird wie folgt unterschieden:
 
-1. nach Spielen (gewonnen − verloren). Sind diese auch gleich, 
+1. Nach Spielen (gewonnen − verloren). Sind diese auch gleich,
 2. nach Legs (gewonnen − verloren).
+3. Ist auch die Legdifferenz gleich, dann nach gewonnenen Legs.
 
 
 ### Ranking nach Punkten 
 
 Hier werden je nach Ergebnis verschiedene Punkte vergeben. Motivation: 
-ein deutlicher Sieg soll mehr punkte ergeben, als ein knapper; eine 
+ein deutlicher Sieg soll mehr Punkte ergeben, als ein knapper; eine
 knappe Niederlage soll besser bewertet werden, als eine klare "zu Null Niederlage".
 
 Beispiel bei "best of three":
@@ -99,10 +100,25 @@ use Fiedsch\LigaverwaltungBundle\Helper\RankingHelper as OriginalHelper;
 
 class RankingHelper extends OriginalHelper
 {
-  /* 
-    Überschreiben der Teile, die in Fiedsch\LigaverwaltungBundle\Helper\RankingHelper geändert
-    werden sollen.
-  */
+    /*
+     * Nach Bedarf die Teile überschreiben, die in
+     * Fiedsch\LigaverwaltungBundle\Helper\RankingHelper geändert werden sollen.
+     */
+
+    const PUNKTE_GEWONNEN = 2;         // Bsp.: 3 zu 2 geändert
+    // const PUNKTE_UNENTSCHIEDEN = 1; // soll gleich bleiben
+    // const PUNKTE_VERLOREN = 0;      // soll gleich bleiben
+
+    public function compareResults(array $a, array $b): int
+    {
+        /* ... */
+    }
+
+    public function getPunkte(string $score, int $ranking_model = 1): int
+    {
+        /* ... */
+    }
+
 }
 ```
 
