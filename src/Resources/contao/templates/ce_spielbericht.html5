@@ -2,12 +2,14 @@
 
 <?php $this->block('content'); ?>
 
-<h2><?= $this->begegnunglabel ?></h2>
+<h1><?= $this->begegnunglabel ?></h1>
 
 <?php if ($this->spielergebnisse): ?>
 
+<h2>Spiele</h2>
+
 <div class="table-responsive">
-<table class="table table-hover spielbericht">
+<table class="table table-hover">
 <thead>
 <tr>
 <th><?= $this->home ?></th>
@@ -25,6 +27,38 @@
 <?php endforeach; ?>
 </tbody>
 </table>
+</div>
+<?php endif; ?>
+
+<?php if ($this->highlights): ?>
+<h2>Highlights</h2>
+
+<div class="table-responsive">
+<table class="table table-hover">
+<thead>
+  <tr>
+      <th>Spieler</th>
+      <th>Team</th>
+      <th>180</th>
+      <th>171</th>
+      <th>Shortleg</th>
+      <th>Highfinish</th>
+  </tr>
+</thead>
+<tbody>
+<?php foreach ($this->highlights as $data):?>
+<tr>
+    <td><?= $data['name'] ?></td>
+    <td><?= $data['team'] ?></td>
+    <td><?= $data['highlights'][\Contao\HighlightModel::TYPE_180] ?></td>
+    <td><?= $data['highlights'][\Contao\HighlightModel::TYPE_171] ?></td>
+    <td><?= $data['highlights'][\Contao\HighlightModel::TYPE_SHORTLEG] ?></td>
+    <td><?= $data['highlights'][\Contao\HighlightModel::TYPE_HIGHFINISH] ?></td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>
+</div>
 </div>
 <?php endif; ?>
 

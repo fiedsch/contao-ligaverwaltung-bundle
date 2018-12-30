@@ -21,9 +21,14 @@ namespace Fiedsch\LigaverwaltungBundle;
 use Contao\BackendTemplate;
 use Contao\BegegnungModel;
 use Contao\ContentElement;
+use Contao\HighlightModel;
+use Contao\SpielerModel;
 use Contao\SpielModel;
 use Patchwork\Utf8;
 
+/**
+ * @property integer $begegnung
+ */
 class ContentSpielbericht extends ContentElement
 {
     /**
@@ -73,15 +78,28 @@ class ContentSpielbericht extends ContentElement
         $this->Template->home = $begegnung->getRelated('home')->name;
         $this->Template->away = $begegnung->getRelated('away')->name;
 
-        $this->Template->spielergebnisse = [];
+        $this->Template->spielergebnisse = $this->compileSpielergebnsisse($begegnung);
 
-        $spiele = SpielModel::findByPid($this->begegnung, ['order' => 'slot ASC']);
+        $this->Template->highlights = $this->compileHighlights($begegnung);
+
+    }
+
+    /**
+     * @param BegegnungModel $begegnung
+     * @return array
+     * @throws \Exception
+     */
+    protected function compileSpielergebnsisse(BegegnungModel $begegnung)
+    {
+        $spiele = SpielModel::findByPid($begegnung->id, ['order' => 'slot ASC']);
         if (!$spiele) {
-            return;
+            return [];
         }
         $spielergebnisse = [];
+        /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
             // Einzel (und erster Spieler Doppel)
+            /** @var SpielerModel $home */
             if ($home = $spiel->getRelated('home')) {
                 /** @var \Contao\MemberModel $member */
                 $member = $home->getRelated('member_id');
@@ -89,7 +107,9 @@ class ContentSpielbericht extends ContentElement
             } else {
                 $homeplayer = '-';
             }
+            /** @var SpielerModel $away */
             if ($away = $spiel->getRelated('away')) {
+                /** @var \MemberModel $member */
                 $member = $away->getRelated('member_id');
                 $awayplayer = DCAHelper::makeSpielerName($member);
             } else {
@@ -97,13 +117,17 @@ class ContentSpielbericht extends ContentElement
             }
             if (SpielModel::TYPE_DOPPEL === $spiel->spieltype) {
                 // Doppel (zweiter Spieler)
+                /** @var SpielerModel $home */
                 if ($home = $spiel->getRelated('home2')) {
+                    /** @var \MemberModel $member */
                     $member = $home->getRelated('member_id');
                     $homeplayer .= '/'.DCAHelper::makeSpielerName($member);
                 } else {
                     $homeplayer .= '/-';
                 }
+                /** @var SpielerModel $away */
                 if ($away = $spiel->getRelated('away2')) {
+                    /** @var \MemberModel $member */
                     $member = $away->getRelated('member_id');
                     $awayplayer .= '/'.DCAHelper::makeSpielerName($member);
                 } else {
@@ -127,6 +151,33 @@ class ContentSpielbericht extends ContentElement
                 'score' => $score,
             ];
         }
-        $this->Template->spielergebnisse = $spielergebnisse;
+        return $spielergebnisse;
+    }
+
+    protected function compileHighlights(BegegnungModel $begegnung)
+    {
+        $highlights = HighlightModel::findBy(['begegnung_id=?'], [$begegnung->id]);
+        if (!$highlights) {
+            return [];
+        }
+        $result = [];
+        /** @var HighlightModel $highlight */
+        foreach ($highlights as $highlight) {
+
+            $result[$highlight->spieler_id]['highlights'][$highlight->type] = $highlight->value;
+            if (!isset($result[$highlight->spieler_id]['name'])) {
+                $spieler = SpielerModel::findById($highlight->spieler_id);
+                $result[$highlight->spieler_id]['name'] = $spieler->getName();
+                $result[$highlight->spieler_id]['team'] = $spieler->getRelated('pid')->name;
+
+            }
+
+        }
+
+        uasort($result, function ($a, $b) {
+            return $a['name'] <=> $b['name'];
+        });
+
+        return $result;
     }
 }
