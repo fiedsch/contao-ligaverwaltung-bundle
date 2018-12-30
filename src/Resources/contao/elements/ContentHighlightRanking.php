@@ -27,6 +27,8 @@ use Patchwork\Utf8;
  * Content element "Liste aller Spieler einer Mannaschft".
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
+ *
+ *  @property integer $liga
  */
 class ContentHighlightRanking extends ContentElement
 {
@@ -99,6 +101,7 @@ class ContentHighlightRanking extends ContentElement
                 $this->Template->subject = 'Undefined '.$this->rankingtype;
         }
         $this->Template->rankingfield = $this->rankingfield;
+        $this->Template->auf_mannschaftsseite = $this->mannschaft > 0;
     }
 
     /**

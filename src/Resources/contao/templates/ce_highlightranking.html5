@@ -67,7 +67,7 @@
             <th>&nbsp;</th><!-- Rangplatz -->
           <?php endif; ?>
           <th>Name</th>
-          <th>Mannschaft</th>
+          <?php if (!$this->auf_mannschaftsseite): ?><th>Mannschaft</th><?php endif; ?>
         <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
         || $this->rankingfield == \HighlightModel::TYPE_171
         || $this->rankingfield == \HighlightModel::TYPE_180): ?>
@@ -91,7 +91,7 @@
               <td><?= $listitem['hl_rang'] ?></td>
             <?php endif; ?>
             <td><?= $listitem['name'] ?></td>
-            <td><?= $listitem['mannschaft'] ?></td>
+              <?php if (!$this->auf_mannschaftsseite): ?><td><?= $listitem['mannschaft'] ?></td><?php endif; ?>
             <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
             || $this->rankingfield == \HighlightModel::TYPE_171
             || $this->rankingfield == \HighlightModel::TYPE_180): ?>
