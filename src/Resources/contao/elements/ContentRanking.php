@@ -26,6 +26,11 @@ use Patchwork\Utf8;
  * Content element "Liste aller Spieler einer Mannaschft".
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
+ *
+ * @property integer $rankingtype
+ * @property integer $liga
+ * @property integer $mannschaft
+ *
  */
 class ContentRanking extends ContentElement
 {

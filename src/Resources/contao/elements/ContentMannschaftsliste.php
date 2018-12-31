@@ -22,6 +22,8 @@ use Patchwork\Utf8;
  * Content element "Liste aller Mannschaften einer Liga".
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
+ *
+ * @property integer $liga
  */
 class ContentMannschaftsliste extends ContentElement
 {

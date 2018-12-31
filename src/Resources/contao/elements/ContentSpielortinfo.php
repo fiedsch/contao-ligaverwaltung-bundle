@@ -21,6 +21,9 @@ namespace Fiedsch\LigaverwaltungBundle;
 use Contao\ContentElement;
 use Contao\SpielortModel;
 
+/**
+ * @property integer $spielort
+ */
 class ContentSpielortinfo extends ContentElement
 {
     /**

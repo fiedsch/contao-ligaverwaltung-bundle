@@ -13,13 +13,14 @@
 namespace Contao;
 
 /**
- * @property int    $id
- * @property int    $pid
- * @property int    $home
- * @property int    $away
- * @property string $name
- * @property int    $spiel_am
- * @property int    $tstamp
+ * @property integer $id
+ * @property integer $pid
+ * @property integer $home
+ * @property integer $away
+ * @property string  $name
+ * @property integer $spiel_am
+ * @property integer $tstamp
+ * @property integer $spiel_tag
  *
  * @method static BegegnungModel|null findById($id, array $opt=array())
  */

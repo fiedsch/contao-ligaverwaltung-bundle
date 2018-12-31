@@ -13,17 +13,17 @@
 namespace Contao;
 
 /**
- * @property int $id
- * @property int $pid
- * @property int $tstamp
- * @property int $slot
- * @property int $spieltype
- * @property int $home
- * @property int $home2
- * @property int $away
- * @property int $away2
- * @property int $score_home
- * @property int $score_away
+ * @property int    $id
+ * @property int    $pid
+ * @property int    $tstamp
+ * @property int    $slot
+ * @property string $spieltype
+ * @property int    $home
+ * @property int    $home2
+ * @property int    $away
+ * @property int    $away2
+ * @property int    $score_home
+ * @property int    $score_away
  *
  * @method static SpielModel|null findById($id, array $opt=array())
  * @method static Model\Collection|SpielModel|null findByPid($id, array $opt=array())

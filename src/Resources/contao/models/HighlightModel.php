@@ -22,12 +22,6 @@ namespace Contao;
  *
  * @method static HighlightModel|null findById($id, array $opt=array())
  */
-
-/**
- * @see https://github.com/fiedsch/contao-ligaverwaltung-bundle-bundle/
- *
- * @license https://opensource.org/licenses/MIT
- */
 class HighlightModel extends Model
 {
     const TYPE_180 = 1;

@@ -24,6 +24,9 @@ use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\PageModel;
 
+/**
+ * @property integer verband
+ */
 class ContentLigenliste extends ContentElement
 {
     /**

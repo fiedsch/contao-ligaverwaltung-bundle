@@ -25,6 +25,9 @@ use Contao\MannschaftModel;
 use Contao\SpielerModel;
 use Patchwork\Utf8;
 
+/**
+ * @property integer $saison
+ */
 class ContentMannschaftenuebersicht extends ContentElement
 {
     /**
