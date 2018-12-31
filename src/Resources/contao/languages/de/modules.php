@@ -1,16 +1,10 @@
 <?php
 
-/*
- * This file is part of fiedsch/ligaverwaltung-bundle.
- *
- * (c) 2016-2018 Andreas Fieger
- *
- * @package Ligaverwaltung
- * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
- * @license https://opensource.org/licenses/MIT
- */
+/* Bezeichnung der Gruppe im Backend-Menü */
 
 $GLOBALS['TL_LANG']['MOD']['liga'] = 'Ligaverwaltung';
+
+/* Backendmodule */
 
 $GLOBALS['TL_LANG']['MOD']['liga.spielort'] = [
     'Spielorte',
@@ -26,11 +20,6 @@ $GLOBALS['TL_LANG']['MOD']['liga.saison'] = [
     'Saisons',
     'Verwaltung von Saisons',
 ];
-
-//$GLOBALS['TL_LANG']['MOD']['liga.liga'] = [
-//    'Ligen',
-//    'Verwaltung von Ligen',
-//];
 
 $GLOBALS['TL_LANG']['MOD']['liga.verband'] = [
     'Verbände/Ligen',
@@ -61,7 +50,25 @@ $GLOBALS['TL_LANG']['MOD']['liga.spieler_history'] = [
         'Wo hat ein Mitglied wann gespielt?',
     ];
 
+/** Frontendmodule */
+
+$GLOBALS['TL_LANG']['FMD']['mannschaftsseitenreader'] = [
+    'Mannschaftsseiten Reader',
+    'Reader, der eine Mannschaftsseite darstellt. ID der Mannschaft aus der URL.',
+];
+
+$GLOBALS['TL_LANG']['FMD']['spielortseitenreader'] = [
+    'Spielortseiten Reader',
+    'Reader, der eine Spielortseite darstellt. ID des Spielorts aus der URL.',
+];
+$GLOBALS['TL_LANG']['FMD']['spielberichtreader'] = [
+    'Spielbericht Reader',
+    'Reader, der einen Spielbericht darstellt. ID der Begegnung aus der URL.',
+];
+
+/* Überschrift auf der Info-Seite (Popup im Backend) */
+
 $GLOBALS['TL_LANG']['FMD']['ligaverwaltung'] = [
-    'Ligaverwaltung',
+    'XYZ Ligaverwaltung',
     'Ligaverwaltung',
 ];
