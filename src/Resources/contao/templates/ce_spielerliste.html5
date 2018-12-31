@@ -34,8 +34,8 @@
             ($listitem['spieler']->teamcaptain || $listitem['spieler']->co_teamcaptain)
          ) {
             $details = [];
-            if ($listitem['spieler']->teamcaptain)    { $details[] = "TC";    }
-            if ($listitem['spieler']->co_teamcaptain) { $details[] = "Co-TC"; }
+          if ($listitem['spieler']->teamcaptain)    { $details[] = $GLOBALS['TL_LANG']['MSC']['tc1'];    }
+          if ($listitem['spieler']->co_teamcaptain) { $details[] = $GLOBALS['TL_LANG']['MSC']['tc2']; }
             if ($listitem['member']->mobile) {
                 $details[] = sprintf("<a href='tel:%s'>%s</a>",
                     $listitem['member']->mobile,

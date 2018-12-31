@@ -79,3 +79,5 @@ $GLOBALS['TL_LANG']['FMD']['spielberichtreader'] = [
     'Spielbericht Reader',
     'Reader, der einen Spielbericht darstellt. ID der Begegnung aus der URL.',
 ];
+$GLOBALS['TL_LANG']['MSC']['tc1'] = 'TC';
+$GLOBALS['TL_LANG']['MSC']['tc2'] = 'Co-TC';

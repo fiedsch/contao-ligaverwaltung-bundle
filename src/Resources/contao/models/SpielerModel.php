@@ -159,8 +159,8 @@ class SpielerModel extends Model
         $kontaktdaten = implode(', ', $kontaktdaten);
 
         return sprintf('%s%s %s%s%s',
-            $this->teamcaptain ? 'TC' : '',
-            $this->co_teamcaptain ? 'Co-TC' : '',
+            $this->teamcaptain ? $GLOBALS['TL_LANG']['MSC']['tc1'] : '',
+            $this->co_teamcaptain ? $GLOBALS['TL_LANG']['MSC']['tc2'] : '',
             self::getFullNameFor($member),
             $kontaktdaten ? ', ' : '',
             $kontaktdaten
