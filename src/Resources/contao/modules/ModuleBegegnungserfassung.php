@@ -324,13 +324,14 @@ class ModuleBegegnungserfassung extends BackendModule
                 if ($spieler) {
                     foreach ($spieler as $s) {
                         // addslashes() wegen Namen wie O'Reilly
+                        $member = $s->getRelated('member_id');
                         $player_name = addslashes(DCAHelper::makeSpielerName(
-                            $s->getRelated('member_id')
+                            $member
                         ));
                         if ('home' === $homeaway) {
-                            $team_home[] = sprintf("{name: '%s', id: %d}", html_entity_decode($player_name), $s->id);
+                            $team_home[] = sprintf("{name: '%s', id: %d, pass: %d}", html_entity_decode($player_name), $s->id, $member->passnummer);
                         } else {
-                            $team_away[] = sprintf("{name: '%s', id: %d}", html_entity_decode($player_name), $s->id);
+                            $team_away[] = sprintf("{name: '%s', id: %d, pass: %d}", html_entity_decode($player_name), $s->id, $member->passnummer);
                         }
                     }
                 }

@@ -1934,12 +1934,12 @@ if (typeof window !== 'undefined') {
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=36d09f12&ref=app&
-var Appvue_type_template_id_36d09f12_ref_app_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._m(0),_c('form',{staticClass:"tl_form tl_edit_form",attrs:{"method":"POST","enctype":"application/x-www-form-urlencoded"}},[_c('div',{staticClass:"tl_formbody_edit"},[_c('input',{attrs:{"type":"hidden","name":"REQUEST_TOKEN"},domProps:{"value":_vm.requestToken}}),_c('input',{attrs:{"type":"hidden","name":"FORM_SUBMIT","value":"begegnungserfassung"}}),_c('input',{attrs:{"type":"hidden","name":"id"},domProps:{"value":_vm.begegnungId}}),_c('input',{attrs:{"type":"hidden","name":"homelineup"},domProps:{"value":_vm.home.lineup}}),_c('input',{attrs:{"type":"hidden","name":"awaylineup"},domProps:{"value":_vm.away.lineup}}),_c('Aufstellung',{attrs:{"home":_vm.home,"away":_vm.away,"slots":_vm.numSlots}}),_c('ResultsTable',{attrs:{"home":_vm.home,"away":_vm.away,"spielplan":_vm.spielplan}}),_c('HighlightsEntry',{attrs:{"available":_vm.availableAll}})],1),_vm._m(1)])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=8511ee26&ref=app&
+var Appvue_type_template_id_8511ee26_ref_app_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._m(0),_c('form',{staticClass:"tl_form tl_edit_form",attrs:{"method":"POST","enctype":"application/x-www-form-urlencoded"}},[_c('div',{staticClass:"tl_formbody_edit"},[_c('input',{attrs:{"type":"hidden","name":"REQUEST_TOKEN"},domProps:{"value":_vm.requestToken}}),_c('input',{attrs:{"type":"hidden","name":"FORM_SUBMIT","value":"begegnungserfassung"}}),_c('input',{attrs:{"type":"hidden","name":"id"},domProps:{"value":_vm.begegnungId}}),_c('input',{attrs:{"type":"hidden","name":"homelineup"},domProps:{"value":_vm.home.lineup}}),_c('input',{attrs:{"type":"hidden","name":"awaylineup"},domProps:{"value":_vm.away.lineup}}),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.showspielerpass),expression:"showspielerpass"}],attrs:{"type":"checkbox","id":"showspielerpass"},domProps:{"checked":Array.isArray(_vm.showspielerpass)?_vm._i(_vm.showspielerpass,null)>-1:(_vm.showspielerpass)},on:{"change":function($event){var $$a=_vm.showspielerpass,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.showspielerpass=$$a.concat([$$v]))}else{$$i>-1&&(_vm.showspielerpass=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.showspielerpass=$$c}}}}),_c('label',{attrs:{"for":"showspielerpass"}},[_vm._v("Spielerpass-Nummern anzeigen")]),_c('Aufstellung',{attrs:{"home":_vm.home,"away":_vm.away,"slots":_vm.numSlots,"showspielerpass":_vm.showspielerpass}}),_c('ResultsTable',{attrs:{"home":_vm.home,"away":_vm.away,"spielplan":_vm.spielplan,"showspielerpass":_vm.showspielerpass}}),_c('HighlightsEntry',{attrs:{"available":_vm.availableAll,"showspielerpass":_vm.showspielerpass}})],1),_vm._m(1)])])}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"tl_buttons"}},[_c('a',{staticClass:"header_back",attrs:{"href":"contao?do=liga.begegnungserfassung","title":"","accesskey":"b","onclick":"Backend.getScrollOffset()"}},[_vm._v("Zurück")])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"tl_formbody_submit"},[_c('div',{staticClass:"tl_submit_container"},[_c('button',{staticClass:"tl_submit",attrs:{"type":"submit","name":"save","id":"save","accesskey":"s"}},[_vm._v("Speichern")])])])}]
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=36d09f12&ref=app&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=8511ee26&ref=app&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
@@ -1984,34 +1984,35 @@ function _nonIterableSpread() {
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
 }
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Aufstellung.vue?vue&type=template&id=16e59a80&
-var Aufstellungvue_type_template_id_16e59a80_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"aufstellung"},[_c('div',{staticClass:"team-lineup"},[_c('TeamLineup',{attrs:{"name":_vm.home.name,"suffix":"H","available":_vm.home.available,"lineup":_vm.home.lineup,"slots":_vm.slots}})],1),_c('div',{staticClass:"team-lineup"},[_c('TeamLineup',{attrs:{"name":_vm.away.name,"suffix":"G","available":_vm.away.available,"lineup":_vm.away.lineup,"slots":_vm.slots}})],1)])}
-var Aufstellungvue_type_template_id_16e59a80_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Aufstellung.vue?vue&type=template&id=5fd04460&
+var Aufstellungvue_type_template_id_5fd04460_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"aufstellung"},[_c('div',{staticClass:"team-lineup"},[_c('TeamLineup',{attrs:{"name":_vm.home.name,"suffix":"H","available":_vm.home.available,"lineup":_vm.home.lineup,"slots":_vm.slots,"showspielerpass":_vm.showspielerpass}})],1),_c('div',{staticClass:"team-lineup"},[_c('TeamLineup',{attrs:{"name":_vm.away.name,"suffix":"G","available":_vm.away.available,"lineup":_vm.away.lineup,"slots":_vm.slots,"showspielerpass":_vm.showspielerpass}})],1)])}
+var Aufstellungvue_type_template_id_5fd04460_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Aufstellung.vue?vue&type=template&id=16e59a80&
+// CONCATENATED MODULE: ./src/components/Aufstellung.vue?vue&type=template&id=5fd04460&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("c5f6");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TeamLineup.vue?vue&type=template&id=0f20cfa2&
-var TeamLineupvue_type_template_id_0f20cfa2_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"team-lineup"},[_c('h2',[_vm._v(_vm._s(_vm.name))]),_vm._l((_vm.slots),function(i){return _c('div',{key:'lps_'+i},[_c('LineupPlayerSelect',{attrs:{"suffix":_vm.suffix,"slotNumber":i,"available":_vm.available,"lineup":_vm.lineup},on:{"lineupplayerchanged":_vm.lineupplayerchanged}})],1)})],2)}
-var TeamLineupvue_type_template_id_0f20cfa2_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TeamLineup.vue?vue&type=template&id=1613b09a&
+var TeamLineupvue_type_template_id_1613b09a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"team-lineup"},[_c('h2',[_vm._v(_vm._s(_vm.name))]),_vm._l((_vm.slots),function(i){return _c('div',{key:'lps_'+i},[_c('LineupPlayerSelect',{attrs:{"suffix":_vm.suffix,"slotNumber":i,"available":_vm.available,"lineup":_vm.lineup,"showspielerpass":_vm.showspielerpass},on:{"lineupplayerchanged":_vm.lineupplayerchanged}})],1)})],2)}
+var TeamLineupvue_type_template_id_1613b09a_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/TeamLineup.vue?vue&type=template&id=0f20cfa2&
+// CONCATENATED MODULE: ./src/components/TeamLineup.vue?vue&type=template&id=1613b09a&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/LineupPlayerSelect.vue?vue&type=template&id=7b7cb179&
-var LineupPlayerSelectvue_type_template_id_7b7cb179_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"linup-player"},[_c('span',{staticClass:"slot"},[_vm._v(_vm._s(_vm.suffix)+_vm._s(_vm.slotNumber))]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.selected),expression:"selected"}],staticClass:"tl_select unsetwidth",attrs:{"name":_vm.selectname},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.selected=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},_vm._l((_vm.available),function(a){return _c('option',{key:'player_'+a.id,class:{ isNotAvailable: !_vm.isAvailable(a.id) },attrs:{"disabled":!_vm.isAvailable(a.id)},domProps:{"value":a.id}},[_vm._v(_vm._s(a.name))])}))])}
-var LineupPlayerSelectvue_type_template_id_7b7cb179_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/LineupPlayerSelect.vue?vue&type=template&id=91b402ec&
+var LineupPlayerSelectvue_type_template_id_91b402ec_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"linup-player"},[_c('span',{staticClass:"slot"},[_vm._v(_vm._s(_vm.suffix)+_vm._s(_vm.slotNumber))]),_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.selected),expression:"selected"}],staticClass:"tl_select unsetwidth",attrs:{"name":_vm.selectname},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.selected=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},_vm._l((_vm.available),function(a){return _c('option',{key:'player_'+a.id,class:{ isNotAvailable: !_vm.isAvailable(a.id) },attrs:{"disabled":!_vm.isAvailable(a.id)},domProps:{"value":a.id}},[_vm._v("\n            "+_vm._s(a.name)+" "),(_vm.showspielerpass && a.pass > 0)?_c('span',[_vm._v("("+_vm._s(a.pass)+")")]):_vm._e()])}))])}
+var LineupPlayerSelectvue_type_template_id_91b402ec_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/LineupPlayerSelect.vue?vue&type=template&id=7b7cb179&
+// CONCATENATED MODULE: ./src/components/LineupPlayerSelect.vue?vue&type=template&id=91b402ec&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/LineupPlayerSelect.vue?vue&type=script&lang=js&
 
 
 
+//
 //
 //
 //
@@ -2050,11 +2051,15 @@ var LineupPlayerSelectvue_type_template_id_7b7cb179_staticRenderFns = []
     suffix: {
       type: String,
       required: true
+    },
+    showspielerpass: {
+      type: Boolean,
+      default: false
     }
   },
   data: function data() {
     return {
-      selected: 0
+      selected: this.slotNumber <= this.lineup.length ? this.lineup[this.slotNumber - 1] : 0
     };
   },
   computed: {
@@ -2184,8 +2189,8 @@ function normalizeComponent (
 
 var component = normalizeComponent(
   components_LineupPlayerSelectvue_type_script_lang_js_,
-  LineupPlayerSelectvue_type_template_id_7b7cb179_render,
-  LineupPlayerSelectvue_type_template_id_7b7cb179_staticRenderFns,
+  LineupPlayerSelectvue_type_template_id_91b402ec_render,
+  LineupPlayerSelectvue_type_template_id_91b402ec_staticRenderFns,
   false,
   null,
   null,
@@ -2197,6 +2202,7 @@ component.options.__file = "LineupPlayerSelect.vue"
 /* harmony default export */ var LineupPlayerSelect = (component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TeamLineup.vue?vue&type=script&lang=js&
 
+//
 //
 //
 //
@@ -2247,6 +2253,10 @@ component.options.__file = "LineupPlayerSelect.vue"
     slots: {
       type: Number,
       required: true
+    },
+    showspielerpass: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -2274,8 +2284,8 @@ var TeamLineupvue_type_style_index_0_lang_css_ = __webpack_require__("3152");
 
 var TeamLineup_component = normalizeComponent(
   components_TeamLineupvue_type_script_lang_js_,
-  TeamLineupvue_type_template_id_0f20cfa2_render,
-  TeamLineupvue_type_template_id_0f20cfa2_staticRenderFns,
+  TeamLineupvue_type_template_id_1613b09a_render,
+  TeamLineupvue_type_template_id_1613b09a_staticRenderFns,
   false,
   null,
   null,
@@ -2287,6 +2297,8 @@ TeamLineup_component.options.__file = "TeamLineup.vue"
 /* harmony default export */ var TeamLineup = (TeamLineup_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Aufstellung.vue?vue&type=script&lang=js&
 
+//
+//
 //
 //
 //
@@ -2335,6 +2347,10 @@ TeamLineup_component.options.__file = "TeamLineup.vue"
     slots: {
       type: Number,
       required: true
+    },
+    showspielerpass: {
+      type: Boolean,
+      default: false
     }
   }
 });
@@ -2354,8 +2370,8 @@ var Aufstellungvue_type_style_index_0_lang_css_ = __webpack_require__("4d9c");
 
 var Aufstellung_component = normalizeComponent(
   components_Aufstellungvue_type_script_lang_js_,
-  Aufstellungvue_type_template_id_16e59a80_render,
-  Aufstellungvue_type_template_id_16e59a80_staticRenderFns,
+  Aufstellungvue_type_template_id_5fd04460_render,
+  Aufstellungvue_type_template_id_5fd04460_staticRenderFns,
   false,
   null,
   null,
@@ -2365,12 +2381,12 @@ var Aufstellung_component = normalizeComponent(
 
 Aufstellung_component.options.__file = "Aufstellung.vue"
 /* harmony default export */ var Aufstellung = (Aufstellung_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ResultsTable.vue?vue&type=template&id=7c248c75&
-var ResultsTablevue_type_template_id_7c248c75_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"results-table"},[_c('table',[_c('TableHeader',{attrs:{"home":_vm.home,"away":_vm.away}}),_c('TableBody',{attrs:{"home":_vm.home,"away":_vm.away,"spielplan":_vm.spielplan}})],1)])}
-var ResultsTablevue_type_template_id_7c248c75_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ResultsTable.vue?vue&type=template&id=f6baad0c&
+var ResultsTablevue_type_template_id_f6baad0c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"results-table"},[_c('table',[_c('TableHeader',{attrs:{"home":_vm.home,"away":_vm.away}}),_c('TableBody',{attrs:{"home":_vm.home,"away":_vm.away,"spielplan":_vm.spielplan,"showspielerpass":_vm.showspielerpass}})],1)])}
+var ResultsTablevue_type_template_id_f6baad0c_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/ResultsTable.vue?vue&type=template&id=7c248c75&
+// CONCATENATED MODULE: ./src/components/ResultsTable.vue?vue&type=template&id=f6baad0c&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TableHeader.vue?vue&type=template&id=1d5bfbc9&
 var TableHeadervue_type_template_id_1d5bfbc9_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('thead',[_c('tr',[_c('th'),_c('th',[_vm._v(" "+_vm._s(_vm.home.name)+" ")]),_c('th',[_vm._v(" "+_vm._s(_vm.away.name)+" ")]),_c('th',[_vm._v(" "+_vm._s(_vm.home.name)+" ")]),_c('th',[_vm._v(" "+_vm._s(_vm.away.name)+" ")]),_c('th',[_vm._v(" Spiel ")]),_c('th',[_vm._v(" Gesamt ")])])])}
@@ -2438,19 +2454,19 @@ var TableHeader_component = normalizeComponent(
 
 TableHeader_component.options.__file = "TableHeader.vue"
 /* harmony default export */ var TableHeader = (TableHeader_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TableBody.vue?vue&type=template&id=3e89e800&
-var TableBodyvue_type_template_id_3e89e800_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tbody',[_vm._l((_vm.spielplan),function(spiel,index){return _c('tr',{key:'row_'+index},[_c('td',[_c('span',{staticClass:"slot"},[_vm._v(_vm._s(index+1))])]),_c('td',[_c('SpielerSelect',{attrs:{"team":_vm.home,"position":spiel.home,"index":index,"spielplan":_vm.spielplan}})],1),_c('td',[_c('SpielerSelect',{attrs:{"team":_vm.away,"position":spiel.away,"index":index,"spielplan":_vm.spielplan}})],1),_c('td',{staticClass:"narrow centered"},[_c('SpielerScore',{attrs:{"team":_vm.home,"index":index,"spielplan":_vm.spielplan}})],1),_c('td',{staticClass:"narrow centered"},[_c('SpielerScore',{attrs:{"team":_vm.away,"index":index,"spielplan":_vm.spielplan}})],1),_c('td',{staticClass:"narrow centered"},[_c('SpielErgebnis',{staticClass:"spiel",attrs:{"index":index,"spielplan":_vm.spielplan}})],1),_c('td',{staticClass:"narrow centered"},[(spiel.scores.home != null && spiel.scores.away != null)?_c('span',[_c('SpielStand',{staticClass:"gesamt",attrs:{"index":index,"spielplan":_vm.spielplan}})],1):_vm._e()])])}),_c('tr',[_c('td',{attrs:{"colspan":"5"}}),_c('td',{staticClass:"centered",attrs:{"colspan":"1"}},[_c('LegStand',{staticClass:"gesamt",attrs:{"index":_vm.spielplan.length,"spielplan":_vm.spielplan}})],1),_c('td',{staticClass:"centered",attrs:{"colspan":"1"}},[_c('SpielStand',{staticClass:"gesamt",attrs:{"index":_vm.spielplan.length,"spielplan":_vm.spielplan}})],1)])],2)}
-var TableBodyvue_type_template_id_3e89e800_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TableBody.vue?vue&type=template&id=69f5c816&
+var TableBodyvue_type_template_id_69f5c816_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tbody',[_vm._l((_vm.spielplan),function(spiel,index){return _c('tr',{key:'row_'+index},[_c('td',[_c('span',{staticClass:"slot"},[_vm._v(_vm._s(index+1))])]),_c('td',[_c('SpielerSelect',{attrs:{"team":_vm.home,"position":spiel.home,"index":index,"spielplan":_vm.spielplan,"showspielerpass":_vm.showspielerpass}})],1),_c('td',[_c('SpielerSelect',{attrs:{"team":_vm.away,"position":spiel.away,"index":index,"spielplan":_vm.spielplan,"showspielerpass":_vm.showspielerpass}})],1),_c('td',{staticClass:"narrow centered"},[_c('SpielerScore',{attrs:{"team":_vm.home,"index":index,"spielplan":_vm.spielplan}})],1),_c('td',{staticClass:"narrow centered"},[_c('SpielerScore',{attrs:{"team":_vm.away,"index":index,"spielplan":_vm.spielplan}})],1),_c('td',{staticClass:"narrow centered"},[_c('SpielErgebnis',{staticClass:"spiel",attrs:{"index":index,"spielplan":_vm.spielplan}})],1),_c('td',{staticClass:"narrow centered"},[(spiel.scores.home != null && spiel.scores.away != null)?_c('span',[_c('SpielStand',{staticClass:"gesamt",attrs:{"index":index,"spielplan":_vm.spielplan}})],1):_vm._e()])])}),_c('tr',[_c('td',{attrs:{"colspan":"5"}}),_c('td',{staticClass:"centered",attrs:{"colspan":"1"}},[_c('LegStand',{staticClass:"gesamt",attrs:{"index":_vm.spielplan.length,"spielplan":_vm.spielplan}})],1),_c('td',{staticClass:"centered",attrs:{"colspan":"1"}},[_c('SpielStand',{staticClass:"gesamt",attrs:{"index":_vm.spielplan.length,"spielplan":_vm.spielplan}})],1)])],2)}
+var TableBodyvue_type_template_id_69f5c816_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/TableBody.vue?vue&type=template&id=3e89e800&
+// CONCATENATED MODULE: ./src/components/TableBody.vue?vue&type=template&id=69f5c816&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/SpielerSelect.vue?vue&type=template&id=74dc4919&
-var SpielerSelectvue_type_template_id_74dc4919_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',[_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.selected),expression:"selected"}],staticClass:"tl_select unsetwidth",class:{ double: _vm.isDouble, winner: _vm.isWinner, looser: _vm.isLooser },attrs:{"title":"SpleierSelect","name":_vm.selectname,"tabindex":"-1"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.selected=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},_vm._l((_vm.team.lineup.length),function(lineupindex){return _c('option',{key:'pl1_'+(lineupindex-1),domProps:{"value":lineupindex-1}},[_vm._v(_vm._s(_vm.spielername(lineupindex-1))+"\n        ")])})),(_vm.isDouble)?_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.selected2),expression:"selected2"}],staticClass:"tl_select unsetwidth",class:{ double: _vm.isDouble, winner: _vm.isWinner, looser: _vm.isLooser },attrs:{"title":"SpleierSelect2","name":_vm.selectname2,"tabindex":"-1"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.selected2=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},_vm._l((_vm.team.lineup.length),function(lineupindex){return _c('option',{key:'pl2_'+(lineupindex-1),domProps:{"value":lineupindex-1}},[_vm._v(_vm._s(_vm.spielername(lineupindex-1))+"\n        ")])})):_vm._e()])}
-var SpielerSelectvue_type_template_id_74dc4919_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/SpielerSelect.vue?vue&type=template&id=ce5ce38e&
+var SpielerSelectvue_type_template_id_ce5ce38e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',[_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.selected),expression:"selected"}],staticClass:"tl_select unsetwidth",class:{ double: _vm.isDouble, winner: _vm.isWinner, loser: _vm.isLoser },attrs:{"title":"SpleierSelect","name":_vm.selectname,"tabindex":"-1"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.selected=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},_vm._l((_vm.team.lineup.length),function(lineupindex){return _c('option',{key:'pl1_'+(lineupindex-1),domProps:{"value":lineupindex-1}},[_vm._v(_vm._s(_vm.spielername(lineupindex-1))+"\n        ")])})),(_vm.isDouble)?_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.selected2),expression:"selected2"}],staticClass:"tl_select unsetwidth",class:{ double: _vm.isDouble, winner: _vm.isWinner, loser: _vm.isLoser },attrs:{"title":"SpleierSelect2","name":_vm.selectname2,"tabindex":"-1"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.selected2=$event.target.multiple ? $$selectedVal : $$selectedVal[0]}}},_vm._l((_vm.team.lineup.length),function(lineupindex){return _c('option',{key:'pl2_'+(lineupindex-1),domProps:{"value":lineupindex-1}},[_vm._v(_vm._s(_vm.spielername(lineupindex-1))+"\n        ")])})):_vm._e()])}
+var SpielerSelectvue_type_template_id_ce5ce38e_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/SpielerSelect.vue?vue&type=template&id=74dc4919&
+// CONCATENATED MODULE: ./src/components/SpielerSelect.vue?vue&type=template&id=ce5ce38e&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/SpielerSelect.vue?vue&type=script&lang=js&
 
@@ -2505,6 +2521,10 @@ var SpielerSelectvue_type_template_id_74dc4919_staticRenderFns = []
     spielplan: {
       type: Array,
       required: true
+    },
+    showspielerpass: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -2528,7 +2548,7 @@ var SpielerSelectvue_type_template_id_74dc4919_staticRenderFns = []
       }
 
       var suffix = this.team.key === 'home' ? "H" : "G";
-      return "(" + suffix + (index + 1) + ") " + player[0].name;
+      return "(" + suffix + (index + 1) + ") " + player[0].name + (this.showspielerpass && player[0].pass > 0 ? " (" + player[0].pass + ")" : '');
     }
   },
   computed: {
@@ -2574,7 +2594,7 @@ var SpielerSelectvue_type_template_id_74dc4919_staticRenderFns = []
 
       return spiel.scores[this.team.key] > spiel.scores[other];
     },
-    isLooser: function isLooser() {
+    isLoser: function isLoser() {
       var other = this.team.key === 'home' ? 'away' : 'home';
       var spiel = this.spielplan[this.index];
 
@@ -2609,8 +2629,8 @@ var SpielerSelectvue_type_style_index_0_lang_css_ = __webpack_require__("cb4d");
 
 var SpielerSelect_component = normalizeComponent(
   components_SpielerSelectvue_type_script_lang_js_,
-  SpielerSelectvue_type_template_id_74dc4919_render,
-  SpielerSelectvue_type_template_id_74dc4919_staticRenderFns,
+  SpielerSelectvue_type_template_id_ce5ce38e_render,
+  SpielerSelectvue_type_template_id_ce5ce38e_staticRenderFns,
   false,
   null,
   null,
@@ -2985,6 +3005,10 @@ SpielStand_component.options.__file = "SpielStand.vue"
     spielplan: {
       type: Array,
       required: true
+    },
+    showspielerpass: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -3009,8 +3033,8 @@ var TableBodyvue_type_style_index_0_lang_css_ = __webpack_require__("4431");
 
 var TableBody_component = normalizeComponent(
   components_TableBodyvue_type_script_lang_js_,
-  TableBodyvue_type_template_id_3e89e800_render,
-  TableBodyvue_type_template_id_3e89e800_staticRenderFns,
+  TableBodyvue_type_template_id_69f5c816_render,
+  TableBodyvue_type_template_id_69f5c816_staticRenderFns,
   false,
   null,
   null,
@@ -3054,6 +3078,10 @@ TableBody_component.options.__file = "TableBody.vue"
     spielplan: {
       type: Array,
       required: true
+    },
+    showspielerpass: {
+      type: Boolean,
+      default: false
     }
   }
 });
@@ -3073,8 +3101,8 @@ var ResultsTablevue_type_style_index_0_lang_css_ = __webpack_require__("04f9");
 
 var ResultsTable_component = normalizeComponent(
   components_ResultsTablevue_type_script_lang_js_,
-  ResultsTablevue_type_template_id_7c248c75_render,
-  ResultsTablevue_type_template_id_7c248c75_staticRenderFns,
+  ResultsTablevue_type_template_id_f6baad0c_render,
+  ResultsTablevue_type_template_id_f6baad0c_staticRenderFns,
   false,
   null,
   null,
@@ -3084,12 +3112,12 @@ var ResultsTable_component = normalizeComponent(
 
 ResultsTable_component.options.__file = "ResultsTable.vue"
 /* harmony default export */ var ResultsTable = (ResultsTable_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/HighlightsEntry.vue?vue&type=template&id=241bdace&
-var HighlightsEntryvue_type_template_id_241bdace_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.available.length>0)?_c('div',{staticClass:"highlights"},[_c('h2',[_vm._v("Highlights")]),_c('table',[_vm._m(0),_c('tbody',_vm._l((_vm.sortedAvailable),function(player,i){return _c('tr',{key:'pr_'+i},[_c('td',[_vm._v("("+_vm._s(player.abbrev)+") "+_vm._s(player.name))]),_c('td',[_c('NumberInput',{attrs:{"inputname":'one80_'+player.id,"placeholder":'180er',"value":_vm.highlights[i].scores.one80}})],1),_c('td',[_c('NumberInput',{attrs:{"inputname":'one71_'+player.id,"placeholder":'171er',"value":_vm.highlights[i].scores.one71}})],1),_c('td',[_c('NumberListInput',{attrs:{"inputname":'highfinish_'+player.id,"placeholder":'Highfinishes',"value":_vm.highlights[i].scores.highfinish}})],1),_c('td',[_c('NumberListInput',{attrs:{"inputname":'shortleg_'+player.id,"placeholder":'Shortlegs',"value":_vm.highlights[i].scores.shortleg}})],1)])}))])]):_vm._e()}
-var HighlightsEntryvue_type_template_id_241bdace_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('thead',[_c('tr',[_c('th',[_vm._v("Spieler")]),_c('th',[_vm._v("180er")]),_c('th',[_vm._v("171er")]),_c('th',[_vm._v("Highfinish")]),_c('th',[_vm._v("Shortleg")])])])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"f560fc76-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/HighlightsEntry.vue?vue&type=template&id=9514244e&
+var HighlightsEntryvue_type_template_id_9514244e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.available.length>0)?_c('div',{staticClass:"highlights"},[_c('h2',[_vm._v("Highlights")]),_c('table',[_vm._m(0),_c('tbody',_vm._l((_vm.sortedAvailable),function(player,i){return _c('tr',{key:'pr_'+i},[_c('td',[_vm._v("\n                ("+_vm._s(player.abbrev)+") "+_vm._s(player.name)+"\n                "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.showspielerpass),expression:"showspielerpass"}]},[_vm._v("("+_vm._s(player.pass)+")")])]),_c('td',[_c('NumberInput',{attrs:{"inputname":'one80_'+player.id,"placeholder":'180er',"value":_vm.highlights[i].scores.one80}})],1),_c('td',[_c('NumberInput',{attrs:{"inputname":'one71_'+player.id,"placeholder":'171er',"value":_vm.highlights[i].scores.one71}})],1),_c('td',[_c('NumberListInput',{attrs:{"inputname":'highfinish_'+player.id,"placeholder":'Highfinishes',"value":_vm.highlights[i].scores.highfinish}})],1),_c('td',[_c('NumberListInput',{attrs:{"inputname":'shortleg_'+player.id,"placeholder":'Shortlegs',"value":_vm.highlights[i].scores.shortleg}})],1)])}))])]):_vm._e()}
+var HighlightsEntryvue_type_template_id_9514244e_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('thead',[_c('tr',[_c('th',[_vm._v("Spieler")]),_c('th',[_vm._v("180er")]),_c('th',[_vm._v("171er")]),_c('th',[_vm._v("Highfinish")]),_c('th',[_vm._v("Shortleg")])])])}]
 
 
-// CONCATENATED MODULE: ./src/components/HighlightsEntry.vue?vue&type=template&id=241bdace&
+// CONCATENATED MODULE: ./src/components/HighlightsEntry.vue?vue&type=template&id=9514244e&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.match.js
 var es6_regexp_match = __webpack_require__("4917");
@@ -3270,6 +3298,9 @@ NumberListInput_component.options.__file = "NumberListInput.vue"
 //
 //
 //
+//
+//
+//
 
 /**
  * Eingabe von Highhlights für einzelne Spieler
@@ -3287,6 +3318,10 @@ NumberListInput_component.options.__file = "NumberListInput.vue"
     available: {
       type: Array,
       required: true
+    },
+    showspielerpass: {
+      type: Boolean,
+      default: false
     }
   },
   data: function data() {
@@ -3341,8 +3376,8 @@ var HighlightsEntryvue_type_style_index_0_lang_css_ = __webpack_require__("4f4b"
 
 var HighlightsEntry_component = normalizeComponent(
   components_HighlightsEntryvue_type_script_lang_js_,
-  HighlightsEntryvue_type_template_id_241bdace_render,
-  HighlightsEntryvue_type_template_id_241bdace_staticRenderFns,
+  HighlightsEntryvue_type_template_id_9514244e_render,
+  HighlightsEntryvue_type_template_id_9514244e_staticRenderFns,
   false,
   null,
   null,
@@ -3360,6 +3395,10 @@ HighlightsEntry_component.options.__file = "HighlightsEntry.vue"
 
 
 
+//
+//
+//
+//
 //
 //
 //
@@ -3430,7 +3469,8 @@ HighlightsEntry_component.options.__file = "HighlightsEntry.vue"
         test: 'initial'
       },
       requestToken: '',
-      begegnungId: ''
+      begegnungId: '',
+      showspielerpass: false
     };
   },
   computed: {
@@ -3443,7 +3483,8 @@ HighlightsEntry_component.options.__file = "HighlightsEntry.vue"
         return {
           id: el.id,
           name: el.name,
-          abbrev: this.getAbbrev(el.id)
+          abbrev: this.getAbbrev(el.id),
+          pass: el.pass
         };
       }, this);
     }
@@ -3550,7 +3591,7 @@ var Appvue_type_style_index_0_lang_css_ = __webpack_require__("034f");
 
 var App_component = normalizeComponent(
   src_Appvue_type_script_lang_js_,
-  Appvue_type_template_id_36d09f12_ref_app_render,
+  Appvue_type_template_id_8511ee26_ref_app_render,
   staticRenderFns,
   false,
   null,
