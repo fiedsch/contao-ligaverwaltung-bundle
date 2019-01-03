@@ -53,6 +53,19 @@ Hier kann festgelegt werden, wie bei den Spielerrankings sortiert werden soll.
 Je nach gewählter Einstellung wird bei der Frontendausgabe die Spalte "Punkte" 
 ausgegeben ("nach Punkten") oder nicht ("nach gewonnenen Spielen").
 
-[Details zur Berechnung](ranking_aglogithms.md)  
+[Details zur Berechnung](ranking_aglogithms.md)
 
+
+### Textbausteine
+
+Die Begriffe "TC" (Teamcaptain) und "Co-TC" (Co-Teamcaptain oder zweiter TC) können
+über Variablen konfiguriert werden. Beispiel für eine geänderte Definition:
+
+```php
+# app/Resources/contao/languages/de/default.php
+$GLOBALS['TL_LANG']['MSC']['tc1'] = '1. TC';
+$GLOBALS['TL_LANG']['MSC']['tc2'] = '2. TC';
+```
+Diese Textbausteine werden im Template `ce_spielerliste.html5` und im `SpielerModel`
+(und damit letztlich in `ContentMannschaftenuebersicht`) verwendet.
 
