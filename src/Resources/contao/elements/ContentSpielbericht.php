@@ -156,7 +156,7 @@ class ContentSpielbericht extends ContentElement
 
     protected function compileHighlights(BegegnungModel $begegnung)
     {
-        $highlights = HighlightModel::findBy(['begegnung_id=?'], [$begegnung->id]);
+        $highlights = HighlightModel::findBy(['begegnung_id=?', 'spieler_id<>?'], [$begegnung->id, 0]);
         if (!$highlights) {
             return [];
         }
@@ -167,8 +167,11 @@ class ContentSpielbericht extends ContentElement
             $result[$highlight->spieler_id]['highlights'][$highlight->type] = $highlight->value;
             if (!isset($result[$highlight->spieler_id]['name'])) {
                 $spieler = SpielerModel::findById($highlight->spieler_id);
-                $result[$highlight->spieler_id]['name'] = $spieler->getName();
-                $result[$highlight->spieler_id]['team'] = $spieler->getRelated('pid')->name;
+                // Zusatzcheck: verwaiste Highlight-Einträge
+                if ($spieler) {
+                    $result[$highlight->spieler_id]['name'] = $spieler->getName();
+                    $result[$highlight->spieler_id]['team'] = $spieler->getRelated('pid')->name;
+                }
 
             }
 
