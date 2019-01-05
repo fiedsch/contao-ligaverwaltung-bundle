@@ -62,6 +62,7 @@ Die Begriffe "TC" (Teamcaptain) und "Co-TC" (Co-Teamcaptain oder zweiter TC) kö
 über Variablen konfiguriert werden. Beispiel für eine geänderte Definition:
 
 ```php
+<?php
 # app/Resources/contao/languages/de/default.php
 $GLOBALS['TL_LANG']['MSC']['tc1'] = '1. TC';
 $GLOBALS['TL_LANG']['MSC']['tc2'] = '2. TC';
