@@ -65,8 +65,8 @@ dann die gewünschten Regeln hinterlegt werden.
 Dazu müssen die folgenden Dateien angelegt werden:
 
 ```php
-# app/ContaoManagerPlugin.php
 <?php
+# app/ContaoManagerPlugin.php
 
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
@@ -91,8 +91,8 @@ class ContaoManagerPlugin implements BundlePluginInterface
 ``` 
 
 ```php
-# src/AppBundle/Helper/RankingHelper.php
 <?php
+# src/AppBundle/Helper/RankingHelper.php
 
 namespace AppBundle\Helper;
 
@@ -125,8 +125,8 @@ class RankingHelper extends OriginalHelper
 
 
 ```php
-# src/AppBundle/AppBundle.php
 <?php
+# src/AppBundle/AppBundle.php
 
 namespace AppBundle;
 
