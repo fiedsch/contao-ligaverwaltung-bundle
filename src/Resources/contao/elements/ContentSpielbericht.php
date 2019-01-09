@@ -46,6 +46,7 @@ class ContentSpielbericht extends ContentElement
     public function generate()
     {
         if (TL_MODE === 'BE') {
+            /** @var BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
             $begegnunglabel = BegegnungModel::findById($this->begegnung) ? BegegnungModel::findById($this->begegnung)->getLabel('full') : 'Begegnung nicht gefunden!';

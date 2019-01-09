@@ -42,6 +42,7 @@ class ModuleSpielortseitenReader extends Module
     public function generate()
     {
         if (TL_MODE === 'BE') {
+            /** @var BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['spielortseitenreader'][0]).' ###';
