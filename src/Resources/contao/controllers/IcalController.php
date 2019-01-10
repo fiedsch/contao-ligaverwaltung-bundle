@@ -14,6 +14,8 @@ namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BegegnungModel;
 use Contao\LigaModel;
+use Contao\Controller;
+use Contao\Config;
 use Contao\MannschaftModel;
 use Contao\SpielortModel;
 use Eluceo\iCal\Component\Calendar;
@@ -41,6 +43,7 @@ class IcalController
         $this->ligaid = $ligaid;
         $this->mannschaftid = $mannschaftid;
         $this->initialize();
+        Controller::loadDataContainer('tl_begegnung'); // see generateIcalEvent()
     }
 
     /**
@@ -141,8 +144,24 @@ class IcalController
                 $spielort->city
         );
 
+        $dtStart = new \DateTime(date('Y-m-d H:i:s', $begegnung->spiel_am), new \DateTimeZone(Config::get('timeZone')));
+
+        // Did they change the default configuration (date + time) to date only in
+        // the site's contfiguration? Then add a default time here:
+        if ($GLOBALS['TL_DCA']['tl_begegnung']['fields']['spiel_am']['eval']['rgxp'] !== 'datim') {
+            // TODO: "Prime-Time" nicht hart kodiert
+            // In app/config/config.yml (oder parameters.yml?) als ligaverwaltung.default_time
+            // - - - - - - - -
+            // # config.yml
+            // parameters:
+            //     ligaverwaltung.default_time: '20:00'
+            // - - - - - - - -
+            // und dann hier mittels System::getContainer()->getParameter('ligaverwaltung.default_time');
+            // (das Ergebnis dann natürlich noch in Stunden, Minuten splitten).
+            $dtStart->setTime(20, 0);
+        }
         $vEvent
-            ->setDtStart(new \DateTime(date('Y-m-d H:i:s', $begegnung->spiel_am)))
+            ->setDtStart($dtStart)
             ->setSummary($summary)
             ->setLocation($location);
 
