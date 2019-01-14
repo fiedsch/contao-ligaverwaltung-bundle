@@ -13,9 +13,9 @@
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
 use Fiedsch\LigaverwaltungBundle\PlayerHistoryController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller; // for annotations!
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Annotation\Route; // for annotations!
 
 /**
  * Handles the bundle's backend routes.

@@ -13,11 +13,11 @@
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
 use Fiedsch\LigaverwaltungBundle\IcalController;
-use Fiedsch\LigaverwaltungBundle\JsonController; // for annotations!
+use Fiedsch\LigaverwaltungBundle\JsonController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Annotation\Route; // for annotations!
 
 /**
  * Handles the bundle's frontend routes.
