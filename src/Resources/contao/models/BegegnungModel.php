@@ -83,6 +83,9 @@ class BegegnungModel extends Model
         // nicht angetreten?
         $is_noshow_home = 1 === \count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
         $is_noshow_away = 1 === \count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
+        if ($is_noshow_home && $is_noshow_away) {
+            return 'Nicht angetreten';
+        }
         if ($is_noshow_home) {
             return 'Heim nicht angetreten';
         } // siehe auch ce_spielplan.html5!

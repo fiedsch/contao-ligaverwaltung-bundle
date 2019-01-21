@@ -62,7 +62,7 @@
                         $spiel['heimspiel'] ? $spiel['away'] : $spiel['home'],
                         $spiel['im'],
                         $spiel['score'],
-                        empty($spiel["legs"]) ? " empty": (preg_match("/nicht angetreten/", $spiel["legs"]) ? " noshow" : ""),
+                        empty($spiel["legs"]) ? " empty": (preg_match("/nicht angetreten/i", $spiel["legs"]) ? " noshow" : ""),
                         $spiel['legs']
                         );
                     ?>
