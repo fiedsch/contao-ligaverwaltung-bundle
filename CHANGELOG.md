@@ -2,15 +2,20 @@
 
 ## Development
 
+
+## Version 0.5.7
+
 * Fix: "Nicht angetreten" bei der Erfassung der Begegnungen. Wenn sowohl für die Heim- als
   auch für die Gastmanschaft keine Spieler hinterlegt wurden, alle Spiele aber 3:0 für die
   Heimmannschaft gewertet wurden wurde der falsche Infotext "Heim nicht angetreten" angezeigt.
   Hier wird nun "nicht angetreten" angezeigt. Dies ermöglicht zudem, die Begegnung (z.B.)
   16:0 für die angetretene Mannschaft zu werten, aber dennoch keine Spieler hnterlegen zu 
   müssen, wenn man nicht will, daß Ergebnisse solcher Begegnungen Einfluss auf die 
-  Einzelspielerrangliste haben.  
-
-
+  Einzelspielerrangliste haben.
+  
+* New: Bei Begegnungen kann auch nach der ID gesucht werden. Kann hilfreich sein, wenn 
+  im Log ausgegeben wird, daß in einer Begegnung (deren ID wird angeben) ein Fehler 
+  enthalten ist. (Tip: "Exakte" Suche mit RegEx `^123$` "ist geich 123" vs. `123` "enthält 123").
 
 ## Version 0.5.6
 
