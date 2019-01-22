@@ -38,6 +38,11 @@ $GLOBALS['TL_LANG']['tl_begegnung']['show'] = [
     'die Begegnung anzeigen',
 ];
 
+$GLOBALS['TL_LANG']['tl_begegnung']['id'] = [
+    'ID der Begegnung',
+    'ID der Begegnung',
+];
+
 $GLOBALS['TL_LANG']['tl_begegnung']['pid'] = [
     'Liga',
     'Liga, in der die Begegnung gespielt wird.',

@@ -132,6 +132,8 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
 
     'fields' => [
         'id' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['id'],
+            'search' => true,
             'sql' => 'int(10) unsigned NOT NULL auto_increment',
         ],
         'tstamp' => [
