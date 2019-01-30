@@ -77,7 +77,7 @@
       </thead>
       <tbody>
         <?php foreach ($this->listitems as $listitem): ?>
-          <tr>
+          <tr class="<?= $listitem['CSS'] ?>">
           <td><?= $listitem['rang'] ?></td>
           <td><?= $listitem['name'] ?></td>
           <?php if ($this->rankingsubtype === 'alle'): ?>

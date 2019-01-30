@@ -207,8 +207,8 @@ class ContentHighlightRanking extends ContentElement
     {
         $sql = "SELECT 
                           h.*, 
-                          s.id as spieler_id, s.pid, s.active as sactive, 
-                          me.firstname as member_firstname, me.lastname as member_lastname, me.anonymize as member_anonymize, me.id as member_id, 
+                          s.id as spieler_id, s.pid, s.active as sactive, s.jugendlich as sjugendlich, 
+                          me.firstname as member_firstname, me.lastname as member_lastname, me.anonymize as member_anonymize, me.id as member_id, me.gender as member_gender,
                           b.spiel_am,
                           ma.name as mannschaft, ma.active as mactive 
                           FROM tl_highlight h
@@ -270,6 +270,7 @@ class ContentHighlightRanking extends ContentElement
                     'member_id' => $highlights->member_id,
                     'spieler_id' => $highlights->spieler_id,
                     'active' => false,
+                    'CSS' => $highlights->member_anonymize ? '' : trim($highlights->member_gender .' '. ($highlights->sjugendlich ? 'youth': '')),
                 ];
             }
             // Spieler hat in versch. Mannschaften gespielt?

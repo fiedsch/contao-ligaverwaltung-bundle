@@ -355,6 +355,19 @@ class ContentRanking extends ContentElement
 
             $results[$id]['mannschaft'] = $mannschaft->getLinkedName();
 
+            // Informationen zum Spieler über CSS-Klassen hinzufügen
+            /** @var MemberModel $member */
+            $member = $spieler->getRelated('member_id');
+            if ($member) {
+                $cssClasses = [];
+                if (!$member->anonymize) {
+                    $cssClasses[] = $member->gender;
+                    if ($spieler->jugendlich)
+                        $cssClasses[] = 'youth';
+                }
+                $results[$id]['CSS'] = implode(' ', $cssClasses);
+            }
+
             if (self::isTie($results[$id], $lastrow)) {
                 // gleicher Rang und beim nächsten einen Rang mehr auslassen
                 ++$rang_skip;

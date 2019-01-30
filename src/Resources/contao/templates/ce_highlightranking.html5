@@ -86,7 +86,7 @@
       </thead>
       <tbody>
         <?php foreach ($this->listitems as $listitem): ?>
-          <tr>
+          <tr class="<?= $listitem['CSS'] ?>">
             <?php if ($this->rankingfield != \HighlightModel::TYPE_ALL): ?>
               <td><?= $listitem['hl_rang'] ?></td>
             <?php endif; ?>

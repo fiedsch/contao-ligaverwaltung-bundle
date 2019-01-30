@@ -21,6 +21,8 @@ use Fiedsch\LigaverwaltungBundle\DCAHelper;
  * @property bool   $teamcaptain
  * @property bool   $co_teamcaptain
  * @property bool   $active
+ * @property bool   $ersatzspieler
+ * @property bool   $jugendlich
  *
  * @method static SpielerModel|null findById($id, array $opt=array())
  * @method static Model\Collection|SpielerModel|null findByPid($id, array $opt=array())

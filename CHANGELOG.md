@@ -2,6 +2,22 @@
 
 ## Development
 
+* 
+
+
+## Version 0.6.0
+
+* New: "Jugendliche". Bei den Spielern (Tabelle `tl_spieler`) kann in `tl_spieler.jugendlich`
+  erfasst werden, ob der Spieler in der Altersklasse "Jugendlich" gewertet wird. Die
+  Angabe gilt mit dieser Konstruktion für die gesamte Saison.
+  Diese Option dient zunächst nur der Erfassung der Daten und hat bis auf die
+  Vergabe von CSS-Klassen bei der Ausgabe von Ergebnis- und Highlight-Tabellen keine
+  weitere Auswirkung.
+  
+* New: CSS-Klassen bei der Ausgabe von Ergebnis- und Highlight-Tabellen. Klassen für
+  Jugendlich (`youth`) und Geschlecht (`male`, `female` analog zu `tl_member.gender`) 
+  werden Tabellenzeilen abhängig vom dargestellten Spieler vergeben.
+
 
 ## Version 0.5.7
 
@@ -17,6 +33,7 @@
   im Log ausgegeben wird, daß in einer Begegnung (deren ID wird angeben) ein Fehler 
   enthalten ist. (Tip: "Exakte" Suche mit RegEx `^123$` "ist geich 123" vs. `123` "enthält 123").
 
+
 ## Version 0.5.6
 
 * Standarduhrzeit beim Kalender-Export hinzufügen, wenn nötig.
@@ -24,6 +41,7 @@
   Wenn in sitesepzifischen Anpassungen die DCA-Definition der Begenungen von "Datum und Uhrzeit" zu "nur Datum" abgeändert wurde beim Export eine Standardzeit hinzufügen.
 
   Diese Uhrzeit ist aktuell noch nicht konfigurierbar! `:-(`
+
 
 ## Version 0.5.5
 
@@ -39,6 +57,7 @@
   `$GLOBALS['TL_LANG']['MSC']['tc1']`.
 
 * Begegnungserfassung: Spielerpassnummer optional anzeigen.
+
 
 ## Version 0.5.3
 
