@@ -31,6 +31,15 @@
    * Im Spielerranking zählen nur die Spiele, die der Spieler für die neue 
      Mannschaft gemacht hat.
      TODO: dieses Verhalten soll noch geändert werden.
+
+
+### Erfassung von Begegnungen bei denen der Gegner nicht angetreten ist
+
+In der Begegnungserfassung werden zunächst alle Spiele als "zu Null verloren"
+erfasst.
+
+Hier gibt es zwei Optionen:
+* Spieler bei keiner Mannschaft hinterlegen (die nicht gespielte Begegnung hat keine Auswirkung auf das Spielerranking)
+* Spieler bei der angetretenen Mannschaft hinterlegen (diese Spieler erhalten Punkte für das Spielerranking)
       
-   
- 
+Bei die Berechnung der Tabellenplätze der Mannschaften führen beide Wege zum identischen Ergebnis.
