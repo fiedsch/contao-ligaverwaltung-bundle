@@ -4,6 +4,7 @@
 
 * `ContentRanking`: Ausgabe des Typs der Rankings (Spieler oder Mannschaften) im umgebenden
   `<div>` im `block_searchable`. Ergebnis z.B.: `<div class="ce_ranking rankingtype_spieler block">` 
+  (Siehe dazu z.B. https://github.com/fiedsch/contao-ligaverwaltung-bundle/issues/8#issuecomment-459409916).
 
 
 ## Version 0.6.0
