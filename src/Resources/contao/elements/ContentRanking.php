@@ -63,7 +63,7 @@ class ContentRanking extends ContentElement
                 $suffix = 'Spieler';
                 $mannschaft = MannschaftModel::findById($this->mannschaft);
                 $subject = sprintf('%s %s %s',
-                    'Mannschaft '.($mannschaft->name ?: 'alle'),
+                    '(Mannschaft: '.($mannschaft->name ?: 'alle').')',
                     $liga->name,
                     $liga->getRelated('saison')->name
                 );
