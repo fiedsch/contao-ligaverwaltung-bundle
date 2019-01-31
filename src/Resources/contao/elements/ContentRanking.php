@@ -77,6 +77,9 @@ class ContentRanking extends ContentElement
             return $objTemplate->parse();
         }
 
+        $appendCssClass = 'rankingtype_'. ('1' === $this->rankingtype ? 'mannschaft' : 'spieler');
+        $this->cssID = [$this->cssID[0], $this->cssID[1].' '.$appendCssClass];
+
         return parent::generate();
     }
 
