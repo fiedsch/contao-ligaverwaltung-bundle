@@ -2,7 +2,8 @@
 
 ## Development
 
-* 
+* `ContentRanking`: Ausgabe des Typs der Rankings (Spieler oder Mannschaften) im umgebenden
+  `<div>` im `block_searchable`. Ergebnis z.B.: `<div class="ce_ranking rankingtype_spieler block">` 
 
 
 ## Version 0.6.0
