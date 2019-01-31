@@ -52,7 +52,7 @@ class ContentRanking extends ContentElement
             /** @var BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
-            if (1 === $this->rankingtype) {
+            if ('1' === $this->rankingtype) {
                 $suffix = 'Mannschaften';
                 $subject = sprintf('%s %s %s',
                     $liga->getRelated('pid')->name,
