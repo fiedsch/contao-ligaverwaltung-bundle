@@ -70,3 +70,30 @@ $GLOBALS['TL_LANG']['MSC']['tc2'] = '2. TC';
 Diese Textbausteine werden im Template `ce_spielerliste.html5` und im `SpielerModel`
 (und damit letztlich in `ContentMannschaftenuebersicht`) verwendet.
 
+### Nicht benötigte Bausteine
+
+Nicht benötigte Bausteine können entfernt werden. So gibt es z.B. "Aufsteller" nur beim
+E-Dart, nicht aber beim Steeldart. Um den entsprechenden Menüpunkt und die Einstellung
+beim "Spielort" zu entfernen, sind folgende Dateien anzupassen (Dateien und Verzeichnisse
+müssen ggf. angelegt werden):
+
+Datei `app/Resources/contao/config/config.php`
+```php
+<?php
+// Aufsteller gibt es beim Steeldart nicht. Menüpunkt entfernen:
+
+unset($GLOBALS['BE_MOD']['liga']['liga.aufsteller']);
+```
+
+Datei `app/Resources/contao/dca/tl_spielort.php`
+```php
+<?php
+// Aufsteller gibt es beim Steeldart nicht. Auswahl entfernen:
+
+// (1) aus der Palette austragen
+$GLOBALS['TL_DCA']['tl_spielort']['palettes'] = str_replace(',aufsteller', '', $GLOBALS['TL_DCA']['tl_spielort']['palettes']);
+
+// (2) (optional) das Feld (im Installtool) auch in der Datenbank löschen
+// unset($GLOBALS['TL_DCA']['tl_spielort']['fields']['aufsteller']);
+```
+
