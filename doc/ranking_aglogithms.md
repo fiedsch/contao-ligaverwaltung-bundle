@@ -162,3 +162,6 @@ class AppBundle extends Bundle
 	    }
     } 
 ```
+
+
+TODO: "Korrekt" machen; siehe https://symfony.com/doc/current/service_container/service_decoration.html
