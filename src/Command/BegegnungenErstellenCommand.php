@@ -22,7 +22,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Test being a command.
+ * Create Records in `tl_begegnung` (all by all).
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  */

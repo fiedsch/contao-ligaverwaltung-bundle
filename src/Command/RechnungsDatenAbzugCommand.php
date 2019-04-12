@@ -21,7 +21,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Test being a command.
+ * Abzug und "Aufbereitung" von Daten, die für die Erstellung von
+ * Rechnungen benötigt werden: Informationen über Spieler/Mannschaften/
+ * Spielorte/Aufsteller und deren Kombinationen.
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
