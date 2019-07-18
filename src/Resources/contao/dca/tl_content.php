@@ -150,6 +150,3 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['ligen'] = [
 /* Spielortseite */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spielortseite'] = '{config_legend},type'/*.',headline'*/.',spielort,ligen';
 // mannschaft bereits bei Mannschaftsliste bzw. Spielerliste definiert
-
-/* Begegnungserfassung im Frontend */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['begegnungserfassung'] = '{config_legend},type,headline';
