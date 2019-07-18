@@ -15,7 +15,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['ligenliste'] = '{type_legend},type
 $GLOBALS['TL_DCA']['tl_content']['fields']['verband'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['verband'],
     'exclude' => true,
-    'foreignKey' => '',
+    'foreignKey' => 'tl_verband.name',
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     //'eval'             => ['mandatory' => true, 'multiple'=>true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftsliste'] = '{type_legend
 $GLOBALS['TL_DCA']['tl_content']['fields']['liga'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['liga'],
     'exclude' => true,
-    'foreignKey' => '',
+    'foreignKey' => 'tl_liga.name',
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     //'eval'             => ['mandatory' => true, 'multiple'=>true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
@@ -54,7 +54,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['spielerliste'] = '{type_legend},ty
 $GLOBALS['TL_DCA']['tl_content']['fields']['mannschaft'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['mannschaft'],
     'exclude' => true,
-    'foreignKey' => '',
+    'foreignKey' => 'tl_mannschaft.name',
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getAlleMannschaftenForSelect'],
@@ -150,3 +150,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['ligen'] = [
 /* Spielortseite */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spielortseite'] = '{config_legend},type'/*.',headline'*/.',spielort,ligen';
 // mannschaft bereits bei Mannschaftsliste bzw. Spielerliste definiert
+
+/* Begegnungserfassung im Frontend */
+$GLOBALS['TL_DCA']['tl_content']['palettes']['begegnungserfassung'] = '{config_legend},type,headline';
