@@ -23,6 +23,8 @@
 * New: CSS-Klassen bei der Ausgabe von Ergebnis- und Highlight-Tabellen. Klassen für
   Jugendlich (`youth`) und Geschlecht (`male`, `female` analog zu `tl_member.gender`) 
   werden Tabellenzeilen abhängig vom dargestellten Spieler vergeben.
+  
+  Für ein Anwendungsbeispiel siehe z.B. https://github.com/fiedsch/contao-ligaverwaltung-bundle/issues/8#issuecomment-459409916
 
 
 ## Version 0.5.7
