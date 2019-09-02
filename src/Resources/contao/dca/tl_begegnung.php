@@ -214,5 +214,8 @@ if ('liga.begegnung' === \Input::get('do')) {
         'fields' => ['pid', 'home', 'away'],
         'panelLayout' => 'sort,filter;search,limit',
         'disableGrouping' => false,
+        'filter' => [
+            ['pid IN (SELECT id FROM tl_liga WHERE aktiv=?)', '1']
+        ]
     ];
 }

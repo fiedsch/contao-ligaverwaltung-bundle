@@ -2,6 +2,8 @@
 
 ## Development
 
+* New: In der Auflistung der Begegnungen nur die anzeigen, deren zugeordnete Liga aktiv ist (`l_liga.aktiv=1`).
+  Der Zugriff auf die anderen Begegnungen ist als Kindelemente der entsprechenden Liga weiterhin möglich.
 
 ## Version 0.6.3
 
