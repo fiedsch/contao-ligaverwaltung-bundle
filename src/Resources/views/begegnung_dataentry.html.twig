@@ -1,0 +1,40 @@
+{% extends "@ContaoCore/Backend/be_page.html.twig" %}
+
+{% block headline %}
+    {{ headline }} {# Not only the content of the `title`-tag but also the title of the content section. #}
+{% endblock %}
+
+{% block error %}
+    {#- Will be placed within the error block and displayed there if not empty -#}
+{% endblock %}
+
+{% block main %}
+    <div id="tl_buttons">
+        <a href="contao?do=liga.begegnung" class="header_back" title="" accesskey="b" onclick="Backend.getScrollOffset()">Zurück</a>
+    </div>
+
+    <div class="tl_listing_container">
+        <script>
+            var data = {{ app_data|json_encode()|raw }}
+        </script>
+
+        {# hier wird die App injiziert #}
+        <div id="app"></div>
+
+        {# JS und CSS Code für die App #}
+        <script src="/bundles/fiedschligaverwaltung/js/chunk-vendors.js"></script>
+        <script src="/bundles/fiedschligaverwaltung/js/app.js"></script>
+        <link rel="stylesheet" href="/bundles/fiedschligaverwaltung/css/app.css">
+    </div>
+
+    <style>
+        {{ app_data.spielplanCss|raw }}
+    </style>
+
+    {#
+    <pre>
+       {{ app_data|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
+    </pre>
+    #}
+
+{% endblock %}

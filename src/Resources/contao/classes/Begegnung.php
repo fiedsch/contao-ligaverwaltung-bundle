@@ -105,6 +105,22 @@ class Begegnung
     }
 
     /**
+     * @return int
+     */
+    public function getNumSpiele()
+    {
+        return \count($this->spiele);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGewonnenHome()
+    {
+        return $this->rankingHelper::PUNKTE_GEWONNEN === $this->getPunkteHome();
+    }
+
+    /**
      * 3 Punkte bei Sieg, 1 bei unentschieden, 0 bei verloren.
      *
      * @return int
@@ -125,6 +141,14 @@ class Begegnung
     }
 
     /**
+     * @return bool
+     */
+    public function isGewonnenAway()
+    {
+        return $this->rankingHelper::PUNKTE_GEWONNEN === $this->getPunkteAway();
+    }
+
+    /**
      * 3 Punkte bei Sieg, 1 bei unentschieden, 0 bei verloren.
      *
      * @return int
@@ -142,30 +166,6 @@ class Begegnung
         }
 
         return $punkte_home > $punkte_away ? $this->rankingHelper::PUNKTE_VERLOREN : $this->rankingHelper::PUNKTE_GEWONNEN;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNumSpiele()
-    {
-        return \count($this->spiele);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isGewonnenHome()
-    {
-        return $this->rankingHelper::PUNKTE_GEWONNEN === $this->getPunkteHome();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isGewonnenAway()
-    {
-        return $this->rankingHelper::PUNKTE_GEWONNEN === $this->getPunkteAway();
     }
 
     /**

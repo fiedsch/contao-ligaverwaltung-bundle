@@ -12,6 +12,8 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
+use Contao\BackendTemplate;
+use Contao\MemberModel;
 use Contao\SpielerModel;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,7 +39,7 @@ class PlayerHistoryController
      */
     public function run()
     {
-        $template = new \BackendTemplate('be_spielerhistory');
+        $template = new BackendTemplate('be_spielerhistory');
         $template->history = $this->getHistory();
 
         return new Response($template->parse());

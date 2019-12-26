@@ -119,7 +119,7 @@ class ContentHighlightRanking extends ContentElement
             $liga->getRelated('saison')->name
         );
 
-        $sql = "SELECT 
+        $sql = "SELECT
                           h.*, b.spiel_am, ma.name as mannschaft
                           FROM tl_highlight h
                           LEFT JOIN tl_begegnung b
@@ -205,12 +205,10 @@ class ContentHighlightRanking extends ContentElement
      */
     protected function compileSpielerranking()
     {
-        $sql = "SELECT 
-                          h.*, 
-                          s.id as spieler_id, s.pid, s.active as sactive, s.jugendlich as sjugendlich, 
+        $sql = "SELECT
                           me.firstname as member_firstname, me.lastname as member_lastname, me.anonymize as member_anonymize, me.id as member_id, me.gender as member_gender,
                           b.spiel_am,
-                          ma.name as mannschaft, ma.active as mactive 
+                          ma.name as mannschaft, ma.active as mactive
                           FROM tl_highlight h
                           LEFT JOIN tl_begegnung b
                           ON (h.begegnung_id = b.id)
@@ -221,7 +219,7 @@ class ContentHighlightRanking extends ContentElement
                           LEFT JOIN tl_mannschaft ma
                           ON (s.pid=ma.id)
                           WHERE b.pid=?
-                          -- AND s.active='1'   -- keine Filter, damit 'meine' Leistungen nicht verloren gehen 
+                          -- AND s.active='1'   -- keine Filter, damit 'meine' Leistungen nicht verloren gehen
                           -- AND ma.active='1'  -- auch, wenn 'ich' sie in einer anderen Mannschaft erbracht habe
                           AND me.id IS NOT NULL"; // keine gelöschten Spieler
 
