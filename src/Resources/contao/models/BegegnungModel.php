@@ -12,6 +12,9 @@
 
 namespace Contao;
 
+use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * @property integer $id
  * @property integer $pid
@@ -21,17 +24,27 @@ namespace Contao;
  * @property integer $spiel_am
  * @property integer $tstamp
  * @property integer $spiel_tag
+ * @property bool $published
  *
  * @method static BegegnungModel|null findById($id, array $opt=array())
  */
 class BegegnungModel extends Model
 {
+    use YamlGetterSetterTrait;
+
     /**
      * Table name.
      *
      * @var string
      */
     protected static $strTable = 'tl_begegnung';
+
+    /**
+     * YAML-data column (@see YamlGetterSetterTrait)
+     *
+     * @var string
+     */
+    protected static $strYamlColumn = 'begegnung_data';
 
     /**
      * @return string Ergebnis der Begegnung

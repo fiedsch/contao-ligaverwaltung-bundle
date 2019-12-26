@@ -27,8 +27,6 @@ use Patchwork\Utf8;
  * Content element "Liste aller Spieler einer Mannaschft".
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
- *
- *  @property integer $liga
  */
 class ContentHighlightRanking extends ContentElement
 {
@@ -206,6 +204,8 @@ class ContentHighlightRanking extends ContentElement
     protected function compileSpielerranking()
     {
         $sql = "SELECT
+                          h.*,
+                          s.id as spieler_id, s.pid, s.active as sactive, s.jugendlich as sjugendlich,
                           me.firstname as member_firstname, me.lastname as member_lastname, me.anonymize as member_anonymize, me.id as member_id, me.gender as member_gender,
                           b.spiel_am,
                           ma.name as mannschaft, ma.active as mactive

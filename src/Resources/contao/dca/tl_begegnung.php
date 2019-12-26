@@ -3,12 +3,16 @@
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2020 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
+
+use Fiedsch\LigaverwaltungBundle\DCAHelper;
+use Contao\SpielModel;
+use Contao\Config;
 
 $GLOBALS['TL_DCA']['tl_begegnung'] = [
     'config' => [
@@ -44,13 +48,13 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'fields' => ['pid', 'home', 'away'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['name', 'saison'],
-            'child_record_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'labelBegegnungCallback'],
+            'child_record_callback' => [DCAHelper::class, 'labelBegegnungCallback'],
             'disableGrouping' => true,
         ],
         'label' => [
             'fields' => ['home', 'away'],
             'format' => '%s : %s',
-            'label_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'labelBegegnungCallback'],
+            'label_callback' => [DCAHelper::class, 'labelBegegnungCallback'],
         ],
         'global_operations' => [
             'all' => [
@@ -61,47 +65,76 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             ],
         ],
         'operations' => [
-            /*
+            'editform' => [
+                'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editform'],
+                // 'href' => '', // see button_callback for URL generation
+                'button_callback' => function ($arrRow,
+                                               $href,
+                                               $label,
+                                               $title,
+                                               $icon,
+                                               $attributes,
+                                               $strTable,
+                                               $arrRootIds,
+                                               $arrChildRecordIds,
+                                               $blnCircularReference,
+                                               $strPrevious,
+                                               $strNext) {
+
+                    $numSpiele = SpielModel::countBy('pid', $arrRow['id']);
+
+                    // Legacy-Check: wenn wir bereits tl_spiel Records haben, aber keine Daten
+                    // in begegnung_data gespeichert (=alte Dateneingabe), dann diesen Button
+                    // "disablen". Änderung dann (wie früher) nur noch über die einzelnen
+                    // tl_spiel-Records!
+                    if ($numSpiele > 0 && '' === $arrRow['begegnung_data']) {
+                        return '<img src="bundles/fiedschligaverwaltung/icons/all_.svg" title="Begegnung wurde mit dem alten System erfasst!">&nbsp;';
+                    }
+
+                    return sprintf('<a href="%s" title="die Begegnung bearbeiten (neuer Modus)" class="edit">%s</a>',
+                        System::getContainer()->get('router')->getGenerator()->generate('begegnung_dataentry_form', ['begegnung'=>$arrRow['id']]),
+                        '<img src="bundles/fiedschligaverwaltung/icons/all.svg" alt="erfassen">&nbsp;'
+                    );
+
+                    // <a
+                    //   href="contao?do=liga.begegnung&amp;act=copy&amp;id=2904&amp;rt=7cyllBJISr6p5rN8YH8wOYBIlRUnnUPfusPaGVAc25Y&amp;ref=yC4LvTWP"
+                    //   title=""
+                    //   class="copy"
+                    // >
+                    //   <img src="system/themes/flexible/icons/copy.svg" width="16" height="16" alt="kopieren">
+                    // </a>
+                },
+            ],
             'edit'       => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['edit'],
-                'href'  => 'table=tl_spiel',
+                'href'  => 'table=tl_spiel', // also see 'button_callback'!
                 'icon'  => 'edit.svg',
-            ],
-            */
-            'edit' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['edit'],
-            'href' => 'do=liga.begegnungserfassung',
-            'icon' => 'editheader.svg',
-            'button_callback' => function ($arrRow,
-                                          $href,
-                                          $label,
-                                          $title,
-                                          $icon,
-                                          $attributes,
-                                          $strTable,
-                                          $arrRootIds,
-                                          $arrChildRecordIds,
-                                          $blnCircularReference,
-                                          $strPrevious,
-                                          $strNext) {
-                $spiele = \Contao\SpielModel::findByPid($arrRow['id']);
-                if ($spiele) {
-                    return sprintf('<a href="contao/main.php?%s&rt=%s&id=%d" title="" class="edit">%s</a>',
-                        'do=liga.begegnung&table=tl_spiel',
-                        REQUEST_TOKEN,
-                        $arrRow['id'],
-                        //'<span style="width:6em;display:inline-block">bearbeiten</span>' //json_encode(func_get_args())
-                        '<img src="system/themes/flexible/icons/edit.svg" width="12" height="16" alt="Begegnung bearbeiten">&nbsp;'
-                    );
-                }
+                'button_callback' => function ($arrRow,
+                                               $href,
+                                               $label,
+                                               $title,
+                                               $icon,
+                                               $attributes,
+                                               $strTable,
+                                               $arrRootIds,
+                                               $arrChildRecordIds,
+                                               $blnCircularReference,
+                                               $strPrevious,
+                                               $strNext) {
 
-                return sprintf('<a href="contao/main.php?%s&id=%d" title="" class="edit">%s</a>',
-                    $href,
-                    $arrRow['id'],
-                    '<img src="system/themes/flexible/icons/edit.svg" width="12" height="16" alt="Begegnung erfassen">&nbsp;'
-                );
-            },
-           ],
+                    // Legacy-Check: nur anzeigen, wenn
+                    // im tl_begegnung-Record keine 'begegnung_data'-Daten gespeichert sind
+                    // und gleichzeitig aber tl_spiel Daten vorhanden sind.
+                    $numSpiele = SpielModel::countBy('pid', $arrRow['id']);
+                    // negierung der Bedingung beim 'editform'-'button_callback', also immer nur einen
+                    // von beiden Buttons anzeigen
+                    if ('' !== $arrRow['begegnung_data'] || $numSpiele === 0) {
+                        return '<img src="system/themes/flexible/icons/edit_.svg" title="Begegnung wird über die Eingabemaske verwaltet!">&nbsp;';
+                    }
+                    return "<a href='contao?do=liga.begegnung&table=tl_spiel&id=$arrRow[id]' title='die Begegnung bearbeiten (alter Modus)' class='edit'><img src='system/themes/flexible/icons/edit.svg' alt='bearbeiten'></a>&nbsp;";
+                },
+            ],
+
             'editheader' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editheader'],
                 'href' => 'act=edit',
@@ -118,6 +151,23 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
                 'icon' => 'delete.svg',
                 'attributes' => 'onclick="if(!confirm(\''.$GLOBALS['TL_LANG']['MSC']['deleteConfirm'].'\'))return false;Backend.getScrollOffset()"',
             ],
+            'toggle' => [
+                'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['toggle'],
+                'attributes' => 'onclick="Backend.getScrollOffset();"',
+                'haste_ajax_operation'  => [
+                    'field' => 'published',
+                    'options' => [
+                        [
+                            'value'     => '',
+                            'icon'      => 'invisible.svg'
+                        ],
+                        [
+                            'value'     => '1',
+                            'icon'      => 'visible.svg'
+                        ]
+                    ]
+                ]
+            ],
             'show' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['show'],
                 'href' => 'act=show',
@@ -127,7 +177,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
     ],
 
     'palettes' => [
-        'default' => '{title_legend},pid,home,away;{details_legend},spiel_tag,spiel_am,kommentar',
+        'default' => '{title_legend},pid,home,away;{details_legend},spiel_tag,spiel_am,published,kommentar,{internal_legend},begegnung_data',
     ],
 
     'fields' => [
@@ -148,9 +198,17 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'inputType' => 'select',
             'foreignKey' => 'tl_liga.name',
             'eval' => ['submitOnChange' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getAktiveLigenForSelect'],
+            'options_callback' => [DCAHelper::class, 'getAktiveLigenForSelect'],
             'relation' => ['type' => 'belongsTo'],
             'sql' => "int(10) unsigned NOT NULL default '0'",
+        ],
+        'published' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['published'],
+            'inputType' => 'checkbox',
+            'filter' => true,
+            'exclude' => true,
+            'eval' => ['tl_class' => 'w50'],
+            'sql' => "char(1) NOT NULL default ''",
         ],
         'home' => [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['home'],
@@ -162,7 +220,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'foreignKey' => 'tl_mannschaft.name',
             'eval' => ['mandatory' => true, 'tl_class' => 'w50 clr', 'chosen' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'load' => 'eager'],
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getMannschaftenForSelect'],
+            'options_callback' => [DCAHelper::class, 'getMannschaftenForSelect'],
             'sql' => "int(10) NOT NULL default '0'",
         ],
         'away' => [
@@ -176,7 +234,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             // 'mandatory' => false da "kein Gegner angegeben === Spielfrei"
             'eval' => ['mandatory' => false, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'load' => 'eager'],
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getMannschaftenForSelect'],
+            'options_callback' => [DCAHelper::class, 'getMannschaftenForSelect'],
             'sql' => "int(10) NOT NULL default '0'",
         ],
         'spiel_tag' => [
@@ -192,6 +250,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'],
             'exclude' => true,
             'inputType' => 'text',
+            'rangeFilter' => true, // see https://github.com/codefog/contao-haste/blob/master/docs/Dca/index.md#haste-dca
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
             'sql' => "varchar(11) NOT NULL default ''",
         ],
@@ -203,11 +262,18 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'eval' => ['tl_class' => 'clr long', 'maxlength' => 255, 'rte' => false],
             'sql' => 'mediumtext NULL',
         ],
+        'begegnung_data' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'],
+            'inputType' => 'yamlWidget',
+            'eval' => ['rte'=>'ace|yaml'],
+            'default' => '',
+            'sql' => 'blob NOT NULL'
+        ]
     ],
 ];
 
-/* Bei Aufruf "nicht als child record */
-if ('liga.begegnung' === \Input::get('do')) {
+/* Bei Aufruf "nicht als child record von liga.verband */
+if ('liga.begegnung' === \Contao\Input::get('do')) {
     $GLOBALS['TL_DCA']['tl_begegnung']['list']['sorting'] = [
         'mode' => 2,
         'flag' => 11, // sort ascending
@@ -218,4 +284,8 @@ if ('liga.begegnung' === \Input::get('do')) {
             ['pid IN (SELECT id FROM tl_liga WHERE aktiv=?)', '1']
         ]
     ];
+}
+
+if (!Config::get('ligaverwaltung_dataentry_compatibility_mode')) {
+    unset($GLOBALS['TL_DCA']['tl_begegnung']['list']['operations']['edit']);
 }

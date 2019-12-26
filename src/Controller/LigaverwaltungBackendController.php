@@ -12,17 +12,25 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
+use Contao\BegegnungModel;
+use Contao\System;
+use Contao\CoreBundle\Exception\RedirectResponseException;
+use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
+use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
 use Fiedsch\LigaverwaltungBundle\PlayerHistoryController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route; // for annotations!
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 
 /**
  * Handles the bundle's backend routes.
  *
  * @Route(defaults={"_scope" = "backend", "_token_check" = true})
  */
-class LigaverwaltungBackendController extends Controller
+class LigaverwaltungBackendController extends AbstractController // Controller
 {
     /**
      * Spielerhistorie.
@@ -31,7 +39,13 @@ class LigaverwaltungBackendController extends Controller
      *
      * @return Response
      *
-     * @Route("/ligaverwaltung/player/history/{memberid}", name="player_history")
+     * @Route(
+     *     "/ligaverwaltung/player/history/{memberid}",
+     *     name="player_history",
+     *     requirements={
+     *       "memberid": "[0-9]+"
+     *     }
+     * )
      */
     public function playerhistoryAction($memberid)
     {
@@ -39,4 +53,76 @@ class LigaverwaltungBackendController extends Controller
 
         return $controller->run();
     }
+
+    /**
+     * Einbagemaske Begegnungserfassung
+     *
+     * @param int $begegnung
+     *
+     * @return Response
+     *
+     * @Route(
+     *     "/ligaverwaltung/begegnung/{begegnung}",
+     *     name="begegnung_dataentry_form",
+     *     requirements={
+     *       "begegnung": "[0-9]+"
+     *     },
+     *     defaults = {
+     *         "_backend_module" = "liga.begegnung",
+     *     },
+     *     methods={"GET"}
+     * )
+     * @Template("@FiedschLigaverwaltung/begegnung_dataentry.html.twig")
+     */
+    public function begegnungDataEntryAction($begegnung)
+    {
+        $begegnungModel = BegegnungModel::findById($begegnung);
+        if (!$begegnungModel) {
+            throw new RedirectResponseException('/contao?do=liga.begegnung');
+            // ODER: 'contao/main.php?act=error' ?
+        }
+
+        $appData = $begegnungModel->{DataEntrySaver::KEY_APP_DATA};
+        if (!is_array($appData)) { $appData = []; }
+        $appData['webserviceUrl'] = '/ligaverwaltung/begegnung';
+        $appData['requestToken'] = REQUEST_TOKEN;
+        $appData['begegnungId'] = $begegnung;
+        $appData['numSlots'] = 8;
+        $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);
+        $appData = DataEntrySaver::augment($appData);
+
+        $data = [
+            'headline' => $begegnungModel->getLabel(),
+            'app_data' => $appData,
+        ];
+        $twig = System::getContainer()->get('twig');
+        $template = '@FiedschLigaverwaltung/begegnung_dataentry.html.twig';
+
+        return new Response($twig->render($template, $data));
+    }
+
+    /**
+     * Datenverarbeitung Begegnungserfassung
+     *
+     * @param Request
+     * @param int $begegnung
+     *
+     * @return Response
+     *
+     * @Route(
+     *     "/ligaverwaltung/begegnung/{begegnung}",
+     *     name="begegnung_dataentry_save",
+     *     requirements={
+     *       "begegnung": "[0-9]+"
+     *     },
+     *     methods={"POST"}
+     *     )
+     */
+    public function begegnungDataSaveAction(Request $request, $begegnung)
+    {
+        $requestData = \json_decode($request->request->get('json_data'), true);
+
+        return new Response(DataEntrySaver::handleDataEntryData($begegnung, $requestData));
+    }
+
 }

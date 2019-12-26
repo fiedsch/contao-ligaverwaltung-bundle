@@ -3,7 +3,7 @@
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2020 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -11,7 +11,7 @@
  */
 
 //$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{ligaverwaltung_legend},ligaverwaltung_exclusive_model,ligaverwaltung_ranking_model,ligaverwaltung_ranking_model_ties,teampage,spielberichtpage';
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{ligaverwaltung_legend},ligaverwaltung_exclusive_model,ligaverwaltung_ranking_model,teampage,spielberichtpage';
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{ligaverwaltung_legend},ligaverwaltung_exclusive_model,ligaverwaltung_ranking_model,teampage,spielberichtpage,ligaverwaltung_dataentry_compatibility_mode';
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['ligaverwaltung_exclusive_model'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_exclusive_model'],
@@ -56,3 +56,9 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['ligaverwaltung_ranking_model_ties']
     'eval' => ['tl_class' => 'w50'],
 ];
 */
+
+$GLOBALS['TL_DCA']['tl_settings']['fields']['ligaverwaltung_dataentry_compatibility_mode'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_dataentry_compatibility_mode'],
+    'inputType' => 'checkbox',
+    'eval' => ['tl_class' => 'long'],
+];

@@ -12,9 +12,12 @@
   ],
   "require": {
     "php": "^7.1",
+    "ext-json": "*",
     "contao/core-bundle": "^4.4",
     "eluceo/ical": "^0.13",
-    "ext-json": "*"
+    "fiedsch/contao-jsonwidget": "^0.1.2",
+    "codefog/contao-haste": "^4.24.1",
+    "sensio/framework-extra-bundle": "^5.4.1"
   },
   "autoload": {
     "psr-4": {

@@ -30,17 +30,11 @@ array_insert($GLOBALS['BE_MOD'], 2, [
         'liga.begegnung' => [
             'tables' => ['tl_begegnung', 'tl_spiel'],
         ],
-        'liga.highlight' => [
-            'tables' => ['tl_highlight'],
-            'javascript' => 'bundles/fiedschligaverwaltung/tl_highlight.js',
-            'stylesheet' => 'bundles/fiedschligaverwaltung/tl_highlight.css',
-        ],
-        // In ModuleBegegnungserfassung als ::redirect() auf 'liga.begegnung' falls
-        // keine id angegeben ist.
-        // TODO: eigene Backend-Route
-        'liga.begegnungserfassung' => [
-            'callback' => 'Fiedsch\LigaverwaltungBundle\ModuleBegegnungserfassung',
-        ],
+        // 'liga.highlight' => [
+        //     'tables' => ['tl_highlight'],
+        //     'javascript' => 'bundles/fiedschligaverwaltung/tl_highlight.js',
+        //     'stylesheet' => 'bundles/fiedschligaverwaltung/tl_highlight.css',
+        // ],
     ],
 ]);
 

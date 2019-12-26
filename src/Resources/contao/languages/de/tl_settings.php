@@ -32,9 +32,7 @@ $GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model'] = [
     'Regelt die Punktevergabe und damit die Sortierlogik in den Spieler-Rankings.',
 ];
 
-/*
-$GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model_ties'] = [
-    'Sortierung Ranking bei Gleichstand',
-    'Regelt, wie bei Gleichstand weiter entschieden wird (betrachten der nächsten "Dimension", d.h. gleiche Punkte → Spiele betrachten, gleiche Spiele → Legs betrachten).',
+$GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_dataentry_compatibility_mode'] = [
+    'Erfassung Spielberichtsbögen (Begegnungen)',
+    'Bei der Erfassung der Spielberichtsbögen Symbole anzeigen, um Begenungen sowohl im "alten" (Spiele einzeln) als auch im "neuen" Modus (nur noch Eingabemaske) zu erfassen.',
 ];
-*/

@@ -14,6 +14,8 @@ $GLOBALS['TL_LANG']['tl_begegnung']['title_legend'] = 'Titel';
 
 $GLOBALS['TL_LANG']['tl_begegnung']['details_legend'] = 'Details';
 
+$GLOBALS['TL_LANG']['tl_begegnung']['internal_legend'] = '(Interne) Daten';
+
 $GLOBALS['TL_LANG']['tl_begegnung']['new'] = [
     'Neue Begegnung erstellen',
     'Eine neue Begegnung (Spiel zwischen zwei Mannschaften) erstellen',
@@ -23,6 +25,12 @@ $GLOBALS['TL_LANG']['tl_begegnung']['edit'] = [
     'bearbeiten',
     'die Begegnung bearbeiten',
 ];
+
+$GLOBALS['TL_LANG']['tl_begegnung']['editform'] = [
+  'erfassung',
+  'die Begegnung erfassen (Eingabemaske)'
+];
+
 $GLOBALS['TL_LANG']['tl_begegnung']['copy'] = [
     'kopieren',
     'die Begegnung kopieren',
@@ -38,6 +46,11 @@ $GLOBALS['TL_LANG']['tl_begegnung']['show'] = [
     'die Begegnung anzeigen',
 ];
 
+$GLOBALS['TL_LANG']['tl_begegnung']['toggle'] = [
+  'Veröffentlicht-Status umschalten',
+  'veröffentlichen oder Veröffentlichung aufheben'
+];
+
 $GLOBALS['TL_LANG']['tl_begegnung']['id'] = [
     'ID der Begegnung',
     'ID der Begegnung',
@@ -46,6 +59,11 @@ $GLOBALS['TL_LANG']['tl_begegnung']['id'] = [
 $GLOBALS['TL_LANG']['tl_begegnung']['pid'] = [
     'Liga',
     'Liga, in der die Begegnung gespielt wird.',
+];
+
+$GLOBALS['TL_LANG']['tl_begegnung']['published'] = [
+    'Veröffentlicht',
+    'Diese Begegnung ist fertig erfasst und vom Spielleiter veröffentlicht. Eine Bearbeitung im Frontend ist nicht mehr möglich.',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['home'] = [
@@ -71,4 +89,9 @@ $GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'] = [
 $GLOBALS['TL_LANG']['tl_begegnung']['kommentar'] = [
     'Kommentar',
     'Kommentar zum Spiel. Z.B. zu Spielverlegung oder Protest etc.',
+];
+
+$GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'] = [
+    'Daten der Begegnungserfassung',
+    'Interne Daten (nur "visual Debug"!).'
 ];
