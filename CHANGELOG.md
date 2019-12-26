@@ -16,6 +16,12 @@
    das Häkchen gesetzt werden. Dann wird neben dem neuen Icon auch das alte ("der Stift") angezeigt und
    "alte Begegnungen" können wie gewohnt nachbearbeitet werden.
 
+   Die Begegnung kann mit dem neuen "Auge-Symbol" veröffentlicht werden. Erst dann werden ihre Daten
+   im Frontend angezeigt.
+
+   *Wichtig: damit bereits erfasste Begegnungen im Frontend angezeigt werden, müssen sie nachträglich
+   veröffentlicht werden!*
+
 
 ## Version 0.6.3
 
