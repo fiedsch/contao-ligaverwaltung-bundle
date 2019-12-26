@@ -2,12 +2,24 @@
 
 ## Development
 
+## Version 0.7.0
+
 * New: In der Auflistung der Begegnungen nur die anzeigen, deren zugeordnete Liga aktiv ist (`l_liga.aktiv=1`).
   Der Zugriff auf die anderen Begegnungen ist als Kindelemente der entsprechenden Liga weiterhin möglich.
+* kleinere Verbesserungen (z.B. Label bei Spielerhistorie)
+* "Datenerfassung Begegnung": es ist nun möglich, die Eingabemaske zur Erfassung einer Begegnung auch
+   nach dem Speichern erneut zu öffnen und Daten zu ergänzen. Dazu wird das neue Icon "Stift mit Plus-Zeichen"
+   (mehrere bearbeiten) verwendet. Diese Bearbeitung erfordert, daß (z.B.) Daten zur Aufstellung in der
+   Begegnung abgespeichert werden. Da dies bei Begegnungen, die vor Verwendung der Versopn 0.7.0 erfasst
+   wurden nicht gegeben ist, ist das Icon hier ausgegraut (deaktiviert). Um "alte" Begegnungen erneut
+   bearbeiten zu können muss in den Systemeinstellungen bei "Erfassung Spielberichtsbögen (Begegnungen)"
+   das Häkchen gesetzt werden. Dann wird neben dem neuen Icon auch das alte ("der Stift") angezeigt und
+   "alte Begegnungen" können wie gewohnt nachbearbeitet werden.
+
 
 ## Version 0.6.3
 
-* New: Spielplan 8 Einzel, 2 Doppel 
+* New: Spielplan 8 Einzel, 2 Doppel
 
 ## Version 0.6.2
 
@@ -21,11 +33,11 @@
   Diese Option dient zunächst nur der Erfassung der Daten und hat bis auf die
   Vergabe von CSS-Klassen bei der Ausgabe von Ergebnis- und Highlight-Tabellen keine
   weitere Auswirkung.
-  
+
 * New: CSS-Klassen bei der Ausgabe von Ergebnis- und Highlight-Tabellen. Klassen für
-  Jugendlich (`youth`) und Geschlecht (`male`, `female` analog zu `tl_member.gender`) 
+  Jugendlich (`youth`) und Geschlecht (`male`, `female` analog zu `tl_member.gender`)
   werden Tabellenzeilen abhängig vom dargestellten Spieler vergeben.
-  
+
   Für ein Anwendungsbeispiel siehe z.B. https://github.com/fiedsch/contao-ligaverwaltung-bundle/issues/8#issuecomment-459409916
 
 
@@ -35,12 +47,12 @@
   auch für die Gastmanschaft keine Spieler hinterlegt wurden, alle Spiele aber 3:0 für die
   Heimmannschaft gewertet wurden wurde der falsche Infotext "Heim nicht angetreten" angezeigt.
   Hier wird nun "nicht angetreten" angezeigt. Dies ermöglicht zudem, die Begegnung (z.B.)
-  16:0 für die angetretene Mannschaft zu werten, aber dennoch keine Spieler hnterlegen zu 
-  müssen, wenn man nicht will, daß Ergebnisse solcher Begegnungen Einfluss auf die 
+  16:0 für die angetretene Mannschaft zu werten, aber dennoch keine Spieler hnterlegen zu
+  müssen, wenn man nicht will, daß Ergebnisse solcher Begegnungen Einfluss auf die
   Einzelspielerrangliste haben.
-  
-* New: Bei Begegnungen kann auch nach der ID gesucht werden. Kann hilfreich sein, wenn 
-  im Log ausgegeben wird, daß in einer Begegnung (deren ID wird angeben) ein Fehler 
+
+* New: Bei Begegnungen kann auch nach der ID gesucht werden. Kann hilfreich sein, wenn
+  im Log ausgegeben wird, daß in einer Begegnung (deren ID wird angeben) ein Fehler
   enthalten ist. (Tip: "Exakte" Suche mit RegEx `^123$` "ist geich 123" vs. `123` "enthält 123").
 
 
