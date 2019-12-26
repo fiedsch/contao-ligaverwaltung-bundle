@@ -118,7 +118,7 @@ class ContentSpielplan extends ContentElement
                 continue;
             }
 
-            // Ergsbnis ud daraus abgeleitet: hat die Begegnung bereits statt gefunden
+            // Ergsbnis und daraus abgeleitet: hat die Begegnung bereits statt gefunden
             $linked_score = $begegnung->getLinkedScore();
             $already_played = '' !== $linked_score;
 

@@ -92,6 +92,9 @@ class ContentSpielbericht extends ContentElement
      */
     protected function compileSpielergebnsisse(BegegnungModel $begegnung)
     {
+        if (!$begegnung->published) {
+            return [];
+        }
         $spiele = SpielModel::findByPid($begegnung->id, ['order' => 'slot ASC']);
         if (!$spiele) {
             return [];
@@ -157,6 +160,9 @@ class ContentSpielbericht extends ContentElement
 
     protected function compileHighlights(BegegnungModel $begegnung)
     {
+        if (!$begegnung->published) {
+            return [];
+        }
         $highlights = HighlightModel::findBy(['begegnung_id=?', 'spieler_id<>?'], [$begegnung->id, 0]);
         if (!$highlights) {
             return [];

@@ -129,6 +129,7 @@ class ContentHighlightRanking extends ContentElement
                           LEFT JOIN tl_mannschaft ma
                           ON (s.pid=ma.id)
                           WHERE b.pid=?
+                          AND b.published='1'
                           AND ma.active='1'
                           AND s.active='1'
                           AND me.id IS NOT NULL"; // keine gelöschten Spieler
@@ -219,6 +220,7 @@ class ContentHighlightRanking extends ContentElement
                           LEFT JOIN tl_mannschaft ma
                           ON (s.pid=ma.id)
                           WHERE b.pid=?
+                          AND b.published='1'
                           -- AND s.active='1'   -- keine Filter, damit 'meine' Leistungen nicht verloren gehen
                           -- AND ma.active='1'  -- auch, wenn 'ich' sie in einer anderen Mannschaft erbracht habe
                           AND me.id IS NOT NULL"; // keine gelöschten Spieler

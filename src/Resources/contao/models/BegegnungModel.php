@@ -51,6 +51,9 @@ class BegegnungModel extends Model
      */
     public function getScore()
     {
+        if (!$this->published) {
+            return '';
+        }
         $spiele = SpielModel::findByPid($this->id);
         if (!$spiele) {
             return '';
@@ -79,6 +82,9 @@ class BegegnungModel extends Model
      */
     public function getLegs()
     {
+        if (!$this->published) {
+            return '';
+        }
         $spiele = SpielModel::findByPid($this->id);
         if (!$spiele) {
             return '';
@@ -153,6 +159,9 @@ class BegegnungModel extends Model
      */
     public function getLinkedScore()
     {
+        if (!$this->published) {
+            return '';
+        }
         $score = $this->getScore();
         if ('' === $score) {
             return '';

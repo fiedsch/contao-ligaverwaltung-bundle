@@ -121,7 +121,7 @@ class ContentRanking extends ContentElement
         );
 
         $spiele = Database::getInstance()
-            ->prepare("SELECT 
+            ->prepare("SELECT
                           s.score_home AS legs_home,
                           s.score_away AS legs_away,
                           b.home AS team_home,
@@ -139,6 +139,7 @@ class ContentRanking extends ContentElement
                           WHERE l.id=?
                           AND m1.active='1'
                           AND m2.active='1'
+                          AND b.published='1'
                           ")
             ->execute($this->liga);
 
@@ -249,7 +250,7 @@ class ContentRanking extends ContentElement
      */
     protected function compileSpielerranking()
     {
-        $sql = "SELECT 
+        $sql = "SELECT
                           s.score_home AS legs_home,
                           s.score_away AS legs_away,
                           s.home AS player_home,
@@ -270,6 +271,7 @@ class ContentRanking extends ContentElement
                           AND l.id=?
                           AND m1.active='1'
                           AND m2.active='1'
+                          AND b.published='1'
                           ";
 
         if ($this->mannschaft > 0) {
