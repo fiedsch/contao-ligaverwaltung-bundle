@@ -3,12 +3,14 @@
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2020 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
+
+use Contao\MemberModel;
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
         'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
@@ -24,15 +26,18 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
                                       $blnCircularReference,
                                       $strPrevious,
                                       $strNext) {
+
+            $member = MemberModel::findById($arrRow['id']);
+
             return sprintf(
                 '<a href="ligaverwaltung/player/history/%s?popup=1&amp;rt=%s"'
                 .' title="" style="padding-left:3px"'
-                .' onclick="Backend.openModalIframe({\'width\':768,\'title\':\'Spielerhistorie des Mitglieds ID %d anzeigen\',\'url\':this.href});return false"'
+                .' onclick="Backend.openModalIframe({\'width\':768,\'title\':\'Spielerhistorie von %s\',\'url\':this.href});return false"'
                 .'>'
                 .'%s</a>',
                 $arrRow['id'],
                 REQUEST_TOKEN,
-                $arrRow['id'],
+                $member->firstname.' '.$member->lastname,
                 // getHtml(a, foo, c) setzt mit foo das alt-Attribut, wir benötigen aber das title-Attribut
                 // das wir im dritten Parameter "manuell" setzen.
                 \Contao\Image::getHtml('diff.svg', $GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0], 'style="vertical-align:top" title="'.$GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0].'"')
