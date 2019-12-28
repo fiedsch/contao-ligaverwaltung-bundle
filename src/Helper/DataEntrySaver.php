@@ -33,7 +33,6 @@ class DataEntrySaver
         // nicht benötigte Daten entfernen
         unset($data['REQUEST_TOKEN']);
         unset($data['FORM_SUBMIT']);
-        unset($data['highlights']['dummy']); // see self::augment()!
         foreach ($data['highlights'] as $k => $v) {
             if ('' === $v) {
                 unset($data['highlights'][$k]);
@@ -200,7 +199,8 @@ class DataEntrySaver
         }
 
         if (!is_array($data['highlights']) || count($data['highlights'])===0) {
-            $data['highlights'] = ['dummy'=>'data']; // force Object ('{ }') because it would otherwise be an empty array ('[ ]')
+            //$data['highlights'] = ['dummy'=>'data']; // force Object ('{ }') because it would otherwise be an empty array ('[ ]')
+            $data['highlights'] = json_decode('{}');
         }
 
         return $data;
