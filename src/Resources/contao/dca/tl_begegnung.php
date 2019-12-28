@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
                     // in begegnung_data gespeichert (=alte Dateneingabe), dann diesen Button
                     // "disablen". Änderung dann (wie früher) nur noch über die einzelnen
                     // tl_spiel-Records!
-                    if ($numSpiele > 0 && '' === $arrRow['begegnung_data']) {
+                    if ($numSpiele > 0 && '' === $arrRow['begegnung_data'] || $arrRow['away']==0) {
                         return '<img src="bundles/fiedschligaverwaltung/icons/all_.svg" title="Begegnung wurde mit dem alten System erfasst!">&nbsp;';
                     }
 
@@ -128,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
                     $numSpiele = SpielModel::countBy('pid', $arrRow['id']);
                     // negierung der Bedingung beim 'editform'-'button_callback', also immer nur einen
                     // von beiden Buttons anzeigen
-                    if ('' !== $arrRow['begegnung_data'] || $numSpiele === 0) {
+                    if ('' !== $arrRow['begegnung_data'] || $numSpiele === 0 || $arrRow['away']==0) {
                         return '<img src="system/themes/flexible/icons/edit_.svg" title="Begegnung wird über die Eingabemaske verwaltet!">&nbsp;';
                     }
                     return "<a href='contao?do=liga.begegnung&table=tl_spiel&id=$arrRow[id]' title='die Begegnung bearbeiten (alter Modus)' class='edit'><img src='system/themes/flexible/icons/edit.svg' alt='bearbeiten'></a>&nbsp;";

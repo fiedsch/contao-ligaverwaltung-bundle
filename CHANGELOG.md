@@ -2,6 +2,14 @@
 
 ## Development
 
+* Bearbeiten Icon ausgegraut wenn einen Mannschaft "spielfrei hat" und es deshalb nichts zu bearbeiten gibt.
+
+
+## Version 0.7.1
+
+* Bugfix-Release: Update der Vue-App für die Begegnungserfassung
+
+
 ## Version 0.7.0
 
 * New: In der Auflistung der Begegnungen nur die anzeigen, deren zugeordnete Liga aktiv ist (`l_liga.aktiv=1`).
