@@ -10,6 +10,8 @@
  * @license https://opensource.org/licenses/MIT
  */
 
+use Fiedsch\LigaverwaltungBundle\ContentElement\ContentBegegnungsauswahl;
+
 array_insert($GLOBALS['BE_MOD'], 2, [
     'liga' => [
         'liga.spielort' => [
@@ -52,6 +54,7 @@ $GLOBALS['TL_CTE']['ligaverwaltung']['highlightranking'] = '\Fiedsch\Ligaverwalt
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsseite'] = '\Fiedsch\LigaverwaltungBundle\ContentMannschaftsseite';
 $GLOBALS['TL_CTE']['ligaverwaltung']['spielortseite'] = '\Fiedsch\LigaverwaltungBundle\ContentSpielortseite';
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftenuebersicht'] = '\Fiedsch\LigaverwaltungBundle\ContentMannschaftenuebersicht';
+$GLOBALS['TL_CTE']['ligaverwaltung']['begegnungsauswahl'] = ContentBegegnungsauswahl::class;
 
 /*
  * Module

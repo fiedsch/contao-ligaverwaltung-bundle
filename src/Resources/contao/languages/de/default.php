@@ -55,10 +55,17 @@ $GLOBALS['TL_LANG']['CTE']['spielortseite'] = [
     'Spielortseite',
     'Spielortseite bündelt alle Informationen zu einem Spielort (für ausgewählte Saisons)',
 ];
+
 $GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'] = [
     'Mannschaftenübersicht',
     'Übersicht der Mannschaften einer Saison und je Mannschart die Teamcaptains',
 ];
+
+$GLOBALS['TL_LANG']['CTE']['begegnungsauswahl'] = [
+    'Begegnungsauswahl',
+    'Auswahl einer Begegnung für die Erfassung im Frontend'
+];
+
 
 /* Textbausteine */
 

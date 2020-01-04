@@ -1,0 +1,122 @@
+<script src="/bundles/fiedschligaverwaltung/vue.js"></script>
+
+<div class="begegnungsauswahl">
+    <div id="app">
+        <div v-if="this.saisons.length>1">
+            <label for="saison">Saison</label>
+            <select id="saison" name="saison" v-model="saison">
+                <option value="">bitte wählen</option>
+                <option v-for="saison in saisons">{{ saison }}</option>
+            </select>
+        </div>
+        <div v-if="saison!==''">
+            <label for="liga">Liga</label>
+            <select id="liga" name="liga" v-model="liga">
+                <option value="">bitte wählen</option>
+                <option v-for="liga in ligen">{{ liga }}</option>
+            </select>
+        </div>
+        <div v-if="liga!==''">
+            <label for="mannschaft">Mannschaft</label>
+            <select id="mannschaft" name="mannschaft" v-model="mannschaft">
+                <option value="">bitte wählen</option>
+                <option v-for="mannschaft in mannschaften">{{ mannschaft }}</option>
+            </select>
+        </div>
+        <div v-if="mannschaft!==''">
+            <label for="begegnung">Begegnung</label>
+            <select id="begegnung" name="begegnung" v-model="begegnung_id">
+                <option value="0">Bitte wählen</option>
+                <option :value="begegnung.id" v-for="begegnung in filtered_begegnungen">{{ begegnung.label }}
+                </option>
+            </select>
+        </div>
+        <div v-if="begegnung_id > 0" class="begegnungserfassung-link">
+            Eingabe der Begeggnung: <a :href="'begegnung='+begegnung_id">{{ begegnung_label }}</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let begegnungen = [];
+    <?php foreach($this->listitems as $item): ?>
+    begegnungen.push( <?= json_encode($item) ?>)
+    <?php endforeach; ?>
+
+    const unique = (value, index, self) => {
+        return self.indexOf(value) === index;
+    }
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            begegnungen: begegnungen,
+            liga: '',
+            saison: '',
+            mannschaft: '',
+            begegnung_id: 0
+        },
+        watch: {
+            liga() {
+                this.mannschaft = ''
+            },
+            mannschaft() {
+                this.begegnung_id = 0
+            }
+        },
+        computed: {
+            saisons() {
+                return this.begegnungen.map((el) => {
+                    return el.saison
+                }).filter(unique);
+            },
+            ligen() {
+                return this.begegnungen.map((el) => {
+                    return el.liga
+                }).filter(unique);
+            },
+            mannschaften() {
+                return this.begegnungen
+                    .filter((el) => {
+                        return el.liga === this.liga
+                    })
+                    .map((el) => {
+                        return el.home // jede Mannschaft hat irgendwann ein Heimspiel, taucht also in der Ergebnisliste auf
+                    })
+                    .filter(unique)
+                    .sort((a, b) => { return a.localeCompare(b) })
+            },
+            filtered_begegnungen() {
+                return this.begegnungen
+                    .filter((el) => {
+                        let included = true
+                        if (this.liga !== '' && this.liga !== el.liga) {
+                            included = false
+                        }
+                        if (this.mannschaft !== '' && this.mannschaft !== el.home && this.mannschaft !== el.away) {
+                            included = false
+                        }
+
+                        return included
+                    })
+                .sort((a,b) => { return a.spiel_tag - b.spiel_tag })
+            },
+            begegnung_label() {
+                return this.begegnungen.find((el) => { return el.id === this.begegnung_id}).label
+            }
+        },
+        mounted() {
+            if (this.saisons.length === 1) {
+                this.saison = this.saisons[0]
+            }
+            if (this.ligen.length === 1) {
+                this.liga = this.ligen[0]
+            }
+        }
+    })
+</script>
+
+<style>
+    label { width: 6em; }
+    .begegnungserfassung-link { margin-top: 1rem; }
+</style>
