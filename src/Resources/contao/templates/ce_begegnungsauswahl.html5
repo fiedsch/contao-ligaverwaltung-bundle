@@ -32,7 +32,7 @@
             </select>
         </div>
         <div v-if="begegnung_id > 0" class="begegnungserfassung-link">
-            Eingabe der Begeggnung: <a :href="'begegnung='+begegnung_id">{{ begegnung_label }}</a>
+            <button class="btn btn-primary" :href="'begegnung='+begegnung_id">{{ begegnung_label }} eingeben</button>
         </div>
     </div>
 </div>
