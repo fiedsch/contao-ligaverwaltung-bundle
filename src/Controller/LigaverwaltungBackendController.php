@@ -21,7 +21,7 @@ use Fiedsch\LigaverwaltungBundle\PlayerHistoryController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 
@@ -96,7 +96,7 @@ class LigaverwaltungBackendController extends AbstractController // Controller
             'app_data' => $appData,
         ];
         $twig = System::getContainer()->get('twig');
-        $template = '@FiedschLigaverwaltung/begegnung_dataentry.html.twig';
+        $template = '@FiedschLigaverwaltung/begegnung_dataentry_be.html.twig';
 
         return new Response($twig->render($template, $data));
     }

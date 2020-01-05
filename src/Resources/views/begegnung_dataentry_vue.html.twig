@@ -1,0 +1,23 @@
+<div class="tl_listing_container">
+    <script>
+        var data = {{ app_data|json_encode()|raw }}
+    </script>
+
+    {# hier wird die App injiziert #}
+    <div id="app"></div>
+
+    {# JS und CSS Code für die App #}
+    <script src="/bundles/fiedschligaverwaltung/js/chunk-vendors.js"></script>
+    <script src="/bundles/fiedschligaverwaltung/js/app.js"></script>
+    <link rel="stylesheet" href="/bundles/fiedschligaverwaltung/css/app.css">
+</div>
+
+<style>
+    {{ app_data.spielplanCss|raw }}
+</style>
+
+{#
+    <pre>
+       {{ app_data|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
+    </pre>
+#}

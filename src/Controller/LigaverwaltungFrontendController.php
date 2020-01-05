@@ -12,12 +12,21 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
+use Contao\BegegnungModel;
+use Contao\CoreBundle\Exception\PageNotFoundException;
+use Contao\System;
+use Contao\FrontendTemplate;
+use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
+use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
 use Fiedsch\LigaverwaltungBundle\IcalController;
 use Fiedsch\LigaverwaltungBundle\JsonController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route; // for annotations!
+
 
 /**
  * Handles the bundle's frontend routes.
@@ -32,8 +41,6 @@ class LigaverwaltungFrontendController extends Controller
      * @param int $ligaid
      * @param int $mannschaftid
      *
-     * @throws \Exception
-     *
      * @return Response
      *
      * @Route(
@@ -47,6 +54,8 @@ class LigaverwaltungFrontendController extends Controller
      *       "mannschaftid":"0"
      *     }
      * )
+     * @throws \Exception
+     *
      */
     public function icalAction($ligaid, $mannschaftid = 0)
     {
@@ -81,4 +90,80 @@ class LigaverwaltungFrontendController extends Controller
 
         return $controller->run();
     }
+
+
+    /**
+     * Einbagemaske Begegnungserfassung
+     *
+     * @param int $begegnung
+     *
+     * @return Response
+     *
+     * @Route(
+     *     "/ligaverwaltung/begegnung_fe/{begegnung}",
+     *     name="begegnung_dataentry_form_fe",
+     *     requirements={
+     *       "begegnung": "[0-9]+"
+     *     },
+     *     methods={"GET"}
+     * )
+     * @Template("@FiedschLigaverwaltung/begegnung_dataentry.html.twig")
+     */
+    public function begegnungDataEntryAction($begegnung)
+    {
+        $begegnungModel = BegegnungModel::findById($begegnung);
+        if (!$begegnungModel) {
+            throw new PageNotFoundException('Begegnung ' . $begegnung . ' nicht gefunden');
+        }
+
+        $appData = $begegnungModel->{DataEntrySaver::KEY_APP_DATA};
+        if (!is_array($appData)) {
+            $appData = [];
+        }
+        $appData['webserviceUrl'] = '/ligaverwaltung/begegnung_fe';
+        $appData['requestToken'] = REQUEST_TOKEN;
+        $appData['begegnungId'] = $begegnung;
+        $appData['numSlots'] = 8;
+        $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);
+        $appData = DataEntrySaver::augment($appData);
+
+        $data = [
+            'headline' => $begegnungModel->getLabel(),
+            'app_data' => $appData,
+        ];
+        $twig = System::getContainer()->get('twig');
+
+        // $template = '@FiedschLigaverwaltung/begegnung_dataentry_vue.html.twig';
+        // $feTemplate = new FrontendTemplate('fe_page');
+        // $feTemplate->main = $twig->render($template, $data);
+        // return $feTemplate->getResponse();
+
+        $template = '@FiedschLigaverwaltung/begegnung_dataentry_fe.html.twig';
+        return new Response($twig->render($template, $data));
+    }
+
+    /**
+     * Datenverarbeitung Begegnungserfassung
+     *
+     * @param Request
+     * @param int $begegnung
+     *
+     * @return Response
+     *
+     * @Route(
+     *     "/ligaverwaltung/begegnung_fe/{begegnung}",
+     *     name="begegnung_dataentry_save_fe",
+     *     requirements={
+     *       "begegnung": "[0-9]+"
+     *     },
+     *     methods={"POST"}
+     *     )
+     */
+    public function begegnungDataSaveAction(Request $request, $begegnung)
+    {
+        $requestData = \json_decode($request->request->get('json_data'), true);
+
+        return new Response(DataEntrySaver::handleDataEntryData($begegnung, $requestData));
+    }
+
 }
