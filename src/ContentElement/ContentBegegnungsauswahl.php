@@ -21,7 +21,9 @@ namespace Fiedsch\LigaverwaltungBundle\ContentElement;
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\StringUtil;
+use Contao\System;
 use Patchwork\Utf8;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * @property string $headline
@@ -81,6 +83,9 @@ class ContentBegegnungsauswahl extends ContentElement
                      ";
         $result = $this->Database::getInstance()->prepare($strQuery)->execute($this->verband);
 
+        /** @var Router $routeGenerator */
+        $routeGenerator = System::getContainer()->get('router')->getGenerator();
+
         while ($result->next()) {
             $listitems[] = [
                 'id'        => $result->id,
@@ -90,6 +95,7 @@ class ContentBegegnungsauswahl extends ContentElement
                 'spiel_tag' => $result->spiel_tag,
                 'home'      => $result->mh_name,
                 'away'      => $result->ma_name,
+                'edit_url'  => $routeGenerator->generate('begegnung_dataentry_form_fe', ['begegnung' => $result->id])
             ];
         }
 

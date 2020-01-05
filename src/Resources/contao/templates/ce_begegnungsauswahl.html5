@@ -32,7 +32,7 @@
             </select>
         </div>
         <div v-if="begegnung_id > 0" class="begegnungserfassung-link">
-            <button class="btn btn-primary" :href="'begegnung='+begegnung_id">{{ begegnung_label }} eingeben</button>
+            <a class="btn btn-primary" :href="begegnung_edit_url">{{ begegnung_label }} eingeben</a>
         </div>
     </div>
 </div>
@@ -103,6 +103,9 @@
             },
             begegnung_label() {
                 return this.begegnungen.find((el) => { return el.id === this.begegnung_id}).label
+            },
+            begegnung_edit_url() {
+                return this.begegnungen.find((el) => { return el.id === this.begegnung_id}).edit_url
             }
         },
         mounted() {
@@ -119,4 +122,13 @@
 <style>
     label { width: 6em; }
     .begegnungserfassung-link { margin-top: 1rem; }
+
+    .btn-primary {
+        background-color: #97ba28;
+        border-color: #647b1a;
+    }
+    .btn-primary:hover {
+        background-color: #647b1a;
+        border-color: #313c0d;
+    }
 </style>
