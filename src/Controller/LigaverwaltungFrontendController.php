@@ -15,7 +15,6 @@ namespace Fiedsch\LigaverwaltungBundle\Controller;
 use Contao\BegegnungModel;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\System;
-use Contao\FrontendTemplate;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
 use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
 use Fiedsch\LigaverwaltungBundle\IcalController;
