@@ -30,6 +30,9 @@ class DataEntrySaver
         if (!$begegnungModel) {
             return 'Begegnung nicht gefunden';
         }
+        if ($begegnungModel->published) {
+            return 'Begegnung bereits erfasst und veröffentlicht';
+        }
         // nicht benötigte Daten entfernen
         unset($data['REQUEST_TOKEN']);
         unset($data['FORM_SUBMIT']);

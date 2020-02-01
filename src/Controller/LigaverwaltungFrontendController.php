@@ -13,6 +13,7 @@
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
 use Contao\BegegnungModel;
+use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
@@ -113,6 +114,9 @@ class LigaverwaltungFrontendController extends Controller
         $begegnungModel = BegegnungModel::findById($begegnung);
         if (!$begegnungModel) {
             throw new PageNotFoundException('Begegnung ' . $begegnung . ' nicht gefunden');
+        }
+        if ($begegnungModel->published) {
+            throw new AccessDeniedException('Begegnung ' . $begegnung . ' ist bereits erfasst');
         }
 
         $appData = $begegnungModel->{DataEntrySaver::KEY_APP_DATA};
