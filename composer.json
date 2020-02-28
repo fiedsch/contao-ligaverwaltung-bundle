@@ -15,7 +15,7 @@
     "ext-json": "*",
     "contao/core-bundle": "^4.4",
     "eluceo/ical": "^0.13",
-    "fiedsch/contao-jsonwidget": "^0.1.2",
+    "fiedsch/contao-jsonwidget": "^3.0",
     "codefog/contao-haste": "^4.24.1",
     "sensio/framework-extra-bundle": "^5.4.1"
   },
