@@ -2,7 +2,12 @@
 
 ## Development
 
-* Bearbeiten Icon ausgegraut wenn einen Mannschaft "spielfrei hat" und es deshalb nichts zu bearbeiten gibt.
+## Version 0.8.0
+
+* merge branch `begegnungserfassung_frontend`
+  - neues Content Element "Begegnungsauswahl" (experimentell!)
+  - Begegnungserfassung im Backend erweitert. Das Eingabeformular kann nun mehrmals aufgerufen und
+    die Bearbeitung fortgesetzt werden.
 
 
 ## Version 0.7.1
