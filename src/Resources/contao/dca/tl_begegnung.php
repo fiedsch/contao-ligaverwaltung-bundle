@@ -13,6 +13,7 @@
 use Fiedsch\LigaverwaltungBundle\DCAHelper;
 use Contao\SpielModel;
 use Contao\Config;
+use Contao\System;
 
 $GLOBALS['TL_DCA']['tl_begegnung'] = [
     'config' => [
@@ -92,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
                     }
 
                     return sprintf('<a href="%s" title="die Begegnung bearbeiten (neuer Modus)" class="edit">%s</a>',
-                        System::getContainer()->get('router')->getGenerator()->generate('begegnung_dataentry_form', ['begegnung'=>$arrRow['id']]),
+                        System::getContainer()->get('router')->generate('begegnung_dataentry_form', ['begegnung'=>$arrRow['id']]),
                         '<img src="bundles/fiedschligaverwaltung/icons/all.svg" alt="erfassen">&nbsp;'
                     );
 
