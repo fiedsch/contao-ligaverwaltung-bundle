@@ -84,6 +84,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
 
     'fields' => [
         'id' => [
+            'search' => true,
             'sql' => 'int(10) unsigned NOT NULL auto_increment',
         ],
 
