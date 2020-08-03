@@ -141,6 +141,10 @@ class ContentSpielplan extends ContentElement
                 continue;
             }
 
+            // Begegnung rückwirkend gelöscht?
+            if (!$home || !$away) {
+                continue;
+            }
             $spielort = $home->getRelated('spielort');
 
             // Ist die Heim- oder die Gastmannschaft nicht mehr aktiv?
