@@ -15,17 +15,17 @@ namespace Contao;
 use Fiedsch\LigaverwaltungBundle\DCAHelper;
 
 /**
- * @property int    $id
- * @property int    $pid
+ * @property int $id
+ * @property int $pid
  * @property string $name
- * @property bool   $teamcaptain
- * @property bool   $co_teamcaptain
- * @property bool   $active
- * @property bool   $ersatzspieler
- * @property bool   $jugendlich
+ * @property bool $teamcaptain
+ * @property bool $co_teamcaptain
+ * @property bool $active
+ * @property bool $ersatzspieler
+ * @property bool $jugendlich
  *
- * @method static SpielerModel|null findById($id, array $opt=array())
- * @method static Model\Collection|SpielerModel|null findByPid($id, array $opt=array())
+ * @method static SpielerModel|null findById($id, array $opt = [])
+ * @method static Model\Collection|SpielerModel|null findByPid($id, array $opt = [])
  * @method static Model\Collection|Model|null getRelated($tablename)
  */
 class SpielerModel extends Model
@@ -38,6 +38,26 @@ class SpielerModel extends Model
      * @var string
      */
     protected static $strTable = 'tl_spieler';
+
+    /**
+     * @param int $id
+     *
+     * @return string
+     * @throws \Exception
+     *
+     */
+    public static function getNameById($id)
+    {
+        $spieler = self::findById($id);
+        if ($spieler) {
+            /** @var MemberModel $member */
+            $member = $spieler->getRelated('member_id');
+
+            return self::getFullNameFor($member);
+        }
+
+        return 'kein Name für Spieler ' . $id;
+    }
 
     /**
      * Get the full name (lastname, firstname) for a member.
@@ -56,42 +76,9 @@ class SpielerModel extends Model
     }
 
     /**
-     * @param int $id
-     *
+     * @return string
      * @throws \Exception
      *
-     * @return string
-     */
-    public static function getNameById($id)
-    {
-        $spieler = self::findById($id);
-        if ($spieler) {
-            /** @var MemberModel $member */
-            $member = $spieler->getRelated('member_id');
-
-            return self::getFullNameFor($member);
-        }
-
-        return 'kein Name für Spieler '.$id;
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        /** @var MemberModel $member */
-        $member = $this->getRelated('member_id');
-
-        return self::getFullNameFor($member);
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return string
      */
     public function getFullName()
     {
@@ -106,23 +93,23 @@ class SpielerModel extends Model
             /** @var \Contao\LigaModel $liga */
             $liga = $mannschaft->getRelated('liga');
             if ($liga) {
-                $mannschaftsname .= ' '.$liga->name;
+                $mannschaftsname .= ' ' . $liga->name;
                 $saison = $liga->getRelated('saison');
                 if ($saison) {
-                    $mannschaftsname .= ', '.$saison->name;
+                    $mannschaftsname .= ', ' . $saison->name;
                 }
             }
         } else {
             $mannschaftsname = 'Mannschaft ex. nicht (mehr)';
         }
 
-        return $membername.', '.$mannschaftsname;
+        return $membername . ', ' . $mannschaftsname;
     }
 
     /**
+     * @return string
      * @throws \Exception
      *
-     * @return string
      */
     public function getNameAndMannschaft()
     {
@@ -130,18 +117,31 @@ class SpielerModel extends Model
         /** @var MannschaftModel $mannschaft */
         $mannschaft = $this->getRelated('pid');
         if ($mannschaft) {
-            $result .= ', '.$mannschaft->name;
+            $result .= ', ' . $mannschaft->name;
         }
 
         return $result;
     }
 
     /**
+     * @return string
      * @throws \Exception
      *
-     * @return string
      */
-    public function getTcDetails()
+    public function getName()
+    {
+        /** @var MemberModel $member */
+        $member = $this->getRelated('member_id');
+
+        return self::getFullNameFor($member);
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     *
+     */
+    public function getTcDetails(): array
     {
         /** @var \Contao\MemberModel $member */
         $member = $this->getRelated('member_id');
