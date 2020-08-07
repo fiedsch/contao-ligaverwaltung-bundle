@@ -146,27 +146,30 @@ class SpielerModel extends Model
         /** @var \Contao\MemberModel $member */
         $member = $this->getRelated('member_id');
 
-        $kontaktdaten = [];
+        $kontaktdaten = [
+            'name'   => '',
+            'email'  => '',
+            'mobile' => '',
+        ];
         if ($member->mobile) {
-            $kontaktdaten[] = sprintf("<a href='tel:%s'>%s</a>",
+            $kontaktdaten['mobile'] = sprintf("<a href='tel:%s'>%s</a>",
                 $member->mobile,
                 $member->mobile
             );
         }
         if ($member->email) {
-            $kontaktdaten[] = sprintf("<a href='%s'>%s</a>",
-                StringUtil::encodeEmail('mailto:'.$member->email),
+            $kontaktdaten['email'] = sprintf("<a href='%s'>%s</a>",
+                StringUtil::encodeEmail('mailto:' . $member->email),
                 StringUtil::encodeEmail($member->email)
             );
         }
-        $kontaktdaten = implode(', ', $kontaktdaten);
 
-        return sprintf('%s%s %s%s%s',
+        $kontaktdaten['name'] = sprintf('%s%s %s',
             $this->teamcaptain ? $GLOBALS['TL_LANG']['MSC']['tc1'] : '',
             $this->co_teamcaptain ? $GLOBALS['TL_LANG']['MSC']['tc2'] : '',
-            self::getFullNameFor($member),
-            $kontaktdaten ? ', ' : '',
-            $kontaktdaten
-            );
+            self::getFullNameFor($member)
+        );
+
+        return $kontaktdaten;
     }
 }

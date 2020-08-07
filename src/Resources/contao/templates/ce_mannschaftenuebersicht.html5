@@ -21,7 +21,9 @@
             <td>
             <ul>
             <?php foreach ($mannschaftsinfos['tc'] as $tc): ?>
-                <li><?= $tc ?></li>
+                <li>
+                    <?= join(', ', array_filter([$tc['name'], $tc['mobile'], $tc['email']], function($el) { return !empty($el); })) ?>
+                </li>
             <?php endforeach; ?>
             </ul>
             </td>
