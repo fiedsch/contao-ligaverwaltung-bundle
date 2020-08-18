@@ -2,6 +2,16 @@
 
 ## Development
 
+* Update README.md
+
+## Version 0.9.2
+
+* Bugfix:  "Spielfrei" Begegnungen werden wieder angezeigt
+
+## Version 0.9.0
+
+* "Allow better personal data control": Möglichkeit, die Kontaktdaten der TC nur angemeldeten Mitgliedern auszugeben
+
 ## Version 0.8.0
 
 * merge branch `begegnungserfassung_frontend`
