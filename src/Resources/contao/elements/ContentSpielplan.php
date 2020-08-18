@@ -127,6 +127,15 @@ class ContentSpielplan extends ContentElement
             /** @var MannschaftModel $away */
             $away = $begegnung->getRelated('away');
 
+            // Voreilig gelöschte Heimmannschaft (hätte auf inaktiv gesetzt werden sollen)
+            if ($begegnung->home && !$home) {
+                continue;
+            }
+            // Dito mit der Gastmannschaft
+            if ($begegnung->away && !$away) {
+                continue;
+            }
+
             // "(geplant) Spielfrei" oder "Gegner nicht mehr aktiv":
             //
             // Reguläres Spielfrei oder Gegner nicht mehr aktiv und
