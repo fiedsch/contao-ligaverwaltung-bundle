@@ -1,12 +1,12 @@
 # Ligaverwaltung für Contao Open Source CMS
 
-## Überblick 
+## Überblick
 
-* Ligaverwaltung für Sportarten, bei denen bei einer Begegnung zweier Mannschaften einzelne 
-  Spieler gegeneinander antreten und die Summe der Einzelspielergebnisse das Gesamtergebnis 
+* Ligaverwaltung für Sportarten, bei denen bei einer Begegnung zweier Mannschaften einzelne
+  Spieler gegeneinander antreten und die Summe der Einzelspielergebnisse das Gesamtergebnis
   ergibt. Anwendungsfall und Motivation für die Entwicklung: Verwaltung einer Dartliga
-  (Beispiele [hier](https://www.edart-bayern.de) oder [hier](https://www.steeldart-muenchen.de)).  
-* Contao 4 Version der nicht mehr weitererentwickelten Contao 3 Erweiterung 
+  (siehe Beispiele).
+* Contao 4 Version der nicht mehr weitererentwickelten Contao 3 Erweiterung
 https://github.com/fiedsch/contao-ligaverwaltung
 
 ## Dokumentation
