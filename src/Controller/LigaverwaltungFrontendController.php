@@ -18,8 +18,6 @@ use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
 use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
-use Fiedsch\LigaverwaltungBundle\IcalController;
-use Fiedsch\LigaverwaltungBundle\JsonController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

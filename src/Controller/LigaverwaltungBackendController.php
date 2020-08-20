@@ -17,7 +17,6 @@ use Contao\System;
 use Contao\CoreBundle\Exception\RedirectResponseException;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
 use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
-use Fiedsch\LigaverwaltungBundle\PlayerHistoryController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
