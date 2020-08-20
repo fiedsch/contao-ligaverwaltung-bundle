@@ -21,9 +21,9 @@ namespace Fiedsch\LigaverwaltungBundle;
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
-use Contao\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Patchwork\Utf8;
 
 class ContentSpielortseite extends ContentElement

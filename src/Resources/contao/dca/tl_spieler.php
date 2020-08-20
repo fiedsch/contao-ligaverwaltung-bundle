@@ -10,6 +10,10 @@
  * @license https://opensource.org/licenses/MIT
  */
 
+use Contao\DataContainer;
+use Contao\FilesModel;
+use Contao\MemberModel;
+
 $GLOBALS['TL_DCA']['tl_spieler'] = [
     'config' => [
         'dataContainer' => 'Table',
@@ -152,10 +156,10 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
 
         'avatar' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['avatar'],
-            'input_field_callback' => function (\Contao\DataContainer $dc) {
+            'input_field_callback' => function (DataContainer $dc) {
                 $member_id = $dc->activeRecord->row()['member_id'];
-                $member = \Contao\MemberModel::findById($member_id);
-                $avatar = $member ? \Contao\FilesModel::findById($member->avatar)->path : null;
+                $member = MemberModel::findById($member_id);
+                $avatar = $member ? FilesModel::findById($member->avatar)->path : null;
 
                 return '<div class="widget">'
                     .'<h3>'

@@ -21,7 +21,7 @@ namespace Fiedsch\LigaverwaltungBundle;
 use Contao\BackendTemplate;
 use Contao\ContentModel;
 use Contao\Input;
-use Contao\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Contao\Module;
 use Patchwork\Utf8;
 

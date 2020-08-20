@@ -1,5 +1,7 @@
 <?php
 
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
@@ -153,11 +155,11 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'inputType' => 'select',
             'exclude' => true,
             'options' => [
-                    \Contao\LigaModel::SPIELPLAN_16E2D => '16E,2D',
-                    \Contao\LigaModel::SPIELPLAN_16E4D => '16E,4D',
-                    \Contao\LigaModel::SPIELPLAN_8E2D => '8E,2D',
-                    \Contao\LigaModel::SPIELPLAN_6E3D => '6E,3D',
-                    \Contao\LigaModel::SPIELPLAN_16E => '16E',
+                    LigaModel::SPIELPLAN_16E2D => '16E,2D',
+                    LigaModel::SPIELPLAN_16E4D => '16E,4D',
+                    LigaModel::SPIELPLAN_8E2D => '8E,2D',
+                    LigaModel::SPIELPLAN_6E3D => '6E,3D',
+                    LigaModel::SPIELPLAN_16E => '16E',
                 ],
             'eval' => ['mandatory' => true, 'includeBlankOption' => true, 'tl_class' => 'w50'],
             'sql' => "int(10) unsigned NOT NULL default '0'",

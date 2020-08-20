@@ -10,9 +10,9 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-use Contao\HighlightModel;
-use Contao\SpielerModel;
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 
 $GLOBALS['TL_DCA']['tl_highlight'] = [
     'config' => [

@@ -12,7 +12,7 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\System;

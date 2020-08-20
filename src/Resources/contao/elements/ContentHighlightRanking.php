@@ -17,9 +17,9 @@ use Contao\Config;
 use Contao\ContentElement;
 use Contao\Database;
 use Contao\Date;
-use Contao\HighlightModel;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Contao\System;
 use Patchwork\Utf8;
 
@@ -42,9 +42,9 @@ class ContentHighlightRanking extends ContentElement
     protected $strTemplate = 'ce_highlightranking';
 
     /**
+     * @return string
      * @throws \Exception
      *
-     * @return string
      */
     public function generate()
     {
@@ -63,14 +63,14 @@ class ContentHighlightRanking extends ContentElement
                 $suffix = 'Spieler';
                 $mannschaft = MannschaftModel::findById($this->mannschaft);
                 $subject = sprintf('%s %s %s %s',
-                    'Mannschaft '.($mannschaft->name ?: 'alle'),
+                    'Mannschaft ' . ($mannschaft->name ?: 'alle'),
                     $liga->getRelated('pid')->name,
                     $liga->name,
                     $liga->getRelated('saison')->name
                 );
             }
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['highlightranking'][0]).", $suffix, $subject ###";
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['highlightranking'][0]) . ", $suffix, $subject ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
@@ -96,7 +96,7 @@ class ContentHighlightRanking extends ContentElement
                 $this->compileSpielerranking();
                 break;
             default:
-                $this->Template->subject = 'Undefined '.$this->rankingtype;
+                $this->Template->subject = 'Undefined ' . $this->rankingtype;
         }
         $this->Template->rankingfield = $this->rankingfield;
         $this->Template->auf_mannschaftsseite = $this->mannschaft > 0;
@@ -134,7 +134,7 @@ class ContentHighlightRanking extends ContentElement
                           AND s.active='1'
                           AND me.id IS NOT NULL"; // keine gelöschten Spieler
 
-        $sql .= ' AND '.$this->getRankingTypeFilter('h');
+        $sql .= ' AND ' . $this->getRankingTypeFilter('h');
 
         $highlights = Database::getInstance()
             ->prepare($sql)
@@ -145,14 +145,14 @@ class ContentHighlightRanking extends ContentElement
         while ($highlights->next()) {
             //print "<pre>".print_r($highlights->row(), true)."</pre>";
             $results[] = [
-                'datum' => Date::parse(Config::get('dateFormat'), $highlights->spiel_am),
-                'mannschaft' => $highlights->mannschaft,
-                'hl_171' => HighlightModel::TYPE_171 == $highlights->type ? $highlights->value : '',
-                'hl_180' => HighlightModel::TYPE_180 == $highlights->type ? $highlights->value : '',
+                'datum'         => Date::parse(Config::get('dateFormat'), $highlights->spiel_am),
+                'mannschaft'    => $highlights->mannschaft,
+                'hl_171'        => HighlightModel::TYPE_171 == $highlights->type ? $highlights->value : '',
+                'hl_180'        => HighlightModel::TYPE_180 == $highlights->type ? $highlights->value : '',
                 'hl_highfinish' => HighlightModel::TYPE_HIGHFINISH == $highlights->type ? $highlights->value : '',
-                'hl_shortleg' => HighlightModel::TYPE_SHORTLEG == $highlights->type ? $highlights->value : '',
-                'hl_punkte' => [],
-                'hl_rang' => 0,
+                'hl_shortleg'   => HighlightModel::TYPE_SHORTLEG == $highlights->type ? $highlights->value : '',
+                'hl_punkte'     => [],
+                'hl_rang'       => 0,
             ];
         }
 
@@ -228,16 +228,16 @@ class ContentHighlightRanking extends ContentElement
         if ($this->mannschaft > 0) {
             // eine bestimmte Mannschaft
             $mannschaft = MannschaftModel::findById($this->mannschaft);
-            $this->Template->subject = 'Highlight-Ranking aller Spieler der Mannschaft '.$mannschaft->name;
+            $this->Template->subject = 'Highlight-Ranking aller Spieler der Mannschaft ' . $mannschaft->name;
             $sql .= ' AND s.pid=?';
-            $sql .= ' AND '.$this->getRankingTypeFilter('h');
+            $sql .= ' AND ' . $this->getRankingTypeFilter('h');
             $sql .= " AND s.active='1'"; // nur aktive Spieler dieser Mannschaft
             $sql .= ' ORDER BY spiel_am DESC';
             $highlights = Database::getInstance()
                 ->prepare($sql)->execute($this->liga, $this->mannschaft);
         } else {
             // alle Mannschaften
-            $sql .= ' AND '.$this->getRankingTypeFilter('h');
+            $sql .= ' AND ' . $this->getRankingTypeFilter('h');
             $sql .= ' ORDER BY spiel_am DESC';
             $this->Template->subject = 'Highlight-Ranking aller Spieler';
             $highlights = Database::getInstance()
@@ -259,18 +259,18 @@ class ContentHighlightRanking extends ContentElement
             // Initialisieren
             if (!isset($results[$credit_to])) {
                 $results[$credit_to] = [
-                    'name' => DCAHelper::makeSpielerNameFromParts($highlights->member_firstname, $highlights->member_lastname, $highlights->member_anonymize),
-                    'mannschaft' => [$highlights->mannschaft => 0], // bei Wechsel der Mannschaft eines Spielers innerhalb der Saison können es mehrere Mannschaften sein!
-                    'hl_171' => 0,  // Anzahl
-                    'hl_180' => 0,  // dito
+                    'name'          => DCAHelper::makeSpielerNameFromParts($highlights->member_firstname, $highlights->member_lastname, $highlights->member_anonymize),
+                    'mannschaft'    => [$highlights->mannschaft => 0], // bei Wechsel der Mannschaft eines Spielers innerhalb der Saison können es mehrere Mannschaften sein!
+                    'hl_171'        => 0,  // Anzahl
+                    'hl_180'        => 0,  // dito
                     'hl_highfinish' => [], // Liste der Highfinishes
-                    'hl_shortleg' => [], // dito
-                    'hl_punkte' => [], // List der einzelnen Punkte
-                    'hl_rang' => 0,
-                    'member_id' => $highlights->member_id,
-                    'spieler_id' => $highlights->spieler_id,
-                    'active' => false,
-                    'CSS' => $highlights->member_anonymize ? '' : trim($highlights->member_gender .' '. ($highlights->sjugendlich ? 'youth': '')),
+                    'hl_shortleg'   => [], // dito
+                    'hl_punkte'     => [], // List der einzelnen Punkte
+                    'hl_rang'       => 0,
+                    'member_id'     => $highlights->member_id,
+                    'spieler_id'    => $highlights->spieler_id,
+                    'active'        => false,
+                    'CSS'           => $highlights->member_anonymize ? '' : trim($highlights->member_gender . ' ' . ($highlights->sjugendlich ? 'youth' : '')),
                 ];
             }
             // Spieler hat in versch. Mannschaften gespielt?
@@ -322,8 +322,8 @@ class ContentHighlightRanking extends ContentElement
                     $results[$id]['hl_punkte'] = static::flattenToIntArray($results[$id]['hl_punkte']);
                     $results[$id]['hl_shortleg'] = static::prettyPrintSorted($results[$id]['hl_shortleg'], 'ASC');
                     // Mapping
-                    $results[$id]['hl_punkte'] = array_map(function ($val) {
-                        $val = (int) $val;
+                    $results[$id]['hl_punkte'] = array_map(function($val) {
+                        $val = (int)$val;
                         // Wert > self::MAX_SHORTLEG_DARTS via 0 Punkte nicht berücksichtigen
                         if (self::MAX_SHORTLEG_DARTS < $val) {
                             return 0;
@@ -353,12 +353,12 @@ class ContentHighlightRanking extends ContentElement
         // print '<pre>'.print_r(['rankingtype'=>$this->rankingtype, $results], true) .'</pre>';
 
         if (HighlightModel::TYPE_ALL == $this->rankingfield) {
-            uasort($results, function ($a, $b) {
+            uasort($results, function($a, $b) {
                 // ohne spezielle Punkteregel: nach Namen sortieren
                 return $a['name'] <=> $b['name'];
             });
         } else {
-            uasort($results, function ($a, $b) {
+            uasort($results, function($a, $b) {
                 // Bei Shortleg und Highfinish können wir die sortierten Werte (== ['hl_punkte']-Eintrag)
                 // aneinander hängen und als String sortieren, weil:
                 // * bei Shortleg oben bereits "gemap" wurde (kurze Legs -> hohe Werte) und
@@ -418,7 +418,7 @@ class ContentHighlightRanking extends ContentElement
         $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($a));
         $result = [];
         foreach ($it as $v) {
-            $result[] = (int) $v;
+            $result[] = (int)$v;
         }
 
         return $result;
@@ -428,7 +428,7 @@ class ContentHighlightRanking extends ContentElement
      * TODO (?): "13,13,13,14,14" als "13 (3x), 14 (2x)" ausgeben.
      *
      * @param string|array $value
-     * @param string       $order
+     * @param string $order
      *
      * @return string
      */

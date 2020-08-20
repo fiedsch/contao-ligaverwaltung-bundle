@@ -1,5 +1,7 @@
 <?php
 
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
@@ -121,11 +123,11 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['rankingfield'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['rankingfield'],
     'exclude' => true,
     'options' => [
-        \Contao\HighlightModel::TYPE_ALL => 'Alle zusammen',
-        //\Contao\HighlightModel::TYPE_171 => '180+171',
-        \Contao\HighlightModel::TYPE_180 => '180+171',
-        \Contao\HighlightModel::TYPE_SHORTLEG => 'Shortleg',
-        \Contao\HighlightModel::TYPE_HIGHFINISH => 'Highfinish',
+        HighlightModel::TYPE_ALL => 'Alle zusammen',
+        //HighlightModel::TYPE_171 => '180+171',
+        HighlightModel::TYPE_180 => '180+171',
+        HighlightModel::TYPE_SHORTLEG => 'Shortleg',
+        HighlightModel::TYPE_HIGHFINISH => 'Highfinish',
     ],
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'includeBlankOption' => true],

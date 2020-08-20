@@ -14,8 +14,8 @@ namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
 use Contao\ContentElement;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Patchwork\Utf8;
 
 /**

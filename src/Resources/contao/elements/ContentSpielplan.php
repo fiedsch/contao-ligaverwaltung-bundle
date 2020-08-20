@@ -19,15 +19,15 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\Config;
 use Contao\ContentElement;
 use Contao\Controller;
 use Contao\Date;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Contao\PageModel;
-use Contao\SaisonModel;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Contao\System;
 use Patchwork\Utf8;
 
@@ -43,9 +43,9 @@ class ContentSpielplan extends ContentElement
     /**
      * Generate the content element.
      *
+     * @return string
      * @throws \Exception
      *
-     * @return string
      */
     public function generate()
     {
@@ -54,6 +54,37 @@ class ContentSpielplan extends ContentElement
         }
 
         return parent::generate();
+    }
+
+    /**
+     * generate the view for the back end.
+     *
+     * @throws \Exception
+     */
+    protected function generateBackendView()
+    {
+        $objTemplate = new BackendTemplate('be_wildcard');
+
+        $liga = LigaModel::findById($this->liga);
+        $filter = '';
+        if ($this->mannschaft) {
+            $mannschaft = MannschaftModel::findById($this->mannschaft);
+            $filter = ' (nur Begegnungen von "' . $mannschaft->name . '")';
+        }
+        $saison = SaisonModel::findById($liga->saison);
+        $ligalabel = sprintf('%s %s %s',
+            $liga->getRelated('pid')->name,
+            $liga->name,
+            $saison->name
+        );
+        $suffix = sprintf('%s %s', $ligalabel, $filter);
+        $objTemplate->title = $this->headline;
+        $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielplan'][0]) . " $suffix ###";
+        // $objTemplate->id = $this->id;
+        // $objTemplate->link = 'the text that will be linked with href';
+        // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
+
+        return $objTemplate->parse();
     }
 
     /**
@@ -72,8 +103,8 @@ class ContentSpielplan extends ContentElement
             ['type=?'],
             ['root'],
             [
-                'order' => 'id ASC',
-                'limit' => 1,
+                'order'  => 'id ASC',
+                'limit'  => 1,
                 'return' => 'Model',
             ]
         );
@@ -170,17 +201,17 @@ class ContentSpielplan extends ContentElement
             }
 
             $spiel = [
-                'home' => $homelabel,
-                'away' => $awaylabel,
+                'home'      => $homelabel,
+                'away'      => $awaylabel,
                 // es interessiert nicht, wann und wo "Spielfei" stattfindet:
-                'am' => $spielfrei ? '' : sprintf('%s. %s',
+                'am'        => $spielfrei ? '' : sprintf('%s. %s',
                     Date::parse('D', $begegnung->spiel_am),
                     Date::parse(Config::get('dateFormat'), $begegnung->spiel_am)
                 ),
-                'um' => $spielfrei ? '' : Date::parse(Config::get('timeFormat'), $begegnung->spiel_am),
-                'im' => $spielfrei ? '' : $spielortlabel,
-                'score' => $inactive && $already_played ? 'nicht gewertet' : $linked_score,
-                'legs' => $inactive ? '' : ($already_played ? $begegnung->getLegs() : ''),
+                'um'        => $spielfrei ? '' : Date::parse(Config::get('timeFormat'), $begegnung->spiel_am),
+                'im'        => $spielfrei ? '' : $spielortlabel,
+                'score'     => $inactive && $already_played ? 'nicht gewertet' : $linked_score,
+                'legs'      => $inactive ? '' : ($already_played ? $begegnung->getLegs() : ''),
                 'spiel_tag' => $begegnung->spiel_tag,
                 // 'kommentar' => $begegnung->kommentar,
             ];
@@ -198,39 +229,8 @@ class ContentSpielplan extends ContentElement
         $this->Template->ical_link = System::getContainer()
             ->get('router')
             ->generate('spielplan_ical', [
-                'ligaid' => $this->liga,
+                'ligaid'       => $this->liga,
                 'mannschaftid' => $this->mannschaft,
             ]);
-    }
-
-    /**
-     * generate the view for the back end.
-     *
-     * @throws \Exception
-     */
-    protected function generateBackendView()
-    {
-        $objTemplate = new BackendTemplate('be_wildcard');
-
-        $liga = LigaModel::findById($this->liga);
-        $filter = '';
-        if ($this->mannschaft) {
-            $mannschaft = MannschaftModel::findById($this->mannschaft);
-            $filter = ' (nur Begegnungen von "'.$mannschaft->name.'")';
-        }
-        $saison = SaisonModel::findById($liga->saison);
-        $ligalabel = sprintf('%s %s %s',
-            $liga->getRelated('pid')->name,
-            $liga->name,
-            $saison->name
-        );
-        $suffix = sprintf('%s %s', $ligalabel, $filter);
-        $objTemplate->title = $this->headline;
-        $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielplan'][0])." $suffix ###";
-        // $objTemplate->id = $this->id;
-        // $objTemplate->link = 'the text that will be linked with href';
-        // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
-
-        return $objTemplate->parse();
     }
 }

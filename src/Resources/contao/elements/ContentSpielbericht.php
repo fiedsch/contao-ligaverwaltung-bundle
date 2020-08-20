@@ -19,11 +19,11 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\ContentElement;
-use Contao\HighlightModel;
-use Contao\SpielerModel;
-use Contao\SpielModel;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 use Patchwork\Utf8;
 
 /**

@@ -20,8 +20,8 @@ namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\ContentElement;
 use Contao\Controller;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Contao\PageModel;
 
 /**

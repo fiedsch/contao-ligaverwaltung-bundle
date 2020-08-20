@@ -20,13 +20,13 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendModule;
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\Controller;
-use Contao\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Contao\Input;
-use Contao\LigaModel;
-use Contao\SpielerModel;
-use Contao\SpielModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 
 class ModuleBegegnungserfassung extends BackendModule
 {

@@ -13,8 +13,7 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
-use Contao\MemberModel;
-use Contao\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Symfony\Component\HttpFoundation\Response;
 
 class PlayerHistoryController

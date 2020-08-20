@@ -10,20 +10,23 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Contao;
+namespace Fiedsch\LigaverwaltungBundle\Model;
+
+use Contao\Model;
 
 /**
- * @property int $id
- * @property int $pid
+ * @property int    $id
+ * @property int    $pid
+ * @property string $name
  *
- * @method static AufstellerModel|null findById($id, array $opt=array())
+ * @method static SaisonModel|null findById($id, array $opt=array())
  */
-class AufstellerModel extends Model
+class SaisonModel extends Model
 {
     /**
      * Table name.
      *
      * @var string
      */
-    protected static $strTable = 'tl_aufsteller';
+    protected static $strTable = 'tl_saison';
 }

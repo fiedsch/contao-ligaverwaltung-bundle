@@ -2,8 +2,8 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Helper;
 
-use Contao\BegegnungModel;
-use Contao\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 
 
 class Spielplan

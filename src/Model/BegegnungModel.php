@@ -10,10 +10,13 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Contao;
+namespace Fiedsch\LigaverwaltungBundle\Model;
 
+use Contao\Model;
+use Contao\Config;
+use Contao\PageModel;
+use Contao\Controller;
 use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * @property integer $id

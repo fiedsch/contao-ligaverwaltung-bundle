@@ -12,7 +12,7 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\System;
 use Contao\CoreBundle\Exception\RedirectResponseException;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;

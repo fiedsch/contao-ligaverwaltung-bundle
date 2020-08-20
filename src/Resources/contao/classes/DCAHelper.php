@@ -12,21 +12,21 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\Config;
 use Contao\Database;
 use Contao\DataContainer;
 use Contao\DC_Table;
-use Contao\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Contao\Image;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
-use Contao\MemberModel;
-use Contao\SaisonModel;
-use Contao\SpielerModel;
-use Contao\SpielModel;
-use Contao\SpielortModel;
-use Contao\VerbandModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\MemberModel;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Model\VerbandModel;
 use Contao\Widget;
 
 class DCAHelper

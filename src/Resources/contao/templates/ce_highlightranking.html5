@@ -10,38 +10,38 @@
     <thead>
       <tr>
         <th>Mannschaft</th>
-        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-        || $this->rankingfield == \HighlightModel::TYPE_171
-        || $this->rankingfield == \HighlightModel::TYPE_180): ?>
+        <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+        || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_171
+        || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_180): ?>
         <th>171</th>
         <th>180</th>
         <?php endif; ?>
-        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-        || $this->rankingfield == \HighlightModel::TYPE_HIGHFINISH): ?>
+        <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+        || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_HIGHFINIS): ?>
         <th>Highfinish</th>
         <?php endif; ?>
-        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-                || $this->rankingfield == \HighlightModel::TYPE_SHORTLEG): ?>
+        <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+                || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_SHORTLEG): ?>
         <th>Shortleg</th>
         <?php endif; ?>
       </tr>
     </thead>
     <tbody>
-    <?php foreach ($this->listitems as $listitem): ?>
+   <?php foreach ($this->listitems as $listitem): ?>
       <tr>
           <td><?= $listitem['mannschaft'] ?></td>
-          <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-          || $this->rankingfield == \HighlightModel::TYPE_171
-          || $this->rankingfield == \HighlightModel::TYPE_180): ?>
+          <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+          || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_171
+          || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_180): ?>
           <td><?= $listitem['hl_171'] ?></td>
           <td><?= $listitem['hl_180'] ?></td>
           <?php endif; ?>
-          <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-          || $this->rankingfield == \HighlightModel::TYPE_HIGHFINISH): ?>
+          <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+          || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_HIGHFINISH): ?>
           <td><?= $listitem['hl_highfinish'] ?></td>
           <?php endif; ?>
-          <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-          || $this->rankingfield == \HighlightModel::TYPE_SHORTLEG): ?>
+          <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+          || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_SHORTLEG): ?>
           <td><?= $listitem['hl_shortleg'] ?></td>
           <?php endif; ?>
       </tr>
@@ -63,23 +63,23 @@
   <table class="table table-hover">
       <thead>
         <tr>
-          <?php if ($this->rankingfield != \HighlightModel::TYPE_ALL): ?>
+          <?php if ($this->rankingfield != Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL): ?>
             <th>&nbsp;</th><!-- Rangplatz -->
           <?php endif; ?>
           <th>Name</th>
           <?php if (!$this->auf_mannschaftsseite): ?><th>Mannschaft</th><?php endif; ?>
-        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-        || $this->rankingfield == \HighlightModel::TYPE_171
-        || $this->rankingfield == \HighlightModel::TYPE_180): ?>
+        <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+        || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_171
+        || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_180): ?>
         <th>171</th>
         <th>180</th>
         <?php endif; ?>
-        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-        || $this->rankingfield == \HighlightModel::TYPE_HIGHFINISH): ?>
+        <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+        || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_HIGHFINISH): ?>
         <th>Highfinish</th>
         <?php endif; ?>
-        <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-        || $this->rankingfield == \HighlightModel::TYPE_SHORTLEG): ?>
+        <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+        || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_SHORTLEG): ?>
         <th>Shortleg</th>
         <?php endif; ?>
         </tr>
@@ -87,23 +87,23 @@
       <tbody>
         <?php foreach ($this->listitems as $listitem): ?>
           <tr class="<?= $listitem['CSS'] ?>">
-            <?php if ($this->rankingfield != \HighlightModel::TYPE_ALL): ?>
+            <?php if ($this->rankingfield != Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL): ?>
               <td><?= $listitem['hl_rang'] ?></td>
             <?php endif; ?>
             <td><?= $listitem['name'] ?></td>
               <?php if (!$this->auf_mannschaftsseite): ?><td><?= $listitem['mannschaft'] ?></td><?php endif; ?>
-            <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-            || $this->rankingfield == \HighlightModel::TYPE_171
-            || $this->rankingfield == \HighlightModel::TYPE_180): ?>
+            <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+            || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_171
+            || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_180): ?>
             <td><?= $listitem['hl_171'] ?: '' ?></td>
             <td><?= $listitem['hl_180'] ?: '' ?></td>
             <?php endif; ?>
-            <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-            || $this->rankingfield == \HighlightModel::TYPE_HIGHFINISH): ?>
+            <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+            || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_HIGHFINISH): ?>
             <td><?= $listitem['hl_highfinish'] ?></td>
             <?php endif; ?>
-            <?php if ($this->rankingfield == \HighlightModel::TYPE_ALL
-            || $this->rankingfield == \HighlightModel::TYPE_SHORTLEG): ?>
+            <?php if ($this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_ALL
+            || $this->rankingfield == Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_SHORTLEG): ?>
             <td><?= $listitem['hl_shortleg'] ?></td>
             <?php endif; ?>
             <!-- <td><code><?= json_encode($listitem['hl_punkte']) ?></code></td> -->
@@ -121,6 +121,3 @@
 <?php // $this->showTemplateVars(); ?>
 
 <?php $this->endblock(); ?>
-
-
-

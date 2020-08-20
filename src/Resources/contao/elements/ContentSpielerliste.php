@@ -19,7 +19,7 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\ContentElement;
-use Contao\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 
 class ContentSpielerliste extends ContentElement
 {

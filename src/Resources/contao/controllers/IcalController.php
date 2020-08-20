@@ -12,12 +12,12 @@
 
 namespace Fiedsch\LigaverwaltungBundle;
 
-use Contao\BegegnungModel;
-use Contao\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Contao\Controller;
 use Contao\Config;
-use Contao\MannschaftModel;
-use Contao\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
 use Symfony\Component\HttpFoundation\Response;

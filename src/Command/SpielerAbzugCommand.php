@@ -12,10 +12,10 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
-use Contao\LigaModel;
-use Contao\MannschaftModel;
-use Contao\SaisonModel;
-use Contao\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

@@ -19,7 +19,7 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\ContentElement;
-use Contao\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 
 /**
  * @property integer $spielort

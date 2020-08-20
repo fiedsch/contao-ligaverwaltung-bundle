@@ -1,5 +1,7 @@
 <?php
 
+use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
@@ -81,8 +83,8 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
     ],
 
     'subpalettes' => [
-        'spieltype_'.\Contao\SpielModel::TYPE_EINZEL => 'home,away',
-        'spieltype_'.\Contao\SpielModel::TYPE_DOPPEL => 'home,away,home2,away2',
+        'spieltype_'.SpielModel::TYPE_EINZEL => 'home,away',
+        'spieltype_'.SpielModel::TYPE_DOPPEL => 'home,away,home2,away2',
     ],
 
     'fields' => [
@@ -145,7 +147,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['spieltype'],
             'exclude' => true,
             'inputType' => 'select',
-            'options' => [\Contao\SpielModel::TYPE_EINZEL => 'Einzel', \Contao\SpielModel::TYPE_DOPPEL => 'Doppel'],
+            'options' => [SpielModel::TYPE_EINZEL => 'Einzel', SpielModel::TYPE_DOPPEL => 'Doppel'],
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
             'sql' => "int(10) NOT NULL default '0'",
         ],

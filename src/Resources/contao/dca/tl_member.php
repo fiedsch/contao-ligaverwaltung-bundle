@@ -10,7 +10,9 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-use Contao\MemberModel;
+use Contao\DataContainer;
+use Contao\Database;
+use Fiedsch\LigaverwaltungBundle\Model\MemberModel;
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
         'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
@@ -59,7 +61,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
     'sorting' => true,
     'eval' => ['rgxp' => 'alnum', 'tl_class' => 'w50', 'maxlength' => 32, 'unique' => true],
     'sql' => "varchar(32) NOT NULL default ''",
-    'load_callback' => [function ($value, \Contao\DataContainer $dc) {
+    'load_callback' => [function ($value, DataContainer $dc) {
         // "auto increment" passnummer for new records and consider special cases.
         // NOTE: if the member with the highest passnumber gets deleted their passnumber
         // will be assigned to the next new entry in tl_member -- this is something
@@ -72,11 +74,11 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
             return $value;
         }
         // Do we have non numerical passummmer values? Then MAX() + 1 will not be appropriate!
-        $res = \Contao\Database::getInstance()->prepare("SELECT SUM(passnummer NOT REGEXP '^[0-9]+$') as n FROM tl_member WHERE passnummer <>''")->execute();
+        $res = Database::getInstance()->prepare("SELECT SUM(passnummer NOT REGEXP '^[0-9]+$') as n FROM tl_member WHERE passnummer <>''")->execute();
         if ($res->n > 0) {
             return $value;
         }
-        $res = \Contao\Database::getInstance()->prepare('SELECT MAX(passnummer * 1) as maxpass FROM tl_member')->execute();
+        $res = Database::getInstance()->prepare('SELECT MAX(passnummer * 1) as maxpass FROM tl_member')->execute();
 
         return $res->maxpass + 1;
     }],

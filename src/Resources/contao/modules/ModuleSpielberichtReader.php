@@ -19,7 +19,7 @@
 namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\ContentModel;
 use Contao\Input;
 use Contao\Module;

@@ -72,3 +72,28 @@ $GLOBALS['TL_HOOKS']['addCustomRegexp'][] = ['\Fiedsch\LigaverwaltungBundle\DCAH
 if (TL_MODE === 'BE') {
     $GLOBALS['TL_CSS'][] = 'bundles/fiedschligaverwaltung/backend.css';
 }
+
+/**
+ * Models
+ */
+use Fiedsch\LigaverwaltungBundle\Model\AufstellerModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Model\VerbandModel;
+
+$GLOBALS['TL_MODELS']['tl_aufsteller'] = AufstellerModel::class;
+$GLOBALS['TL_MODELS']['tl_begegnung'] = BegegnungModel::class;
+$GLOBALS['TL_MODELS']['tl_highlight'] = HighlightModel::class;
+$GLOBALS['TL_MODELS']['tl_liga'] = LigaModel::class;
+$GLOBALS['TL_MODELS']['tl_mannschaft'] = MannschaftModel::class;
+$GLOBALS['TL_MODELS']['tl_saison'] = SaisonModel::class;
+$GLOBALS['TL_MODELS']['tl_spieler'] = SpielerModel::class;
+$GLOBALS['TL_MODELS']['tl_spiel'] = SpielModel::class;
+$GLOBALS['TL_MODELS']['tl_spielort'] = SpielortModel::class;
+$GLOBALS['TL_MODELS']['tl_verband'] = VerbandModel::class;

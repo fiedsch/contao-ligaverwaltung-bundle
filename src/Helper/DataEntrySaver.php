@@ -2,13 +2,13 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Helper;
 
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\Database;
-use Contao\HighlightModel;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
-use Contao\SpielerModel;
-use Contao\SpielModel;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 use RuntimeException;
 
 class DataEntrySaver

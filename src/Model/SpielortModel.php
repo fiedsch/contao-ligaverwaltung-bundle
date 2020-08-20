@@ -10,7 +10,9 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Contao;
+namespace Fiedsch\LigaverwaltungBundle\Model;
+
+use Contao\Model;
 
 /**
  * @property int    $id

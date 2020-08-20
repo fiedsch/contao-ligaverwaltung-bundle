@@ -37,7 +37,7 @@ class Spiel
     }
 
     /**
-     * Vgl. auch \SpielModel::getScore().
+     * Vgl. auch SpielModel::getScore().
      *
      * @return int
      */
@@ -51,7 +51,7 @@ class Spiel
     }
 
     /**
-     * Vgl. auch \SpielModel::getScore().
+     * Vgl. auch SpielModel::getScore().
      *
      * @return int
      */

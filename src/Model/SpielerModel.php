@@ -10,8 +10,10 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Contao;
+namespace Fiedsch\LigaverwaltungBundle\Model;
 
+use Contao\Model;
+use Contao\MemberModel;
 use Fiedsch\LigaverwaltungBundle\DCAHelper;
 
 /**
@@ -90,7 +92,7 @@ class SpielerModel extends Model
         $mannschaft = $this->getRelated('pid');
         if ($mannschaft) {
             $mannschaftsname = $mannschaft->name;
-            /** @var \Contao\LigaModel $liga */
+            /** @var LigaModel $liga */
             $liga = $mannschaft->getRelated('liga');
             if ($liga) {
                 $mannschaftsname .= ' ' . $liga->name;
