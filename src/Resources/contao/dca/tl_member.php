@@ -12,7 +12,8 @@
 
 use Contao\DataContainer;
 use Contao\Database;
-use Fiedsch\LigaverwaltungBundle\Model\MemberModel;
+use Contao\MemberModel;
+
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
         'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
