@@ -23,6 +23,7 @@ use Contao\ContentModel;
 use Contao\Input;
 use Contao\Module;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortseite;
 use Patchwork\Utf8;
 
 class ModuleSpielortseitenReader extends Module

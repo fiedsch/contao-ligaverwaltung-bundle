@@ -24,6 +24,7 @@ use Contao\Input;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Contao\Module;
 use Patchwork\Utf8;
+use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsseite;
 
 class ModuleMannschaftsseitenReader extends Module
 {

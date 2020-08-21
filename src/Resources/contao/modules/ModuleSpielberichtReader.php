@@ -20,10 +20,12 @@ namespace Fiedsch\LigaverwaltungBundle;
 
 use Contao\BackendTemplate;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Element\ContentSpielbericht;
 use Contao\ContentModel;
 use Contao\Input;
 use Contao\Module;
 use Patchwork\Utf8;
+
 
 class ModuleSpielberichtReader extends Module
 {

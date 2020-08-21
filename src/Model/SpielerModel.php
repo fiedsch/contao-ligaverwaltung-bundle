@@ -14,6 +14,7 @@ namespace Fiedsch\LigaverwaltungBundle\Model;
 
 use Contao\Model;
 use Contao\MemberModel;
+use Contao\StringUtil;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
 /**
