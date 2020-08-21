@@ -32,8 +32,6 @@ array_insert($GLOBALS['BE_MOD'], 2, [
         ],
         // 'liga.highlight' => [
         //     'tables' => ['tl_highlight'],
-        //     'javascript' => 'bundles/fiedschligaverwaltung/tl_highlight.js',
-        //     'stylesheet' => 'bundles/fiedschligaverwaltung/tl_highlight.css',
         // ],
     ],
 ]);
@@ -70,9 +68,13 @@ $GLOBALS['TL_CTE']['ligaverwaltung']['begegnungsauswahl'] = ContentBegegnungsaus
 /*
  * Module
  */
-$GLOBALS['FE_MOD']['ligaverwaltung']['mannschaftsseitenreader'] = '\Fiedsch\LigaverwaltungBundle\ModuleMannschaftsseitenReader';
-$GLOBALS['FE_MOD']['ligaverwaltung']['spielortseitenreader'] = '\Fiedsch\LigaverwaltungBundle\ModuleSpielortseitenReader';
-$GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = '\Fiedsch\LigaverwaltungBundle\ModuleSpielberichtReader';
+use Fiedsch\LigaverwaltungBundle\Module\ModuleMannschaftsseitenReader;
+use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielortseitenReader;
+use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielberichtReader;
+
+$GLOBALS['FE_MOD']['ligaverwaltung']['mannschaftsseitenreader'] = ModuleMannschaftsseitenReader::class;
+$GLOBALS['FE_MOD']['ligaverwaltung']['spielortseitenreader'] = ModuleSpielortseitenReader::class;
+$GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = ModuleSpielberichtReader::class;
 
 /*
  * Hooks

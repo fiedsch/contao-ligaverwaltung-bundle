@@ -17,7 +17,7 @@
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 
-namespace Fiedsch\LigaverwaltungBundle;
+namespace Fiedsch\LigaverwaltungBundle\Module;
 
 use Contao\BackendModule;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
