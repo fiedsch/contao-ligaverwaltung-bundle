@@ -52,7 +52,7 @@ use Fiedsch\LigaverwaltungBundle\Element\ContentHighlightRanking;
 use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsseite;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortseite;
 use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftenuebersicht;
-use Fiedsch\LigaverwaltungBundle\ContentElement\ContentBegegnungsauswahl;
+use Fiedsch\LigaverwaltungBundle\Element\ContentBegegnungsauswahl;
 
 $GLOBALS['TL_CTE']['ligaverwaltung']['ligenliste'] = ContentLigenliste::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsliste'] = ContentMannschaftsliste::class;
