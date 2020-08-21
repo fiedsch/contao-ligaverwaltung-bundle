@@ -80,6 +80,7 @@ $GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = ModuleSpielberichtR
  * Hooks
  */
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+
 $GLOBALS['TL_HOOKS']['addCustomRegexp'][] = [DCAHelper::class, 'addCustomRegexp'];
 
 /* Add to Backend CSS */
@@ -100,7 +101,6 @@ use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Fiedsch\LigaverwaltungBundle\Model\VerbandModel;
-
 
 $GLOBALS['TL_MODELS']['tl_aufsteller'] = AufstellerModel::class;
 $GLOBALS['TL_MODELS']['tl_begegnung'] = BegegnungModel::class;
