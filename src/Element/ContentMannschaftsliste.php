@@ -10,7 +10,7 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle;
+namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\BackendTemplate;
 use Contao\ContentElement;

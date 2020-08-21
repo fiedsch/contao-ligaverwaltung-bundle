@@ -16,7 +16,7 @@
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 
-namespace Fiedsch\LigaverwaltungBundle;
+namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\ContentElement;
 use Contao\Controller;

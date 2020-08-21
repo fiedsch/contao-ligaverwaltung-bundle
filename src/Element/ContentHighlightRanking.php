@@ -10,7 +10,7 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle;
+namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\BackendTemplate;
 use Contao\Config;
@@ -20,6 +20,7 @@ use Contao\Date;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Contao\System;
 use Patchwork\Utf8;
 

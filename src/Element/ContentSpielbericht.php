@@ -16,10 +16,11 @@
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 
-namespace Fiedsch\LigaverwaltungBundle;
+namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\BackendTemplate;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Contao\ContentElement;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;

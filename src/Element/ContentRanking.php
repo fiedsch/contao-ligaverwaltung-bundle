@@ -10,7 +10,7 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle;
+namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\BackendTemplate;
 use Contao\ContentElement;
@@ -18,6 +18,8 @@ use Contao\Database;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Entity\Spiel;
+use Fiedsch\LigaverwaltungBundle\Entity\Begegnung;
 use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
 use Patchwork\Utf8;
@@ -155,7 +157,7 @@ class ContentRanking extends ContentElement
 
         $results = [];
 
-        /** @var \Fiedsch\LigaverwaltungBundle\Begegnung $begegnung */
+        /** @var Begegnung $begegnung */
         foreach ($begegnungen as $key => $begegnung) {
             /* @noinspection PhpUnusedLocalVariableInspection */
             list($spieltag, $home, $away) = explode(':', $key);
