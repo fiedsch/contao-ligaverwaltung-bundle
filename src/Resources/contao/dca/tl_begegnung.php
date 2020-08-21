@@ -13,7 +13,7 @@
 use Contao\Config;
 use Contao\Input;
 use Contao\System;
-use Fiedsch\LigaverwaltungBundle\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 
 

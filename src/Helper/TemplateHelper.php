@@ -10,7 +10,7 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle;
+namespace Fiedsch\LigaverwaltungBundle\Helper;
 
 class TemplateHelper
 {

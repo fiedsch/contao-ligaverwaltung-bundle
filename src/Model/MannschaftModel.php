@@ -16,6 +16,7 @@ use Contao\Model;
 use Contao\Config;
 use Contao\PageModel;
 use Contao\Controller;
+use Contao\Database;
 
 /**
  * @property int    $id

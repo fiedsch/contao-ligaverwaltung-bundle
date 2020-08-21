@@ -1,6 +1,7 @@
 <?php
 
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
@@ -33,14 +34,14 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'fields' => ['name'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['name'],
-            'child_record_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'ligaListCallback'],
+            'child_record_callback' => [DCAHelper::class, 'ligaListCallback'],
             'child_record_class' => 'no_padding',
             'disableGrouping' => true,
         ],
         'label' => [
             'fields' => ['name'],
             'format' => '%s',
-            'label_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'ligaLabelCallback'],
+            'label_callback' => [DCAHelper::class, 'ligaLabelCallback'],
         ],
         'global_operations' => [
             'all' => [

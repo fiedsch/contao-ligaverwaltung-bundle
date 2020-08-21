@@ -10,6 +10,8 @@
  * @license https://opensource.org/licenses/MIT
  */
 
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+
 $GLOBALS['TL_DCA']['tl_mannschaft'] = [
     'config' => [
         'dataContainer' => 'Table',
@@ -33,7 +35,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
         'label' => [
             'fields' => ['name', 'liga'],
             'format' => '%s %s',
-            'label_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'mannschaftLabelCallback'],
+            'label_callback' => [DCAHelper::class, 'mannschaftLabelCallback'],
         ],
         'global_operations' => [
             'all' => [
@@ -101,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             'relation' => ['type' => 'belongsTo', 'load' => 'eager'],
             'foreignKey' => 'tl_liga.name',
             'eval' => ['chosen' => true, 'includeBlankOption' => true, 'tl_class' => 'w50'],
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getLigaForSelect'],
+            'options_callback' => [DCAHelper::class, 'getLigaForSelect'],
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
 

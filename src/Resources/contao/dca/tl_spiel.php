@@ -1,6 +1,7 @@
 <?php
 
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
@@ -35,14 +36,14 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'fields' => ['slot'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['home', 'away', 'pid'],
-            'child_record_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'listSpielCallback'],
+            'child_record_callback' => [DCAHelper::class, 'listSpielCallback'],
             'child_record_class' => 'no_padding',
             'disableGrouping' => true,
         ],
         'label' => [
             'fields' => ['home', 'away'],
             'format' => '%s : %s',
-            //'label_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'begegnungLabelCallback'],
+            //'label_callback' => [DCAHelper::class, 'begegnungLabelCallback'],
         ],
         'global_operations' => [
             'all' => [
@@ -113,7 +114,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'inputType' => 'select',
             'eval' => ['tl_class' => 'w50 clr', 'chosen' => true, 'mandatory' => false, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getHomeSpielerForSelect'],
+            'options_callback' => [DCAHelper::class, 'getHomeSpielerForSelect'],
             'sql' => "int(10) NOT NULL default '0'",
         ],
         'away' => [
@@ -125,7 +126,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'inputType' => 'select',
             'eval' => ['tl_class' => 'w50', 'chosen' => true, 'mandatory' => false, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getAwaySpielerForSelect'],
+            'options_callback' => [DCAHelper::class, 'getAwaySpielerForSelect'],
             'sql' => "int(10) NOT NULL default '0'",
         ],
         'score_home' => [
@@ -160,7 +161,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'inputType' => 'select',
             'eval' => ['tl_class' => 'w50 clr', 'chosen' => true, 'mandatory' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getHomeSpielerForSelect'],
+            'options_callback' => [DCAHelper::class, 'getHomeSpielerForSelect'],
             'sql' => "int(10) NOT NULL default '0'",
         ],
         'away2' => [
@@ -172,7 +173,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'inputType' => 'select',
             'eval' => ['tl_class' => 'w50', 'chosen' => true, 'mandatory' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getAwaySpielerForSelect'],
+            'options_callback' => [DCAHelper::class, 'getAwaySpielerForSelect'],
             'sql' => "int(10) NOT NULL default '0'",
         ],
     ],

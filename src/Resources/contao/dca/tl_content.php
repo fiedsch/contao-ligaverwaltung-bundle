@@ -1,6 +1,7 @@
 <?php
 
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
@@ -23,7 +24,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['verband'] = [
     //'eval'             => ['mandatory' => true, 'multiple'=>true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     //'inputType'        => 'checkboxWizard',
     //'eval'             => ['mandatory' => true, 'multiple'=>true, 'tl_class' => ''],
-    'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getAlleVerbaendeForSelect'],
+    'options_callback' => [DCAHelper::class, 'getAlleVerbaendeForSelect'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
     //'sql'              => "blob NULL",
 ];
@@ -33,7 +34,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['saison'] = [
     'foreignKey' => 'tl_saison.name',
     'inputType' => 'checkboxWizard',
     'eval' => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'w50 clr'],
-    //'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getAlleVerbaendeForSelect'],
+    //'options_callback' => [DCAHelper::class, 'getAlleVerbaendeForSelect'],
     'sql' => 'blob NULL',
 ];
 /* Mannschaftsliste */
@@ -47,7 +48,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['liga'] = [
     //'eval'             => ['mandatory' => true, 'multiple'=>true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     //'inputType'        => 'checkboxWizard',
     //'eval'             => ['mandatory' => true, 'multiple'=>true, 'tl_class' => ''],
-    'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getAlleLigenForSelect'],
+    'options_callback' => [DCAHelper::class, 'getAlleLigenForSelect'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 
@@ -59,7 +60,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['mannschaft'] = [
     'foreignKey' => 'tl_mannschaft.name',
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
-    'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getAlleMannschaftenForSelect'],
+    'options_callback' => [DCAHelper::class, 'getAlleMannschaftenForSelect'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_content']['fields']['showdetails'] = [
@@ -91,7 +92,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['begegnung'] = [
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     'foreignKey' => 'tl_begegnung.id',
-    'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getAlleBegegnungen'],
+    'options_callback' => [DCAHelper::class, 'getAlleBegegnungen'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 /* Ranking/Tabelle */
@@ -146,7 +147,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['ligen'] = [
     'relation' => ['type' => 'belongsTo', 'load' => 'lazy'],
     'foreignKey' => 'tl_liga.name',
     'eval' => ['multiple' => true, 'tl_class' => 'w50 clr'],
-    'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getLigaForSelect'],
+    'options_callback' => [DCAHelper::class, 'getLigaForSelect'],
     'sql' => 'blob NULL',
 ];
 /* Spielortseite */

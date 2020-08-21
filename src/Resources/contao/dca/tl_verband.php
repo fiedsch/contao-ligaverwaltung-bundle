@@ -10,6 +10,8 @@
  * @license https://opensource.org/licenses/MIT
  */
 
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+
 $GLOBALS['TL_DCA']['tl_verband'] = [
     'config' => [
         'dataContainer' => 'Table',
@@ -33,7 +35,7 @@ $GLOBALS['TL_DCA']['tl_verband'] = [
         'label' => [
             'fields' => ['name'],
             'format' => '%s',
-            'label_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'verbandLabelCallback'],
+            'label_callback' => [DCAHelper::class, 'verbandLabelCallback'],
         ],
         'global_operations' => [
             'all' => [

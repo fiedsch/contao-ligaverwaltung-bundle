@@ -14,7 +14,7 @@ namespace Fiedsch\LigaverwaltungBundle\Model;
 
 use Contao\Model;
 use Contao\MemberModel;
-use Fiedsch\LigaverwaltungBundle\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
 /**
  * @property int $id
