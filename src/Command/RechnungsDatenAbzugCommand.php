@@ -12,7 +12,6 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
-use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
@@ -55,7 +54,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Contao "booten"
-        $this->framework->initialize();
+        $this->getFramework()->initialize();
 
         $saisonParameter = $input->getArgument('saison');
         $saison = SaisonModel::findBy('name', $saisonParameter);
@@ -80,10 +79,11 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
             'aufstellerModels' => [],
         ];
 
-        $output->writeln("## Ligen und Mannschaften\n");
+
+        // $output->writeln("## Ligen und Mannschaften\n");
 
         foreach ($ligen as $liga) {
-            $output->writeln(sprintf("### %s\n", $liga->name));
+            // $output->writeln(sprintf("### %s\n", $liga->name));
 
             $mannschaften = MannschaftModel::findBy(
                 ['liga=?'],
@@ -112,17 +112,17 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                     $data['aufsteller'][$keyAufsteller][] = $mannschaftsbezeichnung;
                     $data['aufstellerModels'][$keyAufsteller] = $aufsteller;
 
-                    $output->writeln(sprintf("\n* %s (%s, %s)\n",
-                        $mannschaft->name,
-                        $keyWirt,
-                        $keyAufsteller
-                    ));
+                    //$output->writeln(sprintf("\n* %s (%s, %s)\n",
+                    //    $mannschaft->name,
+                    //    $keyWirt,
+                    //    $keyAufsteller
+                    //));
                 }
             } else {
-                $output->writeln("keine Mannschaften in der Liga '".$liga->name."'\n");
+                // $output->writeln("keine Mannschaften in der Liga '".$liga->name."'\n");
             }
         }
-
+        /**/
         $output->writeln("## Wirte\n");
         foreach ($data['wirteModels'] as $keyWirt => $wirtModel) {
             $output->writeln("### $keyWirt\n");
@@ -155,6 +155,8 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                 $output->writeln("* $who\n");
             }
         }
+
+        // $output->writeln(print_r(array_keys($data), true));
 
         return 1;
     }

@@ -12,13 +12,13 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
+use Contao\MemberModel;
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SaisonModel;
 use Contao\SpielerModel;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -52,8 +52,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Contao "booten"
-        $framework = $this->getContainer()->get('contao.framework');
-        $framework->initialize();
+        $this->getFramework()->initialize();
 
         $saisonParameter = $input->getArgument('saison');
         $saison = SaisonModel::findBy('name', $saisonParameter);
@@ -93,7 +92,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                         [$mannschaft->id]
                     );
                     foreach ($spieler as $s) {
-                        /** @var \MemberModel $member */
+                        /** @var MemberModel $member */
                         $member = $s->getRelated('member_id');
 
                         printf("%s\t%s\t%s\t%s\t%s\t%s\n",

@@ -18,12 +18,11 @@ use Contao\CoreBundle\Framework\FrameworkAwareTrait;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SaisonModel;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
+use function count;
 /**
  * Create Records in `tl_begegnung` (all by all).
  *
@@ -54,8 +53,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Contao "booten"
-        $framework = $this->getContainer()->get('contao.framework');
-        $framework->initialize();
+        $this->getFramework()->initialize();
 
         $ligaParameter = $input->getArgument('liga');
         $liga = LigaModel::findBy('id', $ligaParameter);
@@ -127,7 +125,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
         // als Heimspiel).
 
         // Ungerade Anzahl von Mannschaften? Dann hat jede ein Mal Spielfrei!
-        if (\count($mannschaftIds) % 2) {
+        if (count($mannschaftIds) % 2) {
             foreach ($mannschaftIds as $idHome) {
                 $begegnung = BegegnungModel::findBy(
                     ['pid=?', 'home=?', 'away=?'],
