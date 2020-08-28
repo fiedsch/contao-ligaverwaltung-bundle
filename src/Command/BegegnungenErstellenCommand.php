@@ -13,10 +13,13 @@
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
 use Contao\BegegnungModel;
+use Contao\CoreBundle\Framework\FrameworkAwareInterface;
+use Contao\CoreBundle\Framework\FrameworkAwareTrait;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SaisonModel;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,8 +29,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
-class BegegnungenErstellenCommand extends ContainerAwareCommand
+class BegegnungenErstellenCommand extends Command implements FrameworkAwareInterface
 {
+    use FrameworkAwareTrait;
+
     const DUMMY_SPIELTAG = 999;
     const SPIELFREI_MANNSCHAFT = 0;
 

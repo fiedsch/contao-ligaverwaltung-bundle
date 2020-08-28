@@ -12,10 +12,13 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
+use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\Framework\FrameworkAwareTrait;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SaisonModel;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Contao\CoreBundle\Framework\FrameworkAwareInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,8 +30,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
-class RechnungsDatenAbzugCommand extends ContainerAwareCommand
+class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterface
 {
+    use FrameworkAwareTrait;
+
     const KEIN_AUFSTELLER = 'kein Auftseller';
     const KEIN_WIRT = 'kein Spielort';
 
@@ -50,8 +55,7 @@ class RechnungsDatenAbzugCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Contao "booten"
-        $framework = $this->getContainer()->get('contao.framework');
-        $framework->initialize();
+        $this->framework->initialize();
 
         $saisonParameter = $input->getArgument('saison');
         $saison = SaisonModel::findBy('name', $saisonParameter);

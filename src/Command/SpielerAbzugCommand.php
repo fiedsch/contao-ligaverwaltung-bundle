@@ -12,11 +12,14 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
+use Contao\CoreBundle\Framework\FrameworkAwareInterface;
+use Contao\CoreBundle\Framework\FrameworkAwareTrait;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SaisonModel;
 use Contao\SpielerModel;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,8 +30,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
-class SpielerAbzugCommand extends ContainerAwareCommand
+class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
 {
+    use FrameworkAwareTrait;
 
     /**
      * {@inheritdoc}
