@@ -15,6 +15,10 @@ namespace Contao;
 /**
  * @property int $id
  * @property int $pid
+ * @property string $name
+ * @property string $postal
+ * @property string $street
+ * @property string $city
  *
  * @method static AufstellerModel|null findById($id, array $opt=array())
  */

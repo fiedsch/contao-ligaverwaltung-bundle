@@ -18,6 +18,9 @@ namespace Contao;
  * @property string $name
  * @property string $saison
  * @property string $spielplan
+ * @property string $spielstaerke
+ * @property string $rechnungsbetrag_spielort
+ * @property string $rechnungsbetrag_aufsteller
  *
  * @method static LigaModel|null findById($id, array $opt=array())
  */
