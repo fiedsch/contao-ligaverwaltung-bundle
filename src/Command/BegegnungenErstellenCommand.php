@@ -71,7 +71,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
 
         $output->writeln(sprintf('Fertig: %d Begegnungen wurden neu erstellt', $countNew));
 
-        return 1;
+        return 0;
     }
 
     /**

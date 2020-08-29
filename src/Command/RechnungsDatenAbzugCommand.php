@@ -61,7 +61,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         if (null === $saison) {
             $output->writeln("Saison '$saisonParameter' nicht gefunden!");
 
-            return 0;
+            return 1;
         }
 
         $output->writeln("# RechnungsdatenAbzugCommand für Saison '$saisonParameter'\n");

@@ -112,6 +112,6 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
         }
 
 
-        return 1;
+        return 0;
     }
 }
