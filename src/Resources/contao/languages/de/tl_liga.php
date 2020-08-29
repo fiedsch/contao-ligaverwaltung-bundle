@@ -11,6 +11,7 @@
  */
 
 $GLOBALS['TL_LANG']['tl_liga']['title_legend'] = 'Titel';
+$GLOBALS['TL_LANG']['tl_liga']['abrechnung_legend'] = 'Abrechnung';
 
 $GLOBALS['TL_LANG']['tl_liga']['new'] = [
     'Neue Liga erstellen',
@@ -76,4 +77,13 @@ $GLOBALS['TL_LANG']['tl_liga']['spielstaerke'] = [
 $GLOBALS['TL_LANG']['tl_liga']['spielplan'] = [
     'Spielplan',
     'Der Spielplan bestimmt, welche Spieler wann gegeneinander spielen',
+];
+
+$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_spielort'] = [
+    'Rechnungsbetrag Spielort/Wirt',
+    'Dieser Betrag wird dem Spielort/Wirt je Mannschaft in dieser Liga in Rechnung gestellt. (Bsp.: "5" oder "5,00" für 5 €).'
+];
+$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_aufsteller'] = [
+    'Rechnungsbetrag Aufsteller',
+    'Dieser Betrag wird dem Aufsteller je Mannschaft in dieser Liga in Rechnung gestellt. (Bsp.: "5" oder "5,00" für 5 €).'
 ];

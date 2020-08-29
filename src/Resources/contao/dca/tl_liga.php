@@ -98,7 +98,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
     ],
 
     'palettes' => [
-        'default' => '{title_legend},name,saison,aktiv,spielstaerke,spielplan',
+        'default' => '{title_legend},name,saison,aktiv,spielstaerke,spielplan;{abrechnung_legend},rechnungsbetrag_spielort,rechnungsbetrag_aufsteller',
     ],
 
     'fields' => [
@@ -162,5 +162,31 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'eval' => ['mandatory' => true, 'includeBlankOption' => true, 'tl_class' => 'w50'],
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
+        'rechnungsbetrag_spielort' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_spielort'],
+            'inputType' => 'text',
+            'eval' => ['tl_class' => 'w50'],
+            'save_callback' => [ function($value) {
+                if ('' === $value) { return $value; }
+                if (!preg_match('/^\d+(,*\\d{1,2}){0,1}$/', $value)) {
+                    throw new \Exception("UngültigerWert: $value");
+                }
+                return $value;
+            }],
+            'sql' => "varchar(16) NOT NULL default ''",
+        ],
+        'rechnungsbetrag_aufsteller' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_aufsteller'],
+            'inputType' => 'text',
+            'eval' => ['tl_class' => 'w50'],
+            'save_callback' => [ function($value) {
+                if ('' === $value) { return $value; }
+                if (!preg_match('/^\d+(,*\\d{1,2}){0,1}$/', $value)) {
+                    throw new \Exception("UngültigerWert: $value");
+                }
+                return $value;
+            }],
+            'sql' => "varchar(16) NOT NULL default ''",
+        ]
     ],
 ];
