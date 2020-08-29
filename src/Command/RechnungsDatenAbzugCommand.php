@@ -3,7 +3,7 @@
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2020 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -12,15 +12,20 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
+use Contao\AufstellerModel;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SaisonModel;
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
+use Contao\SpielortModel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Exception;
+use RuntimeException;
+use Twig\Environment;
 
 /**
  * Abzug und "Aufbereitung" von Daten, die für die Erstellung von
@@ -33,8 +38,16 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 {
     use FrameworkAwareTrait;
 
-    const KEIN_AUFSTELLER = 'kein Auftseller';
-    const KEIN_WIRT = 'kein Spielort';
+    const KEIN_AUFSTELLER = -1;
+
+    protected $twig;
+
+    public function __construct(Environment $twig)
+    {
+        parent::__construct();
+        $this->twig = $twig;
+        $this->twig->setCache(false);
+    }
 
     /**
      * {@inheritdoc}
@@ -44,16 +57,17 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         $this
             ->setName('fiedsch:rechnungsdaten')
             ->setDescription('Datenabzug für die Rechnungsstellung.')
-            ->addArgument('saison', InputArgument::REQUIRED, 'Saison')
-             ;
+            ->addArgument('saison', InputArgument::REQUIRED, 'Saison');
     }
 
     /**
      * {@inheritdoc}
+     * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // Contao "booten"
+        /** @noinspection PhpDeprecationInspection */
         $this->getFramework()->initialize();
 
         $saisonParameter = $input->getArgument('saison');
@@ -64,100 +78,150 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
             return 1;
         }
 
-        $output->writeln("# RechnungsdatenAbzugCommand für Saison '$saisonParameter'\n");
-
         // Ligen dieser Saison
 
         $ligen = LigaModel::findBy(['saison=?'], [$saison->id]);
 
-        // Ergebnisdaten
+        // Ergebnisdaten zum Erzeugen der Rechnungen für Wirte (Spielort) und Aufsteller
 
         $data = [
-            'wirte' => [],
-            'wirteModels' => [],
+            'spielorte'  => [],
             'aufsteller' => [],
-            'aufstellerModels' => [],
         ];
 
-
-        // $output->writeln("## Ligen und Mannschaften\n");
-
+        /** @var LigaModel $liga */
         foreach ($ligen as $liga) {
-            // $output->writeln(sprintf("### %s\n", $liga->name));
 
             $mannschaften = MannschaftModel::findBy(
                 ['liga=?'],
                 [$liga->id]
             );
+            if (!$mannschaften) {
+                continue;
+            }
 
-            if ($mannschaften) {
-                foreach ($mannschaften as $mannschaft) {
-                    $wirt = $mannschaft->getRelated('spielort');
-                    $keyWirt = $wirt ? $wirt->name : self::KEIN_WIRT;
-                    $aufsteller = $mannschaft->getRelated('spielort')->getRelated('aufsteller');
-                    $keyAufsteller = $aufsteller ? $aufsteller->name : self::KEIN_AUFSTELLER;
+            /** @var MannschaftModel $mannschaft */
+            foreach ($mannschaften as $mannschaft) {
 
-                    if (!isset($data['wirte'][$keyWirt])) {
-                        $data['wirte'][$keyWirt] = [];
-                    }
-                    if (!isset($data['aufsteller'][$keyAufsteller])) {
-                        $data['aufsteller'][$keyAufsteller] = [];
-                    }
-                    $mannschaftsbezeichnung = sprintf('%s, %s',
-                        $mannschaft->name,
-                        $liga->name
-                    );
-                    $data['wirte'][$keyWirt][] = $mannschaftsbezeichnung;
-                    $data['wirteModels'][$keyWirt] = $wirt;
-                    $data['aufsteller'][$keyAufsteller][] = $mannschaftsbezeichnung;
-                    $data['aufstellerModels'][$keyAufsteller] = $aufsteller;
-
-                    //$output->writeln(sprintf("\n* %s (%s, %s)\n",
-                    //    $mannschaft->name,
-                    //    $keyWirt,
-                    //    $keyAufsteller
-                    //));
+                /** @var SpielortModel $spielort */
+                $spielort = $mannschaft->getRelated('spielort');
+                if (!$spielort) {
+                    $output->writeln(sprintf("Mannschaft %s ohne Spielort", $mannschaft->getFullName()));
+                    continue;
                 }
-            } else {
-                // $output->writeln("keine Mannschaften in der Liga '".$liga->name."'\n");
+
+                /** @var AufstellerModel $aufsteller */
+                $aufsteller = $mannschaft->getRelated('spielort')->getRelated('aufsteller');
+                $keyAufsteller = $aufsteller ? $aufsteller->id : self::KEIN_AUFSTELLER;
+
+                // Initialisierung
+
+                if (!isset($data['spielorte'][$spielort->id])) {
+                    $data['spielorte'][$spielort->id] = [
+                        'id'                        => $spielort->id,
+                        'name'                      => $spielort->name,
+                        'street'                    => $spielort->street,
+                        'postal'                    => $spielort->postal,
+                        'city'                      => $spielort->city,
+                        'is_aufsteller'             => $keyAufsteller === self::KEIN_AUFSTELLER,
+                        'summe_rechnung'            => 0,
+                        'summe_rechnung_aufsteller' => 0, // Rechnungssumme, falls der Spielort sein eigener Aufsteller ist
+                        'mannschaften'              => [],
+                    ];
+                }
+
+                if (!isset($data['aufsteller'][$keyAufsteller])) {
+                    $data['aufsteller'][$keyAufsteller] = [
+                        'id'             => $keyAufsteller,
+                        'name'           => $aufsteller ? $aufsteller->name : '-',
+                        'street'         => $aufsteller ? $aufsteller->street : '-',
+                        'postal'         => $aufsteller ? $aufsteller->postal : '-',
+                        'city'           => $aufsteller ? $aufsteller->city : '-',
+                        'summe_rechnung' => 0,
+                        'mannschaften'   => [],
+                    ];
+                }
+
+                // Daten für die Rechnung für den Spielort
+                $data['spielorte'][$spielort->id]['summe_rechnung'] += $this->toFloat($liga->rechnungsbetrag_spielort);
+                // Wenn es keinen Aufsteller zum Spielort gibt, der also sein eigener Aufsteller ist:
+                if ($data['spielorte'][$spielort->id]['is_aufsteller']) {
+                    $data['spielorte'][$spielort->id]['summe_rechnung_aufsteller'] += $this->toFloat($liga->rechnungsbetrag_aufsteller);
+                }
+                $data['spielorte'][$spielort->id]['mannschaften'][] = [
+                    'name'                       => $mannschaft->name,
+                    'liga'                       => $liga->name,
+                    'spielstaerke'               => $liga->spielstaerke,
+                    'saison'                     => $saison->name,
+                    'rechnungsbetrag_spielort'   => $liga->rechnungsbetrag_spielort,
+                    'rechnungsbetrag_aufsteller' => $liga->rechnungsbetrag_aufsteller,
+                ];
+
+                // Daten für die Rechnung für den Aufsteller
+                $data['aufsteller'][$keyAufsteller]['summe_rechnung'] += $this->toFloat($liga->rechnungsbetrag_aufsteller);
+                $data['aufsteller'][$keyAufsteller]['mannschaften'][] = [
+                    'name'                       => $mannschaft->name,
+                    'liga'                       => $liga->name,
+                    'spielstaerke'               => $liga->spielstaerke,
+                    'saison'                     => $saison->name,
+                    'spielort'                   => $spielort->name,
+                    'rechnungsbetrag_spielort'   => $liga->rechnungsbetrag_spielort,
+                    'rechnungsbetrag_aufsteller' => $liga->rechnungsbetrag_aufsteller,
+                ];
             }
         }
-        /**/
-        $output->writeln("## Wirte\n");
-        foreach ($data['wirteModels'] as $keyWirt => $wirtModel) {
-            $output->writeln("### $keyWirt\n");
 
-            $output->writeln(sprintf("\n%s  \n%s %s\n", // two spaces before \n for al linebreak
-                $wirtModel->street,
-                $wirtModel->postal,
-                $wirtModel->city
-            ));
-
-            foreach ($data['wirte'][$keyWirt] as $who) {
-                $output->writeln("* $who\n");
-            }
+        // Mannschaftslisten sortieren, damit sie auf den Rechnungsn in nachvollziehbarer Reihenfolge erscheinen
+        foreach (array_keys($data['spielorte']) as $id) {
+            $this->sortMannschaften($data['spielorte'][$id]['mannschaften'], 'spielort');
+        }
+        foreach (array_keys($data['aufsteller']) as $keyAufsteller) {
+            $this->sortMannschaften($data['aufsteller'][$keyAufsteller]['mannschaften'], 'aufsteller');
         }
 
-        $output->writeln("## Aufsteller\n");
+        // Daten ausgeben
+        $output->writeln($this->twig->render(
+            '@FiedschLigaverwaltung/rechnungsdaten.md.twig',
+            [
+                'saison'     => $saison->name,
+                'spielorte'  => $data['spielorte'],
+                'aufsteller' => $data['aufsteller'],
+            ]
+        ));
 
-        foreach ($data['aufstellerModels'] as $keyAufsteller => $aufstellerModel) {
-            $output->writeln("### $keyAufsteller");
-
-            if (self::KEIN_AUFSTELLER !== $keyAufsteller) {
-                $output->writeln(sprintf("\n%s  \n%s %s\n",
-                    $aufstellerModel->street,
-                    $aufstellerModel->postal,
-                    $aufstellerModel->city
-                ));
-            }
-
-            foreach ($data['aufsteller'][$keyAufsteller] as $who) {
-                $output->writeln("* $who\n");
-            }
-        }
-
-        // $output->writeln(print_r(array_keys($data), true));
-
-        return 1;
+        return 0;
     }
+
+    protected function toFloat(string $value): float
+    {
+        if ('' === $value) {
+            return 0;
+        }
+
+        return (float)str_replace(',', '.', $value);
+    }
+
+    protected function sortMannschaften(array &$data, $type = 'spielort'): void
+    {
+        switch ($type) {
+            case 'spielort':
+                usort($data, function($a, $b) {
+                    // nach Liga
+                    return strnatcmp($a['spielstaerke'], $b['spielstaerke']);
+                });
+                break;
+            case 'aufsteller';
+                usort($data, function($a, $b) {
+                    // nach Spielort und innerhalb eines Spielorts nach Liga ('spielstaerke')
+                    if ($a['spielort'] === $b['spielort']) {
+                        return $a['spielstaerke'] <=> $b['spielstaerke'];
+                    }
+                    return strnatcmp($a['spielort'], $b['spielort']);
+                });
+                break;
+            default:
+                throw new RuntimeException("ungültiger Sortiertyp $type");
+        }
+    }
+
 }

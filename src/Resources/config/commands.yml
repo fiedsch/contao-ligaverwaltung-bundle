@@ -9,6 +9,8 @@ services:
 
     fiedsch.command.rechnungsdaten:
         class: Fiedsch\LigaverwaltungBundle\Command\RechnungsDatenAbzugCommand
+        arguments:
+            - '@twig'
 
     fiedsch.command.spielerliste:
         class: Fiedsch\LigaverwaltungBundle\Command\SpielerAbzugCommand
