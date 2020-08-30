@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            padding: 3rem;
+        }
+        div.spielort,
+        div.aufsteller {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 2rem;
+            margin-top: 3rem;
+            border: 1px solid #999999;
+        }
+        div.rechnung {
+            order: -1;
+            margin-top: 100px;
+        }
+        @media print {
+            div.spielort,
+            div.aufsteller {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Rechnungsdaten für die Saison {{ saison }}</h1>
+
+{% set MWSTSATZ = 19 %}
+
+
+<h2>Spielorte</h2>
+
+{% for sp in spielorte %}
+
+    <div class="spielort">
+        <div class="rechnung">
+            <p style="margin-bottom: 75px">
+                {{ sp.name|raw }} <br/>
+                {{ sp.street }} <br/>
+                {{ sp.postal }} {{ sp.city }} <br/>
+            </p>
+            <p>
+                Rechnungsnummer S-{{ saison|raw }}-{{ "%03d"|format(sp.id) }}
+            </p>
+            <p>
+                Provison Wirt{% if sp.is_aufsteller %}/Aufsteller{% endif %}
+            </p>
+
+            <!-- <pre>{{ sp|json_encode }}</pre> -->
+
+            {% if sp.is_aufsteller -%}
+                {% set summe_rechnung = sp.summe_rechnung + sp.summe_rechnung_aufsteller %}
+            {% else %}
+                {% set summe_rechnung = sp.summe_rechnung %}
+            {% endif %}
+
+            <table style="margin-top: 75px">
+                <thead>
+                <tr>
+                    <th align="left">Mannschaft</th>
+                    <th align="left">Liga</th>
+                    <th align="left">Betrag</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="3" style="border-bottom: 1px solid #000000"></td>
+                </tr>
+                {% for mannschaft in sp.mannschaften %}
+                    {% if sp.is_aufsteller -%}
+                        {% set rechnungsbetrag = mannschaft.rechnungsbetrag_spielort + mannschaft.rechnungsbetrag_aufsteller %}
+                    {% else %}
+                        {% set rechnungsbetrag = mannschaft.rechnungsbetrag_spielort %}
+                    {% endif %}
+                    <tr>
+                        <td align="left">{{ mannschaft.name|raw }}</td>
+                        <td align="left">{{ mannschaft.liga|raw }}</td>
+                        <td align="right">{{ rechnungsbetrag|number_format(2, ',', '.') }} €</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3" style="border-bottom: 1px solid #000000"></td>
+                </tr>
+                <tr>
+                    <td align="left" colspan="2">Nettobetrag</td>
+                    <td align="right">{{ summe_rechnung|number_format(2, ',', '.') }} €</td>
+                </tr>
+                <tr>
+                    <td align="left" colspan="2">{{ MWSTSATZ }} % Mwst.</td>
+                    <td align="right">{{ (summe_rechnung * (MWSTSATZ / 100))|number_format(2, ',', '.') }} €</td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="left"><b>Bruttobetrag</b></td>
+                    <td align="right"><b>{{ (summe_rechnung * ((100+MWSTSATZ) / 100))|number_format(2, ',', '.') }}
+                            €</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border-bottom: 1px solid #000000"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endfor %}
+
+
+<h2>Aufsteller</h2>
+
+{% for au in aufsteller %}
+
+    <div class="aufsteller">
+        <div class="rechnung">
+            <p style="margin-bottom: 75px">
+                {{ au.name|raw }} <br/>
+                {{ au.street }} <br/>
+                {{ au.postal }} {{ au.city }} <br/>
+            </p>
+            <p>
+                Rechnungsnummer A-{{ saison|raw }}-{{ "%03d"|format(au.id) }}
+            </p>
+            <p>
+                Provison Aufsteller
+            </p>
+
+            <!-- <pre>{{ au|json_encode }}</pre> -->
+
+            <table>
+                <thead>
+                <tr>
+                    <th align="left">Wirt</th>
+                    <th align="left">Mannschaft</th>
+                    <th align="left">Liga</th>
+                    <th align="left">Betrag</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="4" style="border-bottom: 1px solid #000000"></td>
+                </tr>
+                {% for mannschaft in au.mannschaften %}
+                    <tr>
+                        <td align="left">{{ mannschaft.spielort|raw }}</td>
+                        <td align="left">{{ mannschaft.name|raw }}</td>
+                        <td align="left">{{ mannschaft.liga|raw }}</td>
+                        <td align="right">{{ mannschaft.rechnungsbetrag_aufsteller|number_format(2, ',', '.') }} €</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="4" style="border-bottom: 1px solid #000000"></td>
+                </tr>
+                <tr>
+                    <td align="left" colspan="3">Nettobetrag</td>
+                    <td align="right">{{ au.summe_rechnung|number_format(2, ',', '.') }} €</td>
+                </tr>
+                <tr>
+                    <td align="left" colspan="3">{{ MWSTSATZ }} % Mwst.</td>
+                    <td align="right">{{ (au.summe_rechnung * (MWSTSATZ / 100))|number_format(2, ',', '.') }} €</td>
+                </tr>
+                <tr>
+                    <td align="left" colspan="3"><b>Bruttobetrag</b></td>
+                    <td><b>{{ (au.summe_rechnung * ((100+MWSTSATZ) / 100))|number_format(2, ',', '.') }} €</b></td>
+                <tr>
+                    <td colspan="4" style="border-bottom: 1px solid #000000"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endfor %}
+
+</body>
+</html>

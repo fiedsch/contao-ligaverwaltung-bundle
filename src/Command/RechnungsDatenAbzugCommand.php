@@ -179,9 +179,13 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
             $this->sortMannschaften($data['aufsteller'][$keyAufsteller]['mannschaften'], 'aufsteller');
         }
 
+        // Die Daten entfernen, die bei "kein Aufsteller" unter self::KEIN_AUFSTELLER summiert wurden,
+        // aber beim Spielort abgerechnet werden
+        unset($data['aufsteller'][self::KEIN_AUFSTELLER]);
+
         // Daten ausgeben
         $output->writeln($this->twig->render(
-            '@FiedschLigaverwaltung/rechnungsdaten.md.twig',
+            '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.html.twig',
             [
                 'saison'     => $saison->name,
                 'spielorte'  => $data['spielorte'],
