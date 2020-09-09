@@ -2,7 +2,14 @@
 
 ## Development
 
+
+## Version 0.9.3
+
 * Update README.md
+* Bugfix in `ContentHighlightRanking`
+* Work on `Commands`: `RechnungsDatenAbzugCommand` that will eventually be moved to
+  a separate bundle together with everything else not strictly needed here like
+  `tl_aufsteller` which does not make sense in steel-darts.
 
 ## Version 0.9.2
 
