@@ -2,6 +2,8 @@
 
 ## Development
 
+* move CSS from `rechnungsdaten.html.twig` to `rechnungsdaten.header.html.twig` as the styled elements are only used
+  there.
 
 ## Version 0.9.3
 
