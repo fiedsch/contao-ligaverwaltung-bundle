@@ -2,8 +2,13 @@
 
 ## Development
 
-* move CSS from `rechnungsdaten.html.twig` to `rechnungsdaten.header.html.twig` as the styled elements are only used
-  there.
+## Version 0.9.4
+
+* Twig Templates für die `rechnungsdaten` umstrukturiert. Die angepassten Versionen (mit den
+  echten Daten wie Ansender oder Fußzeile) können in der Contao-Installation unter
+  `templates/bundles/FiedschLigaverwaltungBundle/` gespeichert werden. Sie ersetzen dann die
+  mitgelieferten Templates des Bundles.
+
 
 ## Version 0.9.3
 

@@ -1,28 +1,44 @@
-<div id="lb-headerimage">
-    <div class="inside">
-        <div class="headerimage">
-            <div class="mastertext">
-                <div class="main">BeDV</div>
-                <div class="sub">Bayerischer Elektronik-Dart Verein  e.V.</div>
-            </div>
+<div class="header">
+    <div class="headerimage">
+        <div class="mastertext">
+            <div class="main">NAME</div>
+            <div class="sub">Untertitel</div>
+        </div>
+    </div>
+    <div class="kontakte">
+        <div class="vereinsadresse">
+            zeile a<br>
+            zeile b<br>
+            zeile c
+        </div>
+        <div class="vorstand">
+            zeile 1<br>
+            zeile 2<br>
+            zeile 3
+        </div>
+        <div class="vorstand">
+            zeile 1a<br>
+            zeile 2a<br>
+            zeile 3a
         </div>
     </div>
 </div>
 
 <style>
-    #lb-headerimage {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
+    .header {
+        height: 1px;
+        max-height: 1px;
+        overflow: visible;
     }
     .headerimage {
         display: block;
-        background-image: url(https://www.edart-bayern.de/files/assets/site/images/Darts_Logo.svg) !important;
+        background-image: url(https://www.example.com/logo.svg) !important;
         background-size: 125px 175px;
         background-position: 25px -15px;
         background-repeat: no-repeat;
         min-height: 140px;
     }
+
     .mastertext {
         display: block;
         font-size: 25px;
@@ -34,10 +50,23 @@
         margin-left: 200px;
         padding-top: 40px;
     }
+
     .mastertext .sub {
         font-size: 12.5px;
         font-weight: 300;
         font-style: normal;
         color: #666;
+    }
+
+    .kontakte {
+        margin-left: 8rem;
+    }
+
+    .vereinsadresse {
+        margin-bottom: 1.5rem;
+    }
+
+    .vorstand {
+        margin-bottom: 1rem;
     }
 </style>

@@ -1,0 +1,118 @@
+<style>
+    .absender {
+        font-size: 0.75em;
+        text-decoration: underline;
+        margin-top: 140px;
+        margin-bottom: -12px;
+        margin-left: 25px;
+    }
+    .adresse {
+        margin-top: 17px;
+        margin-bottom: 75px;
+        margin-left: 25px;
+    }
+    .betreff {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .rechnungsnummer {
+        font-weight: bold;
+    }
+    .rechnungsdatum {
+        padding-right: 0px;
+    }
+    .rechnung table {
+        margin-top: 25px;
+    }
+    .rechnung table td {
+        vertical-align: bottom;
+    }
+    .rechnung table td.divider {
+        border-bottom: 1px solid #666;
+    }
+    .rechnung table td.wirt {
+        width: 300px;
+        text-align: left;
+    }
+    .rechnung table td.mannschaft {
+        width: 250px;
+        text-align: left;
+    }
+    .rechnung table td.liga {
+        width: 180px;
+        text-align: left;
+    }
+    .rechnung table td.betrag {
+        width: 120px;
+        text-align: right;
+    }
+    .rechnung table td.joined {
+    }
+</style>
+
+<div class="rechnungsdaten">
+    <p class="absender">{{ absender }}</p>
+    <p class="adresse">
+        {{ empfaenger.name|raw }} <br/>
+        {{ empfaenger.street }} <br/>
+        {{ empfaenger.postal }} {{ empfaenger.city }} <br/>
+    </p>
+    <p class="betreff">
+        <span class="rechnungsnummer">
+        Rechnungsnummer A-{{ saison|raw }}-{{ "%03d"|format(empfaenger.id) }}
+            </span>
+        <span class="rechnungsdatum">
+            {{  "now"|date("d.m.Y") }}
+        </span>
+    </p>
+    <p class="rechnungsthema">
+        Provison Aufsteller
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th class="wirt" align="left">Wirt</th>
+            <th class="mannschaft" align="left">Mannschaft</th>
+            <th class="liga" align="left">Liga</th>
+            <th class="betrag" align="left">Betrag</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="4" class="divider"></td>
+        </tr>
+        {% for mannschaft in empfaenger.mannschaften %}
+            <tr>
+                <td class="wirt">{{ mannschaft.spielort|raw }}</td>
+                <td class="mannschaft">{{ mannschaft.name|raw }}</td>
+                <td class="liga">{{ mannschaft.liga|raw }}</td>
+                <td class="betrag">{{ mannschaft.rechnungsbetrag_aufsteller|number_format(2, ',', '.') }} €</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="4" class="divider"></td>
+        </tr>
+        <tr>
+            <td class="joined" colspan="3">Nettobetrag</td>
+            <td class="betrag">{{ empfaenger.summe_rechnung|number_format(2, ',', '.') }} €</td>
+        </tr>
+        <tr>
+            <td class="joined" colspan="3">{{ MWSTSATZ }} % Mwst.</td>
+            <td class="betrag">{{ (empfaenger.summe_rechnung * (MWSTSATZ / 100))|number_format(2, ',', '.') }} €
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="joined"><b>Bruttobetrag</b></td>
+            <td class="betrag">
+                <b>{{ (empfaenger.summe_rechnung * ((100+MWSTSATZ) / 100))|number_format(2, ',', '.') }}
+                    €</b>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"  class="divider"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
