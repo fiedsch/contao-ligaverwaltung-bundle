@@ -63,7 +63,7 @@
         </span>
     </p>
     <p class="rechnungsthema">
-        Provison Wirt{% if empfaenger.is_aufsteller %}/Aufsteller{% endif %}
+        Provison Wirt{% if empfaenger.is_aufsteller %}/Aufsteller{% endif %} Saison {{ saison|raw }}
     </p>
 
     {% if empfaenger.is_aufsteller -%}
