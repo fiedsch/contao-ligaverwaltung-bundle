@@ -36,7 +36,7 @@ class Spielplan
                     ["home" => [3], "away" => [0]],
                     ["home" => [2], "away" => [1]],
                     ["home" => [0], "away" => [2]],
-                    ["home" => [1], " away" => [3]],
+                    ["home" => [1], "away" => [3]],
                 ];
                 break;
             case LigaModel::SPIELPLAN_16E2D:

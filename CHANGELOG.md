@@ -2,6 +2,10 @@
 
 ## Development
 
+* Bugfix in `Fiedsch\LigaverwaltungBundle\Helper\Spielplan`: Leerzeichen im Array-Key erzeugte Zugriff
+  auf undefinierten Index und damit weitere JS-Folgefehler.
+
+
 ## Version 0.9.4
 
 * Twig Templates für die `rechnungsdaten` umstrukturiert. Die angepassten Versionen (mit den
