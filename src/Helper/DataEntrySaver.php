@@ -219,7 +219,7 @@ class DataEntrySaver
         /** @var SpielerModel $spieler */
         foreach ($spielerModel as $spieler) {
             $players[] = [
-                "name" => $spieler->getName(),
+                "name" => html_entity_decode($spieler->getName()),
                 "id"   => $spieler->id,
                 "pass" => $spieler->getRelated('member_id')->passnummer,
             ];
