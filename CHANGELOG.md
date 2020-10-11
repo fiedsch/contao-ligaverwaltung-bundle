@@ -6,6 +6,8 @@
   auf undefinierten Index und damit weitere JS-Folgefehler.
 * In `Helper\DataEntrySaver::getTeamData()` `html_entity_decode()` für Spielernamen vor der Verwendung
   im Twig-Template
+* add `'exclude' => true` to `tl_begegnung.begegnung_data`
+
 
 ## Version 0.9.4
 
