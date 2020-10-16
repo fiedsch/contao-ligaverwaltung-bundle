@@ -2,11 +2,15 @@
 
 ## Development
 
+
+## Version 0.9.5
+
 * Bugfix in `Fiedsch\LigaverwaltungBundle\Helper\Spielplan`: Leerzeichen im Array-Key erzeugte Zugriff
   auf undefinierten Index und damit weitere JS-Folgefehler.
 * In `Helper\DataEntrySaver::getTeamData()` `html_entity_decode()` für Spielernamen vor der Verwendung
   im Twig-Template
 * add `'exclude' => true` to `tl_begegnung.begegnung_data`
+* add `tl_member.dateOfBirth` to `SpielerAbzugCommand` output
 
 
 ## Version 0.9.4

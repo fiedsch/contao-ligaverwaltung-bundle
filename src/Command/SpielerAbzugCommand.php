@@ -15,6 +15,7 @@ namespace Fiedsch\LigaverwaltungBundle\Command;
 use Contao\MemberModel;
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
+use Contao\Date;
 use Contao\LigaModel;
 use Contao\MannschaftModel;
 use Contao\SaisonModel;
@@ -68,13 +69,14 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
 
         // Kopfzeile
 
-        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
             'Nachname',
             'Vorname',
             'Spielerpass',
             'Mannschaft',
             'Liga',
             'Saison',
+            'Geburtsdatum',
             'bezahlt'
         );
 
@@ -95,13 +97,14 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                         /** @var MemberModel $member */
                         $member = $s->getRelated('member_id');
 
-                        printf("%s\t%s\t%s\t%s\t%s\t%s\n",
+                        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
                             html_entity_decode($member->lastname),
                             html_entity_decode($member->firstname),
                             $member->passnummer,
                             html_entity_decode($mannschaft->name),
                             html_entity_decode($liga->name),
                             html_entity_decode($saison->name),
+                            Date::parse('Y-m-d', $member->dateOfBirth),
                             '' // Platzhalter für "bezahlt" Spalte
                         );
                     }
