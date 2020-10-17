@@ -178,7 +178,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
     ],
 
     'palettes' => [
-        'default' => '{title_legend},pid,home,away;{details_legend},spiel_tag,spiel_am,published,kommentar,{internal_legend},begegnung_data',
+        'default' => '{title_legend},pid,home,away;{details_legend},spiel_tag,spiel_am,published,postponed,kommentar,{internal_legend},begegnung_data',
     ],
 
     'fields' => [
@@ -270,7 +270,15 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'eval' => ['rte'=>'ace|yaml'],
             'default' => '',
             'sql' => 'blob NOT NULL'
-        ]
+        ],
+        'postponed' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['postponed'],
+            'inputType' => 'checkbox',
+            'filter' => true,
+            'exclude' => true,
+            'eval' => ['tl_class' => 'w50'],
+            'sql' => "char(1) NOT NULL default ''",
+        ],
     ],
 ];
 

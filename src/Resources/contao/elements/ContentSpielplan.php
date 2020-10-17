@@ -183,6 +183,7 @@ class ContentSpielplan extends ContentElement
                 'legs' => $inactive ? '' : ($already_played ? $begegnung->getLegs() : ''),
                 'spiel_tag' => $begegnung->spiel_tag,
                 // 'kommentar' => $begegnung->kommentar,
+                'postponed' => $begegnung->postponed
             ];
             if ($this->mannschaft) {
                 $spiel['heimspiel'] = $home->id === $this->mannschaft;

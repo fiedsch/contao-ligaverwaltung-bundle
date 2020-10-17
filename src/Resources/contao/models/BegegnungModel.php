@@ -25,6 +25,7 @@ use Symfony\Component\Yaml\Yaml;
  * @property integer $tstamp
  * @property integer $spiel_tag
  * @property bool $published
+ * @property bool $postponed
  *
  * @method static BegegnungModel|null findById($id, array $opt=array())
  */

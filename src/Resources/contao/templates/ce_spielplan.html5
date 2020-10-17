@@ -40,7 +40,7 @@
           <tbody>
         <?php endif; ?>
         <?php foreach ($spiele as $spiel): ?>
-            <tr class="spiel">
+            <tr class="spiel<?php if ($spiel['postponed']) { echo ' postponed'; } ?>">
                 <?php if ($this->mannschaft): ?>
                     <?php printf("
                     <td class='spiel am w-25'>%s %s (%s)</td>

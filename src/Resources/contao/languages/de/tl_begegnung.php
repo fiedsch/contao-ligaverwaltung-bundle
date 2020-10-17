@@ -95,3 +95,8 @@ $GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'] = [
     'Daten der Begegnungserfassung',
     'Interne Daten (nur "visual Debug"!).'
 ];
+
+$GLOBALS['TL_LANG']['tl_begegnung']['postponed'] = [
+    'Verschoben',
+    'Diese Begegnung wurde bis auf weiteres verschoben. Ein neuer Termin steht noch nicht fest.'
+];

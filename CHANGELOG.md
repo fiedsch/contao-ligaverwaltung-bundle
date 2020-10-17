@@ -3,6 +3,11 @@
 ## Development
 
 
+## Version 0.9.6
+
+* Neues Feld `tl_begegnung.postponed` um Begegnungen markieren zu können, die (bis auf weiteres) verschoben wurden.
+
+
 ## Version 0.9.5
 
 * Bugfix in `Fiedsch\LigaverwaltungBundle\Helper\Spielplan`: Leerzeichen im Array-Key erzeugte Zugriff
