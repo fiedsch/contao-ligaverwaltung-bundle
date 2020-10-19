@@ -31,7 +31,7 @@ class DataEntrySaver
             return 'Begegnung nicht gefunden';
         }
         if ($begegnungModel->published) {
-            return 'Begegnung bereits erfasst und veröffentlicht';
+            return 'Begegnung ist bereits erfasst und veröffentlicht. Für Änderungen muss die Veröffentlichung vorübergehend zurückgesetzt werden.';
         }
         // nicht benötigte Daten entfernen
         unset($data['REQUEST_TOKEN']);

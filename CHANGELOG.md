@@ -2,6 +2,8 @@
 
 ## Development
 
+* Text der Message bei "bereits veröffentlichte Begegnung speichern" klarerer formuliert.
+
 
 ## Version 0.9.6
 
