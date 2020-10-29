@@ -3,7 +3,7 @@
 ## Development
 
 * Text der Message bei "bereits veröffentlichte Begegnung speichern" klarerer formuliert.
-
+* Prepare Help Wizard with explanation text(currently not active though)
 
 ## Version 0.9.6
 

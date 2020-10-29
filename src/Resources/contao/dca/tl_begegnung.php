@@ -267,9 +267,10 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'],
             'inputType' => 'yamlWidget',
             'exclude' => true,
-            'eval' => ['rte'=>'ace|yaml'],
+            'eval' => ['rte'=>'ace|yaml' /*, 'helpwizard' => true*/],
             'default' => '',
-            'sql' => 'blob NOT NULL'
+            'sql' => 'blob NOT NULL',
+            //'explanation' => 'begegnung_data_explanation',
         ],
         'postponed' => [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['postponed'],

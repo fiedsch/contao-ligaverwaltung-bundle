@@ -1,0 +1,13 @@
+<?php
+
+$GLOBALS['TL_LANG']['XPL']['begegnung_data_explanation'] = [
+    [
+        'Interne Daten',
+        'In den internen Daten der Begegnungserfassung werden die im Formular eingegebenen Daten gespeichert, '
+        .'damit dies erneut aufgerufen werden kann um (z.B.) die erfassten Ergebnisse zu modifizieren. <br>'
+        .'Für den "normalen" User sind sie nicht von interesse und können in der Konfiguration einer Benutzergruppe '
+        .' ausgeblendet werden.<br>'
+        .'Administratoren könnten hier Fehler bereinigen, die dazu führen, daß die Erfassungsmaske (eine Vue.js App) '
+        .'nicht korrekt angezeigt wird.'
+    ]
+];
