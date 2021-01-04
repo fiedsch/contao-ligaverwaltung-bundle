@@ -10,10 +10,12 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-use Fiedsch\LigaverwaltungBundle\DCAHelper;
-use Contao\SpielModel;
 use Contao\Config;
+use Contao\Input;
 use Contao\System;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+
 
 $GLOBALS['TL_DCA']['tl_begegnung'] = [
     'config' => [
@@ -284,7 +286,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
 ];
 
 /* Bei Aufruf "nicht als child record von liga.verband */
-if ('liga.begegnung' === \Contao\Input::get('do')) {
+if ('liga.begegnung' === Input::get('do')) {
     $GLOBALS['TL_DCA']['tl_begegnung']['list']['sorting'] = [
         'mode' => 2,
         'flag' => 11, // sort ascending

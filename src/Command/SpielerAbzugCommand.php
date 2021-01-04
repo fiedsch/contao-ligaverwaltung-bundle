@@ -12,18 +12,19 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Contao\MemberModel;
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
-use Contao\Date;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
-use Contao\SaisonModel;
-use Contao\SpielerModel;
+Use Contao\Date;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use function html_entity_decode;
 
 /**
  * Erstellen einer Liste aller Spieler (inkl. Name etc. aus zugehörigem tl_member)
@@ -49,8 +50,10 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Contao "booten"
         $this->getFramework()->initialize();
@@ -97,7 +100,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                         /** @var MemberModel $member */
                         $member = $s->getRelated('member_id');
 
-                        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+                        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
                             html_entity_decode($member->lastname),
                             html_entity_decode($member->firstname),
                             $member->passnummer,
@@ -113,7 +116,6 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                 $output->writeln("keine Mannschaften in der Liga '".$liga->name."'\n");
             }
         }
-
 
         return 0;
     }

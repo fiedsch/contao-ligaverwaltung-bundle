@@ -10,6 +10,11 @@
  * @license https://opensource.org/licenses/MIT
  */
 
+use Contao\DataContainer;
+use Contao\FilesModel;
+use Contao\MemberModel;
+use Fiedsch\LigaverwaltungBundle\DCAHelper;
+
 $GLOBALS['TL_DCA']['tl_spieler'] = [
     'config' => [
         'dataContainer' => 'Table',
@@ -34,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'flag' => 1,
             'fields' => ['teamcaptain DESC,co_teamcaptain DESC'],
             'panelLayout' => '', // sort, search,filter etc. nicht anzeigen
-            'child_record_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'listMemberCallback'],
+            'child_record_callback' => [DCAHelper::class, 'listMemberCallback'],
             'child_record_class' => 'no_padding',
             'disableGrouping' => true,
         ],
@@ -98,10 +103,10 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'search' => true,
             'sorting' => true,
             'inputType' => 'select',
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getSpielerForSelect'],
+            'options_callback' => [DCAHelper::class, 'getSpielerForSelect'],
             'eval' => ['chosen' => true, 'includeBlankOption' => true, 'mandatory' => true, 'tl_class' => 'w50 wizard'],
             'wizard' => [
-                    ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'editMemberWizard'],
+                    [DCAHelper::class, 'editMemberWizard'],
             ],
             //'foreignKey'       => 'tl_member.CONCAT(lastname, ", ", firstname)',
             'foreignKey' => 'tl_member.CONCAT(firstname, " ", lastname)',
@@ -120,7 +125,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
         ],
         'active' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['active'],
-            'save_callback' => [['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'spielerSaveCallback']],
+            'save_callback' => [[DCAHelper::class, 'spielerSaveCallback']],
             'inputType' => 'checkbox',
             'exclude' => true,
             'search' => false,
@@ -152,10 +157,10 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
 
         'avatar' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['avatar'],
-            'input_field_callback' => function (\Contao\DataContainer $dc) {
+            'input_field_callback' => function (DataContainer $dc) {
                 $member_id = $dc->activeRecord->row()['member_id'];
-                $member = \Contao\MemberModel::findById($member_id);
-                $avatar = $member ? \Contao\FilesModel::findById($member->avatar)->path : null;
+                $member = MemberModel::findById($member_id);
+                $avatar = $member ? FilesModel::findById($member->avatar)->path : null;
 
                 return '<div class="widget">'
                     .'<h3>'

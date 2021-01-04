@@ -50,10 +50,10 @@
 <tr>
     <td><?= $data['name'] ?></td>
     <td><?= $data['team'] ?></td>
-    <td><?= $data['highlights'][\Contao\HighlightModel::TYPE_180] ?></td>
-    <td><?= $data['highlights'][\Contao\HighlightModel::TYPE_171] ?></td>
-    <td><?= $data['highlights'][\Contao\HighlightModel::TYPE_SHORTLEG] ?></td>
-    <td><?= $data['highlights'][\Contao\HighlightModel::TYPE_HIGHFINISH] ?></td>
+    <td><?= $data['highlights'][Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_180] ?></td>
+    <td><?= $data['highlights'][Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_171] ?></td>
+    <td><?= $data['highlights'][Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_SHORTLEG] ?></td>
+    <td><?= $data['highlights'][Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_HIGHFINISH] ?></td>
 </tr>
 <?php endforeach; ?>
 </tbody>

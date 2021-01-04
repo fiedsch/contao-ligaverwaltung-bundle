@@ -12,13 +12,13 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
-use Contao\AufstellerModel;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
-use Contao\SaisonModel;
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
-use Contao\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
+use Fiedsch\LigaverwaltungBundle\Model\AufstellerModel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,7 +40,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 
     const KEIN_AUFSTELLER = -1;
 
-    protected $twig;
+    protected Environment $twig;
 
     public function __construct(Environment $twig)
     {
@@ -64,7 +64,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
      * {@inheritdoc}
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Contao "booten"
         /** @noinspection PhpDeprecationInspection */

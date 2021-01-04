@@ -10,9 +10,10 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-use Contao\HighlightModel;
-use Contao\SpielerModel;
-use Contao\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
 $GLOBALS['TL_DCA']['tl_highlight'] = [
     'config' => [
@@ -102,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'inputType' => 'select',
             'filter' => true,
             'foreignKey' => 'tl_begegnung.id',
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getBegegnungenForHighlight'],
+            'options_callback' => [DCAHelper::class, 'getBegegnungenForHighlight'],
             'eval' => ['submitOnChange' => true, 'chosen' => true, 'includeBlankOption' => true, 'mandatory' => false, 'tl_class' => 'w50'],
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
@@ -111,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'inputType' => 'select',
             'sorting' => false,
             'foreignKey' => 'tl_spieler.id',
-            'options_callback' => ['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'getSpielerForHighlight'],
+            'options_callback' => [DCAHelper::class, 'getSpielerForHighlight'],
             'eval' => ['chosen' => true, 'includeBlankOption' => true, 'mandatory' => false, 'tl_class' => 'w50'],
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
@@ -128,7 +129,7 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_highlight']['value'],
             'inputType' => 'text',
             'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'rgxp' => 'csvdigit'],
-            'save_callback' => [['\Fiedsch\LigaverwaltungBundle\DCAHelper', 'cleanCsvDigitList']],
+            'save_callback' => [[DCAHelper::class, 'cleanCsvDigitList']],
             'sql' => "varchar(64) NOT NULL default ''",
         ],
     ],

@@ -12,12 +12,12 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
-use Contao\BegegnungModel;
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
-use Contao\LigaModel;
-use Contao\MannschaftModel;
-use Contao\SaisonModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -80,7 +80,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
      *
      * @return int Anzahl der erstellten Begegnungen
      */
-    protected function generateBegegnungen($ligaId, OutputInterface $output)
+    protected function generateBegegnungen(int $ligaId, OutputInterface $output): int
     {
         $mannschaft = MannschaftModel::findByLiga($ligaId);
 

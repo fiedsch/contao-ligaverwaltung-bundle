@@ -3,7 +3,7 @@
 <?php $this->block('content'); ?>
 
 <?php if ($this->listitems): ?>
-  <?= \Fiedsch\LigaverwaltungBundle\TemplateHelper::renderArrayAsList($this->listitems) ?>
+  <?= \Fiedsch\LigaverwaltungBundle\Helper\TemplateHelper::renderArrayAsList($this->listitems) ?>
 <?php endif; ?>
 
 <?php $this->endblock(); ?>
