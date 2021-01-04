@@ -40,7 +40,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 
     const KEIN_AUFSTELLER = -1;
 
-    protected Environment $twig;
+    protected /*Environment*/ $twig;
 
     public function __construct(Environment $twig)
     {
