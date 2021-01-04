@@ -53,22 +53,26 @@ class ContentHighlightRanking extends ContentElement
             /** @var BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
-            if (1 === $this->rankingtype) {
-                $suffix = 'Mannschaften';
-                $subject = sprintf('%s %s %s',
-                    $liga->getRelated('pid')->name,
-                    $liga->name,
-                    $liga->getRelated('saison')->name
-                );
-            } else {
-                $suffix = 'Spieler';
-                $mannschaft = MannschaftModel::findById($this->mannschaft);
-                $subject = sprintf('%s %s %s %s',
-                    'Mannschaft ' . ($mannschaft->name ?: 'alle'),
-                    $liga->getRelated('pid')->name,
-                    $liga->name,
-                    $liga->getRelated('saison')->name
-                );
+            $suffix = '';
+            $subject = '';
+            if ($liga) {
+                if (1 === $this->rankingtype) {
+                    $suffix = 'Mannschaften';
+                    $subject = sprintf('%s %s %s',
+                        $liga->getRelated('pid')->name,
+                        $liga->name,
+                        $liga->getRelated('saison')->name
+                    );
+                } else {
+                    $suffix = 'Spieler';
+                    $mannschaft = MannschaftModel::findById($this->mannschaft);
+                    $subject = sprintf('%s %s %s %s',
+                        'Mannschaft ' . ($mannschaft->name ?: 'alle'),
+                        $liga->getRelated('pid')->name,
+                        $liga->name,
+                        $liga->getRelated('saison')->name
+                    );
+                }
             }
             $objTemplate->title = $this->headline;
             $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['highlightranking'][0]) . ", $suffix, $subject ###";
