@@ -2,6 +2,11 @@
 
 ## Development
 
+
+## Version 1.0.0
+
+* Refactor directory structure (e.g. move code from `src/Resources/contao/{controllers,models,modules}`
+  to `src/{Controller,Model,Module}/`)
 * Text der Message bei "bereits veröffentlichte Begegnung speichern" klarerer formuliert.
 * Prepare Help Wizard with explanation text(currently not active though)
 
