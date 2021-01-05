@@ -5,7 +5,7 @@
 
 ## Version 1.0.1
 
-* Fix silly bugs intoduced in 1.0.0
+* Fix silly bugs introduced in 1.0.0
 * CS fixes
 
 
