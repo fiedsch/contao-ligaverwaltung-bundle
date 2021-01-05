@@ -3,12 +3,19 @@
 ## Development
 
 
+## Version 1.0.1
+
+* Fix silly bugs intoduced in 1.0.0
+* CS fixes
+
+
 ## Version 1.0.0
 
 * Refactor directory structure (e.g. move code from `src/Resources/contao/{controllers,models,modules}`
   to `src/{Controller,Model,Module}/`)
 * Text der Message bei "bereits veröffentlichte Begegnung speichern" klarerer formuliert.
 * Prepare Help Wizard with explanation text(currently not active though)
+
 
 ## Version 0.9.6
 
