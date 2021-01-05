@@ -20,6 +20,7 @@ namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\BackendTemplate;
 use Contao\ContentElement;
+use Contao\StringUtil;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
@@ -40,7 +41,6 @@ class ContentMannschaftenuebersicht extends ContentElement
     public function generate()
     {
         if (TL_MODE === 'BE') {
-            /** @var BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
             $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'][0]).' ###';
@@ -65,7 +65,7 @@ class ContentMannschaftenuebersicht extends ContentElement
             return;
         }
         $ligen = LigaModel::findBy(
-            ['saison IN ('.implode(',', array_map('intval', deserialize($this->saison))).')'],
+            ['saison IN ('.implode(',', array_map('intval', StringUtil::deserialize($this->saison))).')'],
             [],
             ['order' => 'tl_liga.spielstaerke ASC, tl_liga.name ASC']
         );

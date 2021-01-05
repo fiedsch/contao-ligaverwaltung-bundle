@@ -52,7 +52,6 @@ class ContentRanking extends ContentElement
     public function generate()
     {
         if (TL_MODE === 'BE') {
-            /** @var BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
             if ('1' === $this->rankingtype) {
@@ -415,7 +414,7 @@ class ContentRanking extends ContentElement
      *
      * @return bool
      */
-    protected function isTie($result, $lastresult)
+    protected function isTie(array $result, array $lastresult)
     {
             return $result['punkte_self'] === $lastresult['punkte_self']
                 && $result['spiele_self'] - $result['spiele_other'] === $lastresult['spiele_self'] - $lastresult['spiele_other']

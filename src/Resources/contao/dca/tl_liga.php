@@ -171,7 +171,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'eval' => ['tl_class' => 'w50'],
             'save_callback' => [ function($value) {
                 if ('' === $value) { return $value; }
-                if (!preg_match('/^\d+(,*\\d{1,2}){0,1}$/', $value)) {
+                if (!preg_match('/^\d+(,*\\d{1,2})?$/', $value)) {
                     throw new \Exception("UngültigerWert: $value");
                 }
                 return $value;
@@ -184,7 +184,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'eval' => ['tl_class' => 'w50'],
             'save_callback' => [ function($value) {
                 if ('' === $value) { return $value; }
-                if (!preg_match('/^\d+(,*\\d{1,2}){0,1}$/', $value)) {
+                if (!preg_match('/^\d+(,*\\d{1,2})?$/', $value)) {
                     throw new \Exception("UngültigerWert: $value");
                 }
                 return $value;

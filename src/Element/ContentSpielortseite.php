@@ -21,10 +21,13 @@ namespace Fiedsch\LigaverwaltungBundle\Element;
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
+use Contao\StringUtil;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Patchwork\Utf8;
+use function in_array;
+use function array_filter;
 
 class ContentSpielortseite extends ContentElement
 {
@@ -41,7 +44,6 @@ class ContentSpielortseite extends ContentElement
     public function generate()
     {
         if (TL_MODE === 'BE') {
-            /** @var BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $headline = $this->headline;
@@ -86,16 +88,13 @@ class ContentSpielortseite extends ContentElement
         // nach Ligen gemäß Auswahl in der CE-Konfiguration filtern
         // Nach Ligen gruppiert Mannschaften (verlinkt)  ausgeben
 
-        $mannschaften_liste = [];
         $mannschaften_in_ligen_liste = [];
         $gefundene_ligen = [];
         $ligen_lookup = [];
 
         if ($mannschaften) {
             foreach ($mannschaften as $mannschaft) {
-                if (\in_array($mannschaft->liga, deserialize($this->ligen), true)) {
-                    $mannschaften_liste[] = $mannschaft->name;
-                    // $mannschaften_in_ligen_liste[$mannschaft->liga][] = $mannschaft->name;
+                if (in_array($mannschaft->liga, StringUtil::deserialize($this->ligen), true)) {
                     $mannschaften_in_ligen_liste[$mannschaft->liga][] = $mannschaft->getLinkedName();
                     ++$gefundene_ligen[$mannschaft->liga];
                 }
@@ -105,8 +104,8 @@ class ContentSpielortseite extends ContentElement
 
         // nach in der Konfiguration ausgewählten Saisons filtern
 
-        $show_ligen = array_filter(deserialize($this->ligen, true), function ($el) use ($gefundene_ligen) {
-            return \in_array($el, $gefundene_ligen, true);
+        $show_ligen = array_filter(StringUtil::deserialize($this->ligen, true), function ($el) use ($gefundene_ligen) {
+            return in_array($el, $gefundene_ligen, true);
         });
 
         foreach ($show_ligen as $ligaId) {
@@ -115,7 +114,7 @@ class ContentSpielortseite extends ContentElement
 
         // $this->Template->mannschaften_liste = $mannschaften_liste; // nur debug
         // $this->Template->gefundene_ligen = $gefundene_ligen;  // nur debug
-        // $this->Template->ligen_config = deserialize($this->ligen, true);  // nur debug
+        // $this->Template->ligen_config = StringUtil::deserialize($this->ligen, true);  // nur debug
         $this->Template->show_ligen = $show_ligen;
         $this->Template->ligen_lookup = $ligen_lookup;
         $this->Template->mannschaften_in_ligen_liste = $mannschaften_in_ligen_liste;
@@ -131,7 +130,7 @@ class ContentSpielortseite extends ContentElement
      *
      * @param string $content
      */
-    protected function addDescriptionToTlHead($content)
+    protected function addDescriptionToTlHead(string $content)
     {
         if ($GLOBALS['TL_HEAD']) {
             foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {

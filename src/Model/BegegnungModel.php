@@ -12,11 +12,14 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Model;
 
+use Contao\Controller;
 use Contao\Model;
 use Contao\Config;
+use Contao\Date;
 use Contao\PageModel;
-use Contao\Controller;
 use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
+use Exception;
+use function count;
 
 /**
  * @property integer $id
@@ -66,7 +69,7 @@ class BegegnungModel extends Model
         $result = [0, 0];
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
-            list($home, $away) = $spiel->getScore();
+            [$home, $away] = $spiel->getScore();
             $result[0] += $home;
             $result[1] += $away;
             //$eingesetzte_spieler['home'][$spiel->home]++;
@@ -97,15 +100,15 @@ class BegegnungModel extends Model
         $eingesetzte_spieler = ['home' => [], 'away' => []];
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
-            list($home, $away) = $spiel->getLegs();
+            [$home, $away] = $spiel->getLegs();
             $result[0] += $home;
             $result[1] += $away;
             ++$eingesetzte_spieler['home'][$spiel->home];
             ++$eingesetzte_spieler['away'][$spiel->away];
         }
         // nicht angetreten?
-        $is_noshow_home = 1 === \count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
-        $is_noshow_away = 1 === \count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
+        $is_noshow_home = 1 === count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
+        $is_noshow_away = 1 === count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
         if ($is_noshow_home && $is_noshow_away) {
             return 'Nicht angetreten';
         }
@@ -122,7 +125,7 @@ class BegegnungModel extends Model
     /**
      * @param string $mode Art (Ausführlichkeit) des Labels ['full'|'medium'|'short']
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @return string
      */
@@ -135,7 +138,7 @@ class BegegnungModel extends Model
                     $this->getRelated('away')->name,
                     $this->getRelated('pid')->name,
                     $this->getRelated('pid')->getRelated('saison')->name,
-                    \Date::parse(\Config::get('dateFormat'), $this->spiel_am)
+                    Date::parse(\Config::get('dateFormat'), $this->spiel_am)
                 );
                 break;
             case 'medium':

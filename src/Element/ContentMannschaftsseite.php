@@ -41,7 +41,6 @@ class ContentMannschaftsseite extends ContentElement
     public function generate()
     {
         if (TL_MODE === 'BE') {
-            /** @var BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $headline = $this->headline;
@@ -144,7 +143,7 @@ class ContentMannschaftsseite extends ContentElement
      *
      * @param string $content
      */
-    protected function addDescriptionToTlHead($content)
+    protected function addDescriptionToTlHead(string $content)
     {
         if ($GLOBALS['TL_HEAD']) {
             foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {

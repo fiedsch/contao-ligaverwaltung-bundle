@@ -60,7 +60,7 @@ class DataEntrySaver
      * @param array $data
      * @return int Anzahl gespeicherte SpielModel
      */
-    protected static function handleSpiel($i, $spiel, $data): int
+    protected static function handleSpiel(int $i, array $spiel, array $data): int
     {
         $begegnungId = $data['begegnungId'];
         $slot = $i + 1;
@@ -123,7 +123,7 @@ class DataEntrySaver
      * @param array $data
      * @return int Anzahl gespeicherte HighlightlModel
      */
-    protected static function handleHighlights(int $begegnung, $data) //: int
+    protected static function handleHighlights(int $begegnung, array $data): int
     {
         $existingHighlightsIds = Database::getInstance()
             ->prepare('SELECT id FROM tl_highlight WHERE begegnung_id=?')

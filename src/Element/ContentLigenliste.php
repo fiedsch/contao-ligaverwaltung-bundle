@@ -20,9 +20,11 @@ namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\ContentElement;
 use Contao\Controller;
+use Contao\PageModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Contao\PageModel;
+use Contao\StringUtil;
+use Exception;
 
 /**
  * @property integer verband
@@ -39,14 +41,14 @@ class ContentLigenliste extends ContentElement
     /**
      * Generate the content element.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function compile()
     {
         if ('' === $this->verband) {
             return;
         }
-        $saisonIds = deserialize($this->saison);
+        $saisonIds = StringUtil::deserialize($this->saison);
 
         $saisonFilter = sprintf('saison IN (%s)', implode(',', $saisonIds));
         $ligen = LigaModel::findAll([

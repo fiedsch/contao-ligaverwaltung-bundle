@@ -23,6 +23,10 @@ use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Contao\System;
 use Patchwork\Utf8;
+use Exception;
+use RecursiveIteratorIterator;
+use RecursiveArrayIterator;
+use function is_array;
 
 /**
  * Content element "Liste aller Spieler einer Mannaschft".
@@ -44,13 +48,12 @@ class ContentHighlightRanking extends ContentElement
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      *
      */
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
-            /** @var BackendTemplate $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
             $suffix = '';
@@ -89,7 +92,7 @@ class ContentHighlightRanking extends ContentElement
     /**
      * Generate the content element.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function compile()
     {
@@ -110,7 +113,7 @@ class ContentHighlightRanking extends ContentElement
     /**
      * Highlight-"Ranking" aller Mannschaften einer Liga.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function compileMannschaftenranking()
     {
@@ -173,7 +176,7 @@ class ContentHighlightRanking extends ContentElement
      *
      * @return string
      */
-    protected function getRankingTypeFilter($tablealias)
+    protected function getRankingTypeFilter(string $tablealias)
     {
         switch ($this->rankingfield) {
             case HighlightModel::TYPE_171:
@@ -420,7 +423,7 @@ class ContentHighlightRanking extends ContentElement
      */
     protected static function flattenToIntArray(array $a)
     {
-        $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($a));
+        $it = new RecursiveIteratorIterator(new RecursiveArrayIterator($a));
         $result = [];
         foreach ($it as $v) {
             $result[] = (int)$v;
@@ -437,9 +440,9 @@ class ContentHighlightRanking extends ContentElement
      *
      * @return string
      */
-    protected static function prettyPrintSorted($value, $order)
+    protected static function prettyPrintSorted($value, string $order)
     {
-        if (\is_array($value)) {
+        if (is_array($value)) {
             $data = $value;
         } else {
             $data = explode(',', $value);
@@ -466,7 +469,7 @@ class ContentHighlightRanking extends ContentElement
      *
      * @return string
      */
-    protected static function compressResultsArray($data)
+    protected static function compressResultsArray(array $data)
     {
         $aggregated = [];
         $current = null;

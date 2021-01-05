@@ -14,6 +14,7 @@ namespace Fiedsch\LigaverwaltungBundle\Entity;
 
 use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
+use function count;
 
 /**
  * Class Begegnung.
@@ -109,7 +110,7 @@ class Begegnung
      */
     public function getNumSpiele()
     {
-        return \count($this->spiele);
+        return count($this->spiele);
     }
 
     /**

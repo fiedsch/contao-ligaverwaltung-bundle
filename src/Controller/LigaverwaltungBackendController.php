@@ -119,7 +119,7 @@ class LigaverwaltungBackendController extends AbstractController // Controller
      *     methods={"POST"}
      *     )
      */
-    public function begegnungDataSaveAction(Request $request, $begegnung)
+    public function begegnungDataSaveAction(Request $request, $begegnung): Response
     {
         $requestData = \json_decode($request->request->get('json_data'), true);
 

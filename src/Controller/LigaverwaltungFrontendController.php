@@ -21,9 +21,10 @@ use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use function json_decode;
 
 
 /**
@@ -31,7 +32,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Route(defaults={"_scope" = "frontend", "_token_check" = true})
  */
-class LigaverwaltungFrontendController extends Controller
+class LigaverwaltungFrontendController extends AbstractController
 {
     /**
      * Spielplan als Ical.
@@ -161,9 +162,9 @@ class LigaverwaltungFrontendController extends Controller
      *     methods={"POST"}
      *     )
      */
-    public function begegnungDataSaveAction(Request $request, $begegnung)
+    public function begegnungDataSaveAction(Request $request, $begegnung): Response
     {
-        $requestData = \json_decode($request->request->get('json_data'), true);
+        $requestData = json_decode($request->request->get('json_data'), true);
 
         return new Response(DataEntrySaver::handleDataEntryData($begegnung, $requestData));
     }

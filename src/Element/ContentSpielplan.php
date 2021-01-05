@@ -19,16 +19,16 @@
 namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\BackendTemplate;
+use Contao\Controller;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\Config;
 use Contao\ContentElement;
-use Contao\Controller;
 use Contao\Date;
+use Contao\PageModel;
+use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Contao\PageModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
-use Contao\System;
 use Patchwork\Utf8;
 
 class ContentSpielplan extends ContentElement
