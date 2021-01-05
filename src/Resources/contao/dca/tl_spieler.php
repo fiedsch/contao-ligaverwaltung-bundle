@@ -13,7 +13,7 @@
 use Contao\DataContainer;
 use Contao\FilesModel;
 use Contao\MemberModel;
-use Fiedsch\LigaverwaltungBundle\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
 $GLOBALS['TL_DCA']['tl_spieler'] = [
     'config' => [

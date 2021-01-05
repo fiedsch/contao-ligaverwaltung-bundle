@@ -15,6 +15,7 @@ namespace Fiedsch\LigaverwaltungBundle\Element;
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\Database;
+use Contao\MemberModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
