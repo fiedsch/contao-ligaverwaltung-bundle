@@ -44,15 +44,15 @@
             }
             if ($listitem['member']->email) {
                 $details[] = sprintf("<a href='%s'>%s</a>",
-                    \StringUtil::encodeEmail('mailto:'.$listitem['member']->email),
-                    \StringUtil::encodeEmail($listitem['member']->email)
+                    \Contao\StringUtil::encodeEmail('mailto:'.$listitem['member']->email),
+                    \Contao\StringUtil::encodeEmail($listitem['member']->email)
                 );
             }
             $teamcaptain_suffix = join(", ", $details);
       }
       ?>
         <td><?= \Fiedsch\LigaverwaltungBundle\Helper\DCAHelper::makeSpielerName($listitem['member']) ?></td>
-        <td><?= $listitem['member']->anonymize ? substr(SpielerModel::ANONYM_LABEL,0,3) : $listitem['member']->passnummer ?></td>
+        <td><?= $listitem['member']->anonymize ? substr(\Fiedsch\LigaverwaltungBundle\Model\SpielerModel::ANONYM_LABEL,0,3) : $listitem['member']->passnummer ?></td>
         <td><?= $teamcaptain_suffix ?></td>
         <?php if ($listitem['member']->anonymize): ?>
           <td>&nbsp;<!-- anonymisieren: Bild nicht ausgeben! --></td>
