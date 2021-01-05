@@ -34,6 +34,7 @@ class PlayerHistoryController
     }
 
     /**
+     * @throws \Exception
      * @return Response
      */
     public function run()
@@ -45,6 +46,7 @@ class PlayerHistoryController
     }
 
     /**
+     * @throws \Exception
      * @return array
      */
     protected function getHistory()

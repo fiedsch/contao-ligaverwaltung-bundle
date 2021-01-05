@@ -159,6 +159,11 @@ class ContentSpielbericht extends ContentElement
         return $spielergebnisse;
     }
 
+    /**
+     * @param BegegnungModel $begegnung
+     * @return array
+     * @throws \Exception
+     */
     protected function compileHighlights(BegegnungModel $begegnung)
     {
         if (!$begegnung->published) {

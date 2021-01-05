@@ -32,6 +32,8 @@ class ContentSpielerliste extends ContentElement
 
     /**
      * Generate the content element.
+     *
+     * @throws \Exception
      */
     public function compile()
     {

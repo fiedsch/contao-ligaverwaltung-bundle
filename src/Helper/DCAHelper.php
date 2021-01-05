@@ -139,6 +139,7 @@ class DCAHelper
      * @param DataContainer $dc
      *
      * @return array
+     * @throws \Exception
      */
     public static function getLigaForSelect(DataContainer $dc)
     {
@@ -251,7 +252,7 @@ class DCAHelper
      * ('options_callback' in tl_begegnung).
      *
      * @param DataContainer $dc
-     *
+     * @throws \Exception
      * @return array
      */
     public static function getAktiveLigenForSelect(DataContainer $dc)
@@ -711,7 +712,7 @@ class DCAHelper
      * ('options_callback' in tl_content).
      *
      * @param DataContainer $dc
-     *
+     * @throws \Exception
      * @return array
      */
     public static function getAlleLigenForSelect(DataContainer $dc)
@@ -822,6 +823,10 @@ class DCAHelper
         return $result;
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public function getBegegnungenForHighlight()
     {
         $result = [];

@@ -38,6 +38,8 @@ class ContentLigenliste extends ContentElement
 
     /**
      * Generate the content element.
+     *
+     * @throws \Exception
      */
     public function compile()
     {

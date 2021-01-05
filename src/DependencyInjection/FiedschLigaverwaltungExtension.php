@@ -21,6 +21,11 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class FiedschLigaverwaltungExtension extends Extension
 {
+    /**
+     * @param array $mergedConfig
+     * @param ContainerBuilder $container
+     * @throws \Exception
+     */
     public function load(array $mergedConfig, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader(

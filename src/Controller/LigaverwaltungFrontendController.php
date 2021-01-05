@@ -106,6 +106,7 @@ class LigaverwaltungFrontendController extends Controller
      *     methods={"GET"}
      * )
      * @Template("@FiedschLigaverwaltung/begegnung_dataentry.html.twig")
+     * @throws \Exception
      */
     public function begegnungDataEntryAction($begegnung)
     {

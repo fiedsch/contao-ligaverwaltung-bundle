@@ -5,7 +5,6 @@ namespace Fiedsch\LigaverwaltungBundle\Helper;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\Database;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
@@ -185,6 +184,7 @@ class DataEntrySaver
     /**
      * @param array $data
      * @return array
+     * @throws \Exception
      */
     public static function augment(array $data): array
     {
@@ -209,7 +209,12 @@ class DataEntrySaver
         return $data;
     }
 
-
+    /**
+     * @param BegegnungModel $begegnungModel
+     * @param string $homeaway
+     * @return array
+     * @throws \Exception
+     */
     protected static function getTeamData(BegegnungModel $begegnungModel, string $homeaway): array
     {
         $teamId = "home" === $homeaway ? $begegnungModel->home : $begegnungModel->away;

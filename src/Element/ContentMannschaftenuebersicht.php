@@ -56,6 +56,8 @@ class ContentMannschaftenuebersicht extends ContentElement
 
     /**
      * Generate the content element.
+     *
+     * @throws \Exception
      */
     public function compile()
     {

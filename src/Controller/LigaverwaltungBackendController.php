@@ -45,6 +45,7 @@ class LigaverwaltungBackendController extends AbstractController // Controller
      *       "memberid": "[0-9]+"
      *     }
      * )
+     * @throws \Exception
      */
     public function playerhistoryAction($memberid)
     {
@@ -72,6 +73,7 @@ class LigaverwaltungBackendController extends AbstractController // Controller
      *     methods={"GET"}
      * )
      * @Template("@FiedschLigaverwaltung/begegnung_dataentry.html.twig")
+     * @throws \Exception
      */
     public function begegnungDataEntryAction($begegnung)
     {
