@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -12,26 +14,26 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Model;
 
-use Contao\Controller;
-use Contao\Model;
 use Contao\Config;
+use Contao\Controller;
 use Contao\Date;
+use Contao\Model;
 use Contao\PageModel;
-use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
-use Exception;
 use function count;
+use Exception;
+use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
 
 /**
- * @property integer $id
- * @property integer $pid
- * @property integer $home
- * @property integer $away
- * @property string  $name
- * @property integer $spiel_am
- * @property integer $tstamp
- * @property integer $spiel_tag
- * @property bool $published
- * @property bool $postponed
+ * @property int    $id
+ * @property int    $pid
+ * @property int    $home
+ * @property int    $away
+ * @property string $name
+ * @property int    $spiel_am
+ * @property int    $tstamp
+ * @property int    $spiel_tag
+ * @property bool   $published
+ * @property bool   $postponed
  *
  * @method static BegegnungModel|null findById($id, array $opt=array())
  */
@@ -47,7 +49,7 @@ class BegegnungModel extends Model
     protected static $strTable = 'tl_begegnung';
 
     /**
-     * YAML-data column (@see YamlGetterSetterTrait)
+     * YAML-data column (@see YamlGetterSetterTrait).
      *
      * @var string
      */
@@ -62,6 +64,7 @@ class BegegnungModel extends Model
             return '';
         }
         $spiele = SpielModel::findByPid($this->id);
+
         if (!$spiele) {
             return '';
         }
@@ -93,6 +96,7 @@ class BegegnungModel extends Model
             return '';
         }
         $spiele = SpielModel::findByPid($this->id);
+
         if (!$spiele) {
             return '';
         }
@@ -107,14 +111,17 @@ class BegegnungModel extends Model
             ++$eingesetzte_spieler['away'][$spiel->away];
         }
         // nicht angetreten?
-        $is_noshow_home = 1 === count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
-        $is_noshow_away = 1 === count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
+        $is_noshow_home = 1 === \count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
+        $is_noshow_away = 1 === \count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
+
         if ($is_noshow_home && $is_noshow_away) {
             return 'Nicht angetreten';
         }
+
         if ($is_noshow_home) {
             return 'Heim nicht angetreten';
         } // siehe auch ce_spielplan.html5!
+
         if ($is_noshow_away) {
             return 'Gast nicht angetreten';
         }
@@ -141,6 +148,7 @@ class BegegnungModel extends Model
                     Date::parse(\Config::get('dateFormat'), $this->spiel_am)
                 );
                 break;
+
             case 'medium':
                 return sprintf('%s:%s (%s %s)',
                     $this->getRelated('home')->name,
@@ -149,6 +157,7 @@ class BegegnungModel extends Model
                     $this->getRelated('pid')->getRelated('saison')->name
                 );
                 break;
+
             case 'short':
             default:
                 return sprintf('%s:%s',
@@ -170,12 +179,15 @@ class BegegnungModel extends Model
             return '';
         }
         $score = $this->getScore();
+
         if ('' === $score) {
             return '';
         }
         $spielberichtpageId = Config::get('spielberichtpage');
+
         if ($spielberichtpageId) {
             $spielberichtpage = PageModel::findById($spielberichtpageId);
+
             if (\Config::get('folderUrl')) {
                 $url = Controller::generateFrontendUrl($spielberichtpage->row(), '/id/'.$this->id);
             } else {

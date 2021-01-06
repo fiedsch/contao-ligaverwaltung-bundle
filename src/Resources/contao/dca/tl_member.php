@@ -1,51 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2020 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
 
-use Contao\DataContainer;
 use Contao\Database;
+use Contao\DataContainer;
+use Contao\Image;
 use Contao\MemberModel;
 
-
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
-        'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
-        'button_callback' => function ($arrRow,
-                                      $href,
-                                      $label,
-                                      $title,
-                                      $icon,
-                                      $attributes,
-                                      $strTable,
-                                      $arrRootIds,
-                                      $arrChildRecordIds,
-                                      $blnCircularReference,
-                                      $strPrevious,
-                                      $strNext) {
+    'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
+    'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
+        $member = MemberModel::findById($arrRow['id']);
 
-            $member = MemberModel::findById($arrRow['id']);
-
-            return sprintf(
-                '<a href="ligaverwaltung/player/history/%s?popup=1&amp;rt=%s"'
-                .' title="" style="padding-left:3px"'
-                .' onclick="Backend.openModalIframe({\'width\':768,\'title\':\'Spielerhistorie von %s\',\'url\':this.href});return false"'
-                .'>'
-                .'%s</a>',
-                $arrRow['id'],
-                REQUEST_TOKEN,
-                $member->firstname.' '.$member->lastname,
-                // getHtml(a, foo, c) setzt mit foo das alt-Attribut, wir benötigen aber das title-Attribut
-                // das wir im dritten Parameter "manuell" setzen.
-                \Contao\Image::getHtml('diff.svg', $GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0], 'style="vertical-align:top" title="'.$GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0].'"')
-            );
-        },
+        return sprintf(
+            '<a href="ligaverwaltung/player/history/%s?popup=1&amp;rt=%s"'
+            .' title="" style="padding-left:3px"'
+            .' onclick="Backend.openModalIframe({\'width\':768,\'title\':\'Spielerhistorie von %s\',\'url\':this.href});return false"'
+            .'>'
+            .'%s</a>',
+            $arrRow['id'],
+            REQUEST_TOKEN,
+            $member->firstname.' '.$member->lastname,
+            // getHtml(a, foo, c) setzt mit foo das alt-Attribut, wir benötigen aber das title-Attribut
+            // das wir im dritten Parameter "manuell" setzen.
+            Image::getHtml('diff.svg', $GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0], 'style="vertical-align:top" title="'.$GLOBALS['TL_LANG']['tl_member']['spielerhistorie'][0].'"')
+        );
+    },
 ];
 
 // Nicht jeder Spieler hat eine E-Mail-Adresse: den Contao-Standard "ist Pflichtfeld" ändern
@@ -62,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
     'sorting' => true,
     'eval' => ['rgxp' => 'alnum', 'tl_class' => 'w50', 'maxlength' => 32, 'unique' => true],
     'sql' => "varchar(32) NOT NULL default ''",
-    'load_callback' => [function ($value, DataContainer $dc) {
+    'load_callback' => [static function ($value, DataContainer $dc) {
         // "auto increment" passnummer for new records and consider special cases.
         // NOTE: if the member with the highest passnumber gets deleted their passnumber
         // will be assigned to the next new entry in tl_member -- this is something
@@ -76,6 +66,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
         }
         // Do we have non numerical passummmer values? Then MAX() + 1 will not be appropriate!
         $res = Database::getInstance()->prepare("SELECT SUM(passnummer NOT REGEXP '^[0-9]+$') as n FROM tl_member WHERE passnummer <>''")->execute();
+
         if ($res->n > 0) {
             return $value;
         }

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -28,6 +30,7 @@ class TemplateHelper
             return sprintf('<li>%s</li>', $data);
         }
         $result = '<ul>';
+
         foreach ($data as $item) {
             $result .= self::renderArrayAsList($item);
         }

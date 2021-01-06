@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -19,13 +21,12 @@
 namespace Fiedsch\LigaverwaltungBundle\Module;
 
 use Contao\BackendTemplate;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Element\ContentSpielbericht;
 use Contao\ContentModel;
 use Contao\Input;
 use Contao\Module;
+use Fiedsch\LigaverwaltungBundle\Element\ContentSpielbericht;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Patchwork\Utf8;
-
 
 class ModuleSpielberichtReader extends Module
 {
@@ -64,7 +65,7 @@ class ModuleSpielberichtReader extends Module
      *
      * @throws \Exception
      */
-    protected function compile()
+    protected function compile(): void
     {
         /** @var \PageModel $objPage */
         // global $objPage;
@@ -79,12 +80,14 @@ class ModuleSpielberichtReader extends Module
         if (!$id) {
             $id = Input::get('auto_item');
         }
+
         if (empty($id)) {
             $this->Template->begegnung = null;
 
             return;
         }
         $begegnung = BegegnungModel::findById($id);
+
         if (!$begegnung) {
             $this->Template->begegnung = null;
 

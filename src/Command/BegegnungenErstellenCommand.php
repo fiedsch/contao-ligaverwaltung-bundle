@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -22,7 +24,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use function count;
+
 /**
  * Create Records in `tl_begegnung` (all by all).
  *
@@ -38,7 +40,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('fiedsch:begegnungenerstellen')
@@ -57,6 +59,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
 
         $ligaParameter = $input->getArgument('liga');
         $liga = LigaModel::findBy('id', $ligaParameter);
+
         if (null === $liga) {
             $output->writeln("Liga '$ligaParameter' nicht gefunden!");
 
@@ -75,9 +78,6 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
     }
 
     /**
-     * @param int             $ligaId
-     * @param OutputInterface $output
-     *
      * @return int Anzahl der erstellten Begegnungen
      */
     protected function generateBegegnungen(int $ligaId, OutputInterface $output): int
@@ -104,6 +104,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
                         ['pid=?', 'home=?', 'away=?'],
                         [$ligaId, $idHome, $idAway]
                 );
+
                 if ($begegnung) {
                     $output->writeln(sprintf("-> Begegnung '%s:%s' existiert bereits", $idHome, $idAway));
                 } else {
@@ -125,16 +126,18 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
         // als Heimspiel).
 
         // Ungerade Anzahl von Mannschaften? Dann hat jede ein Mal Spielfrei!
-        if (count($mannschaftIds) % 2) {
+        if (\count($mannschaftIds) % 2) {
             foreach ($mannschaftIds as $idHome) {
                 $begegnung = BegegnungModel::findBy(
                     ['pid=?', 'home=?', 'away=?'],
                     [$ligaId, $idHome, self::SPIELFREI_MANNSCHAFT]
                 );
+
                 if ($begegnung) {
                     $output->writeln(sprintf("-> Begegnung '%s:%s' existiert bereits", $idHome, self::SPIELFREI_MANNSCHAFT));
                 } else {
                     $output->writeln(sprintf("->lege 2 x Spielfrei an '%s:%s' (Hin- und Rückrunde)", $idHome, self::SPIELFREI_MANNSCHAFT));
+
                     for ($i = 0; $i < 2; ++$i) {
                         $begegnung = new BegegnungModel();
                         $begegnung->tstamp = time();

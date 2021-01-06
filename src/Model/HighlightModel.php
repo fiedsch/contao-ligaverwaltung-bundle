@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -15,12 +17,12 @@ namespace Fiedsch\LigaverwaltungBundle\Model;
 use Contao\Model;
 
 /**
- * @property int     $id
- * @property int     $pid
- * @property int     $begegnung_id
- * @property int     $spieler_id
- * @property int     $type
- * @property string  $value
+ * @property int    $id
+ * @property int    $pid
+ * @property int    $begegnung_id
+ * @property int    $spieler_id
+ * @property int    $type
+ * @property string $value
  *
  * @method static HighlightModel|null findById($id, array $opt=array())
  */

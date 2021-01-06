@@ -1,14 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
+
+use Fiedsch\LigaverwaltungBundle\Element\ContentBegegnungsauswahl;
+use Fiedsch\LigaverwaltungBundle\Element\ContentHighlightRanking;
+use Fiedsch\LigaverwaltungBundle\Element\ContentLigenliste;
+use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftenuebersicht;
+use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsliste;
+use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsseite;
+use Fiedsch\LigaverwaltungBundle\Element\ContentRanking;
+use Fiedsch\LigaverwaltungBundle\Element\ContentSpielbericht;
+use Fiedsch\LigaverwaltungBundle\Element\ContentSpielerliste;
+use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortinfo;
+use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortseite;
+use Fiedsch\LigaverwaltungBundle\Element\ContentSpielplan;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Model\AufstellerModel;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Model\VerbandModel;
+use Fiedsch\LigaverwaltungBundle\Module\ModuleMannschaftsseitenReader;
+use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielberichtReader;
+use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielortseitenReader;
 
 array_insert($GLOBALS['BE_MOD'], 2, [
     'liga' => [
@@ -39,18 +68,6 @@ array_insert($GLOBALS['BE_MOD'], 2, [
 /*
  * Contentelemente
  */
-use Fiedsch\LigaverwaltungBundle\Element\ContentLigenliste;
-use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsliste;
-use Fiedsch\LigaverwaltungBundle\Element\ContentSpielbericht;
-use Fiedsch\LigaverwaltungBundle\Element\ContentSpielerliste;
-use Fiedsch\LigaverwaltungBundle\Element\ContentSpielplan;
-use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortinfo;
-use Fiedsch\LigaverwaltungBundle\Element\ContentRanking;
-use Fiedsch\LigaverwaltungBundle\Element\ContentHighlightRanking;
-use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsseite;
-use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortseite;
-use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftenuebersicht;
-use Fiedsch\LigaverwaltungBundle\Element\ContentBegegnungsauswahl;
 
 $GLOBALS['TL_CTE']['ligaverwaltung']['ligenliste'] = ContentLigenliste::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsliste'] = ContentMannschaftsliste::class;
@@ -68,9 +85,6 @@ $GLOBALS['TL_CTE']['ligaverwaltung']['begegnungsauswahl'] = ContentBegegnungsaus
 /*
  * Module
  */
-use Fiedsch\LigaverwaltungBundle\Module\ModuleMannschaftsseitenReader;
-use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielortseitenReader;
-use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielberichtReader;
 
 $GLOBALS['FE_MOD']['ligaverwaltung']['mannschaftsseitenreader'] = ModuleMannschaftsseitenReader::class;
 $GLOBALS['FE_MOD']['ligaverwaltung']['spielortseitenreader'] = ModuleSpielortseitenReader::class;
@@ -79,7 +93,6 @@ $GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = ModuleSpielberichtR
 /*
  * Hooks
  */
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
 $GLOBALS['TL_HOOKS']['addCustomRegexp'][] = [DCAHelper::class, 'addCustomRegexp'];
 
@@ -88,19 +101,9 @@ if (TL_MODE === 'BE') {
     $GLOBALS['TL_CSS'][] = 'bundles/fiedschligaverwaltung/backend.css';
 }
 
-/**
+/*
  * Models
  */
-use Fiedsch\LigaverwaltungBundle\Model\AufstellerModel;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
-use Fiedsch\LigaverwaltungBundle\Model\VerbandModel;
 
 $GLOBALS['TL_MODELS']['tl_aufsteller'] = AufstellerModel::class;
 $GLOBALS['TL_MODELS']['tl_begegnung'] = BegegnungModel::class;

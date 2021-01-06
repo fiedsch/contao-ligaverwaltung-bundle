@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -81,9 +83,9 @@ $GLOBALS['TL_LANG']['tl_liga']['spielplan'] = [
 
 $GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_spielort'] = [
     'Rechnungsbetrag Spielort/Wirt',
-    'Dieser Betrag wird dem Spielort/Wirt je Mannschaft in dieser Liga in Rechnung gestellt. (Bsp.: "5" oder "5,00" für 5 €).'
+    'Dieser Betrag wird dem Spielort/Wirt je Mannschaft in dieser Liga in Rechnung gestellt. (Bsp.: "5" oder "5,00" für 5 €).',
 ];
 $GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_aufsteller'] = [
     'Rechnungsbetrag Aufsteller',
-    'Dieser Betrag wird dem Aufsteller je Mannschaft in dieser Liga in Rechnung gestellt. (Bsp.: "5" oder "5,00" für 5 €).'
+    'Dieser Betrag wird dem Aufsteller je Mannschaft in dieser Liga in Rechnung gestellt. (Bsp.: "5" oder "5,00" für 5 €).',
 ];

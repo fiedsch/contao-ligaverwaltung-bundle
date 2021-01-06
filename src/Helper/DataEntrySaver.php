@@ -1,9 +1,21 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2021 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
+ */
 
 namespace Fiedsch\LigaverwaltungBundle\Helper;
 
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\Database;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
@@ -19,22 +31,22 @@ class DataEntrySaver
      * Die Daten aus der Begegnunserfassung verarbeiten:
      * == tl_spiel und tl_begegnung Records anlegen bzw. aktualisieren.
      *
-     * @param int $begegnung
-     * @param array $data die Daten, die die Vue-App "Begegnungserfassung" übermittelt hat.
-     * @return string
+     * @param array $data die Daten, die die Vue-App "Begegnungserfassung" übermittelt hat
      */
     public static function handleDataEntryData(int $begegnung, array $data): string
     {
         $begegnungModel = BegegnungModel::findById($begegnung);
+
         if (!$begegnungModel) {
             return 'Begegnung nicht gefunden';
         }
+
         if ($begegnungModel->published) {
             return 'Begegnung ist bereits erfasst und veröffentlicht. Für Änderungen muss die Veröffentlichung vorübergehend zurückgesetzt werden.';
         }
         // nicht benötigte Daten entfernen
-        unset($data['REQUEST_TOKEN']);
-        unset($data['FORM_SUBMIT']);
+        unset($data['REQUEST_TOKEN'], $data['FORM_SUBMIT']);
+
         foreach ($data['highlights'] as $k => $v) {
             if ('' === $v) {
                 unset($data['highlights'][$k]);
@@ -45,26 +57,52 @@ class DataEntrySaver
         $begegnungModel->save();
 
         $spieleGespeichert = 0;
+
         foreach ($data['spielplan'] as $i => $spiel) {
             $spieleGespeichert += self::handleSpiel($i, $spiel, $data);
         }
 
         $highlightsGespeichert = self::handleHighlights($begegnung, $data);
 
-        return sprintf("%d Spiele und %s Highlights gespeichert", $spieleGespeichert, $highlightsGespeichert);
+        return sprintf('%d Spiele und %s Highlights gespeichert', $spieleGespeichert, $highlightsGespeichert);
     }
 
     /**
-     * @param int $i
-     * @param array $spiel
-     * @param array $data
+     * @throws \Exception
+     */
+    public static function augment(array $data): array
+    {
+        $begegnungId = (int) $data['begegnungId'];
+        $begegnungModel = BegegnungModel::findById($begegnungId);
+
+        if (!isset($data['spielplan'])) {
+            $data['spielplan'] = Spielplan::getSpielplan($begegnungModel);
+        }
+
+        if (!isset($data['home'])) {
+            $data['home'] = self::getTeamData($begegnungModel, 'home');
+        }
+
+        if (!isset($data['away'])) {
+            $data['away'] = self::getTeamData($begegnungModel, 'away');
+        }
+
+        if (!\is_array($data['highlights']) || 0 === \count($data['highlights'])) {
+            //$data['highlights'] = ['dummy'=>'data']; // force Object ('{ }') because it would otherwise be an empty array ('[ ]')
+            $data['highlights'] = json_decode('{}');
+        }
+
+        return $data;
+    }
+
+    /**
      * @return int Anzahl gespeicherte SpielModel
      */
     protected static function handleSpiel(int $i, array $spiel, array $data): int
     {
         $begegnungId = $data['begegnungId'];
         $slot = $i + 1;
-        $isDouble = count($spiel['home']) > 1;
+        $isDouble = \count($spiel['home']) > 1;
         $playerHomeId = $data['home']['lineup'][$spiel['home'][0]];
         $playerAwayId = $data['away']['lineup'][$spiel['away'][0]];
 
@@ -75,11 +113,13 @@ class DataEntrySaver
             if ($spielModel) {
                 $spielModel->delete();
             }
+
             return 0;
         }
 
         $playerHome2Id = 0;
         $playerAway2Id = 0;
+
         if ($isDouble) {
             $playerHome2Id = $data['home']['lineup'][$spiel['home'][1]];
             $playerAway2Id = $data['away']['lineup'][$spiel['away'][1]];
@@ -93,6 +133,7 @@ class DataEntrySaver
             if ($spielModel) {
                 $spielModel->delete();
             }
+
             return 0;
         }
         $spieltype = $isDouble ? SpielModel::TYPE_DOPPEL : SpielModel::TYPE_EINZEL;
@@ -110,17 +151,17 @@ class DataEntrySaver
         $spielModel->score_home = $scoreHome;
         $spielModel->score_away = $scoreAway;
         $spielModel->tstamp = time();
+
         try {
             $spielModel->save();
         } catch (RuntimeException $e) {
             return 0;
         }
+
         return 1;
     }
 
     /**
-     * @param int $begegnung
-     * @param array $data
      * @return int Anzahl gespeicherte HighlightlModel
      */
     protected static function handleHighlights(int $begegnung, array $data): int
@@ -128,7 +169,8 @@ class DataEntrySaver
         $existingHighlightsIds = Database::getInstance()
             ->prepare('SELECT id FROM tl_highlight WHERE begegnung_id=?')
             ->execute($begegnung)
-            ->fetchEach('id');
+            ->fetchEach('id')
+        ;
 
         $savedModels = 0;
 
@@ -142,12 +184,15 @@ class DataEntrySaver
                 case 'one80':
                     $intType = HighlightModel::TYPE_180;
                     break;
+
                 case 'one71':
                     $intType = HighlightModel::TYPE_171;
                     break;
+
                 case 'shortleg':
                     $intType = HighlightModel::TYPE_SHORTLEG;
                     break;
+
                 case 'highfinish':
                     $intType = HighlightModel::TYPE_HIGHFINISH;
             }
@@ -156,6 +201,7 @@ class DataEntrySaver
                 ['begegnung_id=?', 'spieler_id=?', 'type=?'],
                 [$begegnung, $spieler, $intType]
             );
+
             if (!$highlightModel) {
                 $highlightModel = new HighlightModel();
                 $highlightModel->begegnung_id = $begegnung;
@@ -168,12 +214,13 @@ class DataEntrySaver
             $highlightModel->save();
             // Bookkeeping
             ++$savedModels;
-            if (($key = array_search($highlightModel->id, $existingHighlightsIds)) !== false) {
+
+            if (($key = array_search($highlightModel->id, $existingHighlightsIds, true)) !== false) {
                 unset($existingHighlightsIds[$key]);
             }
         }
 
-        if (count($existingHighlightsIds)) {
+        if (\count($existingHighlightsIds)) {
             $query = sprintf('DELETE FROM tl_highlight WHERE id IN (%s)', implode(',', $existingHighlightsIds));
             Database::getInstance()->execute($query);
         }
@@ -182,70 +229,44 @@ class DataEntrySaver
     }
 
     /**
-     * @param array $data
-     * @return array
-     * @throws \Exception
-     */
-    public static function augment(array $data): array
-    {
-        $begegnungId = (int)$data['begegnungId'];
-        $begegnungModel = BegegnungModel::findById($begegnungId);
-
-        if (!isset($data['spielplan'])) {
-            $data['spielplan'] = Spielplan::getSpielplan($begegnungModel);
-        }
-        if (!isset($data['home'])) {
-            $data['home'] = self::getTeamData($begegnungModel, "home");
-        }
-        if (!isset($data['away'])) {
-            $data['away'] = self::getTeamData($begegnungModel, "away");
-        }
-
-        if (!is_array($data['highlights']) || count($data['highlights'])===0) {
-            //$data['highlights'] = ['dummy'=>'data']; // force Object ('{ }') because it would otherwise be an empty array ('[ ]')
-            $data['highlights'] = json_decode('{}');
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param BegegnungModel $begegnungModel
-     * @param string $homeaway
-     * @return array
      * @throws \Exception
      */
     protected static function getTeamData(BegegnungModel $begegnungModel, string $homeaway): array
     {
-        $teamId = "home" === $homeaway ? $begegnungModel->home : $begegnungModel->away;
+        $teamId = 'home' === $homeaway ? $begegnungModel->home : $begegnungModel->away;
         $mannschaftModel = MannschaftModel::findById($teamId);
         $spielerModel = SpielerModel::findBy(['pid=?'], [$teamId]);
         $players = [];
-        /** @var SpielerModel $spieler */
-        foreach ($spielerModel as $spieler) {
-            $players[] = [
-                "name" => html_entity_decode($spieler->getName()),
-                "id"   => $spieler->id,
-                "pass" => $spieler->getRelated('member_id')->passnummer,
-            ];
+
+        if ($spielerModel) {
+            /** @var SpielerModel $spieler */
+            foreach ($spielerModel as $spieler) {
+                $players[] = [
+                    'name' => html_entity_decode($spieler->getName()),
+                    'id' => $spieler->id,
+                    'pass' => $spieler->getRelated('member_id')->passnummer,
+                ];
+            }
         }
 
-        usort($players, function($a, $b) {
-            return strcmp($a['name'], $b['name']);
-        });
+        usort(
+            $players,
+            static function ($a, $b) {
+                return strcmp($a['name'], $b['name']);
+            }
+        );
         $players[] = [
-            "name" => 'kein Spieler',
-            "id"   => 0,
-            "pass" => 0,
+            'name' => 'kein Spieler',
+            'id' => 0,
+            'pass' => 0,
         ];
 
         return [
-            "key"       => $homeaway,
-            "name"      => $mannschaftModel->name,
-            "available" => $players,
-            "lineup"    => [ ],
-            "played"    => [ ],
+            'key' => $homeaway,
+            'name' => $mannschaftModel->name,
+            'available' => $players,
+            'lineup' => [],
+            'played' => [],
         ];
     }
-
 }

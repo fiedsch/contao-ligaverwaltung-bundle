@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -27,7 +29,7 @@ use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Patchwork\Utf8;
 
 /**
- * @property integer $saison
+ * @property int $saison
  */
 class ContentMannschaftenuebersicht extends ContentElement
 {
@@ -59,7 +61,7 @@ class ContentMannschaftenuebersicht extends ContentElement
      *
      * @throws \Exception
      */
-    public function compile()
+    public function compile(): void
     {
         if (!$this->saison) {
             return;
@@ -76,6 +78,7 @@ class ContentMannschaftenuebersicht extends ContentElement
         foreach ($ligen as $liga) {
             //$mannschaften = MannschaftModel::findByLiga($liga->id, ['order' => 'name ASC']);
             $mannschaften = MannschaftModel::findBy(['liga=?', 'active=?'], [$liga->id, '1'], ['order' => 'name ASC']);
+
             if (null === $mannschaften) {
                 continue;
             }
@@ -89,6 +92,7 @@ class ContentMannschaftenuebersicht extends ContentElement
                     [$mannschaft->id],
                     ['order' => 'tl_spieler.teamcaptain DESC, tl_spieler.co_teamcaptain DESC']
                 );
+
                 if ($spieler) {
                     foreach ($spieler as $sp) {
                         $arrTc[] = $sp->getTcDetails();
@@ -106,7 +110,7 @@ class ContentMannschaftenuebersicht extends ContentElement
                             'street' => $spielort->street,
                             'postal' => $spielort->postal,
                             'city' => $spielort->city,
-                            ],
+                        ],
                     ],
                 ];
             }

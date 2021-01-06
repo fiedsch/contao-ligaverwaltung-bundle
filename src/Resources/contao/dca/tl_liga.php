@@ -1,17 +1,20 @@
 <?php
 
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+declare(strict_types=1);
 
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
+
+use Exception;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 
 $GLOBALS['TL_DCA']['tl_liga'] = [
     'config' => [
@@ -156,12 +159,12 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'inputType' => 'select',
             'exclude' => true,
             'options' => [
-                    LigaModel::SPIELPLAN_16E2D => '16E,2D',
-                    LigaModel::SPIELPLAN_16E4D => '16E,4D',
-                    LigaModel::SPIELPLAN_8E2D => '8E,2D',
-                    LigaModel::SPIELPLAN_6E3D => '6E,3D',
-                    LigaModel::SPIELPLAN_16E => '16E',
-                ],
+                LigaModel::SPIELPLAN_16E2D => '16E,2D',
+                LigaModel::SPIELPLAN_16E4D => '16E,4D',
+                LigaModel::SPIELPLAN_8E2D => '8E,2D',
+                LigaModel::SPIELPLAN_6E3D => '6E,3D',
+                LigaModel::SPIELPLAN_16E => '16E',
+            ],
             'eval' => ['mandatory' => true, 'includeBlankOption' => true, 'tl_class' => 'w50'],
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
@@ -169,11 +172,15 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_spielort'],
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50'],
-            'save_callback' => [ function($value) {
-                if ('' === $value) { return $value; }
-                if (!preg_match('/^\d+(,*\\d{1,2})?$/', $value)) {
-                    throw new \Exception("UngültigerWert: $value");
+            'save_callback' => [static function ($value) {
+                if ('' === $value) {
+                    return $value;
                 }
+
+                if (!preg_match('/^\d+(,*\\d{1,2})?$/', $value)) {
+                    throw new Exception("Ungültiger Wert: $value");
+                }
+
                 return $value;
             }],
             'sql' => "varchar(16) NOT NULL default ''",
@@ -182,14 +189,18 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_aufsteller'],
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50'],
-            'save_callback' => [ function($value) {
-                if ('' === $value) { return $value; }
-                if (!preg_match('/^\d+(,*\\d{1,2})?$/', $value)) {
-                    throw new \Exception("UngültigerWert: $value");
+            'save_callback' => [static function ($value) {
+                if ('' === $value) {
+                    return $value;
                 }
+
+                if (!preg_match('/^\d+(,*\\d{1,2})?$/', $value)) {
+                    throw new Exception("UngültigerWert: $value");
+                }
+
                 return $value;
             }],
             'sql' => "varchar(16) NOT NULL default ''",
-        ]
+        ],
     ],
 ];

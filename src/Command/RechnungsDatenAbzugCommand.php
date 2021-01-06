@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2020 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -12,19 +14,19 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
-use Contao\CoreBundle\Framework\FrameworkAwareTrait;
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
-use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Contao\CoreBundle\Framework\FrameworkAwareTrait;
+use Exception;
+use Fiedsch\LigaverwaltungBundle\Model\AufstellerModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
-use Fiedsch\LigaverwaltungBundle\Model\AufstellerModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Exception;
-use RuntimeException;
 use Twig\Environment;
 
 /**
@@ -40,7 +42,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 
     const KEIN_AUFSTELLER = -1;
 
-    protected /*Environment*/ $twig;
+    /*Environment*/ protected $twig;
 
     public function __construct(Environment $twig)
     {
@@ -52,16 +54,18 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('fiedsch:rechnungsdaten')
             ->setDescription('Datenabzug für die Rechnungsstellung.')
-            ->addArgument('saison', InputArgument::REQUIRED, 'Saison');
+            ->addArgument('saison', InputArgument::REQUIRED, 'Saison')
+        ;
     }
 
     /**
      * {@inheritdoc}
+     *
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -72,6 +76,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 
         $saisonParameter = $input->getArgument('saison');
         $saison = SaisonModel::findBy('name', $saisonParameter);
+
         if (null === $saison) {
             $output->writeln("Saison '$saisonParameter' nicht gefunden!");
 
@@ -85,28 +90,28 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         // Ergebnisdaten zum Erzeugen der Rechnungen für Wirte (Spielort) und Aufsteller
 
         $data = [
-            'spielorte'  => [],
+            'spielorte' => [],
             'aufsteller' => [],
         ];
 
         /** @var LigaModel $liga */
         foreach ($ligen as $liga) {
-
             $mannschaften = MannschaftModel::findBy(
                 ['liga=?'],
                 [$liga->id]
             );
+
             if (!$mannschaften) {
                 continue;
             }
 
             /** @var MannschaftModel $mannschaft */
             foreach ($mannschaften as $mannschaft) {
-
                 /** @var SpielortModel $spielort */
                 $spielort = $mannschaft->getRelated('spielort');
+
                 if (!$spielort) {
-                    $output->writeln(sprintf("Mannschaft %s ohne Spielort", $mannschaft->getFullName()));
+                    $output->writeln(sprintf('Mannschaft %s ohne Spielort', $mannschaft->getFullName()));
                     continue;
                 }
 
@@ -118,27 +123,27 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 
                 if (!isset($data['spielorte'][$spielort->id])) {
                     $data['spielorte'][$spielort->id] = [
-                        'id'                        => $spielort->id,
-                        'name'                      => $spielort->name,
-                        'street'                    => $spielort->street,
-                        'postal'                    => $spielort->postal,
-                        'city'                      => $spielort->city,
-                        'is_aufsteller'             => $keyAufsteller === self::KEIN_AUFSTELLER,
-                        'summe_rechnung'            => 0,
+                        'id' => $spielort->id,
+                        'name' => $spielort->name,
+                        'street' => $spielort->street,
+                        'postal' => $spielort->postal,
+                        'city' => $spielort->city,
+                        'is_aufsteller' => self::KEIN_AUFSTELLER === $keyAufsteller,
+                        'summe_rechnung' => 0,
                         'summe_rechnung_aufsteller' => 0, // Rechnungssumme, falls der Spielort sein eigener Aufsteller ist
-                        'mannschaften'              => [],
+                        'mannschaften' => [],
                     ];
                 }
 
                 if (!isset($data['aufsteller'][$keyAufsteller])) {
                     $data['aufsteller'][$keyAufsteller] = [
-                        'id'             => $keyAufsteller,
-                        'name'           => $aufsteller ? $aufsteller->name : '-',
-                        'street'         => $aufsteller ? $aufsteller->street : '-',
-                        'postal'         => $aufsteller ? $aufsteller->postal : '-',
-                        'city'           => $aufsteller ? $aufsteller->city : '-',
+                        'id' => $keyAufsteller,
+                        'name' => $aufsteller ? $aufsteller->name : '-',
+                        'street' => $aufsteller ? $aufsteller->street : '-',
+                        'postal' => $aufsteller ? $aufsteller->postal : '-',
+                        'city' => $aufsteller ? $aufsteller->city : '-',
                         'summe_rechnung' => 0,
-                        'mannschaften'   => [],
+                        'mannschaften' => [],
                     ];
                 }
 
@@ -149,23 +154,23 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                     $data['spielorte'][$spielort->id]['summe_rechnung_aufsteller'] += $this->toFloat($liga->rechnungsbetrag_aufsteller);
                 }
                 $data['spielorte'][$spielort->id]['mannschaften'][] = [
-                    'name'                       => $mannschaft->name,
-                    'liga'                       => $liga->name,
-                    'spielstaerke'               => $liga->spielstaerke,
-                    'saison'                     => $saison->name,
-                    'rechnungsbetrag_spielort'   => $liga->rechnungsbetrag_spielort,
+                    'name' => $mannschaft->name,
+                    'liga' => $liga->name,
+                    'spielstaerke' => $liga->spielstaerke,
+                    'saison' => $saison->name,
+                    'rechnungsbetrag_spielort' => $liga->rechnungsbetrag_spielort,
                     'rechnungsbetrag_aufsteller' => $liga->rechnungsbetrag_aufsteller,
                 ];
 
                 // Daten für die Rechnung für den Aufsteller
                 $data['aufsteller'][$keyAufsteller]['summe_rechnung'] += $this->toFloat($liga->rechnungsbetrag_aufsteller);
                 $data['aufsteller'][$keyAufsteller]['mannschaften'][] = [
-                    'name'                       => $mannschaft->name,
-                    'liga'                       => $liga->name,
-                    'spielstaerke'               => $liga->spielstaerke,
-                    'saison'                     => $saison->name,
-                    'spielort'                   => $spielort->name,
-                    'rechnungsbetrag_spielort'   => $liga->rechnungsbetrag_spielort,
+                    'name' => $mannschaft->name,
+                    'liga' => $liga->name,
+                    'spielstaerke' => $liga->spielstaerke,
+                    'saison' => $saison->name,
+                    'spielort' => $spielort->name,
+                    'rechnungsbetrag_spielort' => $liga->rechnungsbetrag_spielort,
                     'rechnungsbetrag_aufsteller' => $liga->rechnungsbetrag_aufsteller,
                 ];
             }
@@ -175,6 +180,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         foreach (array_keys($data['spielorte']) as $id) {
             $this->sortMannschaften($data['spielorte'][$id]['mannschaften'], 'spielort');
         }
+
         foreach (array_keys($data['aufsteller']) as $keyAufsteller) {
             $this->sortMannschaften($data['aufsteller'][$keyAufsteller]['mannschaften'], 'aufsteller');
         }
@@ -187,8 +193,8 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         $output->writeln($this->twig->render(
             '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.html.twig',
             [
-                'saison'     => $saison->name,
-                'spielorte'  => $data['spielorte'],
+                'saison' => $saison->name,
+                'spielorte' => $data['spielorte'],
                 'aufsteller' => $data['aufsteller'],
             ]
         ));
@@ -202,30 +208,38 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
             return 0;
         }
 
-        return (float)str_replace(',', '.', $value);
+        return (float) str_replace(',', '.', $value);
     }
 
     protected function sortMannschaften(array &$data, $type = 'spielort'): void
     {
         switch ($type) {
             case 'spielort':
-                usort($data, function($a, $b) {
-                    // nach Liga
-                    return strnatcmp($a['spielstaerke'], $b['spielstaerke']);
-                });
-                break;
-            case 'aufsteller';
-                usort($data, function($a, $b) {
-                    // nach Spielort und innerhalb eines Spielorts nach Liga ('spielstaerke')
-                    if ($a['spielort'] === $b['spielort']) {
-                        return $a['spielstaerke'] <=> $b['spielstaerke'];
+                usort(
+                    $data,
+                    static function ($a, $b) {
+                        // nach Liga
+                        return strnatcmp($a['spielstaerke'], $b['spielstaerke']);
                     }
-                    return strnatcmp($a['spielort'], $b['spielort']);
-                });
+                );
                 break;
+
+            case 'aufsteller':
+                usort(
+                    $data,
+                    static function ($a, $b) {
+                        // nach Spielort und innerhalb eines Spielorts nach Liga ('spielstaerke')
+                        if ($a['spielort'] === $b['spielort']) {
+                            return $a['spielstaerke'] <=> $b['spielstaerke'];
+                        }
+
+                        return strnatcmp($a['spielort'], $b['spielort']);
+                    }
+                );
+                break;
+
             default:
                 throw new RuntimeException("ungültiger Sortiertyp $type");
         }
     }
-
 }

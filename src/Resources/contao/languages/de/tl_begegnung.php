@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -27,8 +29,8 @@ $GLOBALS['TL_LANG']['tl_begegnung']['edit'] = [
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['editform'] = [
-  'erfassung',
-  'die Begegnung erfassen (Eingabemaske)'
+    'erfassung',
+    'die Begegnung erfassen (Eingabemaske)',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['copy'] = [
@@ -47,8 +49,8 @@ $GLOBALS['TL_LANG']['tl_begegnung']['show'] = [
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['toggle'] = [
-  'Veröffentlicht-Status umschalten',
-  'veröffentlichen oder Veröffentlichung aufheben'
+    'Veröffentlicht-Status umschalten',
+    'veröffentlichen oder Veröffentlichung aufheben',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['id'] = [
@@ -93,10 +95,10 @@ $GLOBALS['TL_LANG']['tl_begegnung']['kommentar'] = [
 
 $GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'] = [
     'Daten der Begegnungserfassung',
-    'Interne Daten (nur "visual Debug"!).'
+    'Interne Daten (nur "visual Debug"!).',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['postponed'] = [
     'Verschoben',
-    'Diese Begegnung wurde bis auf weiteres verschoben. Ein neuer Termin steht noch nicht fest.'
+    'Diese Begegnung wurde bis auf weiteres verschoben. Ein neuer Termin steht noch nicht fest.',
 ];

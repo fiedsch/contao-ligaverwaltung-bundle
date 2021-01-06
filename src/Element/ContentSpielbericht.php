@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -19,16 +21,17 @@
 namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\BackendTemplate;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Contao\ContentElement;
+use Contao\MemberModel;
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 use Patchwork\Utf8;
 
 /**
- * @property integer $begegnung
+ * @property int $begegnung
  */
 class ContentSpielbericht extends ContentElement
 {
@@ -66,7 +69,7 @@ class ContentSpielbericht extends ContentElement
      *
      * @throws \Exception
      */
-    public function compile()
+    public function compile(): void
     {
         $begegnung = BegegnungModel::findById($this->begegnung);
 
@@ -82,13 +85,12 @@ class ContentSpielbericht extends ContentElement
         $this->Template->spielergebnisse = $this->compileSpielergebnsisse($begegnung);
 
         $this->Template->highlights = $this->compileHighlights($begegnung);
-
     }
 
     /**
-     * @param BegegnungModel $begegnung
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     protected function compileSpielergebnsisse(BegegnungModel $begegnung)
     {
@@ -96,6 +98,7 @@ class ContentSpielbericht extends ContentElement
             return [];
         }
         $spiele = SpielModel::findByPid($begegnung->id, ['order' => 'slot ASC']);
+
         if (!$spiele) {
             return [];
         }
@@ -105,7 +108,7 @@ class ContentSpielbericht extends ContentElement
             // Einzel (und erster Spieler Doppel)
             /** @var SpielerModel $home */
             if ($home = $spiel->getRelated('home')) {
-                /** @var \Contao\MemberModel $member */
+                /** @var MemberModel $member */
                 $member = $home->getRelated('member_id');
                 $homeplayer = DCAHelper::makeSpielerName($member);
             } else {
@@ -119,6 +122,7 @@ class ContentSpielbericht extends ContentElement
             } else {
                 $awayplayer = '-';
             }
+
             if (SpielModel::TYPE_DOPPEL === $spiel->spieltype) {
                 // Doppel (zweiter Spieler)
                 /** @var SpielerModel $home */
@@ -142,6 +146,7 @@ class ContentSpielbericht extends ContentElement
             $homeCssClass = 'draw';
             $awayCssClass = 'draw';
             $score = '-';
+
             if ($spiel->score_home > 0 || $spiel->score_away > 0) {
                 $homeCssClass = $spiel->score_home > $spiel->score_away ? 'winner' : 'loser';
                 $awayCssClass = $spiel->score_home > $spiel->score_away ? 'loser' : 'winner';
@@ -155,13 +160,14 @@ class ContentSpielbericht extends ContentElement
                 'score' => $score,
             ];
         }
+
         return $spielergebnisse;
     }
 
     /**
-     * @param BegegnungModel $begegnung
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     protected function compileHighlights(BegegnungModel $begegnung)
     {
@@ -169,14 +175,15 @@ class ContentSpielbericht extends ContentElement
             return [];
         }
         $highlights = HighlightModel::findBy(['begegnung_id=?', 'spieler_id<>?'], [$begegnung->id, 0]);
+
         if (!$highlights) {
             return [];
         }
         $result = [];
         /** @var HighlightModel $highlight */
         foreach ($highlights as $highlight) {
-
             $result[$highlight->spieler_id]['highlights'][$highlight->type] = $highlight->value;
+
             if (!isset($result[$highlight->spieler_id]['name'])) {
                 $spieler = SpielerModel::findById($highlight->spieler_id);
                 // Zusatzcheck: verwaiste Highlight-Einträge
@@ -184,14 +191,15 @@ class ContentSpielbericht extends ContentElement
                     $result[$highlight->spieler_id]['name'] = $spieler->getName();
                     $result[$highlight->spieler_id]['team'] = $spieler->getRelated('pid')->name;
                 }
-
             }
-
         }
 
-        uasort($result, function ($a, $b) {
-            return $a['name'] <=> $b['name'];
-        });
+        uasort(
+            $result,
+            static function ($a, $b) {
+                return $a['name'] <=> $b['name'];
+            }
+        );
 
         return $result;
     }

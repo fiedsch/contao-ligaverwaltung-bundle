@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -23,7 +25,7 @@ use Patchwork\Utf8;
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  *
- * @property integer $liga
+ * @property int $liga
  */
 class ContentMannschaftsliste extends ContentElement
 {
@@ -62,17 +64,19 @@ class ContentMannschaftsliste extends ContentElement
     /**
      * Generate the content element.
      */
-    public function compile()
+    public function compile(): void
     {
         if (!$this->liga) {
             return;
         }
         $mannschaften = MannschaftModel::findByLiga($this->liga, ['order' => 'name ASC']);
+
         if (!$mannschaften) {
             return;
         }
 
         $listitems = [];
+
         foreach ($mannschaften as $mannschaft) {
             if ('1' === $mannschaft->active) {
                 $listitem = $mannschaft->getLinkedName();

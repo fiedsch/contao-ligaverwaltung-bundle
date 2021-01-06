@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
 
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
 $GLOBALS['TL_DCA']['tl_highlight'] = [
     'config' => [
@@ -38,12 +40,13 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
         'label' => [
             'fields' => ['spieler_id'],
             'format' => '%s',
-            'label_callback' => function ($row) {
+            'label_callback' => static function ($row) {
                 $options = HighlightModel::getOptionsArray();
                 $begegnung = BegegnungModel::findById($row['begegnung_id']);
                 $spieler = SpielerModel::findById($row['spieler_id']);
 
                 $result = sprintf('<strong>%s: %s</strong>', $options[$row['type']], $row['value']);
+
                 if ($spieler) {
                     $result .= ' von '.$spieler->getFullName();
                 }

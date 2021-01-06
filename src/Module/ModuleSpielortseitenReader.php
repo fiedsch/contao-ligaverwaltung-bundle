@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -22,8 +24,9 @@ use Contao\BackendTemplate;
 use Contao\ContentModel;
 use Contao\Input;
 use Contao\Module;
-use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Contao\PageModel;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortseite;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Patchwork\Utf8;
 
 class ModuleSpielortseitenReader extends Module
@@ -60,9 +63,9 @@ class ModuleSpielortseitenReader extends Module
     /**
      * Generate the module.
      */
-    protected function compile()
+    protected function compile(): void
     {
-        /** @var \Contao\PageModel $objPage */
+        /** @var PageModel $objPage */
         // global $objPage;
 
         // Falls wir einen Back-Link einbauen wollen:
@@ -75,12 +78,14 @@ class ModuleSpielortseitenReader extends Module
         if (!$id) {
             $id = Input::get('auto_item');
         }
+
         if (empty($id)) {
             $this->Template->spielort = null;
 
             return;
         }
         $spielort = SpielortModel::findById($id);
+
         if (!$spielort) {
             $this->Template->spielort = null;
 

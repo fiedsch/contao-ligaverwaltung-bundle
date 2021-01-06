@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -12,20 +14,19 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\System;
+use Exception;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
 use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use function json_decode;
-
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Handles the bundle's frontend routes.
@@ -40,7 +41,7 @@ class LigaverwaltungFrontendController extends AbstractController
      * @param int $ligaid
      * @param int $mannschaftid
      *
-     * @return Response
+     * @throws Exception
      *
      * @Route(
      *     "/ligaverwaltung/spielplan/ical/{ligaid}/{mannschaftid}",
@@ -53,10 +54,8 @@ class LigaverwaltungFrontendController extends AbstractController
      *       "mannschaftid":"0"
      *     }
      * )
-     * @throws \Exception
-     *
      */
-    public function icalAction($ligaid, $mannschaftid = 0)
+    public function icalAction($ligaid, $mannschaftid = 0): Response
     {
         $controller = new IcalController($ligaid, $mannschaftid);
 
@@ -83,20 +82,19 @@ class LigaverwaltungFrontendController extends AbstractController
      *     }
      * )
      */
-    public function jsonAction($ligaid, $mannschaftid = 0)
+    public function jsonAction($ligaid, $mannschaftid = 0): Response
     {
         $controller = new JsonController($ligaid, $mannschaftid);
 
         return $controller->run();
     }
 
-
     /**
-     * Einbagemaske Begegnungserfassung
+     * Einbagemaske Begegnungserfassung.
      *
      * @param int $begegnung
      *
-     * @return Response
+     * @throws Exception
      *
      * @Route(
      *     "/ligaverwaltung/begegnung_fe/{begegnung}",
@@ -107,27 +105,29 @@ class LigaverwaltungFrontendController extends AbstractController
      *     methods={"GET"}
      * )
      * @Template("@FiedschLigaverwaltung/begegnung_dataentry.html.twig")
-     * @throws \Exception
      */
-    public function begegnungDataEntryAction($begegnung)
+    public function begegnungDataEntryAction($begegnung): Response
     {
         $begegnungModel = BegegnungModel::findById($begegnung);
+
         if (!$begegnungModel) {
-            throw new PageNotFoundException('Begegnung ' . $begegnung . ' nicht gefunden');
+            throw new PageNotFoundException('Begegnung '.$begegnung.' nicht gefunden');
         }
+
         if ($begegnungModel->published) {
-            throw new AccessDeniedException('Begegnung ' . $begegnung . ' ist bereits erfasst');
+            throw new AccessDeniedException('Begegnung '.$begegnung.' ist bereits erfasst');
         }
 
         $appData = $begegnungModel->{DataEntrySaver::KEY_APP_DATA};
-        if (!is_array($appData)) {
+
+        if (!\is_array($appData)) {
             $appData = [];
         }
         $appData['webserviceUrl'] = '/ligaverwaltung/begegnung_fe';
         $appData['requestToken'] = REQUEST_TOKEN;
         $appData['begegnungId'] = $begegnung;
         $appData['numSlots'] = 8;
-        $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);
+        $appData['spielplanCss'] = Spielplan::getSpielplanCss((int) $begegnungModel->getRelated('pid')->spielplan);
         $appData = DataEntrySaver::augment($appData);
 
         $data = [
@@ -142,16 +142,14 @@ class LigaverwaltungFrontendController extends AbstractController
         // return $feTemplate->getResponse();
 
         $template = '@FiedschLigaverwaltung/begegnung_dataentry_fe.html.twig';
+
         return new Response($twig->render($template, $data));
     }
 
     /**
-     * Datenverarbeitung Begegnungserfassung
+     * Datenverarbeitung Begegnungserfassung.
      *
-     * @param Request
      * @param int $begegnung
-     *
-     * @return Response
      *
      * @Route(
      *     "/ligaverwaltung/begegnung_fe/{begegnung}",
@@ -166,7 +164,6 @@ class LigaverwaltungFrontendController extends AbstractController
     {
         $requestData = json_decode($request->request->get('json_data'), true);
 
-        return new Response(DataEntrySaver::handleDataEntryData($begegnung, $requestData));
+        return new Response(DataEntrySaver::handleDataEntryData((int) $begegnung, $requestData));
     }
-
 }

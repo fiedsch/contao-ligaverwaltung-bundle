@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -20,12 +20,6 @@ class RankingHelper implements RankingHelperInterface
     const PUNKTE_UNENTSCHIEDEN = 1;
     const PUNKTE_VERLOREN = 0;
 
-    /**
-     * @param string $score
-     * @param int    $ranking_model
-     *
-     * @return int
-     */
     public function getPunkte(string $score, int $ranking_model = 1): int
     {
         // $ranking_model
@@ -41,12 +35,15 @@ class RankingHelper implements RankingHelperInterface
                     case '2:0':
                         return 3;
                         break;
+
                     case '2:1':
                         return 2;
                         break;
+
                     case '1:2':
                         return 1;
                         break;
+
                     case '0:2':
                         return 0;
                         break;
@@ -54,18 +51,23 @@ class RankingHelper implements RankingHelperInterface
                     case '3:0':
                         return 5;
                         break;
+
                     case '3:1':
                         return 4;
                         break;
+
                     case '3:2':
                         return 3;
                         break;
+
                     case '2:3':
                         return 2;
                         break;
+
                     case '1:3':
                         return 1;
                         break;
+
                     case '0:3':
                         return 0;
                         break;
@@ -89,6 +91,7 @@ class RankingHelper implements RankingHelperInterface
                     case '3:2':
                         return 1;
                         break;
+
                     case '1:2':
                     case '0:2':
                     case '2:3':
@@ -96,6 +99,7 @@ class RankingHelper implements RankingHelperInterface
                     case '0:3':
                         return 0;
                         break;
+
                     default:
                         //\System::log("nicht vorgesehenes Spielergebnis ".$score, __METHOD__, TL_ERROR);
                         return 0;
@@ -115,11 +119,6 @@ class RankingHelper implements RankingHelperInterface
      *    'legs_self' => gewonnene Legs
      *    'legs_other' => verlorene Legs
      * ].
-     *
-     * @param array $a
-     * @param array $b
-     *
-     * @return int
      */
     public function compareResults(array $a, array $b): int
     {

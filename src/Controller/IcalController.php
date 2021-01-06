@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -12,14 +14,15 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
-use Contao\Controller;
 use Contao\Config;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Contao\Controller;
+use Contao\PageModel;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
+use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Symfony\Component\HttpFoundation\Response;
 
 class IcalController
@@ -52,14 +55,14 @@ class IcalController
     public function run()
     {
         // Name für den Kalender aus der (ersten) Root-Page
-        $rootPages = \Contao\PageModel::findBy(
+        $rootPages = PageModel::findBy(
             ['type=?'],
             ['root'],
             [
                 'order' => 'id ASC',
                 'limit' => 1,
                 'return' => 'Model',
-                ]
+            ]
         );
         $calendarBaseName = $rootPages->title;
 
@@ -107,7 +110,7 @@ class IcalController
         return $response;
     }
 
-    protected function initialize()
+    protected function initialize(): void
     {
         $tz = 'Europe/Berlin';
         // $dtz = new \DateTimeZone($tz);
@@ -115,8 +118,6 @@ class IcalController
     }
 
     /**
-     * @param BegegnungModel $begegnung
-     *
      * @throws \Exception
      *
      * @return Event
@@ -144,11 +145,11 @@ class IcalController
                 $spielort->city
         );
 
-        $dtStart = new \DateTime(date('Y-m-d H:i:s', $begegnung->spiel_am), new \DateTimeZone(Config::get('timeZone')));
+        $dtStart = new \DateTime(date('Y-m-d H:i:s', (int) $begegnung->spiel_am), new \DateTimeZone(Config::get('timeZone')));
 
         // Did they change the default configuration (date + time) to date only in
         // the site's contfiguration? Then add a default time here:
-        if ($GLOBALS['TL_DCA']['tl_begegnung']['fields']['spiel_am']['eval']['rgxp'] !== 'datim') {
+        if ('datim' !== $GLOBALS['TL_DCA']['tl_begegnung']['fields']['spiel_am']['eval']['rgxp']) {
             // TODO: "Prime-Time" nicht hart kodiert
             // In app/config/config.yml (oder parameters.yml?) als ligaverwaltung.default_time
             // - - - - - - - -
@@ -163,7 +164,8 @@ class IcalController
         $vEvent
             ->setDtStart($dtStart)
             ->setSummary($summary)
-            ->setLocation($location);
+            ->setLocation($location)
+        ;
 
         return $vEvent;
     }

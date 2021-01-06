@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -12,11 +14,12 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Model;
 
-use Contao\Model;
 use Contao\Config;
-use Contao\PageModel;
 use Contao\Controller;
 use Contao\Database;
+use Contao\Model;
+use Contao\Model\Collection;
+use Contao\PageModel;
 
 /**
  * @property int    $id
@@ -26,7 +29,7 @@ use Contao\Database;
  * @property int    $spielort
  *
  * @method static MannschaftModel|null findById($id, array $opt=array())
- * @method static Model\Collection|MannschaftModel|null findByLiga($id, array $opt=array())
+ * @method static Collection|MannschaftModel|null findByLiga($id, array $opt=array())
  */
 class MannschaftModel extends Model
 {
@@ -40,13 +43,14 @@ class MannschaftModel extends Model
     /**
      * Alle Mannschaften, die aktiv sind, d.h. in eine liga (tl_liga) spielen, die aktiv ist.
      *
-     * @return \Contao\Model\Collection|null
+     * @return Collection|null
      */
     public static function findAllActive()
     {
         $result = Database::getInstance()
             ->prepare('SELECT m.* FROM  tl_mannschaft m LEFT JOIN tl_liga l ON (m.liga=l.id) WHERE l.aktiv=?')
-            ->execute(1);
+            ->execute(1)
+        ;
 
         return Model::createCollectionFromDbResult($result, 'tl_mannschaft');
     }
@@ -60,9 +64,11 @@ class MannschaftModel extends Model
     {
         $result = $this->name;
         $liga = $this->getRelated('liga');
+
         if ($liga) {
             $result .= ' '.$liga->name;
             $saison = $liga->getRelated('saison');
+
             if ($saison) {
                 $result .= ', '.$saison->name;
             }
@@ -79,6 +85,7 @@ class MannschaftModel extends Model
     public function getLinkedName()
     {
         $teampageId = Config::get('teampage');
+
         if ($teampageId && $this->active) {
             $teampage = PageModel::findById($teampageId);
 

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -16,13 +18,13 @@ use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\Database;
 use Contao\MemberModel;
+use Contao\System;
+use Fiedsch\LigaverwaltungBundle\Entity\Begegnung;
+use Fiedsch\LigaverwaltungBundle\Entity\Spiel;
+use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use Fiedsch\LigaverwaltungBundle\Entity\Spiel;
-use Fiedsch\LigaverwaltungBundle\Entity\Begegnung;
-use Contao\System;
-use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
 use Patchwork\Utf8;
 
 /**
@@ -30,10 +32,9 @@ use Patchwork\Utf8;
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  *
- * @property integer $rankingtype
- * @property integer $liga
- * @property integer $mannschaft
- *
+ * @property int $rankingtype
+ * @property int $liga
+ * @property int $mannschaft
  */
 class ContentRanking extends ContentElement
 {
@@ -54,6 +55,7 @@ class ContentRanking extends ContentElement
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
+
             if ('1' === $this->rankingtype) {
                 $suffix = 'Mannschaften';
                 $subject = sprintf('%s %s %s',
@@ -79,7 +81,7 @@ class ContentRanking extends ContentElement
             return $objTemplate->parse();
         }
 
-        $appendCssClass = 'rankingtype_'. ('1' === $this->rankingtype ? 'mannschaft' : 'spieler');
+        $appendCssClass = 'rankingtype_'.('1' === $this->rankingtype ? 'mannschaft' : 'spieler');
         $this->cssID = [$this->cssID[0], $this->cssID[1].' '.$appendCssClass];
 
         return parent::generate();
@@ -90,15 +92,17 @@ class ContentRanking extends ContentElement
      *
      * @throws \Exception
      */
-    public function compile()
+    public function compile(): void
     {
         switch ($this->rankingtype) {
             case 1:
                 $this->compileMannschaftenranking();
                 break;
+
             case 2:
                 $this->compileSpielerranking();
                 break;
+
             default:
                 $this->Template->subject = 'Undefined '.$this->rankingtype;
         }
@@ -112,7 +116,7 @@ class ContentRanking extends ContentElement
      *
      * @throws \Exception
      */
-    protected function compileMannschaftenranking()
+    protected function compileMannschaftenranking(): void
     {
         $liga = LigaModel::findById($this->liga);
 
@@ -143,12 +147,14 @@ class ContentRanking extends ContentElement
                           AND m2.active='1'
                           AND b.published='1'
                           ")
-            ->execute($this->liga);
+            ->execute($this->liga)
+        ;
 
         $begegnungen = [];
 
         while ($spiele->next()) {
             $key = sprintf('%d:%d:%d', $spiele->spieltag, $spiele->team_home, $spiele->team_away);
+
             if (!isset($begegnungen[$key])) {
                 $begegnungen[$key] = new Begegnung();
             }
@@ -159,8 +165,9 @@ class ContentRanking extends ContentElement
 
         /** @var Begegnung $begegnung */
         foreach ($begegnungen as $key => $begegnung) {
-            /* @noinspection PhpUnusedLocalVariableInspection */
-            list($spieltag, $home, $away) = explode(':', $key);
+            /** @noinspection PhpUnusedLocalVariableInspection */
+            [$spieltag, $home, $away] = explode(':', $key);
+            unset($spieltag); // wird nicht benötigt
 
             // Begegnungen: Mannschaft gegen Mannschaft
 
@@ -199,9 +206,12 @@ class ContentRanking extends ContentElement
 
         /** @var RankingHelperInterface */
         $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
-        uasort($results, function ($a, $b) use ($helper) {
-            return $helper->compareResults($a, $b);
-        });
+        uasort(
+            $results,
+            static function ($a, $b) use ($helper) {
+                return $helper->compareResults($a, $b);
+            }
+        );
 
         // Berechnung Rang (Tabellenplatz) und Label
 
@@ -216,7 +226,8 @@ class ContentRanking extends ContentElement
 
         $rang = 0;
         $rang_skip = 1;
-        foreach ($results as $id => $data) {
+
+        foreach (array_keys($results) as $id) {
             $mannschaft = MannschaftModel::findById($id);
 
             if (!$mannschaft || '1' !== $mannschaft->active) {
@@ -250,7 +261,7 @@ class ContentRanking extends ContentElement
      *
      * @throws \Exception
      */
-    protected function compileSpielerranking()
+    protected function compileSpielerranking(): void
     {
         $sql = "SELECT
                           s.score_home AS legs_home,
@@ -331,9 +342,12 @@ class ContentRanking extends ContentElement
 
         /** @var RankingHelperInterface */
         $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
-        uasort($results, function ($a, $b) use ($helper) {
-            return $helper->compareResults($a, $b);
-        });
+        uasort(
+            $results,
+            static function ($a, $b) use ($helper) {
+                return $helper->compareResults($a, $b);
+            }
+        );
 
         // Berechnung Rang (Tabellenplatz) und Label
 
@@ -350,7 +364,7 @@ class ContentRanking extends ContentElement
         $rang = 0;
         $rang_skip = 1;
 
-        foreach ($results as $id => $data) {
+        foreach (array_keys($results) as $id) {
             $spieler = SpielerModel::findById($id);
             $mannschaft = MannschaftModel::findById($results[$id]['mannschaft_id']);
 
@@ -365,12 +379,16 @@ class ContentRanking extends ContentElement
             // Informationen zum Spieler über CSS-Klassen hinzufügen
             /** @var MemberModel $member */
             $member = $spieler->getRelated('member_id');
+
             if ($member) {
                 $cssClasses = [];
+
                 if (!$member->anonymize) {
                     $cssClasses[] = $member->gender;
-                    if ($spieler->jugendlich)
+
+                    if ($spieler->jugendlich) {
                         $cssClasses[] = 'youth';
+                    }
                 }
                 $results[$id]['CSS'] = implode(' ', $cssClasses);
             }
@@ -397,6 +415,7 @@ class ContentRanking extends ContentElement
         }
 
         $this->Template->rankingtype = 'spieler';
+
         if ($this->mannschaft > 0) {
             $this->Template->rankingsubtype = 'mannschaft';
         } else {
@@ -407,7 +426,7 @@ class ContentRanking extends ContentElement
     }
 
     /**
-     * TODO (?): in Helper\RankingHelper auslagern
+     * TODO (?): in Helper\RankingHelper auslagern.
      *
      * @param array $result     die Daten einer Zeile des sortierten Rankimgs
      * @param array $lastresult die Daten der vorhergehenden Zeile des Rankings
@@ -416,7 +435,7 @@ class ContentRanking extends ContentElement
      */
     protected function isTie(array $result, array $lastresult)
     {
-            return $result['punkte_self'] === $lastresult['punkte_self']
+        return $result['punkte_self'] === $lastresult['punkte_self']
                 && $result['spiele_self'] - $result['spiele_other'] === $lastresult['spiele_self'] - $lastresult['spiele_other']
                 && $result['legs_self'] - $result['legs_other'] === $lastresult['legs_self'] - $lastresult['legs_other']
                 && $result['legs_self'] === $lastresult['legs_self']

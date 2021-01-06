@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -74,7 +76,7 @@ $GLOBALS['TL_LANG']['tl_spieler']['ersatzspieler'] = [
 
 $GLOBALS['TL_LANG']['tl_spieler']['jugendlich'] = [
     'Jugendlich',
-    'Der Spieler ist Jugendlicher (gilt für die gesamte Saison!)'
+    'Der Spieler ist Jugendlicher (gilt für die gesamte Saison!)',
 ];
 
 $GLOBALS['TL_LANG']['tl_spieler']['avatar'] = [

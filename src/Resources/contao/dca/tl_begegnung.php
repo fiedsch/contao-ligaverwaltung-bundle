@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2020 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -15,7 +17,6 @@ use Contao\Input;
 use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
-
 
 $GLOBALS['TL_DCA']['tl_begegnung'] = [
     'config' => [
@@ -45,7 +46,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'fields'      => ['pid','home','away'],
             'panelLayout' => 'sort,filter;search,limit',
             */
-            /* */
             'mode' => 4, // Displays the child records of a parent record
             'flag' => 11, // sort ascending
             'fields' => ['pid', 'home', 'away'],
@@ -71,35 +71,27 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'editform' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editform'],
                 // 'href' => '', // see button_callback for URL generation
-                'button_callback' => function ($arrRow,
-                                               $href,
-                                               $label,
-                                               $title,
-                                               $icon,
-                                               $attributes,
-                                               $strTable,
-                                               $arrRootIds,
-                                               $arrChildRecordIds,
-                                               $blnCircularReference,
-                                               $strPrevious,
-                                               $strNext) {
-
+                'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
                     $numSpiele = SpielModel::countBy('pid', $arrRow['id']);
 
                     // Legacy-Check: wenn wir bereits tl_spiel Records haben, aber keine Daten
                     // in begegnung_data gespeichert (=alte Dateneingabe), dann diesen Button
                     // "disablen". Änderung dann (wie früher) nur noch über die einzelnen
                     // tl_spiel-Records!
-                    if ($numSpiele > 0 && '' === $arrRow['begegnung_data'] || $arrRow['away']==0) {
+                    if ('0' === $arrRow['away']) {
+                        return '<img src="bundles/fiedschligaverwaltung/icons/all_.svg" title="Spielfrei!">&nbsp;';
+                    }
+
+                    if ($numSpiele > 0 && '' === $arrRow['begegnung_data']) {
                         return '<img src="bundles/fiedschligaverwaltung/icons/all_.svg" title="Begegnung wurde mit dem alten System erfasst!">&nbsp;';
                     }
 
                     return sprintf('<a href="%s" title="die Begegnung bearbeiten (neuer Modus)" class="edit">%s</a>',
-                        System::getContainer()->get('router')->generate('begegnung_dataentry_form', ['begegnung'=>$arrRow['id']]),
+                        System::getContainer()->get('router')->generate('begegnung_dataentry_form', ['begegnung' => $arrRow['id']]),
                         '<img src="bundles/fiedschligaverwaltung/icons/all.svg" alt="erfassen">&nbsp;'
                     );
 
-                    // <a
+                // <a
                     //   href="contao?do=liga.begegnung&amp;act=copy&amp;id=2904&amp;rt=7cyllBJISr6p5rN8YH8wOYBIlRUnnUPfusPaGVAc25Y&amp;ref=yC4LvTWP"
                     //   title=""
                     //   class="copy"
@@ -108,32 +100,25 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
                     // </a>
                 },
             ],
-            'edit'       => [
+            'edit' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['edit'],
-                'href'  => 'table=tl_spiel', // also see 'button_callback'!
-                'icon'  => 'edit.svg',
-                'button_callback' => function ($arrRow,
-                                               $href,
-                                               $label,
-                                               $title,
-                                               $icon,
-                                               $attributes,
-                                               $strTable,
-                                               $arrRootIds,
-                                               $arrChildRecordIds,
-                                               $blnCircularReference,
-                                               $strPrevious,
-                                               $strNext) {
-
+                'href' => 'table=tl_spiel', // also see 'button_callback'!
+                'icon' => 'edit.svg',
+                'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
                     // Legacy-Check: nur anzeigen, wenn
                     // im tl_begegnung-Record keine 'begegnung_data'-Daten gespeichert sind
                     // und gleichzeitig aber tl_spiel Daten vorhanden sind.
                     $numSpiele = SpielModel::countBy('pid', $arrRow['id']);
-                    // negierung der Bedingung beim 'editform'-'button_callback', also immer nur einen
+                    // Negierung der Bedingung beim 'editform'-'button_callback', also immer nur einen
                     // von beiden Buttons anzeigen
-                    if ('' !== $arrRow['begegnung_data'] || $numSpiele === 0 || $arrRow['away']==0) {
+                    if ('0' === $arrRow['away']) {
+                        return '<img src="system/themes/flexible/icons/edit_.svg" title="Spielfrei!">&nbsp;';
+                    }
+
+                    if ('' !== $arrRow['begegnung_data'] || 0 === $numSpiele) {
                         return '<img src="system/themes/flexible/icons/edit_.svg" title="Begegnung wird über die Eingabemaske verwaltet!">&nbsp;';
                     }
+
                     return "<a href='contao?do=liga.begegnung&table=tl_spiel&id=$arrRow[id]' title='die Begegnung bearbeiten (alter Modus)' class='edit'><img src='system/themes/flexible/icons/edit.svg' alt='bearbeiten'></a>&nbsp;";
                 },
             ],
@@ -157,19 +142,19 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'toggle' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['toggle'],
                 'attributes' => 'onclick="Backend.getScrollOffset();"',
-                'haste_ajax_operation'  => [
+                'haste_ajax_operation' => [
                     'field' => 'published',
                     'options' => [
                         [
-                            'value'     => '',
-                            'icon'      => 'invisible.svg'
+                            'value' => '',
+                            'icon' => 'invisible.svg',
                         ],
                         [
-                            'value'     => '1',
-                            'icon'      => 'visible.svg'
-                        ]
-                    ]
-                ]
+                            'value' => '1',
+                            'icon' => 'visible.svg',
+                        ],
+                    ],
+                ],
             ],
             'show' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['show'],
@@ -269,7 +254,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'],
             'inputType' => 'yamlWidget',
             'exclude' => true,
-            'eval' => ['rte'=>'ace|yaml' /*, 'helpwizard' => true*/],
+            'eval' => ['rte' => 'ace|yaml' /*, 'helpwizard' => true*/],
             'default' => '',
             'sql' => 'blob NOT NULL',
             //'explanation' => 'begegnung_data_explanation',
@@ -294,8 +279,8 @@ if ('liga.begegnung' === Input::get('do')) {
         'panelLayout' => 'sort,filter;search,limit',
         'disableGrouping' => false,
         'filter' => [
-            ['pid IN (SELECT id FROM tl_liga WHERE aktiv=?)', '1']
-        ]
+            ['pid IN (SELECT id FROM tl_liga WHERE aktiv=?)', '1'],
+        ],
     ];
 }
 

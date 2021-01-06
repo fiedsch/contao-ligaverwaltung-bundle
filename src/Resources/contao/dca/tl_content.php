@@ -1,17 +1,19 @@
 <?php
 
-use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+declare(strict_types=1);
 
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
+
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 
 /* Ligenliste */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['ligenliste'] = '{type_legend},type,headline;{auswahl_legend},verband,saison;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
@@ -153,7 +155,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['ligen'] = [
 /* Spielortseite */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spielortseite'] = '{config_legend},type'/*.',headline'*/.',spielort,ligen';
 // mannschaft bereits bei Mannschaftsliste bzw. Spielerliste definiert
-
 
 /* Begegnungsauswahl (Begegnungserfassung im Frontend) */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['begegnungsauswahl'] = '{type_legend},type,headline;{auswahl_legend},verband,saison;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';

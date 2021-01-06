@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -44,6 +46,7 @@ class ContentMannschaftsseite extends ContentElement
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $headline = $this->headline;
+
             if (!$headline) {
                 $mannschaftModel = MannschaftModel::findById($this->mannschaft);
                 $headline = $mannschaftModel->getFullName();
@@ -62,7 +65,7 @@ class ContentMannschaftsseite extends ContentElement
     /**
      * @throws \Exception
      */
-    public function compile()
+    public function compile(): void
     {
         $mannschaftModel = MannschaftModel::findById($this->mannschaft);
 
@@ -140,10 +143,8 @@ class ContentMannschaftsseite extends ContentElement
      * <meta name="description" content="<?php echo $this->description; ?>">
      * <?php endif; ?>
      * ```.
-     *
-     * @param string $content
      */
-    protected function addDescriptionToTlHead(string $content)
+    protected function addDescriptionToTlHead(string $content): void
     {
         if ($GLOBALS['TL_HEAD']) {
             foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {

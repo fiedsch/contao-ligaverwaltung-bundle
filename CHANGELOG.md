@@ -1,6 +1,9 @@
 # Changes
 
+
 ## Development
+
+* apply CS fixer
 
 
 ## Version 1.0.1

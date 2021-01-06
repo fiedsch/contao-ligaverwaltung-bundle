@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -80,15 +82,13 @@ class JsonController
         return new JsonResponse($responseData);
     }
 
-    protected function initialize()
+    protected function initialize(): void
     {
         $tz = 'Europe/Berlin';
         date_default_timezone_set($tz);
     }
 
     /**
-     * @param BegegnungModel $begegnung
-     *
      * @return array
      */
     protected function generateEventData(BegegnungModel $begegnung)
@@ -113,9 +113,9 @@ class JsonController
 
         $result = [
             'title' => $title,
-            'location' => ['name' => $spielort->name,  'address' => $address],
+            'location' => ['name' => $spielort->name, 'address' => $address],
             'startDateTime' => $begegnung->spiel_am,
-            'datetime_local' => date('d.m.Y H:i', $begegnung->spiel_am), // visual debug
+            'datetime_local' => date('d.m.Y H:i', (int) $begegnung->spiel_am), // visual debug
             'liga' => $liga->name,
             'saison' => $saison->name,
         ];

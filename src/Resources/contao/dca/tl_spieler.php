@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -106,7 +108,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'options_callback' => [DCAHelper::class, 'getSpielerForSelect'],
             'eval' => ['chosen' => true, 'includeBlankOption' => true, 'mandatory' => true, 'tl_class' => 'w50 wizard'],
             'wizard' => [
-                    [DCAHelper::class, 'editMemberWizard'],
+                [DCAHelper::class, 'editMemberWizard'],
             ],
             //'foreignKey'       => 'tl_member.CONCAT(lastname, ", ", firstname)',
             'foreignKey' => 'tl_member.CONCAT(firstname, " ", lastname)',
@@ -157,7 +159,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
 
         'avatar' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['avatar'],
-            'input_field_callback' => function (DataContainer $dc) {
+            'input_field_callback' => static function (DataContainer $dc) {
                 $member_id = $dc->activeRecord->row()['member_id'];
                 $member = MemberModel::findById($member_id);
                 $avatar = $member ? FilesModel::findById($member->avatar)->path : null;

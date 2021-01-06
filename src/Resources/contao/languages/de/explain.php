@@ -1,5 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2021 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
+ */
+
 $GLOBALS['TL_LANG']['XPL']['begegnung_data_explanation'] = [
     [
         'Interne Daten',
@@ -8,6 +20,6 @@ $GLOBALS['TL_LANG']['XPL']['begegnung_data_explanation'] = [
         .'Für den "normalen" User sind sie nicht von interesse und können in der Konfiguration einer Benutzergruppe '
         .' ausgeblendet werden.<br>'
         .'Administratoren könnten hier Fehler bereinigen, die dazu führen, daß die Erfassungsmaske (eine Vue.js App) '
-        .'nicht korrekt angezeigt wird.'
-    ]
+        .'nicht korrekt angezeigt wird.',
+    ],
 ];

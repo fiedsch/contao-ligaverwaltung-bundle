@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -12,19 +14,19 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Command;
 
+use Contao\CoreBundle\Framework\FrameworkAwareInterface;
+use Contao\CoreBundle\Framework\FrameworkAwareTrait;
+use Contao\Date;
+use Contao\MemberModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use Contao\MemberModel;
-use Contao\CoreBundle\Framework\FrameworkAwareInterface;
-use Contao\CoreBundle\Framework\FrameworkAwareTrait;
-Use Contao\Date;
+use function html_entity_decode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use function html_entity_decode;
 
 /**
  * Erstellen einer Liste aller Spieler (inkl. Name etc. aus zugehörigem tl_member)
@@ -39,7 +41,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('fiedsch:spielerliste')
@@ -60,6 +62,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
 
         $saisonParameter = $input->getArgument('saison');
         $saison = SaisonModel::findBy('name', $saisonParameter);
+
         if (null === $saison) {
             $output->writeln("Saison '$saisonParameter' nicht gefunden!");
 
@@ -90,12 +93,14 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                 ['liga=?'],
                 [$liga->id]
             );
+
             if ($mannschaften) {
                 foreach ($mannschaften as $mannschaft) {
                     $spieler = SpielerModel::findBy(
                         ['pid=?'],
                         [$mannschaft->id]
                     );
+
                     foreach ($spieler as $s) {
                         /** @var MemberModel $member */
                         $member = $s->getRelated('member_id');

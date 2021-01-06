@@ -1,6 +1,16 @@
 <?php
 
-/* Bezeichnung der Gruppe im Backend-Menü */
+declare(strict_types=1);
+
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2021 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
+ */
 
 $GLOBALS['TL_LANG']['MOD']['liga'] = 'Ligaverwaltung';
 
@@ -46,11 +56,11 @@ $GLOBALS['TL_LANG']['MOD']['liga.highlight'] = [
 ];
 
 $GLOBALS['TL_LANG']['MOD']['liga.spieler_history'] = [
-        'Spielerhistorie',
-        'Wo hat ein Mitglied wann gespielt?',
-    ];
+    'Spielerhistorie',
+    'Wo hat ein Mitglied wann gespielt?',
+];
 
-/** Frontendmodule */
+/* Frontendmodule */
 
 $GLOBALS['TL_LANG']['FMD']['mannschaftsseitenreader'] = [
     'Mannschaftsseiten Reader',

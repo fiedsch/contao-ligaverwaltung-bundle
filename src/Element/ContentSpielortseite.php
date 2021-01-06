@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -18,6 +20,7 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Element;
 
+use function array_filter;
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
@@ -26,8 +29,6 @@ use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Patchwork\Utf8;
-use function in_array;
-use function array_filter;
 
 class ContentSpielortseite extends ContentElement
 {
@@ -47,6 +48,7 @@ class ContentSpielortseite extends ContentElement
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $headline = $this->headline;
+
             if (!$headline) {
                 $spielortModel = SpielortModel::findById($this->spielort);
                 $headline = $spielortModel->name;
@@ -62,7 +64,7 @@ class ContentSpielortseite extends ContentElement
         return parent::generate();
     }
 
-    public function compile()
+    public function compile(): void
     {
         $spielortModel = SpielortModel::findById($this->spielort);
 
@@ -94,7 +96,7 @@ class ContentSpielortseite extends ContentElement
 
         if ($mannschaften) {
             foreach ($mannschaften as $mannschaft) {
-                if (in_array($mannschaft->liga, StringUtil::deserialize($this->ligen), true)) {
+                if (\in_array($mannschaft->liga, StringUtil::deserialize($this->ligen), true)) {
                     $mannschaften_in_ligen_liste[$mannschaft->liga][] = $mannschaft->getLinkedName();
                     ++$gefundene_ligen[$mannschaft->liga];
                 }
@@ -104,8 +106,8 @@ class ContentSpielortseite extends ContentElement
 
         // nach in der Konfiguration ausgewählten Saisons filtern
 
-        $show_ligen = array_filter(StringUtil::deserialize($this->ligen, true), function ($el) use ($gefundene_ligen) {
-            return in_array($el, $gefundene_ligen, true);
+        $show_ligen = array_filter(StringUtil::deserialize($this->ligen, true), static function ($el) use ($gefundene_ligen) {
+            return \in_array($el, $gefundene_ligen, true);
         });
 
         foreach ($show_ligen as $ligaId) {
@@ -127,10 +129,8 @@ class ContentSpielortseite extends ContentElement
      * <meta name="description" content="<?php echo $this->description; ?>">
      * <?php endif; ?>
      * ```.
-     *
-     * @param string $content
      */
-    protected function addDescriptionToTlHead(string $content)
+    protected function addDescriptionToTlHead(string $content): void
     {
         if ($GLOBALS['TL_HEAD']) {
             foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {

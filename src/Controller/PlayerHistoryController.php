@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -35,6 +37,7 @@ class PlayerHistoryController
 
     /**
      * @throws \Exception
+     *
      * @return Response
      */
     public function run()
@@ -47,12 +50,14 @@ class PlayerHistoryController
 
     /**
      * @throws \Exception
+     *
      * @return array
      */
     protected function getHistory()
     {
         $history = [];
         $spieler = SpielerModel::findBy(['member_id=?'], [$this->memberid], ['pid ASC']);
+
         if ($spieler) {
             foreach ($spieler as $sp) {
                 $liga = $sp->getRelated('pid')->getRelated('liga');

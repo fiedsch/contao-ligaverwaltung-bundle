@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -27,7 +29,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * @property string $headline
- * @property integer $verband
+ * @property int    $verband
  * @property string $saison
  */
 class ContentBegegnungsauswahl extends ContentElement
@@ -44,7 +46,7 @@ class ContentBegegnungsauswahl extends ContentElement
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['begegnungsauswahl'][0]) . " ###";
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['begegnungsauswahl'][0]).' ###';
 
             return $objTemplate->parse();
         }
@@ -55,14 +57,14 @@ class ContentBegegnungsauswahl extends ContentElement
     /**
      * Generate the content element.
      */
-    public function compile()
+    public function compile(): void
     {
         $listitems = [];
 
         $saisons = StringUtil::deserialize($this->saison);
 
         // Begegnungen der angegebenen Saison(s) im angegebenen Verband
-        $strQuery = "SELECT
+        $strQuery = 'SELECT
                          b.*,
                          mh.name as mh_name,
                          ma.name as ma_name,
@@ -77,7 +79,7 @@ class ContentBegegnungsauswahl extends ContentElement
                          LEFT JOIN tl_mannschaft ma on b.away = ma.id
                      WHERE
                          v.id=? AND
-                         l.saison IN (" . join(',', $saisons) . ") AND
+                         l.saison IN ('.implode(',', $saisons).") AND
                          b.published=''
                      -- ORDER BY l_name ASC, b.spiel_tag ASC, mh_name ASC
                      ";
@@ -88,14 +90,14 @@ class ContentBegegnungsauswahl extends ContentElement
 
         while ($result->next()) {
             $listitems[] = [
-                'id'        => $result->id,
-                'label'     => sprintf("%d. Spieltag: %s vs. %s", $result->spiel_tag, $result->mh_name, $result->ma_name),
-                'saison'    => $result->s_name,
-                'liga'      => $result->l_name,
+                'id' => $result->id,
+                'label' => sprintf('%d. Spieltag: %s vs. %s', $result->spiel_tag, $result->mh_name, $result->ma_name),
+                'saison' => $result->s_name,
+                'liga' => $result->l_name,
                 'spiel_tag' => $result->spiel_tag,
-                'home'      => $result->mh_name,
-                'away'      => $result->ma_name,
-                'edit_url'  => $router->generate('begegnung_dataentry_form_fe', ['begegnung' => $result->id])
+                'home' => $result->mh_name,
+                'away' => $result->ma_name,
+                'edit_url' => $router->generate('begegnung_dataentry_form_fe', ['begegnung' => $result->id]),
             ];
         }
 

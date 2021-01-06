@@ -1,6 +1,16 @@
 <?php
 
-/* Überschrift auf der Info-Seite (Popup im Backend) */
+declare(strict_types=1);
+
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2021 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
+ */
 
 $GLOBALS['TL_LANG']['CTE']['ligaverwaltung'] = 'Ligaverwaltung';
 
@@ -63,9 +73,8 @@ $GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'] = [
 
 $GLOBALS['TL_LANG']['CTE']['begegnungsauswahl'] = [
     'Begegnungsauswahl',
-    'Auswahl einer Begegnung für die Erfassung im Frontend'
+    'Auswahl einer Begegnung für die Erfassung im Frontend',
 ];
-
 
 /* Textbausteine */
 

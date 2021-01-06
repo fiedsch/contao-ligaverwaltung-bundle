@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -14,7 +16,6 @@ namespace Fiedsch\LigaverwaltungBundle\Entity;
 
 use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
-use function count;
 
 /**
  * Class Begegnung.
@@ -41,10 +42,7 @@ class Begegnung
         $this->rankingHelper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
     }
 
-    /**
-     * @param Spiel $spiel
-     */
-    public function addSpiel(Spiel $spiel)
+    public function addSpiel(Spiel $spiel): void
     {
         $this->spiele[] = $spiel;
     }
@@ -110,7 +108,7 @@ class Begegnung
      */
     public function getNumSpiele()
     {
-        return count($this->spiele);
+        return \count($this->spiele);
     }
 
     /**
@@ -130,10 +128,12 @@ class Begegnung
     {
         $punkte_home = 0;
         $punkte_away = 0;
+
         foreach ($this->spiele as $spiel) {
             $punkte_home += $spiel->getLegsHome() > $spiel->getLegsAway() ? 1 : 0;
             $punkte_away += $spiel->getLegsHome() > $spiel->getLegsAway() ? 0 : 1;
         }
+
         if ($punkte_home === $punkte_away) {
             return $this->rankingHelper::PUNKTE_UNENTSCHIEDEN;
         }
@@ -158,10 +158,12 @@ class Begegnung
     {
         $punkte_home = 0;
         $punkte_away = 0;
+
         foreach ($this->spiele as $spiel) {
             $punkte_home += $spiel->getLegsHome() > $spiel->getLegsAway() ? 1 : 0;
             $punkte_away += $spiel->getLegsHome() > $spiel->getLegsAway() ? 0 : 1;
         }
+
         if ($punkte_home === $punkte_away) {
             return $this->rankingHelper::PUNKTE_UNENTSCHIEDEN;
         }

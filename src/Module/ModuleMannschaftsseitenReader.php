@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -21,10 +23,10 @@ namespace Fiedsch\LigaverwaltungBundle\Module;
 use Contao\BackendTemplate;
 use Contao\ContentModel;
 use Contao\Input;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Contao\Module;
-use Patchwork\Utf8;
 use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsseite;
+use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Patchwork\Utf8;
 
 class ModuleMannschaftsseitenReader extends Module
 {
@@ -63,7 +65,7 @@ class ModuleMannschaftsseitenReader extends Module
      *
      * @throws \Exception
      */
-    protected function compile()
+    protected function compile(): void
     {
         /** @var \PageModel $objPage */
         // global $objPage;
@@ -78,12 +80,14 @@ class ModuleMannschaftsseitenReader extends Module
         if (!$id) {
             $id = Input::get('auto_item');
         }
+
         if (empty($id)) {
             $this->Template->mannschaft = null;
 
             return;
         }
         $mannschaft = MannschaftModel::findById($id);
+
         if (!$mannschaft || !$mannschaft->active) {
             $this->Template->mannschaft = null;
 

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2018 Andreas Fieger
+ * (c) 2016-2021 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -12,6 +14,7 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Helper;
 
+use function array_keys;
 use Contao\Config;
 use Contao\Database;
 use Contao\Database\Result;
@@ -20,22 +23,19 @@ use Contao\DC_Table;
 use Contao\Image;
 use Contao\MemberModel;
 use Contao\StringUtil;
+use Contao\Widget;
+use Exception;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Fiedsch\LigaverwaltungBundle\Model\VerbandModel;
-use Contao\Widget;
-use Exception;
 use function preg_match;
 use function str_replace;
-use function count;
-use function array_keys;
-use function in_array;
 
 class DCAHelper
 {
@@ -51,7 +51,8 @@ class DCAHelper
     {
         $ligen = Database::getInstance()
             ->prepare('SELECT COUNT(*) n FROM tl_liga WHERE pid=?')
-            ->execute($row['id']);
+            ->execute($row['id'])
+        ;
 
         return sprintf('%s (%d Ligen)', $label, $ligen->n);
     }
@@ -69,7 +70,8 @@ class DCAHelper
     {
         $begegnungen = Database::getInstance()
             ->prepare('SELECT COUNT(*) n FROM tl_begegnung WHERE pid=?')
-            ->execute($arrRow['id']);
+            ->execute($arrRow['id'])
+        ;
 
         return self::ligaLabelCallback($arrRow, $arrRow['name'])
             .sprintf(' (%d Begegnungen)', $begegnungen->n)//. ' <span class="tl_gray">'. json_encode($arrRow).'</span>'
@@ -108,9 +110,11 @@ class DCAHelper
     public static function mannschaftLabelCallback($arrRow)
     {
         $liga = LigaModel::findById($arrRow['liga']);
+
         if ('0' === $liga) {
             return sprintf("%s <span class='tl_red'>Keiner Liga zugeordnet</span>", $arrRow['name']);
         }
+
         if (null === $liga) {
             return sprintf("%s <span class='tl_red'>Liga '%d' existiert nicht mehr!</span>",
                 $arrRow['name'],
@@ -119,12 +123,15 @@ class DCAHelper
         $spielort = SpielortModel::findById($arrRow['spielort']);
         $spieler = Database::getInstance()
             ->prepare('SELECT COUNT(*) AS n FROM tl_spieler WHERE pid=?')
-            ->execute($arrRow['id']);
+            ->execute($arrRow['id'])
+        ;
         $anzahlSpieler = '<span class="tl_red">keine Spieler eingetragen</span>';
         $inaktiv = '';
+
         if ($spieler->n > 0) {
             $anzahlSpieler = sprintf('%d Spieler', $spieler->n);
         }
+
         if ('' === $arrRow['active']) {
             $inaktiv = ', <span class=\'tl_red\'>Mannschaft nicht aktiv</span>';
         }
@@ -144,10 +151,9 @@ class DCAHelper
      * Alle zur Vefügung stehenden Ligen
      * ('options_callback' in tl_mannschaft).
      *
-     * @param DataContainer $dc
+     * @throws Exception
      *
      * @return array
-     * @throws Exception
      */
     public static function getLigaForSelect(DataContainer $dc)
     {
@@ -157,6 +163,7 @@ class DCAHelper
         if (null === $ligen) {
             return ['0' => 'keine Ligen gefunden. Bitte erst anlegen!'];
         }
+
         foreach ($ligen as $liga) {
             $result[$liga->id] = sprintf('%s %s %s',
                 $liga->getRelated('pid')->name,
@@ -202,9 +209,6 @@ class DCAHelper
      * Label für eine Begegnung (Spiel zweier Mansnchaften gegeneinander)
      * ('label_callback' in tl_begegnung).
      *
-     * @param array  $row
-     * @param string $label
-     *
      * @throws Exception
      *
      * @return string
@@ -214,6 +218,7 @@ class DCAHelper
         $liga = LigaModel::findById($row['pid']);
         $verband = VerbandModel::findById($liga->pid);
         $home = MannschaftModel::findById($row['home']);
+
         if ($row['away']) {
             $away = MannschaftModel::findById($row['away']);
         } else {
@@ -224,8 +229,10 @@ class DCAHelper
         $punkte_home = $punkte_away = 0;
         $eingesetzte_spieler = ['home' => [], 'away' => []];
         $spiele = SpielModel::findByPid($row['id']);
+
         if ($spiele) {
-            $spieleHinterlegt = sprintf('(%d Spiele)', count($spiele));
+            $spieleHinterlegt = sprintf('(%d Spiele)', \count($spiele));
+
             foreach ($spiele as $spiel) {
                 $punkte_home += $spiel->score_home > $spiel->score_away ? 1 : 0;
                 $punkte_away += $spiel->score_home < $spiel->score_away ? 1 : 0;
@@ -234,8 +241,8 @@ class DCAHelper
             }
         }
         // nicht angetreten? (Mannschaft nur mit virtuellm Spieler '0' (='kein Spieler') angetreten).
-        $is_noshow_home = 1 === count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
-        $is_noshow_away = 1 === count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
+        $is_noshow_home = 1 === \count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
+        $is_noshow_away = 1 === \count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
 
         $final_score = $punkte_home + $punkte_away > 0 ? sprintf('%d:%d', $punkte_home, $punkte_away) : '';
 
@@ -259,17 +266,19 @@ class DCAHelper
      * Einträge für ein Ligaauswahl Dropdown
      * ('options_callback' in tl_begegnung).
      *
-     * @param DataContainer $dc
      * @throws Exception
+     *
      * @return array
      */
     public static function getAktiveLigenForSelect(DataContainer $dc)
     {
         $result = [];
         $ligen = LigaModel::findBy(['aktiv=?'], ['1']);
+
         if (null === $ligen) {
             return ['0' => 'keine Ligen gefunden!'];
         }
+
         foreach ($ligen as $liga) {
             $result[$liga->id] = sprintf('%s %s %s', $liga->getRelated('pid')->name, $liga->name, $liga->getRelated('saison')->name);
         }
@@ -281,13 +290,12 @@ class DCAHelper
      * Einträge für ein Mannschaftsauswahl Dropdown -- nur aktive Mannschaften
      * ('options_callback' in tl_begegnung).
      *
-     * @param DataContainer $dc
-     *
      * @return array
      */
     public static function getMannschaftenForSelect(DataContainer $dc)
     {
         $result = [];
+
         if ($dc->activeRecord->pid) {
             // Callback beim bearbeiten einer Begegnung
             $mannschaften = MannschaftModel::findByLiga($dc->activeRecord->pid);
@@ -299,6 +307,7 @@ class DCAHelper
         if (null === $mannschaften) {
             return ['0' => 'keine Mannschaften gefunden. Bitte erst anlegen und dieser Liga zuordnen!'];
         }
+
         foreach ($mannschaften as $mannschaft) {
             $result[$mannschaft->id] = $mannschaft->name;
         }
@@ -311,8 +320,6 @@ class DCAHelper
     /**
      * Einträge für ein Spielerauswahl Dropdown.
      * ('options_callback' in tl_spieler).
-     *
-     * @param DataContainer $dc
      *
      * @throws Exception
      *
@@ -411,8 +418,6 @@ class DCAHelper
      * Button um das zum Spieler gehörige Mitglied (tl_member) in einem Modal-Window bearbeiten zu können
      * ('wizard' in tl_spieler).
      *
-     * @param DataContainer $dc
-     *
      * @return string
      */
     public static function editMemberWizard(DataContainer $dc)
@@ -435,9 +440,6 @@ class DCAHelper
      * Sicherstellen, daß ein Spieler nur in einer Mannschaft gleichzeitig aktiv ist.
      * Ausnahme: er/sie ist als "ersatzspieler" markiert.
      *
-     * @param string        $value
-     * @param DataContainer $dc
-     *
      * @throws Exception
      *
      * @return string
@@ -447,6 +449,7 @@ class DCAHelper
         if ('1' === $value) {
             // (1) Mannschaft inaktiv?
             $mannschaft = MannschaftModel::findById($dc->activeRecord->pid);
+
             if ($mannschaft && !$mannschaft->active) {
                 throw new RuntimeException('Spieler kann in einer inaktiven Mannschaft nicht auf aktiv gesetzt werden');
             }
@@ -464,10 +467,12 @@ class DCAHelper
 
                     $filterlist = ['-1']; // damit wir bei leeren Ergabnislisten unten etwas zum implode()n haben
                     $ligen = LigaModel::findBy(['saison=?'], [$mannschaft->getRelated('liga')->saison]);
+
                     foreach ($ligen as $liga) {
                         $mannschaften = MannschaftModel::findBy(
                             ['active=?', 'liga=?'],
                             ['1', $liga->id]);
+
                         if ($mannschaften) {
                             foreach ($mannschaften as $m) {
                                 if ($m->id !== $mannschaft->id) {
@@ -487,6 +492,7 @@ class DCAHelper
                         ['active=?', 'liga=?'],
                         ['1', $mannschaft->getRelated('liga')->id]);
                     $filterlist = ['-1'];
+
                     if ($mannschaften) {
                         foreach ($mannschaften as $m) {
                             if ($m->id !== $mannschaft->id) {
@@ -508,9 +514,11 @@ class DCAHelper
 
                 if ($queryResult->count() > 0) {
                     $mannschaftsnamen = [];
+
                     while ($queryResult->next()) {
                         $mannschaftsnamen[] = MannschaftModel::findById($queryResult->pid)->getFullName();
                     }
+
                     throw new RuntimeException('Spieler ist bereits in einer anderen Mannschaft aktiv: '.implode(', ', $mannschaftsnamen));
                 }
             }
@@ -537,12 +545,14 @@ class DCAHelper
             return $initial;
         }
         $begegnung = BegegnungModel::findById($dc->activeRecord->pid);
+
         if (!$begegnung) {
             return $initial;
         }
 
         $result = [];
         $spieler = SpielerModel::findByPid($begegnung->home);
+
         if ($spieler) {
             foreach ($spieler as $sp) {
                 $member = $sp->getRelated('member_id');
@@ -550,9 +560,12 @@ class DCAHelper
             }
         }
         // Nach Namen sortieren
-        uasort($result, function ($a, $b) {
-            return $a < $b ? -1 : ($a > $b ? +1 : 0);
-        });
+        uasort(
+            $result,
+            static function ($a, $b) {
+                return $a < $b ? -1 : ($a > $b ? +1 : 0);
+            }
+        );
 
         return $result;
     }
@@ -573,12 +586,14 @@ class DCAHelper
             return $initial;
         }
         $begegnung = BegegnungModel::findById($dc->activeRecord->pid);
+
         if (!$begegnung) {
             return $initial;
         }
 
         $result = []; // $initial;
         $spieler = SpielerModel::findByPid($begegnung->away);
+
         if ($spieler) {
             foreach ($spieler as $sp) {
                 $member = $sp->getRelated('member_id');
@@ -586,9 +601,12 @@ class DCAHelper
             }
         }
         // Nach Namen sortieren
-        uasort($result, function ($a, $b) {
-            return $a < $b ? -1 : ($a > $b ? +1 : 0);
-        });
+        uasort(
+            $result,
+            static function ($a, $b) {
+                return $a < $b ? -1 : ($a > $b ? +1 : 0);
+            }
+        );
 
         return $result;
     }
@@ -596,8 +614,6 @@ class DCAHelper
     /**
      * Label für ein Spiel
      * ('child_record_callback' in tl_spiel).
-     *
-     * @param array $row
      *
      * @throws Exception
      *
@@ -616,11 +632,13 @@ class DCAHelper
                 $memberHome = $spielerHome ? $spielerHome->getRelated('member_id') : null;
                 /** @var MemberModel $memberAway */
                 $memberAway = $spielerAway ? $spielerAway->getRelated('member_id') : null;
+
                 if ($memberHome) {
                     $memberHomeDisplayname = self::makeSpielerName($memberHome);
                 } else {
                     $memberHomeDisplayname = 'Kein Spieler (ID '.$row['home'].')';
                 }
+
                 if ($memberAway) {
                     $memberAwayDisplayname = self::makeSpielerName($memberAway);
                 } else {
@@ -637,6 +655,7 @@ class DCAHelper
                     $row['score_away']
                 );
                 break;
+
             case 2:
                 $spielerHome = SpielerModel::findById($row['home']);
                 /** @var MemberModel $memberHome */
@@ -656,16 +675,19 @@ class DCAHelper
                 } else {
                     $memberHomeDisplayname = 'Kein Spieler (ID '.$row['home'].')';
                 }
+
                 if ($memberHome2) {
                     $memberHome2Displayname = self::makeSpielerName($memberHome2);
                 } else {
                     $memberHome2Displayname = 'Kein Spieler (ID '.$row['home2'].')';
                 }
+
                 if ($memberAway) {
                     $memberAwayDisplayname = self::makeSpielerName($memberAway);
                 } else {
                     $memberAwayDisplayname = 'Kein Spieler (ID '.$row['away'].')';
                 }
+
                 if ($memberAway2) {
                     $memberAway2Displayname = self::makeSpielerName($memberAway2);
                 } else {
@@ -684,6 +706,7 @@ class DCAHelper
                     $row['score_away']
                 );
                 break;
+
             default:
                 return sprintf("invalid value for 'spieltype': <span class='tl_gray'>%s</span>",
                     json_encode($row)
@@ -697,17 +720,17 @@ class DCAHelper
      * Liste aller definierten Verbände
      * ('options_callback' in tl_content).
      *
-     * @param DataContainer $dc
-     *
      * @return array
      */
     public static function getAlleVerbaendeForSelect(DataContainer $dc)
     {
         $result = [];
         $verbaende = VerbandModel::findAll();
+
         if (null === $verbaende) {
             return ['0' => 'keine Verbände gefunden!'];
         }
+
         foreach ($verbaende as $verband) {
             $result[$verband->id] = $verband->name;
         }
@@ -719,17 +742,19 @@ class DCAHelper
      * Liste aller definierte Ligen
      * ('options_callback' in tl_content).
      *
-     * @param DataContainer $dc
      * @throws Exception
+     *
      * @return array
      */
     public static function getAlleLigenForSelect(DataContainer $dc)
     {
         $result = [];
         $ligen = LigaModel::findAll();
+
         if (null === $ligen) {
             return ['0' => 'keine Ligen gefunden!'];
         }
+
         foreach ($ligen as $liga) {
             $result[$liga->id] = sprintf('%s %s %s',
                 $liga->name,
@@ -747,8 +772,6 @@ class DCAHelper
      * hängen wir Liga und Saison an, um die Auswahl eindeutig zu machen.
      * ('options_callback' in tl_content).
      *
-     * @param DataContainer $dc
-     *
      * @throws Exception
      *
      * @return array
@@ -756,17 +779,21 @@ class DCAHelper
     public static function getAlleMannschaftenForSelect(DataContainer $dc)
     {
         $result = [];
+
         if ($dc && $dc->activeRecord->liga) {
             $mannschaften = MannschaftModel::findByLiga($dc->activeRecord->liga, ['order' => 'name ASC']);
         } else {
             $mannschaften = MannschaftModel::findAll(['order' => 'name ASC']);
         }
+
         if (null === $mannschaften) {
             return ['0' => 'keine Mannschaften gefunden. Liga wählen und speichern!'];
         }
+
         foreach ($mannschaften as $mannschaft) {
             $liga = $mannschaft->getRelated('liga');
             $saison = null;
+
             if ($liga) {
                 $saison = $liga->getRelated('saison');
             }
@@ -779,7 +806,7 @@ class DCAHelper
         // nicht bei der Spielerliste, da wir dort zusätzlich eine Auswahl der
         // Liga bräuchten, damit "alle Mannschaften" Sinn ergibt
         // Dito für die Mannschaftsseite.
-        if (!in_array($dc->activeRecord->type, ['spielerliste', 'mannschaftsseite'], true)) {
+        if (!\in_array($dc->activeRecord->type, ['spielerliste', 'mannschaftsseite'], true)) {
             $result[0] = 'alle Mannschaften'; // z.B. für "Spielerranking" einer gesamten Liga
         }
 
@@ -796,6 +823,7 @@ class DCAHelper
     {
         $result = [];
         $begegnungen = BegegnungModel::findAll(['order' => 'spiel_am ASC']);
+
         if ($begegnungen) {
             foreach ($begegnungen as $begegnung) {
                 $result[$begegnung->id] = $begegnung->getLabel('full');
@@ -814,6 +842,7 @@ class DCAHelper
     {
         $result = [];
         $spieler = null;
+
         if ($dc && $dc->activeRecord) {
             $begegnung = BegegnungModel::findById($dc->activeRecord->begegnung_id);
             $spieler = SpielerModel::findBy(
@@ -821,6 +850,7 @@ class DCAHelper
                 [$begegnung->home, $begegnung->away]
             );
         }
+
         if ($spieler) {
             foreach ($spieler as $s) {
                 $result[$s->id] = $s->getNameAndMannschaft();
@@ -832,13 +862,15 @@ class DCAHelper
     }
 
     /**
-     * @return array
      * @throws Exception
+     *
+     * @return array
      */
     public function getBegegnungenForHighlight()
     {
         $result = [];
         $begegnungen = BegegnungModel::findAll(['eager' => true]);
+
         foreach ($begegnungen as $begegnung) {
             // Dieser Filter reduziert zwar bei Neueingaben die Anzahl
             // der Optionen im Drop-Down, führt aber beim Bearbeiten alter
@@ -855,15 +887,12 @@ class DCAHelper
     }
 
     /**
-     * @param string $strRegexp
-     * @param string $varValue
-     * @param Widget $objWidget
-     *
      * @return bool
      */
     public function addCustomRegexp(string $strRegexp, string $varValue, Widget $objWidget)
     {
         $varValue = str_replace(' ', '', $varValue);
+
         if ('csvdigit' === $strRegexp) {
             // if (!preg_match('/^(\d+(,(?=\d))?)+$/', $varValue)) {
             // Überflüssige Kommata werden im save_callback entfernt, wir prüfen
@@ -882,9 +911,8 @@ class DCAHelper
      * Eine kommaseparierte Liste von Zahlen aufbereiten:
      * - Leerzeichen entfernen
      * - leere Zellen (entstanden durch überflüssige Kommata) entfernen
-     *   (Bsp.: "1,2,"  Ohne Bereinigung => [1,2,''], Soll => [1,2].
+     *   (Bsp.: "1,2," Ohne Bereinigung => [1,2,''], Soll => [1,2].
      *
-     * @param string        $value
      * @param DataContainer $dc
      *
      * @return string
@@ -892,24 +920,30 @@ class DCAHelper
     public function cleanCsvDigitList(string $value, $dc)
     {
         $entries = explode(',', str_replace(' ', '', $value));
-        $entries = array_filter($entries, function ($entry) {
-            return '' !== $entry;
-        });
+        $entries = array_filter(
+            $entries,
+            static function ($entry) {
+                return '' !== $entry;
+            }
+        );
         sort($entries);
+
         switch ($dc->activeRecord->type) {
             case HighlightModel::TYPE_180:
             case HighlightModel::TYPE_171:
-                if (count($entries) > 1) {
+                if (\count($entries) > 1) {
                     throw new RuntimeException('Bitte nur die Anzahl eingeben!');
                 }
                 break;
+
             case HighlightModel::TYPE_SHORTLEG:
-                if (array_filter($entries, function ($el) { return $el > 20; })) {
+                if (array_filter($entries, static function ($el) { return $el > 20; })) {
                     throw new RuntimeException('Bitte nur Werte kleiner/gleich 20 eingeben!');
                 }
                 break;
+
             case HighlightModel::TYPE_HIGHFINISH:
-                if (array_filter($entries, function ($el) { return $el < 100; })) {
+                if (array_filter($entries, static function ($el) { return $el < 100; })) {
                     throw new RuntimeException('Bitte nur Werte größer/gleich 100 eingeben!');
                 }
                 break;
@@ -929,14 +963,10 @@ class DCAHelper
      */
     public static function makeSpielerName($member)
     {
-        return self::makeSpielerNameFromParts($member->firstname, $member->lastname, $member->anonymize);
+        return self::makeSpielerNameFromParts($member->firstname, $member->lastname, (bool) $member->anonymize);
     }
 
     /**
-     * @param string $firstname
-     * @param string $lastname
-     * @param bool   $anonymize
-     *
      * @return string
      */
     public static function makeSpielerNameFromParts(string $firstname, string $lastname, bool $anonymize)
