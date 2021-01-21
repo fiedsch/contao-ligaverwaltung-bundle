@@ -1,0 +1,23 @@
+### {{ empfaenger.name|raw }}
+
+{{ empfaenger.name|raw }}\
+{{ empfaenger.street }}\
+{{ empfaenger.postal }} {{ empfaenger.city }}
+
+Rechnungsnummer A-{{ saison|raw }}-{{ "%03d"|format(empfaenger.id) }}
+
+{{  "now"|date("d.m.Y") }}
+
+Provison Aufsteller Saison {{ saison|raw }}
+
+
+| Wirt | Mannschaft | Liga | Betrag |
+| :--- |:---| :--- | -----:|
+{% for mannschaft in empfaenger.mannschaften %}
+| {{ mannschaft.spielort|raw }} | {{ mannschaft.name|raw }} | {{ mannschaft.liga|raw }} | {{ mannschaft.rechnungsbetrag_aufsteller|number_format(2, ',', '.') }} € |
+{% endfor %}
+| | | |
+| | | Nettobetrag | {{ empfaenger.summe_rechnung|number_format(2, ',', '.') }} € |
+| | | {{ MWSTSATZ }} % Mwst. |{{ (empfaenger.summe_rechnung * (MWSTSATZ / 100))|number_format(2, ',', '.') }} €|
+| | | *Bruttobetrag* | *{{ (empfaenger.summe_rechnung * ((100+MWSTSATZ) / 100))|number_format(2, ',', '.') }} €* |
+

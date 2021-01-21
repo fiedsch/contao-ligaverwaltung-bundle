@@ -1,0 +1,26 @@
+"{{ saison }}" ; {{ '' -}}
+Spielort ; {{ '' -}}
+{{ empfaenger.name|raw }} ; {{ '' -}}
+{{ empfaenger.street }} ; {{ '' -}}
+{{ empfaenger.postal }} {{ empfaenger.city }} ; {{ '' -}}
+Rechnungsnummer S-{{ saison|raw }}-{{ "%03d"|format(empfaenger.id) }} ; {{ '' -}}
+{{  "now"|date("d.m.Y") }} ; {{ '' -}}
+Provison Wirt{% if empfaenger.is_aufsteller %}/Aufsteller{% endif %} Saison {{ saison|raw }} ; {{ '' -}}
+{%- if empfaenger.is_aufsteller -%}
+    {%- set summe_rechnung = empfaenger.summe_rechnung + empfaenger.summe_rechnung_aufsteller -%}
+{% else %}
+    {%- set summe_rechnung = empfaenger.summe_rechnung -%}
+{%- endif -%}
+{%- for mannschaft in empfaenger.mannschaften -%}
+{%- if empfaenger.is_aufsteller -%}
+    {%- set rechnungsbetrag = mannschaft.rechnungsbetrag_spielort + mannschaft.rechnungsbetrag_aufsteller -%}
+{%- else -%}
+    {%- set rechnungsbetrag = mannschaft.rechnungsbetrag_spielort -%}
+{%- endif -%}
+{{ mannschaft.name|raw }} ; {{ '' -}}
+{{ mannschaft.liga|raw }} ; {{ '' -}}
+{{ rechnungsbetrag|number_format(2, ',', '.') }} € ; {{ '' -}}
+{%- endfor -%}
+{{ summe_rechnung|number_format(2, ',', '.') }} € ; {{ '' -}}
+{{ (summe_rechnung * (MWSTSATZ / 100))|number_format(2, ',', '.') }} € ; {{ '' -}}
+{{ (summe_rechnung * ((100+MWSTSATZ) / 100))|number_format(2, ',', '.') }} €

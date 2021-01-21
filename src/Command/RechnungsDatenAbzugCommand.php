@@ -84,23 +84,19 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
             return 1;
         }
 
-        $formatParameter = $input->getArgument('format');
+        $format = $input->getArgument('format');
 
         $data = $this->getData($saison, $output);
 
-        switch ($formatParameter) {
+        switch ($format) {
             case 'html':
-                $this->renderHtml($data, $output);
-                break;
-
             case 'md':
             case 'csv':
-                $output->writeln("Ausgabe im Format '$formatParameter' ist noch nicht implementiert");
-
-                return 1;
+                $this->render($data, $format, $output);
+                break;
 
             default:
-                $output->writeln("ungültiges Ausgabeformat '$formatParameter'");
+                $output->writeln("ungültiges Ausgabeformat '$format'");
 
                 return 1;
         }
@@ -261,10 +257,10 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         }
     }
 
-    protected function renderHtml(array $data, OutputInterface $output): void
+    protected function render(array $data, string $format, OutputInterface $output): void
     {
         $output->writeln($this->twig->render(
-            '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.html.twig',
+            "@FiedschLigaverwaltung/rechnungsdaten/$format/rechnungsdaten.$format.twig",
             [
                 'saison' => $data['saisonname'],
                 'spielorte' => $data['spielorte'],
@@ -272,5 +268,4 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
             ]
         ));
     }
-
 }

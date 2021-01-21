@@ -50,17 +50,17 @@ Getestet mit Chrome (Version 85.0.4183.102) funktioniert nicht (Daten vertikal "
 {% for sp in spielorte %}
     <div class="page">
         <div class="headercontainer">
-            {% include '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.header.html.twig' %}
+            {% include '@FiedschLigaverwaltung/rechnungsdaten/html/rechnungsdaten.header.html.twig' %}
         </div>
         <div class="rechnung">
             {% set empfaenger = sp %}
-            {% include '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.rechnung.spielort.html.twig' %}
+            {% include '@FiedschLigaverwaltung/rechnungsdaten/html/rechnungsdaten.rechnung.spielort.html.twig' %}
         </div>
         <div class="middle">
-            {% include '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.standardtext.html.twig' %}
+            {% include '@FiedschLigaverwaltung/rechnungsdaten/html/rechnungsdaten.standardtext.html.twig' %}
         </div>
         <div class="bottom">
-            {% include '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.footer.html.twig' %}
+            {% include '@FiedschLigaverwaltung/rechnungsdaten/html/rechnungsdaten.footer.html.twig' %}
         </div>
     </div>
 {% endfor %}
@@ -71,17 +71,17 @@ Getestet mit Chrome (Version 85.0.4183.102) funktioniert nicht (Daten vertikal "
 {% for au in aufsteller %}
     <div class="page">
         <div class="headercontainer">
-            {% include '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.header.html.twig' %}
+            {% include '@FiedschLigaverwaltung/rechnungsdaten/html/rechnungsdaten.header.html.twig' %}
         </div>
         <div class="rechnung">
             {% set empfaenger = au %}
-            {% include '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.rechnung.aufsteller.html.twig' %}
+            {% include '@FiedschLigaverwaltung/rechnungsdaten/html/rechnungsdaten.rechnung.aufsteller.html.twig' %}
         </div>
         <div class="middle">
-            {% include '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.standardtext.html.twig' %}
+            {% include '@FiedschLigaverwaltung/rechnungsdaten/html/rechnungsdaten.standardtext.html.twig' %}
         </div>
         <div class="bottom">
-            {% include '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.footer.html.twig' %}
+            {% include '@FiedschLigaverwaltung/rechnungsdaten/html/rechnungsdaten.footer.html.twig' %}
         </div>
     </div>
 {% endfor %}

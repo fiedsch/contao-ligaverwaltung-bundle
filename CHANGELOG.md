@@ -5,6 +5,7 @@
 
 * apply CS fixer
 * Refactor `RechnungsDatenAbzugCommand` to allow multiple output formats
+* Rechnungsdaten: Implement Markdown and CSV output
 
 
 ## Version 1.0.1
