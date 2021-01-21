@@ -4,6 +4,7 @@
 ## Development
 
 * apply CS fixer
+* Refactor `RechnungsDatenAbzugCommand` to allow multiple output formats
 
 
 ## Version 1.0.1

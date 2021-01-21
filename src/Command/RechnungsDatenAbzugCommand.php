@@ -60,6 +60,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
             ->setName('fiedsch:rechnungsdaten')
             ->setDescription('Datenabzug für die Rechnungsstellung.')
             ->addArgument('saison', InputArgument::REQUIRED, 'Saison')
+            ->addArgument('format', InputArgument::OPTIONAL, 'Ausgabeformat (html, md oder csv', 'html')
         ;
     }
 
@@ -83,6 +84,32 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
             return 1;
         }
 
+        $formatParameter = $input->getArgument('format');
+
+        $data = $this->getData($saison, $output);
+
+        switch ($formatParameter) {
+            case 'html':
+                $this->renderHtml($data, $output);
+                break;
+
+            case 'md':
+            case 'csv':
+                $output->writeln("Ausgabe im Format '$formatParameter' ist noch nicht implementiert");
+
+                return 1;
+
+            default:
+                $output->writeln("ungültiges Ausgabeformat '$formatParameter'");
+
+                return 1;
+        }
+
+        return 0;
+    }
+
+    protected function getData(SaisonModel $saison, OutputInterface $output)
+    {
         // Ligen dieser Saison
 
         $ligen = LigaModel::findBy(['saison=?'], [$saison->id]);
@@ -90,6 +117,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         // Ergebnisdaten zum Erzeugen der Rechnungen für Wirte (Spielort) und Aufsteller
 
         $data = [
+            'saisonname' => $saison->name,
             'spielorte' => [],
             'aufsteller' => [],
         ];
@@ -189,17 +217,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         // aber beim Spielort abgerechnet werden
         unset($data['aufsteller'][self::KEIN_AUFSTELLER]);
 
-        // Daten ausgeben
-        $output->writeln($this->twig->render(
-            '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.html.twig',
-            [
-                'saison' => $saison->name,
-                'spielorte' => $data['spielorte'],
-                'aufsteller' => $data['aufsteller'],
-            ]
-        ));
-
-        return 0;
+        return $data;
     }
 
     protected function toFloat(string $value): float
@@ -242,4 +260,17 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                 throw new RuntimeException("ungültiger Sortiertyp $type");
         }
     }
+
+    protected function renderHtml(array $data, OutputInterface $output): void
+    {
+        $output->writeln($this->twig->render(
+            '@FiedschLigaverwaltung/rechnungsdaten/rechnungsdaten.html.twig',
+            [
+                'saison' => $data['saisonname'],
+                'spielorte' => $data['spielorte'],
+                'aufsteller' => $data['aufsteller'],
+            ]
+        ));
+    }
+
 }
