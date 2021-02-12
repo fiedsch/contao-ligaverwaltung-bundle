@@ -454,8 +454,6 @@ class ContentHighlightRanking extends ContentElement
     }
 
     /**
-     * TODO (?): "13,13,13,14,14" als "13 (3x), 14 (2x)" ausgeben.
-     *
      * @param string|array $value
      *
      * @return string
@@ -478,7 +476,6 @@ class ContentHighlightRanking extends ContentElement
             arsort($data);
         }
 
-        // return implode(',', $data);
         return static::compressResultsArray($data);
     }
 
