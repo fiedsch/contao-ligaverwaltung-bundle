@@ -132,7 +132,7 @@ class Spielplan
         }
     }
 
-    public static function getSpielplanCss(int $spielplanCode): string
+    public static function getSpielplanCss(string $spielplanCode): string
     {
         $allCss = 'input.spieler-score { width: 2rem; }';
         $baseTwoSkip = '.results-table tr.single:nth-child(2n+1) {border-top: 20px solid white !important;}';

@@ -127,7 +127,7 @@ class LigaverwaltungFrontendController extends AbstractController
         $appData['requestToken'] = REQUEST_TOKEN;
         $appData['begegnungId'] = $begegnung;
         $appData['numSlots'] = 8;
-        $appData['spielplanCss'] = Spielplan::getSpielplanCss((int) $begegnungModel->getRelated('pid')->spielplan);
+        $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);
         $appData = DataEntrySaver::augment($appData);
 
         $data = [
