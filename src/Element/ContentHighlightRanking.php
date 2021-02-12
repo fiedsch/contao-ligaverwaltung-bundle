@@ -154,7 +154,6 @@ class ContentHighlightRanking extends ContentElement
         $results = [];
 
         while ($highlights->next()) {
-            //print "<pre>".print_r($highlights->row(), true)."</pre>";
             $results[] = [
                 'datum' => Date::parse(Config::get('dateFormat'), $highlights->spiel_am),
                 'mannschaft' => $highlights->mannschaft,
@@ -372,8 +371,6 @@ class ContentHighlightRanking extends ContentElement
 
         // Sortieren
 
-        // print '<pre>'.print_r(['rankingtype'=>$this->rankingtype, $results], true) .'</pre>';
-
         if (HighlightModel::TYPE_ALL === $this->rankingfield) {
             uasort(
                 $results,
@@ -396,7 +393,7 @@ class ContentHighlightRanking extends ContentElement
                     if (HighlightModel::TYPE_SHORTLEG === $this->rankingfield || HighlightModel::TYPE_HIGHFINISH === $this->rankingfield) {
                         return strcmp(implode('', $b['hl_punkte']), implode('', $a['hl_punkte']));
                     }
-                    // Bei allen anderen Rankings hat ['hl_punkte'] nur einene numerischen Eintrag, nach dem
+                    // Bei allen anderen Rankings hat ['hl_punkte'] nur einen numerischen Eintrag, nach dem
                     // wir sortieren können:
                     return $b['hl_punkte'][0] <=> $a['hl_punkte'][0];
                 }
