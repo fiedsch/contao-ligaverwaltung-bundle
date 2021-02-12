@@ -30,11 +30,11 @@ use Contao\Model;
  */
 class LigaModel extends Model
 {
-    const SPIELPLAN_16E2D = 2;
-    const SPIELPLAN_16E4D = 4;
-    const SPIELPLAN_8E2D = 6;
-    const SPIELPLAN_6E3D = 8;
-    const SPIELPLAN_16E = 16;
+    const SPIELPLAN_16E2D = '2';
+    const SPIELPLAN_16E4D = '4';
+    const SPIELPLAN_8E2D = '6';
+    const SPIELPLAN_6E3D = '8';
+    const SPIELPLAN_16E = '16';
 
     /**
      * Table name.

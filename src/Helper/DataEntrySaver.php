@@ -182,34 +182,34 @@ class DataEntrySaver
 
             switch ($strType) {
                 case 'one80':
-                    $intType = HighlightModel::TYPE_180;
+                    $highlightType = HighlightModel::TYPE_180;
                     break;
 
                 case 'one71':
-                    $intType = HighlightModel::TYPE_171;
+                    $highlightType = HighlightModel::TYPE_171;
                     break;
 
                 case 'shortleg':
-                    $intType = HighlightModel::TYPE_SHORTLEG;
+                    $highlightType = HighlightModel::TYPE_SHORTLEG;
                     break;
 
                 case 'highfinish':
-                    $intType = HighlightModel::TYPE_HIGHFINISH;
+                    $highlightType = HighlightModel::TYPE_HIGHFINISH;
             }
 
             $highlightModel = HighlightModel::findBy(
                 ['begegnung_id=?', 'spieler_id=?', 'type=?'],
-                [$begegnung, $spieler, $intType]
+                [$begegnung, $spieler, $highlightType]
             );
 
             if (!$highlightModel) {
                 $highlightModel = new HighlightModel();
                 $highlightModel->begegnung_id = $begegnung;
                 $highlightModel->spieler_id = $spieler;
-                $highlightModel->type = $intType;
+                $highlightModel->type = $highlightType;
             }
             $highlightModel->tstamp = time();
-            $highlightModel->type = $intType;
+            $highlightModel->type = $highlightType;
             $highlightModel->value = $v;
             $highlightModel->save();
             // Bookkeeping
