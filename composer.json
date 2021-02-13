@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "php": "^7.1",
+    "php": "^7.4 || ^8.0",
     "ext-json": "*",
     "contao/core-bundle": "^4.4",
     "eluceo/ical": "^0.13",
