@@ -3,13 +3,11 @@
 
 ## Development
 
-
-## Version 1.0.2
-
 * require alt least PHP 7.4 and mark as compatible with PHP 8
 * apply CS fixer
 * Refactor `RechnungsDatenAbzugCommand` to allow multiple output formats
 * Rechnungsdaten: Implement Markdown and CSV output
+* TODO: wait for `codefog/contao-haste` to be marked as ready for PHP 8
 
 
 ## Version 1.0.1
