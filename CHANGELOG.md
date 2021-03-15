@@ -3,6 +3,9 @@
 
 ## Development
 
+
+## Version 1.0.2
+
 * require alt least PHP 7.4 and mark as compatible with PHP 8
 * apply CS fixer
 * Refactor `RechnungsDatenAbzugCommand` to allow multiple output formats
