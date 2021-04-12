@@ -3,7 +3,7 @@
 
 ## Development
 
-* Reqquire a haste versionthat supports PHP 8
+* Require a haste versionthat supports PHP 8
 
 ## Version 1.0.2
 
