@@ -16,7 +16,7 @@
     "contao/core-bundle": "^4.4",
     "eluceo/ical": "^0.13",
     "fiedsch/contao-jsonwidget": "^0.4",
-    "codefog/contao-haste": "^4.24.1",
+    "codefog/contao-haste": "^4.24.14",
     "sensio/framework-extra-bundle": "^5.4.1"
   },
   "autoload": {
