@@ -97,6 +97,7 @@ class ModuleSpielberichtReader extends Module
         $this->Template->begegnung = $begegnung;
 
         $contentModel = new ContentModel();
+        $contentModel->tstamp = time();
         $contentModel->type = 'spielbericht';
         $contentModel->begegnung = $begegnung->id;
         $contentElement = new ContentSpielbericht($contentModel);

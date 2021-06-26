@@ -72,6 +72,7 @@ class ContentSpielortseite extends ContentElement
 
         // Spielortinfo
         $contentModel = new ContentModel();
+        $contentModel->tstamp = time();
         $contentModel->type = 'spielortinfo';
         $contentModel->spielort = $spielortModel->id;
         $contentModel->headline = [

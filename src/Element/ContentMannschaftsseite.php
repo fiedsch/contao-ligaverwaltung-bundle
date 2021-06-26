@@ -73,6 +73,7 @@ class ContentMannschaftsseite extends ContentElement
 
         // Spielortinfo
         $contentModel = new ContentModel();
+        $contentModel->tstamp = time();
         $contentModel->type = 'spielortinfo';
         $contentModel->spielort = $mannschaftModel->spielort;
         $contentModel->headline = [
@@ -84,6 +85,7 @@ class ContentMannschaftsseite extends ContentElement
 
         // Spielerliste
         $contentModel = new ContentModel();
+        $contentModel->tstamp = time();
         $contentModel->type = 'spielerliste';
         $contentModel->mannschaft = $this->mannschaft;
         $contentModel->showdetails = '1';
@@ -96,6 +98,7 @@ class ContentMannschaftsseite extends ContentElement
 
         // Spielplan
         $contentModel = new ContentModel();
+        $contentModel->tstamp = time();
         $contentModel->type = 'spielplan';
         $contentModel->liga = $mannschaftModel->liga;
         $contentModel->mannschaft = $mannschaftModel->id;
@@ -108,6 +111,7 @@ class ContentMannschaftsseite extends ContentElement
 
         // Einzelspielerrangliste
         $contentModel = new ContentModel();
+        $contentModel->tstamp = time();
         $contentModel->type = 'ranking';
         $contentModel->liga = $mannschaftModel->liga;
         $contentModel->mannschaft = $mannschaftModel->id;
@@ -121,6 +125,7 @@ class ContentMannschaftsseite extends ContentElement
 
         // Highlights
         $contentModel = new ContentModel();
+        $contentModel->tstamp = time();
         $contentModel->type = 'highlightranking';
         $contentModel->liga = $mannschaftModel->liga;
         $contentModel->rankingtype = 2; // 'Spieler'

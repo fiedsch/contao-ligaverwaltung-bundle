@@ -5,6 +5,11 @@
 
 * Require a haste version that supports PHP 8
 
+## Version 1.0.3
+
+* Be compatible with https://github.com/contao/contao/issues/2708
+
+
 ## Version 1.0.2
 
 * require alt least PHP 7.4 and mark as compatible with PHP 8

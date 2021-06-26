@@ -95,6 +95,7 @@ class ModuleSpielortseitenReader extends Module
         $this->Template->spielort = $spielort;
 
         $contentModel = new ContentModel();
+        $contentModel->tstamp = time();
         $contentModel->type = 'spielortseite';
         $contentModel->spielort = $spielort->id;
         $contentModel->ligen = $this->ligen;

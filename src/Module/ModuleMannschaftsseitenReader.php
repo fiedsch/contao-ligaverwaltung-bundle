@@ -97,6 +97,7 @@ class ModuleMannschaftsseitenReader extends Module
         $this->Template->mannschaft = $mannschaft;
 
         $contentModel = new ContentModel();
+        $contentModel->tstamp = time();
         $contentModel->type = 'mannschaftsseite';
         $contentModel->mannschaft = $mannschaft->id;
         $contentElement = new ContentMannschaftsseite($contentModel);
