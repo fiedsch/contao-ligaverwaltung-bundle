@@ -182,8 +182,8 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                     'liga' => $liga->name,
                     'spielstaerke' => $liga->spielstaerke,
                     'saison' => $saison->name,
-                    'rechnungsbetrag_spielort' => $liga->rechnungsbetrag_spielort,
-                    'rechnungsbetrag_aufsteller' => $liga->rechnungsbetrag_aufsteller,
+                    'rechnungsbetrag_spielort' => $liga->rechnungsbetrag_spielort ?: 0,
+                    'rechnungsbetrag_aufsteller' => $liga->rechnungsbetrag_aufsteller ?: 0,
                 ];
 
                 // Daten für die Rechnung für den Aufsteller
@@ -194,8 +194,8 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                     'spielstaerke' => $liga->spielstaerke,
                     'saison' => $saison->name,
                     'spielort' => $spielort->name,
-                    'rechnungsbetrag_spielort' => $liga->rechnungsbetrag_spielort,
-                    'rechnungsbetrag_aufsteller' => $liga->rechnungsbetrag_aufsteller,
+                    'rechnungsbetrag_spielort' => $liga->rechnungsbetrag_spielort ?: 0,
+                    'rechnungsbetrag_aufsteller' => $liga->rechnungsbetrag_aufsteller ?: 0,
                 ];
             }
         }
@@ -259,6 +259,11 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 
     protected function render(array $data, string $format, OutputInterface $output): void
     {
+        print_r([
+            'saison' => $data['saisonname'],
+            'spielorte' => $data['spielorte'],
+            'aufsteller' => $data['aufsteller'],
+        ]);
         $output->writeln($this->twig->render(
             "@FiedschLigaverwaltung/rechnungsdaten/$format/rechnungsdaten.$format.twig",
             [
