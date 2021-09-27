@@ -963,7 +963,10 @@ class DCAHelper
      */
     public static function makeSpielerName($member)
     {
-        return self::makeSpielerNameFromParts($member->firstname, $member->lastname, (bool) $member->anonymize);
+        if (!$member) {
+            return '<span class="tl_error">MITGLIED EXISTIERT NICHT (mehr)</span>';
+        }
+        return self::makeSpielerNameFromParts($member->firstname ?? '', $member->lastname ?? '', (bool) $member->anonymize);
     }
 
     /**
