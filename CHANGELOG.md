@@ -3,7 +3,12 @@
 
 ## Development
 
+
+## Version 1.0.4
+
 * Require a haste version that supports PHP 8
+* Bugfix: Do not crash when a referenced member does no longer exist
+
 
 ## Version 1.0.3
 
