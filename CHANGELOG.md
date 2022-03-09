@@ -3,6 +3,8 @@
 
 ## Development
 
+* Member listing in back end: make gender a filter
+
 
 ## Version 1.0.4
 

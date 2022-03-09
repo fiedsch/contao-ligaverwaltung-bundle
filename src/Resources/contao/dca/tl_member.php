@@ -132,3 +132,6 @@ foreach (['company', 'website', 'street'] as $field) {
 foreach (['company', 'country', 'state'] as $field) {
     $GLOBALS['TL_DCA']['tl_member']['fields'][$field]['sorting'] = false;
 }
+
+// Make gender a filter field
+$GLOBALS['TL_DCA']['tl_member']['fields']['gender']['filter'] = true;
