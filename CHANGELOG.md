@@ -3,7 +3,11 @@
 
 ## Development
 
+
+## Version 1.0.5
+
 * Member listing in back end: make gender a filter
+* Add custom template selection to all provided content elements
 
 
 ## Version 1.0.4
