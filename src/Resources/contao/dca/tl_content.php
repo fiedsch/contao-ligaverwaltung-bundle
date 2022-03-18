@@ -16,7 +16,7 @@ use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 
 /* Ligenliste */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['ligenliste'] = '{type_legend},type,headline;{auswahl_legend},verband,saison;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['ligenliste'] = '{type_legend},type,headline;{auswahl_legend},verband,saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['fields']['verband'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['verband'],
     'exclude' => true,
@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['saison'] = [
     'sql' => 'blob NULL',
 ];
 /* Mannschaftsliste */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftsliste'] = '{type_legend},type,headline;{liga_legend},liga;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftsliste'] = '{type_legend},type,headline;{liga_legend},liga;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['fields']['liga'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['liga'],
     'exclude' => true,
@@ -55,7 +55,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['liga'] = [
 ];
 
 /* Spielerliste */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['spielerliste'] = '{type_legend},type,headline;{mannschaft_legend},mannschaft,showdetails;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['spielerliste'] = '{type_legend},type,headline;{mannschaft_legend},mannschaft,showdetails;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['fields']['mannschaft'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['mannschaft'],
     'exclude' => true,
@@ -73,11 +73,11 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['showdetails'] = [
     'sql' => "char(1) NOT NULL default ''",
 ];
 /* Spielplan */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['spielplan'] = '{type_legend},type,headline;{filter_legend},liga,mannschaft;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['spielplan'] = '{type_legend},type,headline;{filter_legend},liga,mannschaft;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 // liga und mannschaft bereits bei Mannschaftsliste bzw. Spielerliste definiert
 
 /* Spielortinfo */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['spielortinfo'] = '{type_legend},type,headline,spielort;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['spielortinfo'] = '{type_legend},type,headline,spielort;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['fields']['spielort'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['spielort'],
     'exclude' => true,
@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spielort'] = [
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 /* Spielbericht */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['spielbericht'] = '{type_legend},type,headline,begegnung;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['spielbericht'] = '{type_legend},type,headline,begegnung;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['fields']['begegnung'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['begegnung'],
     'exclude' => true,
@@ -98,7 +98,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['begegnung'] = [
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 /* Ranking/Tabelle */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['ranking'] = '{type_legend},type,headline,liga,rankingtype;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['ranking'] = '{type_legend},type,headline,liga,rankingtype;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'rankingtype';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['rankingtype_2'] = 'mannschaft';
 // liga und mannschaft bereits bei Mannschaftsliste bzw. Spielerliste definiert
@@ -117,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftsseite'] = '{config_lege
 // mannschaft bereits bei Mannschaftsliste bzw. Spielerliste definiert
 
 /* Ranking/Tabelle der Highlights */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['highlightranking'] = '{type_legend},type,headline,liga,rankingtype,rankingfield;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['highlightranking'] = '{type_legend},type,headline,liga,rankingtype,rankingfield;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 //$GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'rankingtype';
 //$GLOBALS['TL_DCA']['tl_content']['subpalettes']['rankingtype_2'] = 'mannschaft';
 // ^^^ bereits durch $GLOBALS['TL_DCA']['tl_content']['palettes']['ranking'] gesetzt
@@ -138,7 +138,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['rankingfield'] = [
 ];
 
 /* Mannschaftenübersicht: Mannschaft und deren Teamcaptains */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftenuebersicht'] = '{type_legend},type,headline;{saison_legend},saison;{protected_legend:hide},protected;{template_legend},customTpl;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftenuebersicht'] = '{type_legend},type,headline;{saison_legend},saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{template_legend},customTpl;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['ligen'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['ligen'],
@@ -157,5 +157,5 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['spielortseite'] = '{config_legend}
 // mannschaft bereits bei Mannschaftsliste bzw. Spielerliste definiert
 
 /* Begegnungsauswahl (Begegnungserfassung im Frontend) */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['begegnungsauswahl'] = '{type_legend},type,headline;{auswahl_legend},verband,saison;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['begegnungsauswahl'] = '{type_legend},type,headline;{auswahl_legend},verband,saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 // Felder verband und saison existieren bereits
