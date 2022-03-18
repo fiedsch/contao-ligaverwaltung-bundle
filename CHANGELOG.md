@@ -4,6 +4,11 @@
 ## Development
 
 
+## Version 1.0.6
+
+* Link team names in ranking tables
+
+
 ## Version 1.0.5
 
 * Member listing in back end: make gender a filter
