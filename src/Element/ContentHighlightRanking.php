@@ -220,7 +220,7 @@ class ContentHighlightRanking extends ContentElement
                           s.id as spieler_id, s.pid, s.active as sactive, s.jugendlich as sjugendlich,
                           me.firstname as member_firstname, me.lastname as member_lastname, me.anonymize as member_anonymize, me.id as member_id, me.gender as member_gender,
                           b.spiel_am,
-                          ma.name as mannschaft, ma.active as mactive
+                          ma.name as mannschaft, ma.active as mactive, ma.id as maid
                           FROM tl_highlight h
                           LEFT JOIN tl_begegnung b
                           ON (h.begegnung_id = b.id)
@@ -239,6 +239,7 @@ class ContentHighlightRanking extends ContentElement
         if ($this->mannschaft > 0) {
             // eine bestimmte Mannschaft
             $mannschaft = MannschaftModel::findById($this->mannschaft);
+
             $this->Template->subject = 'Highlight-Ranking aller Spieler der Mannschaft '.$mannschaft->name;
             $sql .= ' AND s.pid=?';
             $sql .= ' AND '.$this->getRankingTypeFilter('h');
@@ -272,6 +273,7 @@ class ContentHighlightRanking extends ContentElement
                 $results[$credit_to] = [
                     'name' => DCAHelper::makeSpielerNameFromParts($highlights->member_firstname, $highlights->member_lastname, (bool) $highlights->member_anonymize),
                     'mannschaft' => [$highlights->mannschaft => 0], // bei Wechsel der Mannschaft eines Spielers innerhalb der Saison können es mehrere Mannschaften sein!
+                    'mannschaftsid' => [$highlights->maid => 0],
                     'hl_171' => 0, // Anzahl
                     'hl_180' => 0, // dito
                     'hl_highfinish' => [], // Liste der Highfinishes
@@ -285,7 +287,8 @@ class ContentHighlightRanking extends ContentElement
                 ];
             }
             // Spieler hat in versch. Mannschaften gespielt?
-            ++$results[$credit_to]['mannschaft'][$highlights->mannschaft];
+            ++$results[$credit_to]['mannschaft'][$highlights->mannschaft]; // Label
+            //++$results[$credit_to]['mannschaftsid'][$highlights->maid]; // ID
             // Spieler ist (noch) aktiv?
             $results[$credit_to]['active'] |= $highlights->sactive && $highlights->mactive; // aktiver Spieler in einer aktiven Mannschaft
 
@@ -363,9 +366,16 @@ class ContentHighlightRanking extends ContentElement
                     $results[$id]['hl_shortleg'] = static::prettyPrintSorted($results[$id]['hl_shortleg'], 'ASC');
                     $results[$id]['hl_highfinish'] = static::prettyPrintSorted($results[$id]['hl_highfinish'], 'DESC');
             }
-            // Spieler hat in versch. Mannschaften gespielt? Auflösen:
-            $mannschaftenlabel = implode(', ', array_keys($results[$id]['mannschaft']));
-            // $results[$id]['test'] = $mannschaftenlabel;
+
+            if (count($results[$id]['mannschaftsid']) === 1) {
+                // der Normalfall: Spieler hat in genau einer Mannschaft gespielt
+                $m = MannschaftModel::findById(array_keys($results[$id]['mannschaftsid'])[0]);
+                $mannschaftenlabel = $m->getLinkedName();
+            } else {
+                // Spieler hat in versch. Mannschaften gespielt? (unverlinkte) Mannschaftsnamen aneinanderhängen:
+                $mannschaftenlabel = implode(', ', array_keys($results[$id]['mannschaft']));
+                // TODO (?) für alle IDs in $results[$id]['mannschaftsid'] den verlinkten Mannschaftsnamen bestimmen und diese aneinanderhängen
+            }
             $results[$id]['mannschaft'] = $mannschaftenlabel;
         }
 
