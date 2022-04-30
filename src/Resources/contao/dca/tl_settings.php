@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['spielberichtpage'] = [
 $GLOBALS['TL_DCA']['tl_settings']['fields']['ligaverwaltung_ranking_model'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model'],
     'inputType' => 'select',
-    'options' => [1 => 'nach Punkten', 2 => 'nach gewonnenen Spielen'],
+    'options' => [1 => 'nach gewonnenen Legs', 2 => 'nur gewonnenen/verloren'],
     'eval' => ['tl_class' => 'clr w50'],
 ];
 /*

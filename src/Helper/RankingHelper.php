@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Fiedsch\LigaverwaltungBundle\Helper;
 
+use Contao\StringUtil;
+
 class RankingHelper implements RankingHelperInterface
 {
     const PUNKTE_GEWONNEN = 3;
@@ -23,10 +25,10 @@ class RankingHelper implements RankingHelperInterface
     public function getPunkte(string $score, int $ranking_model = 1): int
     {
         // $ranking_model
-        // 'options'   => [ 1 => 'nach Punkten', 2 => 'nach gewonnenen Spielen' ],
+        // 'options'   => [ 1 => 'nach gewonnenen Legs', 2 => 'nur gewonnen/verloren' ],
 
         switch ($ranking_model) {
-            // 'nach Punkten'
+            // 'nach gewonnenen Legs'
             // Deutlich gewonnen oder knapp verloren gibt mehr Punkte als
             // knapp gewonnen bzw. deutlich verloren
             case 1:
@@ -79,31 +81,11 @@ class RankingHelper implements RankingHelperInterface
                 break;
 
             case 2:
-            // 'nach gewonnenen Spielen'
+            // 'nur gewonnen/verloren'
             // gewonnen -> 1 Punkt, verloren 0 Punkte; wie gewonnen wurde spielt keine Rolle!
             default:
-                switch ($score) {
-                    // mögliche Ergebnisse bei "best of 3" bzw. "best of 5"
-                    case '2:0':
-                    case '2:1':
-                    case '3:0':
-                    case '3:1':
-                    case '3:2':
-                        return 1;
-                        break;
-
-                    case '1:2':
-                    case '0:2':
-                    case '2:3':
-                    case '1:3':
-                    case '0:3':
-                        return 0;
-                        break;
-
-                    default:
-                        //\System::log("nicht vorgesehenes Spielergebnis ".$score, __METHOD__, TL_ERROR);
-                        return 0;
-                }
+                [$a, $b] = StringUtil::trimsplit(':', $score);
+                return (int)$a > (int)$b ? 1 : 0;
         }
     }
 
