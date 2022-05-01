@@ -3,6 +3,12 @@
 
 ## Development
 
+## Version 1.0.7
+
+* Mitigate effect of badly entered match results in `RankingHelperInterface::getPunkte()` where `"1:0"` (which is an
+  impossible result if you have a best of three match) would have yielded `0` points.
+  instead of `1` point.
+
 
 ## Version 1.0.6
 
