@@ -1,5 +1,6 @@
 # Changes
 
+* Remove "visual debug" (a `print_r()` that unintendedly made it into the code :-(
 
 ## Development
 

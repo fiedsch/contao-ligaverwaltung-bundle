@@ -259,11 +259,6 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 
     protected function render(array $data, string $format, OutputInterface $output): void
     {
-        print_r([
-            'saison' => $data['saisonname'],
-            'spielorte' => $data['spielorte'],
-            'aufsteller' => $data['aufsteller'],
-        ]);
         $output->writeln($this->twig->render(
             "@FiedschLigaverwaltung/rechnungsdaten/$format/rechnungsdaten.$format.twig",
             [
