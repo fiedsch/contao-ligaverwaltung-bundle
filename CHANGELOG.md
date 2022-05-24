@@ -1,6 +1,7 @@
 # Changes
 
 * Remove "visual debug" (a `print_r()` that unintendedly made it into the code :-(
+* convert `strnatcmp()` arguments to string (avoid PHP 8 warning)
 
 ## Development
 

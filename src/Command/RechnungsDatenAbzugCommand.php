@@ -233,7 +233,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                     $data,
                     static function ($a, $b) {
                         // nach Liga
-                        return strnatcmp($a['spielstaerke'], $b['spielstaerke']);
+                        return strnatcmp(''.$a['spielstaerke'], ''.$b['spielstaerke']);
                     }
                 );
                 break;
