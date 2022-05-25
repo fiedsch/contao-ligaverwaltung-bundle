@@ -1,6 +1,7 @@
-{% set MWSTSATZ = 19 %}
-{% set absender = '' %}
-
+{%- set MWSTSATZ = 19 -%}
+{%- set absender = '' -%}
+{#-  -#}
+Typ,Adresse,Spielort,Aufsteller,Mannschaft,Liga,Saison,Betrag
 {% for sp in spielorte %}
 {% set empfaenger = sp %}
 {% include '@FiedschLigaverwaltung/rechnungsdaten/csv/rechnungsdaten.rechnung.spielort.csv.twig' %}

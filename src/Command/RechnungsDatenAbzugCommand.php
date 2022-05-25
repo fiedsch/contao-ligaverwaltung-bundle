@@ -179,6 +179,8 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                 }
                 $data['spielorte'][$spielort->id]['mannschaften'][] = [
                     'name' => $mannschaft->name,
+                    'spielort' => $spielort->name,
+                    'aufsteller' => $aufsteller->name,
                     'liga' => $liga->name,
                     'spielstaerke' => $liga->spielstaerke,
                     'saison' => $saison->name,
@@ -190,6 +192,8 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                 $data['aufsteller'][$keyAufsteller]['summe_rechnung'] += $this->toFloat($liga->rechnungsbetrag_aufsteller);
                 $data['aufsteller'][$keyAufsteller]['mannschaften'][] = [
                     'name' => $mannschaft->name,
+                    'spielort' => $spielort->name,
+                    'aufsteller' => $aufsteller->name,
                     'liga' => $liga->name,
                     'spielstaerke' => $liga->spielstaerke,
                     'saison' => $saison->name,
