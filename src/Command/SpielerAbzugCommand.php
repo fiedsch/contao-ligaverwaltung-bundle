@@ -75,9 +75,10 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
 
         // Kopfzeile
 
-        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
             'Nachname',
             'Vorname',
+            'Geschlecht',
             'Spielerpass',
             'Mannschaft',
             'Liga',
@@ -104,10 +105,14 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                     foreach ($spieler as $s) {
                         /** @var MemberModel $member */
                         $member = $s->getRelated('member_id');
+                        if (null === $member) {
+                            continue;
+                        }
 
-                        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
-                            html_entity_decode($member->lastname),
-                            html_entity_decode($member->firstname),
+                        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+                            html_entity_decode($member->lastname ?? ''),
+                            html_entity_decode($member->firstname ?? ''),
+                            $member->gender,
                             $member->passnummer,
                             html_entity_decode($mannschaft->name),
                             html_entity_decode($liga->name),
