@@ -39,7 +39,7 @@ use Fiedsch\LigaverwaltungBundle\Module\ModuleMannschaftsseitenReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielberichtReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielortseitenReader;
 
-array_insert($GLOBALS['BE_MOD'], 2, [
+ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
     'liga' => [
         'liga.spielort' => [
             'tables' => ['tl_spielort'],
