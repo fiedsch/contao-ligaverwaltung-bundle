@@ -3,6 +3,11 @@
 ## Development
 
 
+## Version 1.1.0
+
+* New Content Element `TeamsAndPlayersOverview` (first draft)
+
+
 ## Version 1.0.8
 
 * Remove "visual debug" (a `print_r()` that unintendedly made it into the code :-(
