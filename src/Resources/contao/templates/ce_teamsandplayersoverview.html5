@@ -1,0 +1,23 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+   <h3>Gesamt</h3>
+    <ul>
+        <li><?= $this->gesamt['mannschaften'] ?> Mannschaften</li>
+        <li><?= $this->gesamt['spieler'] ?> Spieler</li>
+    </ul>
+
+    <h3>Ligen</h3>
+    <ul>
+    <?php foreach ($this->result as $name => $liga): ?>
+       <li><?= $name ?>
+       <ul>
+           <li><?= $liga['mannschaften'] ?> Mannschaften</li>
+           <li><?= $liga['spieler'] ?> Spieler</li>
+       </ul>
+       </li>
+    <?php endforeach; ?>
+    </ul>
+
+<?php $this->endblock(); ?>

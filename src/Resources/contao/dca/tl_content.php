@@ -159,3 +159,6 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['spielortseite'] = '{config_legend}
 /* Begegnungsauswahl (Begegnungserfassung im Frontend) */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['begegnungsauswahl'] = '{type_legend},type,headline;{auswahl_legend},verband,saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 // Felder verband und saison existieren bereits
+
+/* Mannschaften und Spielerübersicht */
+$GLOBALS['TL_DCA']['tl_content']['palettes']['teamsandplayersoverview'] = '{type_legend},type,headline;{auswahl_legend},verband,saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';

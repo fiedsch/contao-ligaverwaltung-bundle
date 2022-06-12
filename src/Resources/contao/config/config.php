@@ -25,6 +25,7 @@ use Fiedsch\LigaverwaltungBundle\Element\ContentSpielerliste;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortinfo;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortseite;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielplan;
+use Fiedsch\LigaverwaltungBundle\Element\ContentTeamsAndPlayersOverview;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\AufstellerModel;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
@@ -82,6 +83,7 @@ $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsseite'] = ContentMannschaftssei
 $GLOBALS['TL_CTE']['ligaverwaltung']['spielortseite'] = ContentSpielortseite::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftenuebersicht'] = ContentMannschaftenuebersicht::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['begegnungsauswahl'] = ContentBegegnungsauswahl::class;
+$GLOBALS['TL_CTE']['ligaverwaltung']['teamsandplayersoverview'] = ContentTeamsAndPlayersOverview::class;
 
 /*
  * Module
