@@ -18,6 +18,8 @@ use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 
+System::loadLanguageFile('default');
+
 $GLOBALS['TL_DCA']['tl_begegnung'] = [
     'config' => [
         'dataContainer' => 'Table',
@@ -247,7 +249,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'exclude' => true,
             'search' => true,
             'inputType' => 'textarea',
-            'eval' => ['tl_class' => 'clr long', 'maxlength' => 255, 'rte' => false],
+            'eval' => ['tl_class' => 'clr long', 'maxlength' => 255],
             'sql' => 'mediumtext NULL',
         ],
         'begegnung_data' => [
