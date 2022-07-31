@@ -48,11 +48,15 @@ class ContentMannschaftsliste extends ContentElement
             $objTemplate->title = $this->headline;
 
             $liga = LigaModel::findById($this->liga);
-            $subject = sprintf('%s %s %s',
-                $liga->getRelated('pid')->name,
-                $liga->name,
-                $liga->getRelated('saison')->name
-            );
+            if ($liga) {
+                $subject = sprintf('%s %s %s',
+                    $liga->getRelated('pid')->name,
+                    $liga->name,
+                    $liga->getRelated('saison')->name
+                );
+            } else {
+                $subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $this->liga);
+            }
             $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftsliste'][0])." $subject ###";
 
             return $objTemplate->parse();

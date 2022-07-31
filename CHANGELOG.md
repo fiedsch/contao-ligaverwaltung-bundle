@@ -3,6 +3,11 @@
 ## Development
 
 
+## Version 1.1.1
+
+* Fix: creation of backend labels failed if corresponding "liga" has been deleted
+
+
 ## Version 1.1.0
 
 * New Content Element `TeamsAndPlayersOverview` (first draft)

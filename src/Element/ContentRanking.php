@@ -55,22 +55,26 @@ class ContentRanking extends ContentElement
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
+            if ($liga) {
 
-            if ('1' === $this->rankingtype) {
-                $suffix = 'Mannschaften';
-                $subject = sprintf('%s %s %s',
-                    $liga->getRelated('pid')->name,
-                    $liga->name,
-                    $liga->getRelated('saison')->name
-                );
+                if ('1' === $this->rankingtype) {
+                    $suffix = 'Mannschaften';
+                    $subject = sprintf('%s %s %s',
+                        $liga->getRelated('pid')->name,
+                        $liga->name,
+                        $liga->getRelated('saison')->name
+                    );
+                } else {
+                    $suffix = 'Spieler';
+                    $mannschaft = MannschaftModel::findById($this->mannschaft);
+                    $subject = sprintf('%s %s %s',
+                        '(Mannschaft: ' . ($mannschaft->name ?: 'alle') . ')',
+                        $liga->name,
+                        $liga->getRelated('saison')->name
+                    );
+                }
             } else {
-                $suffix = 'Spieler';
-                $mannschaft = MannschaftModel::findById($this->mannschaft);
-                $subject = sprintf('%s %s %s',
-                    '(Mannschaft: '.($mannschaft->name ?: 'alle').')',
-                    $liga->name,
-                    $liga->getRelated('saison')->name
-                );
+                $subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $this->liga);
             }
             $objTemplate->title = $this->headline;
             $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['ranking'][0])." $suffix $subject ###";

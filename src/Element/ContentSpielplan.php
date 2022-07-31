@@ -227,11 +227,15 @@ class ContentSpielplan extends ContentElement
             $filter = ' (nur Begegnungen von "'.$mannschaft->name.'")';
         }
         $saison = SaisonModel::findById($liga->saison);
-        $ligalabel = sprintf('%s %s %s',
-            $liga->getRelated('pid')->name,
-            $liga->name,
-            $saison->name
-        );
+        if ($liga) {
+            $ligalabel = sprintf('%s %s %s',
+                $liga->getRelated('pid')->name,
+                $liga->name,
+                $saison->name
+            );
+        } else {
+            $subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $this->liga);
+        }
         $suffix = sprintf('%s %s', $ligalabel, $filter);
         $objTemplate->title = $this->headline;
         $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielplan'][0])." $suffix ###";
