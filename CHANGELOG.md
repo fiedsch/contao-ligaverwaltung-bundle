@@ -2,6 +2,7 @@
 
 ## Development
 
+* Minor fix for Contao 4.9.x (Contao\ArrayUtil is not available there)
 
 ## Version 1.1.1
 
