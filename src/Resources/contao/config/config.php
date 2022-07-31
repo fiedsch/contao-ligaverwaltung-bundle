@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-use Contao\ArrayUtil;
+//use Contao\ArrayUtil;
 use Fiedsch\LigaverwaltungBundle\Element\ContentBegegnungsauswahl;
 use Fiedsch\LigaverwaltungBundle\Element\ContentHighlightRanking;
 use Fiedsch\LigaverwaltungBundle\Element\ContentLigenliste;
@@ -41,7 +41,8 @@ use Fiedsch\LigaverwaltungBundle\Module\ModuleMannschaftsseitenReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielberichtReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielortseitenReader;
 
-ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
+//ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
+array_insert($GLOBALS['BE_MOD'], 2, [
     'liga' => [
         'liga.spielort' => [
             'tables' => ['tl_spielort'],
