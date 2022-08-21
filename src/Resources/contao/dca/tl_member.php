@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['tl_class'] .= ' clr
 // original definition
 // $GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] = 'varchar(64) COLLATE utf8_bin NULL';
 // redefinition
-$GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] = 'varchar(64) COLLATE utf8_general_ci NULL';
+$GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] = 'varchar(64) COLLATE utf8mb4_general_ci NULL';
 
 // do not use 'filter' for these
 foreach (['country', 'language', 'disable', 'login', 'city'] as $field) {
