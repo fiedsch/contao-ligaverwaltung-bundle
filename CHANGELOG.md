@@ -3,9 +3,12 @@
 ## Development
 
 
-## Version 1.1.2
+## Version 1.1.3
 
 * Fix #18 (require `patchwork/utf8` which is nor required in Contao 4.13+)
+
+## Version 1.1.2
+
 * Minor fix for Contao 4.9.x (Contao\ArrayUtil is not available there)
 
 
