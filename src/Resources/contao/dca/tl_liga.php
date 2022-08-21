@@ -15,6 +15,8 @@ declare(strict_types=1);
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 
+\Contao\System::loadLanguageFile('default');
+
 $GLOBALS['TL_DCA']['tl_liga'] = [
     'config' => [
         'dataContainer' => 'Table',

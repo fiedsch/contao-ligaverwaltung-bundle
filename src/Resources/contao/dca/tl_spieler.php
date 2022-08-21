@@ -17,6 +17,8 @@ use Contao\FilesModel;
 use Contao\MemberModel;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
+\Contao\System::loadLanguageFile('default');
+
 $GLOBALS['TL_DCA']['tl_spieler'] = [
     'config' => [
         'dataContainer' => 'Table',

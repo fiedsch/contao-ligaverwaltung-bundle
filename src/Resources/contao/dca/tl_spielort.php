@@ -12,6 +12,8 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
+\Contao\System::loadLanguageFile('default');
+
 $GLOBALS['TL_DCA']['tl_spielort'] = [
     'config' => [
         'dataContainer' => 'Table',

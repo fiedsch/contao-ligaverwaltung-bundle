@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 
+\Contao\System::loadLanguageFile('default');
+
 $GLOBALS['TL_DCA']['tl_verband'] = [
     'config' => [
         'dataContainer' => 'Table',
