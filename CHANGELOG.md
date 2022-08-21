@@ -2,6 +2,10 @@
 
 ## Development
 
+## Version 1.1.4
+
+* Fix collation in `tl_member.username` change
+* Add `loadLanguageFile()` calls in DCA files
 
 ## Version 1.1.3
 
