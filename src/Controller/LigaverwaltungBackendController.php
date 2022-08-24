@@ -33,6 +33,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LigaverwaltungBackendController extends AbstractController // Controller
 {
+    public function __construct()
+    {
+        $this->setContainer(System::getContainer());
+    }
+
     /**
      * Spielerhistorie.
      *

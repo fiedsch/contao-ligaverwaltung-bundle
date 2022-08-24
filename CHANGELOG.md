@@ -2,6 +2,12 @@
 
 ## Development
 
+
+## Version 1.1.5
+
+* add missing `setContainer()` call
+
+
 ## Version 1.1.4
 
 * Fix collation in `tl_member.username` change
