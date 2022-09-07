@@ -31,7 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route(defaults={"_scope" = "backend", "_token_check" = true})
  */
-class LigaverwaltungBackendController extends AbstractController // Controller
+class LigaverwaltungBackendController extends AbstractController
 {
     public function __construct()
     {

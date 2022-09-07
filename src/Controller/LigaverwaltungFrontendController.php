@@ -43,6 +43,8 @@ class LigaverwaltungFrontendController extends AbstractController
      *
      * @throws Exception
      *
+     * @return Response
+     *
      * @Route(
      *     "/ligaverwaltung/spielplan/ical/{ligaid}/{mannschaftid}",
      *     name="spielplan_ical",
