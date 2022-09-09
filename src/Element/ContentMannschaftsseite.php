@@ -151,7 +151,7 @@ class ContentMannschaftsseite extends ContentElement
      */
     protected function addDescriptionToTlHead(string $content): void
     {
-        if ($GLOBALS['TL_HEAD']) {
+        if ($GLOBALS['TL_HEAD'] ?? false) {
             foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {
                 if (preg_match('/description/', $entry)) {
                     unset($GLOBALS['TL_HEAD'][$i]);
