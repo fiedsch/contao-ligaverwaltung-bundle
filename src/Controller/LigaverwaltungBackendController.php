@@ -21,7 +21,6 @@ use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
 use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,13 +30,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route(defaults={"_scope" = "backend", "_token_check" = true})
  */
-class LigaverwaltungBackendController extends AbstractController
+class LigaverwaltungBackendController
 {
-    public function __construct()
-    {
-        $this->setContainer(System::getContainer());
-    }
-
     /**
      * Spielerhistorie.
      *
