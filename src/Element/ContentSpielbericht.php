@@ -193,6 +193,12 @@ class ContentSpielbericht extends ContentElement
                 }
             }
         }
+        // make sure, all fields are set so we can access them in the template without checking
+        foreach ($result as $spielerId => &$data) {
+            foreach (HighlightModel::ALL_TYPES as $highlight) {
+                $data['highlights'][$highlight] = $data['highlights'][$highlight] ?? '';
+            }
+        }
 
         uasort(
             $result,

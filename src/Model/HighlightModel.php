@@ -34,6 +34,8 @@ class HighlightModel extends Model
     const TYPE_171 = '4';
     const TYPE_ALL = '99';
 
+    const ALL_TYPES = [self::TYPE_180, self::TYPE_SHORTLEG, self::TYPE_HIGHFINISH, self::TYPE_171];
+
     /**
      * Table name.
      *

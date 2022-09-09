@@ -164,7 +164,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'input_field_callback' => static function (DataContainer $dc) {
                 $member_id = $dc->activeRecord->row()['member_id'];
                 $member = MemberModel::findById($member_id);
-                $avatar = $member ? FilesModel::findById($member->avatar)->path : null;
+                $avatar = $member ? FilesModel::findById($member->avatar)?->path : null;
 
                 return '<div class="widget">'
                     .'<h3>'

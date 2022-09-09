@@ -107,6 +107,10 @@ class BegegnungModel extends Model
             [$home, $away] = $spiel->getLegs();
             $result[0] += $home;
             $result[1] += $away;
+            // Initialisierung
+            $eingesetzte_spieler['home'][$spiel->home] = $eingesetzte_spieler['home'][$spiel->home] ?? 0;
+            $eingesetzte_spieler['away'][$spiel->away] = $eingesetzte_spieler['away'][$spiel->away] ?? 0;
+
             ++$eingesetzte_spieler['home'][$spiel->home];
             ++$eingesetzte_spieler['away'][$spiel->away];
         }
@@ -138,11 +142,13 @@ class BegegnungModel extends Model
      */
     public function getLabel($mode = 'full')
     {
+        // dd($this);
+
         switch ($mode) {
             case 'full':
                 return sprintf('%s:%s (%s %s, %s)',
-                    $this->getRelated('home')->name,
-                    $this->getRelated('away')->name,
+                    $this->getRelated('home')?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
+                    $this->getRelated('away')?->name,
                     $this->getRelated('pid')->name,
                     $this->getRelated('pid')->getRelated('saison')->name,
                     Date::parse(\Config::get('dateFormat'), $this->spiel_am)
@@ -151,8 +157,8 @@ class BegegnungModel extends Model
 
             case 'medium':
                 return sprintf('%s:%s (%s %s)',
-                    $this->getRelated('home')->name,
-                    $this->getRelated('away')->name,
+                    $this->getRelated('home')?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
+                    $this->getRelated('away')?->name,
                     $this->getRelated('pid')->name,
                     $this->getRelated('pid')->getRelated('saison')->name
                 );
@@ -161,8 +167,8 @@ class BegegnungModel extends Model
             case 'short':
             default:
                 return sprintf('%s:%s',
-                    $this->getRelated('home')->name,
-                    $this->getRelated('away')->name
+                    $this->getRelated('home')?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
+                    $this->getRelated('away')?->name
                 );
             break;
         }

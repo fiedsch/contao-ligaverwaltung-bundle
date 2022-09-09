@@ -33,6 +33,8 @@ use Contao\PageModel;
  */
 class MannschaftModel extends Model
 {
+
+    const MANNSCHAFT_DOES_NOT_EXIST = '[ex. nicht mehr]';
     /**
      * Table name.
      *
