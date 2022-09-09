@@ -22,7 +22,6 @@ use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
 use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +32,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route(defaults={"_scope" = "frontend", "_token_check" = true})
  */
-class LigaverwaltungFrontendController extends AbstractController
+class LigaverwaltungFrontendController
 {
     /**
      * Spielplan als Ical.
