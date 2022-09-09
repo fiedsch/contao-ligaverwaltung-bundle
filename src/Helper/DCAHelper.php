@@ -237,8 +237,8 @@ class DCAHelper
             foreach ($spiele as $spiel) {
                 $punkte_home += $spiel->score_home > $spiel->score_away ? 1 : 0;
                 $punkte_away += $spiel->score_home < $spiel->score_away ? 1 : 0;
-                ++$eingesetzte_spieler['home'][$spiel->home];
-                ++$eingesetzte_spieler['away'][$spiel->away];
+                $eingesetzte_spieler['home'][$spiel->home] = ($eingesetzte_spieler['home'][$spiel->home] ?? 0)+1;
+                $eingesetzte_spieler['away'][$spiel->away] = ($eingesetzte_spieler['away'][$spiel->away] ?? 0)+1;
             }
         }
         // nicht angetreten? (Mannschaft nur mit virtuellm Spieler '0' (='kein Spieler') angetreten).
@@ -255,7 +255,7 @@ class DCAHelper
             $liga->name,
             $liga->getRelated('saison')->name,
             $row['spiel_tag'],
-            $home->name,
+            $home?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
             $away ? 'vs' : 'hat',
             $away ? $away->name : 'Spielfrei',
             $final_score,
@@ -297,7 +297,7 @@ class DCAHelper
     {
         $result = [];
 
-        if ($dc->activeRecord->pid) {
+        if ($dc->activeRecord?->pid) {
             // Callback beim bearbeiten einer Begegnung
             $mannschaften = MannschaftModel::findByLiga($dc->activeRecord->pid);
         } else {

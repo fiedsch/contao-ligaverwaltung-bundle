@@ -86,7 +86,7 @@ class ContentRanking extends ContentElement
         }
 
         $appendCssClass = 'rankingtype_'.('1' === $this->rankingtype ? 'mannschaft' : 'spieler');
-        $this->cssID = [$this->cssID[0], $this->cssID[1].' '.$appendCssClass];
+        $this->cssID = [$this->cssID[0] ?? '', ($this->cssID[1] ?? '') .' '.$appendCssClass];
 
         return parent::generate();
     }
@@ -174,6 +174,13 @@ class ContentRanking extends ContentElement
             unset($spieltag); // wird nicht benötigt
 
             // Begegnungen: Mannschaft gegen Mannschaft
+
+            // Initialisierung
+            foreach ([$home, $away] as $i) {
+                foreach (['begegnungen', 'legs_self', 'legs_other', 'spiele_self', 'spiele_other', 'punkte_self', 'punkte_other', 'gewonnen','unentschieden','verloren'] as $j) {
+                    $results[$i][$j] = $results[$i][$j] ?? 0;
+                }
+            }
 
             ++$results[$home]['begegnungen'];
             ++$results[$away]['begegnungen'];
@@ -313,21 +320,22 @@ class ContentRanking extends ContentElement
             $results[$spiele->player_home]['mannschaft_id'] = $spiele->team_home;
             $results[$spiele->player_away]['mannschaft_id'] = $spiele->team_away;
 
-            ++$results[$spiele->player_home]['spiele'];
-            $results[$spiele->player_home]['spiele_self'] += $spiel->getScoreHome();
-            $results[$spiele->player_home]['spiele_other'] += $spiel->getScoreAway();
-            $results[$spiele->player_home]['legs_self'] += $spiel->getLegsHome();
-            $results[$spiele->player_home]['legs_other'] += $spiel->getLegsAway();
-            $results[$spiele->player_home]['punkte_self'] += $spiel->getPunkteHome();
-            $results[$spiele->player_home]['punkte_other'] += $spiel->getPunkteAway();
+            //++$results[$spiele->player_home]['spiele'];
+            $results[$spiele->player_home]['spiele'] = ($results[$spiele->player_home]['spiele'] ?? 0)+1;
+            $results[$spiele->player_home]['spiele_self'] = ($results[$spiele->player_home]['spiele_self'] ?? 0) + $spiel->getScoreHome();
+            $results[$spiele->player_home]['spiele_other'] = ($results[$spiele->player_home]['spiele_other'] ?? 0)+ $spiel->getScoreAway();
+            $results[$spiele->player_home]['legs_self'] = ($results[$spiele->player_home]['legs_self'] ?? 0) + $spiel->getLegsHome();
+            $results[$spiele->player_home]['legs_other'] = ($results[$spiele->player_home]['legs_other'] ?? 0) + $spiel->getLegsAway();
+            $results[$spiele->player_home]['punkte_self'] = ($results[$spiele->player_home]['punkte_self'] ?? 0) + $spiel->getPunkteHome();
+            $results[$spiele->player_home]['punkte_other'] = ($results[$spiele->player_home]['punkte_other'] ?? 0) + $spiel->getPunkteAway();
 
-            ++$results[$spiele->player_away]['spiele'];
-            $results[$spiele->player_away]['spiele_self'] += $spiel->getScoreAway();
-            $results[$spiele->player_away]['spiele_other'] += $spiel->getScoreHome();
-            $results[$spiele->player_away]['legs_self'] += $spiel->getLegsAway();
-            $results[$spiele->player_away]['legs_other'] += $spiel->getLegsHome();
-            $results[$spiele->player_away]['punkte_self'] += $spiel->getPunkteAway();
-            $results[$spiele->player_away]['punkte_other'] += $spiel->getPunkteHome();
+            $results[$spiele->player_away]['spiele'] = ($results[$spiele->player_away]['spiele'] ?? 0)+1;
+            $results[$spiele->player_away]['spiele_self'] = ($results[$spiele->player_away]['spiele_self'] ?? 0)+ $spiel->getScoreAway();
+            $results[$spiele->player_away]['spiele_other'] = ($results[$spiele->player_away]['spiele_other'] ?? 0) + $spiel->getScoreHome();
+            $results[$spiele->player_away]['legs_self'] = ($results[$spiele->player_away]['legs_self'] ?? 0) + $spiel->getLegsAway();
+            $results[$spiele->player_away]['legs_other'] = ($results[$spiele->player_away]['legs_other'] ?? 0) + $spiel->getLegsHome();
+            $results[$spiele->player_away]['punkte_self'] = ($results[$spiele->player_away]['punkte_self'] ?? 0) + $spiel->getPunkteAway();
+            $results[$spiele->player_away]['punkte_other'] = ($results[$spiele->player_away]['punkte_other'] ?? 0)+ $spiel->getPunkteHome();
         }
 
         // ID 0 ist der Platzhalter für "kein Spieler" (z.B. bei "nicht angetreten"),

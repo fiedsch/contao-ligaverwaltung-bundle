@@ -405,7 +405,7 @@ class ContentHighlightRanking extends ContentElement
                     }
                     // Bei allen anderen Rankings hat ['hl_punkte'] nur einen numerischen Eintrag, nach dem
                     // wir sortieren können:
-                    return $b['hl_punkte'][0] <=> $a['hl_punkte'][0];
+                    return ($b['hl_punkte'][0] ?? 0) <=> ($a['hl_punkte'][0] ?? 0);
                 }
             );
         }

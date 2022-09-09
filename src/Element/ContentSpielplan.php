@@ -156,11 +156,11 @@ class ContentSpielplan extends ContentElement
             $spielort = $home->getRelated('spielort');
 
             // Ist die Heim- oder die Gastmannschaft nicht mehr aktiv?
-            $inactive = !$home->active || !$away->active;
+            $inactive = (!$home?->active) || (!$away?->active);
 
-            $homelabel = !$home->active && !$already_played
+            $homelabel = !$home?->active && !$already_played
                 ? 'Spielfrei' : $home->getLinkedName();
-            $awaylabel = !$away || (!$away->active && !$already_played)
+            $awaylabel = !$away?->active && !$already_played
                 ? 'Spielfrei' : $away->getLinkedName();
 
             $spielortlabel = $spielort->name;
@@ -168,7 +168,8 @@ class ContentSpielplan extends ContentElement
             if ($spielort->spielortpage) {
                 $spielortpage = PageModel::findById($spielort->spielortpage);
                 $spielortlabel = sprintf("<a href='%s'>%s</a>",
-                    Controller::generateFrontendUrl($spielortpage->row()),
+                    //Controller::generateFrontendUrl($spielortpage->row()),
+                    $spielortpage->getFrontendUrl(),
                     $spielort->name
                 );
             }
