@@ -24,7 +24,7 @@ use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Patchwork\Utf8;
+use function Symfony\Component\String\u;
 
 class ContentMannschaftsseite extends ContentElement
 {
@@ -52,7 +52,7 @@ class ContentMannschaftsseite extends ContentElement
                 $headline = $mannschaftModel->getFullName();
             }
 
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftsseite'][0]).' ###';
+            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftsseite'][0])->upper().' ###';
             $objTemplate->id = $this->id;
             $objTemplate->link = $headline;
 

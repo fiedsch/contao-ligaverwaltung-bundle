@@ -10,7 +10,7 @@ use Contao\StringUtil;
 use Contao\System;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
-use Patchwork\Utf8;
+use function Symfony\Component\String\u;
 
 class ContentTeamsAndPlayersOverview extends ContentElement
 {
@@ -29,7 +29,7 @@ class ContentTeamsAndPlayersOverview extends ContentElement
 
             $headline = $this->headline;
 
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['teamsandplayersoverview'][0]).' ###';
+            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['teamsandplayersoverview'][0])->upper().' ###';
             $objTemplate->id = $this->id;
 
             return $objTemplate->parse();

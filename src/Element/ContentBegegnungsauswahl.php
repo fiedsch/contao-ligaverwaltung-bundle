@@ -24,8 +24,8 @@ use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\StringUtil;
 use Contao\System;
-use Patchwork\Utf8;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use function Symfony\Component\String\u;
 
 /**
  * @property string $headline
@@ -46,7 +46,7 @@ class ContentBegegnungsauswahl extends ContentElement
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['begegnungsauswahl'][0]).' ###';
+            $objTemplate->wildcard = '### 'u($GLOBALS['TL_LANG']['CTE']['begegnungsauswahl'][0])->upper().' ###';
 
             return $objTemplate->parse();
         }

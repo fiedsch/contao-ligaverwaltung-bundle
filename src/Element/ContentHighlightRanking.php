@@ -25,9 +25,9 @@ use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Patchwork\Utf8;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
+use function Symfony\Component\String\u;
 
 /**
  * Content element "Liste aller Spieler einer Mannaschft".
@@ -70,7 +70,7 @@ class ContentHighlightRanking extends ContentElement
                     $suffix = 'Spieler';
                     $mannschaft = MannschaftModel::findById($this->mannschaft);
                     $subject = sprintf('%s %s %s %s',
-                        'Mannschaft '.($mannschaft->name ?: 'alle'),
+                        'Mannschaft '.($mannschaft?->name ?: 'alle'),
                         $liga->getRelated('pid')->name,
                         $liga->name,
                         $liga->getRelated('saison')->name
@@ -78,7 +78,7 @@ class ContentHighlightRanking extends ContentElement
                 }
             }
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['highlightranking'][0]).", $suffix, $subject ###";
+            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['highlightranking'][0])->upper().", $suffix, $subject ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;

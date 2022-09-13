@@ -27,7 +27,7 @@ use Contao\Module;
 use Contao\PageModel;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortseite;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
-use Patchwork\Utf8;
+use function Symfony\Component\String\u;
 
 class ModuleSpielortseitenReader extends Module
 {
@@ -48,7 +48,7 @@ class ModuleSpielortseitenReader extends Module
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
 
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['spielortseitenreader'][0]).' ###';
+            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['FMD']['spielortseitenreader'][0])->upper().' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
