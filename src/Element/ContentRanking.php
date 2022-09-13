@@ -25,7 +25,7 @@ use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use Patchwork\Utf8;
+use function Symfony\Component\String\u;
 
 /**
  * Content element "Liste aller Spieler einer Mannaschft".
@@ -68,7 +68,7 @@ class ContentRanking extends ContentElement
                     $suffix = 'Spieler';
                     $mannschaft = MannschaftModel::findById($this->mannschaft);
                     $subject = sprintf('%s %s %s',
-                        '(Mannschaft: ' . ($mannschaft->name ?: 'alle') . ')',
+                        '(Mannschaft: ' . ($mannschaft?->name ?: 'alle') . ')',
                         $liga->name,
                         $liga->getRelated('saison')->name
                     );
@@ -77,7 +77,7 @@ class ContentRanking extends ContentElement
                 $subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $this->liga);
             }
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['ranking'][0])." $suffix $subject ###";
+            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['ranking'][0])->upper()." $suffix $subject ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;

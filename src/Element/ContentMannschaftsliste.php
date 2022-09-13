@@ -18,7 +18,7 @@ use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Patchwork\Utf8;
+use function Symfony\Component\String\u;
 
 /**
  * Content element "Liste aller Mannschaften einer Liga".
@@ -57,7 +57,7 @@ class ContentMannschaftsliste extends ContentElement
             } else {
                 $subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $this->liga);
             }
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['mannschaftsliste'][0])." $subject ###";
+            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftsliste'][0])->upper()." $subject ###";
 
             return $objTemplate->parse();
         }

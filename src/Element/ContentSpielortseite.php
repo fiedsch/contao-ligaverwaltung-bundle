@@ -28,7 +28,7 @@ use Contao\StringUtil;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
-use Patchwork\Utf8;
+use function Symfony\Component\String\u;
 
 class ContentSpielortseite extends ContentElement
 {
@@ -54,7 +54,7 @@ class ContentSpielortseite extends ContentElement
                 $headline = $spielortModel->name;
             }
 
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielortseite'][0]).' ###';
+            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielortseite'][0])->upper().' ###';
             $objTemplate->id = $this->id;
             $objTemplate->link = $headline;
 
