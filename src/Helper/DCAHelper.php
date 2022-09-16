@@ -25,6 +25,7 @@ use Contao\MemberModel;
 use Contao\StringUtil;
 use Contao\Widget;
 use Exception;
+use RuntimeException;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
