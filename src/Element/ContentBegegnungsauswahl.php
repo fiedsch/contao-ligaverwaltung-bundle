@@ -46,7 +46,7 @@ class ContentBegegnungsauswahl extends ContentElement
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = '### 'u($GLOBALS['TL_LANG']['CTE']['begegnungsauswahl'][0])->upper().' ###';
+            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['begegnungsauswahl'][0])->upper().' ###';
 
             return $objTemplate->parse();
         }
