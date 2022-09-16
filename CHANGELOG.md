@@ -5,6 +5,10 @@
 
 ## Version 1.1.5
 
+* add missing `use` statement in `DCAHelper`
+
+## Version 1.1.5
+
 * add missing `setContainer()` call
 
 
