@@ -31,7 +31,7 @@ use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
-use Patchwork\Utf8;
+use function Symfony\Component\String\u;
 
 class ContentSpielplan extends ContentElement
 {
@@ -156,11 +156,11 @@ class ContentSpielplan extends ContentElement
             $spielort = $home->getRelated('spielort');
 
             // Ist die Heim- oder die Gastmannschaft nicht mehr aktiv?
-            $inactive = !$home->active || !$away->active;
+            $inactive = (!$home?->active) || (!$away?->active);
 
-            $homelabel = !$home->active && !$already_played
+            $homelabel = !$home?->active && !$already_played
                 ? 'Spielfrei' : $home->getLinkedName();
-            $awaylabel = !$away || (!$away->active && !$already_played)
+            $awaylabel = !$away?->active && !$already_played
                 ? 'Spielfrei' : $away->getLinkedName();
 
             $spielortlabel = $spielort->name;
@@ -168,7 +168,8 @@ class ContentSpielplan extends ContentElement
             if ($spielort->spielortpage) {
                 $spielortpage = PageModel::findById($spielort->spielortpage);
                 $spielortlabel = sprintf("<a href='%s'>%s</a>",
-                    Controller::generateFrontendUrl($spielortpage->row()),
+                    //Controller::generateFrontendUrl($spielortpage->row()),
+                    $spielortpage->getFrontendUrl(),
                     $spielort->name
                 );
             }
@@ -238,7 +239,7 @@ class ContentSpielplan extends ContentElement
         }
         $suffix = sprintf('%s %s', $ligalabel, $filter);
         $objTemplate->title = $this->headline;
-        $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielplan'][0])." $suffix ###";
+        $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielplan'][0])->upper()." $suffix ###";
         // $objTemplate->id = $this->id;
         // $objTemplate->link = 'the text that will be linked with href';
         // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;

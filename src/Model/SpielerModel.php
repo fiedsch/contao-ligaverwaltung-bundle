@@ -108,7 +108,7 @@ class SpielerModel extends Model
                 }
             }
         } else {
-            $mannschaftsname = 'Mannschaft ex. nicht (mehr)';
+            $mannschaftsname = MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST;
         }
 
         return $membername.', '.$mannschaftsname;

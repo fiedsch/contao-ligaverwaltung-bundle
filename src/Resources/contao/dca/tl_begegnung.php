@@ -240,7 +240,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'],
             'exclude' => true,
             'inputType' => 'text',
-            'rangeFilter' => true, // see https://github.com/codefog/contao-haste/blob/master/docs/Dca/index.md#haste-dca
+            //'rangeFilter' => true, // see https://github.com/codefog/contao-haste/blob/master/docs/Dca/index.md#haste-dca
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
             'sql' => "varchar(11) NOT NULL default ''",
         ],

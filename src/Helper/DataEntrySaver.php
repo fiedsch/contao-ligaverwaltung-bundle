@@ -86,8 +86,7 @@ class DataEntrySaver
         if (!isset($data['away'])) {
             $data['away'] = self::getTeamData($begegnungModel, 'away');
         }
-
-        if (!\is_array($data['highlights']) || 0 === \count($data['highlights'])) {
+        if (!\is_array($data['highlights'] ?? null) || 0 === \count($data['highlights'])) {
             //$data['highlights'] = ['dummy'=>'data']; // force Object ('{ }') because it would otherwise be an empty array ('[ ]')
             $data['highlights'] = json_decode('{}');
         }
@@ -263,7 +262,7 @@ class DataEntrySaver
 
         return [
             'key' => $homeaway,
-            'name' => $mannschaftModel->name,
+            'name' => $mannschaftModel?->name ?? '',
             'available' => $players,
             'lineup' => [],
             'played' => [],

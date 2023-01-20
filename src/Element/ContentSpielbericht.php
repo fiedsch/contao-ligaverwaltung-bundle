@@ -28,7 +28,7 @@ use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
-use Patchwork\Utf8;
+use function Symfony\Component\String\u;
 
 /**
  * @property int $begegnung
@@ -53,7 +53,7 @@ class ContentSpielbericht extends ContentElement
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
             $begegnunglabel = BegegnungModel::findById($this->begegnung) ? BegegnungModel::findById($this->begegnung)->getLabel('full') : 'Begegnung nicht gefunden!';
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['CTE']['spielbericht'][0])." $begegnunglabel ###";
+            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielbericht'][0])->upper()." $begegnunglabel ###";
             // $objTemplate->id = $this->id;
             // $objTemplate->link = 'the text that will be linked with href';
             // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
@@ -191,6 +191,12 @@ class ContentSpielbericht extends ContentElement
                     $result[$highlight->spieler_id]['name'] = $spieler->getName();
                     $result[$highlight->spieler_id]['team'] = $spieler->getRelated('pid')->name;
                 }
+            }
+        }
+        // make sure, all fields are set so we can access them in the template without checking
+        foreach ($result as $spielerId => &$data) {
+            foreach (HighlightModel::ALL_TYPES as $highlight) {
+                $data['highlights'][$highlight] = $data['highlights'][$highlight] ?? '';
             }
         }
 
