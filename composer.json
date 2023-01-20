@@ -28,7 +28,7 @@
   "extra": {
     "contao-manager-plugin": "Fiedsch\\LigaverwaltungBundle\\ContaoManager\\Plugin",
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "require-dev": {
