@@ -35,8 +35,8 @@ use Contao\Model\Collection;
  */
 class SpielModel extends Model
 {
-    const TYPE_EINZEL = '1';
-    const TYPE_DOPPEL = '2';
+    const TYPE_EINZEL = '1'; // FIXME: should this be 1 (not '1') with PHP 8?
+    const TYPE_DOPPEL = '2'; // see above
 
     /**
      * Table name.

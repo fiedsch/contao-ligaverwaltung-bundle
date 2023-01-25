@@ -123,7 +123,7 @@ class ContentSpielbericht extends ContentElement
                 $awayplayer = '-';
             }
 
-            if (SpielModel::TYPE_DOPPEL === $spiel->spieltype) {
+            if (SpielModel::TYPE_DOPPEL === (string)$spiel->spieltype) {
                 // Doppel (zweiter Spieler)
                 /** @var SpielerModel $home */
                 if ($home = $spiel->getRelated('home2')) {
@@ -156,7 +156,7 @@ class ContentSpielbericht extends ContentElement
             $spielergebnisse[] = [
                 'home' => sprintf('<span class="%s">%s</span>', $homeCssClass, $homeplayer),
                 'away' => sprintf('<span class="%s">%s</span>', $awayCssClass, $awayplayer),
-                'type' => SpielModel::TYPE_EINZEL === $spiel->spieltype ? 'einzel' : 'doppel',
+                'type' => SpielModel::TYPE_EINZEL === (string)$spiel->spieltype ? 'einzel' : 'doppel',
                 'score' => $score,
             ];
         }
