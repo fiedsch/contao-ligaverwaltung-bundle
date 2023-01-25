@@ -19,9 +19,9 @@ use Contao\Controller;
 use Contao\Date;
 use Contao\Model;
 use Contao\PageModel;
-use function count;
 use Exception;
 use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
+use function count;
 
 /**
  * @property int    $id
@@ -142,16 +142,15 @@ class BegegnungModel extends Model
      */
     public function getLabel($mode = 'full')
     {
-        // dd($this);
-
         switch ($mode) {
             case 'full':
-                return sprintf('%s:%s (%s %s, %s)',
+                return sprintf('%s:%s (%s %s%s%s)',
                     $this->getRelated('home')?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
                     $this->getRelated('away')?->name,
                     $this->getRelated('pid')->name,
                     $this->getRelated('pid')->getRelated('saison')->name,
-                    Date::parse(\Config::get('dateFormat'), $this->spiel_am)
+                    $this->spiel_am ? ', ' : '',
+                        $this->spiel_am ? Date::parse(Config::get('dateFormat'), $this->spiel_am) : ''
                 );
                 break;
 
@@ -194,7 +193,7 @@ class BegegnungModel extends Model
         if ($spielberichtpageId) {
             $spielberichtpage = PageModel::findById($spielberichtpageId);
 
-            if (\Config::get('folderUrl')) {
+            if (Config::get('folderUrl')) {
                 $url = Controller::generateFrontendUrl($spielberichtpage->row(), '/id/'.$this->id);
             } else {
                 $url = Controller::generateFrontendUrl($spielberichtpage->row()).'?id='.$this->id;
