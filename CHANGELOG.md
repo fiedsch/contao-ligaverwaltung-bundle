@@ -2,7 +2,7 @@
 
 ## Development
 
-* Update Vue components for daat entry to Vue 2.7
+* Update Vue components for data entry to Vue 2.7
 
 
 # Version 2.1.0
