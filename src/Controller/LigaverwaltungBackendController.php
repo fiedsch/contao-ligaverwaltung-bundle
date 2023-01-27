@@ -20,7 +20,6 @@ use Exception;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
 use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,7 +75,6 @@ class LigaverwaltungBackendController
      *     },
      *     methods={"GET"}
      * )
-     * @Template("@FiedschLigaverwaltung/begegnung_dataentry.html.twig")
      */
     public function begegnungDataEntryAction($begegnung)
     {
