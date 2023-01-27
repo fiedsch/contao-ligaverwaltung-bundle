@@ -2,6 +2,17 @@
 
 ## Development
 
+* Update Vue components for daat entry to Vue 2.7
+
+
+# Version 2.1.0
+
+* Remove sensio/framework-extra-bundle requirement
+* Update eluceo/ical
+
+## Version 2.0.0 - 2.0.2
+
+* Version for PHP 8 and Contao 4.13
 
 ## Version 1.1.5
 
