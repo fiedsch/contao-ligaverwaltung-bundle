@@ -17,13 +17,20 @@ namespace Fiedsch\LigaverwaltungBundle\Controller;
 use Contao\Config;
 use Contao\Controller;
 use Contao\PageModel;
-use Eluceo\iCal\Component\Calendar;
-use Eluceo\iCal\Component\Event;
+use Eluceo\iCal\Domain\Entity\Calendar;
+use Eluceo\iCal\Domain\Entity\Event;
+use Eluceo\iCal\Domain\ValueObject\Location;
+use Eluceo\iCal\Presentation\Factory\CalendarFactory;
+use Eluceo\iCal\Domain\ValueObject\TimeSpan;
+use Eluceo\iCal\Domain\ValueObject\DateTime as IcalDateTime;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Symfony\Component\HttpFoundation\Response;
+use DateTime;
+use DateTimeZone;
+use DateInterval;
 
 class IcalController
 {
@@ -83,8 +90,7 @@ class IcalController
             ['order' => 'spiel_tag ASC, spiel_am ASC']
         );
 
-        // Kalender anlegen
-        $vCalendar = new Calendar($calendarBaseName);
+        $events = [];
 
         // Events hinzufügen
         if ($begegnungen) {
@@ -93,9 +99,12 @@ class IcalController
                     // Mannschaft hat Spielfrei
                     continue;
                 }
-                $vCalendar->addComponent($this->generateIcalEvent($begegnung));
+                $events[] = $this->generateIcalEvent($begegnung);
             }
         }
+
+        // Kalender anlegen
+        $vCalendar = new Calendar($events);
 
         $calendarName = sprintf('%s-%d-%d.ics',
             $calendarBaseName,
@@ -103,7 +112,8 @@ class IcalController
             $this->mannschaftid ?: 'alle'
         );
 
-        $response = new Response($vCalendar->render());
+        $iCalendarComponent = (new CalendarFactory())->createCalendar($vCalendar);
+        $response = new Response((string)$iCalendarComponent);
         $response->headers->add(['Content-Type' => 'text/calendar; charset=utf-8']);
         $response->headers->add(['Content-Disposition' => "attachment; filename=\"$calendarName\""]);
 
@@ -113,7 +123,6 @@ class IcalController
     protected function initialize(): void
     {
         $tz = 'Europe/Berlin';
-        // $dtz = new \DateTimeZone($tz);
         date_default_timezone_set($tz);
     }
 
@@ -122,7 +131,7 @@ class IcalController
      *
      * @return Event
      */
-    protected function generateIcalEvent(BegegnungModel $begegnung)
+    protected function generateIcalEvent(BegegnungModel $begegnung): Event
     {
         $vEvent = new Event();
 
@@ -145,15 +154,15 @@ class IcalController
                 $spielort->city
         );
 
-        $dtStart = new \DateTime(date('Y-m-d H:i:s', (int) $begegnung->spiel_am), new \DateTimeZone(Config::get('timeZone')));
+        $dtStart = new DateTime(date('Y-m-d H:i:s', (int) $begegnung->spiel_am), new DateTimeZone(Config::get('timeZone')));
 
         // Did they change the default configuration (date + time) to date only in
         // the site's contfiguration? Then add a default time here:
         if ('datim' !== $GLOBALS['TL_DCA']['tl_begegnung']['fields']['spiel_am']['eval']['rgxp']) {
             // TODO: "Prime-Time" nicht hart kodiert
-            // In app/config/config.yml (oder parameters.yml?) als ligaverwaltung.default_time
+            // Z.B. in app/config/parameters.yml als ligaverwaltung.default_time
             // - - - - - - - -
-            // # config.yml
+            // # parameters.yml
             // parameters:
             //     ligaverwaltung.default_time: '20:00'
             // - - - - - - - -
@@ -162,9 +171,14 @@ class IcalController
             $dtStart->setTime(20, 0);
         }
         $vEvent
-            ->setDtStart($dtStart)
+            ->setOccurrence(
+                new TimeSpan(
+                    new IcalDateTime($dtStart, true),
+                    new IcalDateTime($dtStart->add(new DateInterval('PT2H')), true) // hard coded 2 hours duration
+                )
+            )
             ->setSummary($summary)
-            ->setLocation($location)
+            ->setLocation(new Location($location))
         ;
 
         return $vEvent;
