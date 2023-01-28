@@ -1,5 +1,6 @@
 # Changes
 
+
 ## Development
 
 * Update Vue components for data entry to Vue 2.7
@@ -9,14 +10,18 @@
 
 * Remove sensio/framework-extra-bundle requirement
 * Update eluceo/ical
+* Add documentation
+
 
 ## Version 2.0.0 - 2.0.2
 
 * Version for PHP 8 and Contao 4.13
 
+
 ## Version 1.1.5
 
 * add missing `use` statement in `DCAHelper`
+
 
 ## Version 1.1.5
 
@@ -28,9 +33,11 @@
 * Fix collation in `tl_member.username` change
 * Add `loadLanguageFile()` calls in DCA files
 
+
 ## Version 1.1.3
 
 * Fix #18 (require `patchwork/utf8` which is nor required in Contao 4.13+)
+
 
 ## Version 1.1.2
 
@@ -136,9 +143,11 @@
   a separate bundle together with everything else not strictly needed here like
   `tl_aufsteller` which does not make sense in steel-darts.
 
+
 ## Version 0.9.2
 
 * Bugfix:  "Spielfrei" Begegnungen werden wieder angezeigt
+
 
 ## Version 0.9.0
 
@@ -182,9 +191,11 @@
 
 * New: Spielplan 8 Einzel, 2 Doppel
 
+
 ## Version 0.6.2
 
 * Fix: Delete Code that belongs to branch `ergebniseingabe-frontend`
+
 
 ## Version 0.6.0
 
