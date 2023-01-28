@@ -3,8 +3,13 @@
 
 ## Development
 
-* Update Vue components for data entry to Vue 2.7
 
+# Version 2.1.1
+
+* Update Vue components for data entry to Vue 2.7
+* Remove unused files
+* Remove dependency on codefog/contao-haste
+* Update documentation
 
 # Version 2.1.0
 
