@@ -143,20 +143,8 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             ],
             'toggle' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['toggle'],
-                'attributes' => 'onclick="Backend.getScrollOffset();"',
-                'haste_ajax_operation' => [
-                    'field' => 'published',
-                    'options' => [
-                        [
-                            'value' => '',
-                            'icon' => 'invisible.svg',
-                        ],
-                        [
-                            'value' => '1',
-                            'icon' => 'visible.svg',
-                        ],
-                    ],
-                ],
+                'href' => 'act=toggle&amp;field=published',
+                'icon' => 'visible.svg',
             ],
             'show' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['show'],
@@ -197,6 +185,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'inputType' => 'checkbox',
             'filter' => true,
             'exclude' => true,
+            'toggle' => true,
             'eval' => ['tl_class' => 'w50'],
             'sql' => "char(1) NOT NULL default ''",
         ],
@@ -240,7 +229,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'],
             'exclude' => true,
             'inputType' => 'text',
-            //'rangeFilter' => true, // see https://github.com/codefog/contao-haste/blob/master/docs/Dca/index.md#haste-dca
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
             'sql' => "varchar(11) NOT NULL default ''",
         ],

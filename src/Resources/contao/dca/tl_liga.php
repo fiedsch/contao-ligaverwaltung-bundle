@@ -84,23 +84,11 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
                 'href' => 'act=show',
                 'icon' => 'show.svg',
             ],
-            'toggle' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_liga']['toggle'],
-                'attributes' => 'onclick="Backend.getScrollOffset();"',
-                'haste_ajax_operation' => [
-                    'field' => 'aktiv',
-                    'options' => [
-                        [
-                            'value' => '',
-                            'icon' => 'invisible.svg',
-                        ],
-                        [
-                            'value' => '1',
-                            'icon' => 'visible.svg',
-                        ],
-                    ],
-                ],
-            ],
+            'toggle' => array
+            (
+                'href'                => 'act=toggle&amp;field=aktiv',
+                'icon'                => 'visible.svg',
+            ),
         ],
     ],
 
@@ -143,6 +131,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['aktiv'],
             'inputType' => 'checkbox',
             'filter' => true,
+            'toggle' => true,
             'exclude' => true,
             'eval' => ['tl_class' => 'w50'],
             'sql' => "char(1) NOT NULL default ''",

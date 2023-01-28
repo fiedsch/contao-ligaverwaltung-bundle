@@ -16,7 +16,6 @@
     "contao/core-bundle": "^4.13",
     "eluceo/ical": "^2.11",
     "fiedsch/contao-jsonwidget": "^0.5",
-    "codefog/contao-haste": "^4.25",
     "symfony/string": "^5.4"
   },
   "autoload": {
