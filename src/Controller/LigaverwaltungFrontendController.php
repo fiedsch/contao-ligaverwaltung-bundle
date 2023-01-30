@@ -17,6 +17,7 @@ namespace Fiedsch\LigaverwaltungBundle\Controller;
 use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\System;
+// use Contao\CoreBundle\Csrf\ContaoCsrfTokenManager;
 use Exception;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
 use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
@@ -122,6 +123,15 @@ class LigaverwaltungFrontendController
         if (!\is_array($appData)) {
             $appData = [];
         }
+
+        // // TODO: do not use REQUEST_TOKEN constant. Instead use the ContaoCsrfTokenManager from the container
+        // // TODO: why doe we get different results with REQUEST_TOKEN and $requestToken?
+        // // TODO: when fixed also change in dca/tl_member.php, LigaverwwaltungBackendController and DCAHelper
+        // /** @var ContaoCsrfTokenManager $requestTokenManager */
+        // $requestTokenManager = System::getContainer()->get('contao.csrf.token_manager');
+        // $requestToken = $requestTokenManager->getDefaultTokenValue();
+        // dd(REQUEST_TOKEN, $requestToken);
+
         $appData['webserviceUrl'] = '/ligaverwaltung/begegnung_fe';
         $appData['requestToken'] = REQUEST_TOKEN;
         $appData['begegnungId'] = $begegnung;
