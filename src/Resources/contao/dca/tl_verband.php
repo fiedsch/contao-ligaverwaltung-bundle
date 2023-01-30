@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Contao\DataContainer;
 
 \Contao\System::loadLanguageFile('default');
 
@@ -31,7 +32,7 @@ $GLOBALS['TL_DCA']['tl_verband'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 2,
+            'mode' => DataContainer::MODE_SORTABLE,
             'fields' => ['name'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['home'],
@@ -93,7 +94,7 @@ $GLOBALS['TL_DCA']['tl_verband'] = [
         'name' => [
             'label' => &$GLOBALS['TL_LANG']['tl_verband']['name'],
             'sorting' => true,
-            'flag' => 1, // Sort by initial letter ascending
+            'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'inputType' => 'text',
             'exclude' => true,
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],

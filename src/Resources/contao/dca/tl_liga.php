@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Contao\DataContainer;
 
 \Contao\System::loadLanguageFile('default');
 
@@ -33,8 +34,8 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 4, // Displays the child records of a parent record
-            'flag' => 11, // sort ascending
+            'mode' => DataContainer::MODE_PARENT,
+            'flag' => DataContainer::SORT_ASC,
             'fields' => ['name'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['name'],
@@ -111,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
         'name' => [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['name'],
             'sorting' => true,
-            'flag' => 11, // sort ascending
+            'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
             'exclude' => true,
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],

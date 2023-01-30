@@ -12,6 +12,9 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
+
+use Contao\DataContainer;
+
 $GLOBALS['TL_DCA']['tl_saison'] = [
     'config' => [
         'dataContainer' => 'Table',
@@ -26,8 +29,8 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 0,
-            //'flag'        => 11,
+            'mode' => DataContainer::MODE_UNSORTED,
+            //'flag'        => DataContainer::SORT_ASC,
             'fields' => ['name'],
             'panelLayout' => 'sort,filter;search,limit',
         ],
@@ -83,7 +86,7 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_saison']['name'],
             'sorting' => true,
             'exclude' => true,
-            'flag' => 11, // sort ascending
+            'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],
             'sql' => "varchar(128) NOT NULL default ''",

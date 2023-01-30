@@ -36,11 +36,11 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 4, // Displays the child records of a parent record
+            'mode' => DataContainer::MODE_PARENT,
             'headerFields' => ['name', 'spielort', 'liga'],
             // TODO(?): wird flag bei mode 4 nicht berücksichtigt?
-            // Workarround: DESC als Teil des Feldnamens angeben
-            'flag' => 1,
+            // Workaround: DESC als Teil des Feldnamens angeben
+            'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'fields' => ['teamcaptain DESC,co_teamcaptain DESC'],
             'panelLayout' => '', // sort, search,filter etc. nicht anzeigen
             'child_record_callback' => [DCAHelper::class, 'listMemberCallback'],

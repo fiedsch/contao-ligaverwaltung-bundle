@@ -1,5 +1,7 @@
 <?php
 
+use Contao\DataContainer;
+
 declare(strict_types=1);
 
 /*
@@ -30,8 +32,8 @@ $GLOBALS['TL_DCA']['tl_aufsteller'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 1, // Records are sorted by a fixed field
-            'flag' => 1, // Sort by initial letter ascending
+            'mode' => DataContainer::MODE_SORTED,
+            'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'fields' => ['name'],
             'panelLayout' => 'sort,filter;search,limit',
         ],
@@ -88,7 +90,7 @@ $GLOBALS['TL_DCA']['tl_aufsteller'] = [
             'sorting' => true,
             'search' => true,
             'exclude' => true,
-            'flag' => 1, // sort by initial letter ascending
+            'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],
             'sql' => "varchar(128) NOT NULL default ''",

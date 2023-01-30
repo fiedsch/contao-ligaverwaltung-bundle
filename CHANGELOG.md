@@ -3,6 +3,8 @@
 
 ## Development
 
+* Use Contao\DataContainer constants in DCA files
+
 
 # Version 2.1.1
 
@@ -10,6 +12,7 @@
 * Remove unused files
 * Remove dependency on codefog/contao-haste
 * Update documentation
+
 
 # Version 2.1.0
 

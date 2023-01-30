@@ -16,6 +16,7 @@ use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Contao\DataContainer;
 
 $GLOBALS['TL_DCA']['tl_highlight'] = [
     'config' => [
@@ -30,8 +31,8 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 0, // Sorting mode: not sorted
-            'flag' => 11, // Sorting flag: ascending
+            'mode' => DataContainer::MODE_UNSORTED,
+            'flag' => DataContainer::SORT_ASC,
             'fields' => ['spieler_id', 'type'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['name'],

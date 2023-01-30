@@ -15,6 +15,7 @@ declare(strict_types=1);
 use Contao\Config;
 use Contao\Input;
 use Contao\System;
+use Contao\DataContainer;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 
@@ -43,13 +44,13 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             // note: these settings will be used if we are not called as a child record
             // see if () {} at the end of this file
             /*
-            'mode'        => 2,
-            'flag'        => 11, // sort ascending
+            'mode'        => DataContainer::MODE_SORTABLE,
+            'flag'        => DataContainer::SORT_ASC,
             'fields'      => ['pid','home','away'],
             'panelLayout' => 'sort,filter;search,limit',
             */
-            'mode' => 4, // Displays the child records of a parent record
-            'flag' => 11, // sort ascending
+            'mode' => DataContainer::MODE_PARENT,
+            'flag' => DataContainer::SORT_ASC,
             'fields' => ['pid', 'home', 'away'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['name', 'saison'],
@@ -172,7 +173,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
-            //'flag'             => 11, // sort ascending
+            //'flag'             => DataContainer::SORT_ASC,
             'inputType' => 'select',
             'foreignKey' => 'tl_liga.name',
             'eval' => ['submitOnChange' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
@@ -194,7 +195,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
-            //'flag'             => 11, // sort ascending
+            //'flag'             => DataContainer::SORT_ASC,
             'inputType' => 'select',
             'foreignKey' => 'tl_mannschaft.name',
             'eval' => ['mandatory' => true, 'tl_class' => 'w50 clr', 'chosen' => true, 'includeBlankOption' => true],
@@ -207,7 +208,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
-            'flag' => 11, // sort ascending
+            'flag' => DataContainer::SORT_ASC,
             'foreignKey' => 'tl_mannschaft.name',
             'inputType' => 'select',
             // 'mandatory' => false da "kein Gegner angegeben === Spielfrei"
@@ -263,8 +264,8 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
 /* Bei Aufruf "nicht als child record von liga.verband */
 if ('liga.begegnung' === Input::get('do')) {
     $GLOBALS['TL_DCA']['tl_begegnung']['list']['sorting'] = [
-        'mode' => 2,
-        'flag' => 11, // sort ascending
+        'mode' => DataContainer::MODE_SORTABLE,
+        'flag' => DataContainer::SORT_ASC,
         'fields' => ['pid', 'home', 'away'],
         'panelLayout' => 'sort,filter;search,limit',
         'disableGrouping' => false,

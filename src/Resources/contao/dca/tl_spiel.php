@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Contao\DataContainer;
 
 $GLOBALS['TL_DCA']['tl_spiel'] = [
     'config' => [
@@ -33,8 +34,8 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 4, // Displays the child records of a parent record
-            'flag' => 11, // sort ascending
+            'mode' => DataContainer::MODE_PARENT,
+            'flag' => DataContainer::SORT_ASC,
             'fields' => ['slot'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['home', 'away', 'pid'],
@@ -112,7 +113,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
-            'flag' => 11, // sort ascending
+            'flag' => DataContainer::SORT_ASC,
             'inputType' => 'select',
             'eval' => ['tl_class' => 'w50 clr', 'chosen' => true, 'mandatory' => false, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
@@ -124,7 +125,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
-            'flag' => 11, // sort ascending
+            'flag' => DataContainer::SORT_ASC,
             'inputType' => 'select',
             'eval' => ['tl_class' => 'w50', 'chosen' => true, 'mandatory' => false, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
@@ -159,7 +160,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
-            'flag' => 11, // sort ascending
+            'flag' => DataContainer::SORT_ASC,
             'inputType' => 'select',
             'eval' => ['tl_class' => 'w50 clr', 'chosen' => true, 'mandatory' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
@@ -171,7 +172,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
-            'flag' => 11, // sort ascending
+            'flag' => DataContainer::SORT_ASC,
             'inputType' => 'select',
             'eval' => ['tl_class' => 'w50', 'chosen' => true, 'mandatory' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
