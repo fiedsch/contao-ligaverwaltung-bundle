@@ -15,12 +15,15 @@ declare(strict_types=1);
 namespace Fiedsch\LigaverwaltungBundle\Helper;
 
 use Contao\Database;
+use Exception;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 use RuntimeException;
+use function count;
+use function is_array;
 
 class DataEntrySaver
 {
@@ -68,7 +71,7 @@ class DataEntrySaver
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public static function augment(array $data): array
     {
@@ -86,7 +89,7 @@ class DataEntrySaver
         if (!isset($data['away'])) {
             $data['away'] = self::getTeamData($begegnungModel, 'away');
         }
-        if (!\is_array($data['highlights'] ?? null) || 0 === \count($data['highlights'])) {
+        if (!is_array($data['highlights'] ?? null) || 0 === count($data['highlights'])) {
             //$data['highlights'] = ['dummy'=>'data']; // force Object ('{ }') because it would otherwise be an empty array ('[ ]')
             $data['highlights'] = json_decode('{}');
         }
@@ -101,7 +104,7 @@ class DataEntrySaver
     {
         $begegnungId = $data['begegnungId'];
         $slot = $i + 1;
-        $isDouble = \count($spiel['home']) > 1;
+        $isDouble = count($spiel['home']) > 1;
         $playerHomeId = $data['home']['lineup'][$spiel['home'][0]];
         $playerAwayId = $data['away']['lineup'][$spiel['away'][0]];
 
@@ -109,9 +112,7 @@ class DataEntrySaver
 
         // unvollständige Aufstellung?
         if (null === $playerHomeId || null === $playerAwayId) {
-            if ($spielModel) {
-                $spielModel->delete();
-            }
+            $spielModel?->delete();
 
             return 0;
         }
@@ -129,9 +130,7 @@ class DataEntrySaver
 
         // Unvollständige Ergebniserfassung?
         if (null === $scoreHome || null === $scoreAway) {
-            if ($spielModel) {
-                $spielModel->delete();
-            }
+            $spielModel?->delete();
 
             return 0;
         }
@@ -194,6 +193,8 @@ class DataEntrySaver
 
                 case 'highfinish':
                     $highlightType = HighlightModel::TYPE_HIGHFINISH;
+                default:
+                    $highlightType = '';
             }
 
             $highlightModel = HighlightModel::findBy(
@@ -205,7 +206,7 @@ class DataEntrySaver
                 $highlightModel = new HighlightModel();
                 $highlightModel->begegnung_id = $begegnung;
                 $highlightModel->spieler_id = $spieler;
-                $highlightModel->type = $highlightType;
+                //$highlightModel->type = $highlightType;
             }
             $highlightModel->tstamp = time();
             $highlightModel->type = $highlightType;
@@ -219,7 +220,7 @@ class DataEntrySaver
             }
         }
 
-        if (\count($existingHighlightsIds)) {
+        if (count($existingHighlightsIds)) {
             $query = sprintf('DELETE FROM tl_highlight WHERE id IN (%s)', implode(',', $existingHighlightsIds));
             Database::getInstance()->execute($query);
         }
@@ -228,7 +229,7 @@ class DataEntrySaver
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected static function getTeamData(BegegnungModel $begegnungModel, string $homeaway): array
     {

@@ -36,49 +36,49 @@ class RankingHelper implements RankingHelperInterface
                     // mögliche Ergebnisse bei "best of 3"
                     case '2:0':
                         return 3;
-                        break;
+                        //break;
 
                     case '2:1':
                         return 2;
-                        break;
+                        //break;
 
                     case '1:2':
                         return 1;
-                        break;
+                        //break;
 
                     case '0:2':
                         return 0;
-                        break;
+                        //break;
                     // mögliche Ergebnisse bei "best of 5"
                     case '3:0':
                         return 5;
-                        break;
+                       //break;
 
                     case '3:1':
                         return 4;
-                        break;
+                        //break;
 
                     case '3:2':
                         return 3;
-                        break;
+                        //break;
 
                     case '2:3':
                         return 2;
-                        break;
+                        //break;
 
                     case '1:3':
                         return 1;
-                        break;
+                        //break;
 
                     case '0:3':
                         return 0;
-                        break;
+                        //break;
 
                     default:
                         //\System::log("nicht vorgesehenes Spielergebnis ".$score, __METHOD__, TL_ERROR);
                         return 0;
                 }
-                break;
+                //break;
 
             case 2:
             // 'nur gewonnen/verloren'

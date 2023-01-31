@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function is_array;
 
 /**
  * Handles the bundle's frontend routes.
@@ -56,7 +57,7 @@ class LigaverwaltungFrontendController
      *     }
      * )
      */
-    public function icalAction($ligaid, $mannschaftid = 0): Response
+    public function icalAction(int $ligaid, int $mannschaftid = 0): Response
     {
         $controller = new IcalController($ligaid, $mannschaftid);
 
@@ -83,7 +84,7 @@ class LigaverwaltungFrontendController
      *     }
      * )
      */
-    public function jsonAction($ligaid, $mannschaftid = 0): Response
+    public function jsonAction(int $ligaid, int $mannschaftid = 0): Response
     {
         $controller = new JsonController($ligaid, $mannschaftid);
 
@@ -92,8 +93,6 @@ class LigaverwaltungFrontendController
 
     /**
      * Einbagemaske Begegnungserfassung.
-     *
-     * @param int $begegnung
      *
      * @throws Exception
      *
@@ -106,7 +105,7 @@ class LigaverwaltungFrontendController
      *     methods={"GET"}
      * )
      */
-    public function begegnungDataEntryAction($begegnung): Response
+    public function begegnungDataEntryAction(int $begegnung): Response
     {
         $begegnungModel = BegegnungModel::findById($begegnung);
 
@@ -120,7 +119,7 @@ class LigaverwaltungFrontendController
 
         $appData = $begegnungModel->{DataEntrySaver::KEY_APP_DATA};
 
-        if (!\is_array($appData)) {
+        if (!is_array($appData)) {
             $appData = [];
         }
 
@@ -158,8 +157,6 @@ class LigaverwaltungFrontendController
     /**
      * Datenverarbeitung Begegnungserfassung.
      *
-     * @param int $begegnung
-     *
      * @Route(
      *     "/ligaverwaltung/begegnung_fe/{begegnung}",
      *     name="begegnung_dataentry_save_fe",
@@ -169,10 +166,10 @@ class LigaverwaltungFrontendController
      *     methods={"POST"}
      *     )
      */
-    public function begegnungDataSaveAction(Request $request, $begegnung): Response
+    public function begegnungDataSaveAction(Request $request, int $begegnung): Response
     {
         $requestData = json_decode($request->request->get('json_data'), true);
 
-        return new Response(DataEntrySaver::handleDataEntryData((int) $begegnung, $requestData));
+        return new Response(DataEntrySaver::handleDataEntryData($begegnung, $requestData));
     }
 }

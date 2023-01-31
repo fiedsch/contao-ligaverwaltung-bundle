@@ -20,6 +20,7 @@ use Contao\Database;
 use Contao\Model;
 use Contao\Model\Collection;
 use Contao\PageModel;
+use Exception;
 
 /**
  * @property int    $id
@@ -47,7 +48,7 @@ class MannschaftModel extends Model
      *
      * @return Collection|null
      */
-    public static function findAllActive()
+    public static function findAllActive(): ?Collection
     {
         $result = Database::getInstance()
             ->prepare('SELECT m.* FROM  tl_mannschaft m LEFT JOIN tl_liga l ON (m.liga=l.id) WHERE l.aktiv=?')
@@ -58,11 +59,11 @@ class MannschaftModel extends Model
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      *
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
         $result = $this->name;
         $liga = $this->getRelated('liga');
@@ -84,7 +85,7 @@ class MannschaftModel extends Model
      *
      * @return string
      */
-    public function getLinkedName()
+    public function getLinkedName(): string
     {
         $teampageId = Config::get('teampage');
 

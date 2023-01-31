@@ -23,6 +23,7 @@ use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function is_array;
 
 /**
  * Handles the bundle's backend routes.
@@ -48,7 +49,7 @@ class LigaverwaltungBackendController
      *     }
      * )
      */
-    public function playerhistoryAction($memberid)
+    public function playerhistoryAction(int $memberid): Response
     {
         $controller = new PlayerHistoryController($memberid);
 
@@ -76,7 +77,7 @@ class LigaverwaltungBackendController
      *     methods={"GET"}
      * )
      */
-    public function begegnungDataEntryAction($begegnung)
+    public function begegnungDataEntryAction(int $begegnung): Response
     {
         $begegnungModel = BegegnungModel::findById($begegnung);
 
@@ -87,7 +88,7 @@ class LigaverwaltungBackendController
 
         $appData = $begegnungModel->{DataEntrySaver::KEY_APP_DATA};
 
-        if (!\is_array($appData)) {
+        if (!is_array($appData)) {
             $appData = [];
         }
         $appData['webserviceUrl'] = '/ligaverwaltung/begegnung';
@@ -110,8 +111,6 @@ class LigaverwaltungBackendController
     /**
      * Datenverarbeitung Begegnungserfassung.
      *
-     * @param int $begegnung
-     *
      * @Route(
      *     "/ligaverwaltung/begegnung/{begegnung}",
      *     name="begegnung_dataentry_save",
@@ -121,10 +120,10 @@ class LigaverwaltungBackendController
      *     methods={"POST"}
      *     )
      */
-    public function begegnungDataSaveAction(Request $request, $begegnung): Response
+    public function begegnungDataSaveAction(Request $request, int $begegnung): Response
     {
         $requestData = json_decode($request->request->get('json_data'), true);
 
-        return new Response(DataEntrySaver::handleDataEntryData((int) $begegnung, $requestData));
+        return new Response(DataEntrySaver::handleDataEntryData($begegnung, $requestData));
     }
 }

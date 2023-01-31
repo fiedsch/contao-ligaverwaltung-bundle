@@ -42,7 +42,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 
     const KEIN_AUFSTELLER = -1;
 
-    /*Environment*/ protected $twig;
+    protected Environment $twig;
 
     public function __construct(Environment $twig)
     {
@@ -104,7 +104,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         return 0;
     }
 
-    protected function getData(SaisonModel $saison, OutputInterface $output)
+    protected function getData(SaisonModel $saison, OutputInterface $output): array
     {
         // Ligen dieser Saison
 
@@ -180,8 +180,8 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                 $data['spielorte'][$spielort->id]['mannschaften'][] = [
                     'name' => $mannschaft->name,
                     'spielort' => $spielort->name,
-                    'aufsteller' => $aufsteller->name,
-                    'liga' => $liga->name,
+                    'aufsteller' => $aufsteller?->name,
+                    'liga' => $liga?->name,
                     'spielstaerke' => $liga->spielstaerke,
                     'saison' => $saison->name,
                     'rechnungsbetrag_spielort' => $liga->rechnungsbetrag_spielort ?: 0,
@@ -193,11 +193,10 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
                 $data['aufsteller'][$keyAufsteller]['mannschaften'][] = [
                     'name' => $mannschaft->name,
                     'spielort' => $spielort->name,
-                    'aufsteller' => $aufsteller->name,
+                    'aufsteller' => $aufsteller?->name,
                     'liga' => $liga->name,
                     'spielstaerke' => $liga->spielstaerke,
                     'saison' => $saison->name,
-                    'spielort' => $spielort->name,
                     'rechnungsbetrag_spielort' => $liga->rechnungsbetrag_spielort ?: 0,
                     'rechnungsbetrag_aufsteller' => $liga->rechnungsbetrag_aufsteller ?: 0,
                 ];

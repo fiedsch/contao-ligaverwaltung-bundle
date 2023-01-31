@@ -20,7 +20,7 @@
 
 <?php
   preg_match("/h(\d+)/", $this->hl, $matches);
-  $sublevel = 1 + $matches[1]; // ein Level "unter" der Überschrift des Content Elements
+  $sublevel = 1 + (int)$matches[1]; // ein Level "unter" der Überschrift des Content Elements
 ?>
 
     <?php if ($this->mannschaft): // nur ein langer Block ?>
@@ -52,7 +52,7 @@
                     <td class='spiel score'>%s</td>
                     <td class='spiel legs%s'>%s</td>",
                         $spiel['am'],
-                        $spiel['um']  ? $spiel['um'] : '',
+                        $spiel['um'] ?: '',
                         $spiel['spiel_tag'] . ".&nbsp;Spieltag",
                         $spiel['heimspiel']
                             ? '<i class="fas fa-home" aria-hidden="true" title="zuhause"></i><span class="sr-only">zuhause</span>'
@@ -76,7 +76,7 @@
                     <td class='spiel score'>%s</td>
                     <td class='spiel legs%s'>%s</td>",
                         $spiel['am'],
-                        $spiel['um']  ? $spiel['um'] : '',
+                        $spiel['um']  ?: '',
                         $spiel['home'],
                         $spiel['away'],
                         $spiel['im'],

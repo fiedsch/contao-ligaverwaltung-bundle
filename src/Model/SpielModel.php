@@ -50,7 +50,7 @@ class SpielModel extends Model
      *
      * @return array
      */
-    public function getScore()
+    public function getScore(): array
     {
         if ($this->score_home === $this->score_away) {
             return [0, 0];
@@ -67,7 +67,7 @@ class SpielModel extends Model
      *
      * @return array
      */
-    public function getLegs()
+    public function getLegs(): array
     {
         return [
             $this->score_home,

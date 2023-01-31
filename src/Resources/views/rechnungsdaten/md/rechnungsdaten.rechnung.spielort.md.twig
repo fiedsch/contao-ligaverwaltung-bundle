@@ -17,7 +17,7 @@ Provison Wirt{% if empfaenger.is_aufsteller %}/Aufsteller{% endif %} Saison {{ s
 {% endif %}
 
 | Mannschaft | Liga | Betrag |
-|:---| :--- | -----:|
+|:-----------|:-----|-------:|
 {% for mannschaft in empfaenger.mannschaften %}
 {% if empfaenger.is_aufsteller -%}
     {%- set rechnungsbetrag = mannschaft.rechnungsbetrag_spielort + mannschaft.rechnungsbetrag_aufsteller -%}

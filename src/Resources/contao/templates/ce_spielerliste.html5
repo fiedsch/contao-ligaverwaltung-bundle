@@ -1,4 +1,9 @@
-<?php $this->extend('block_searchable'); ?>
+<?php
+
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+
+$this->extend('block_searchable'); ?>
 
 <?php $this->block('content'); ?>
 
@@ -51,8 +56,8 @@
             $teamcaptain_suffix = join(", ", $details);
       }
       ?>
-        <td><?= \Fiedsch\LigaverwaltungBundle\Helper\DCAHelper::makeSpielerName($listitem['member']) ?></td>
-        <td><?= $listitem['member']->anonymize ? substr(\Fiedsch\LigaverwaltungBundle\Model\SpielerModel::ANONYM_LABEL,0,3) : $listitem['member']->passnummer ?></td>
+        <td><?= DCAHelper::makeSpielerName($listitem['member']) ?></td>
+        <td><?= $listitem['member']->anonymize ? substr(SpielerModel::ANONYM_LABEL,0,3) : $listitem['member']->passnummer ?></td>
         <td><?= $teamcaptain_suffix ?></td>
         <?php if ($listitem['member']->anonymize): ?>
           <td>&nbsp;<!-- anonymisieren: Bild nicht ausgeben! --></td>

@@ -23,21 +23,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class JsonController
 {
-    /**
-     * @var int
-     */
-    protected $ligaid;
+    protected int $ligaid;
 
-    /**
-     * @var int
-     */
-    protected $mannschaftid;
+    protected int $mannschaftid;
 
-    /**
-     * @param int $ligaid
-     * @param int $mannschaftid
-     */
-    public function __construct($ligaid, $mannschaftid)
+    public function __construct(int $ligaid, int $mannschaftid)
     {
         $this->ligaid = $ligaid;
         $this->mannschaftid = $mannschaftid;
@@ -47,7 +37,7 @@ class JsonController
     /**
      * @return JsonResponse
      */
-    public function run()
+    public function run(): JsonResponse
     {
         // Spiele auslesen
 
@@ -88,10 +78,7 @@ class JsonController
         date_default_timezone_set($tz);
     }
 
-    /**
-     * @return array
-     */
-    protected function generateEventData(BegegnungModel $begegnung)
+    protected function generateEventData(BegegnungModel $begegnung): array
     {
         $liga = LigaModel::findById($begegnung->pid);
         $saison = SaisonModel::findById($liga->saison);

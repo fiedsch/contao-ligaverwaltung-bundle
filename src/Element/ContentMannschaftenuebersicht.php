@@ -26,6 +26,7 @@ use Contao\StringUtil;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Exception;
 use function Symfony\Component\String\u;
 
 /**
@@ -40,7 +41,7 @@ class ContentMannschaftenuebersicht extends ContentElement
      */
     protected $strTemplate = 'ce_mannschaftenuebersicht';
 
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
@@ -59,7 +60,7 @@ class ContentMannschaftenuebersicht extends ContentElement
     /**
      * Generate the content element.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function compile(): void
     {

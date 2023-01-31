@@ -28,6 +28,7 @@ use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Exception;
 use function Symfony\Component\String\u;
 
 /**
@@ -43,11 +44,11 @@ class ContentSpielbericht extends ContentElement
     protected $strTemplate = 'ce_spielbericht';
 
     /**
-     * @throws \Exception
+     * @throws Exception
      *
      * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
@@ -67,7 +68,7 @@ class ContentSpielbericht extends ContentElement
     /**
      * Generate the content element.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function compile(): void
     {
@@ -88,11 +89,9 @@ class ContentSpielbericht extends ContentElement
     }
 
     /**
-     * @throws \Exception
-     *
-     * @return array
+     * @throws Exception
      */
-    protected function compileSpielergebnsisse(BegegnungModel $begegnung)
+    protected function compileSpielergebnsisse(BegegnungModel $begegnung): array
     {
         if (!$begegnung->published) {
             return [];
@@ -165,11 +164,9 @@ class ContentSpielbericht extends ContentElement
     }
 
     /**
-     * @throws \Exception
-     *
-     * @return array
+     * @throws Exception
      */
-    protected function compileHighlights(BegegnungModel $begegnung)
+    protected function compileHighlights(BegegnungModel $begegnung): array
     {
         if (!$begegnung->published) {
             return [];
@@ -193,7 +190,7 @@ class ContentSpielbericht extends ContentElement
                 }
             }
         }
-        // make sure, all fields are set so we can access them in the template without checking
+        // make sure, all fields are set, so we can access them in the template without checking
         foreach ($result as $spielerId => &$data) {
             foreach (HighlightModel::ALL_TYPES as $highlight) {
                 $data['highlights'][$highlight] = $data['highlights'][$highlight] ?? '';

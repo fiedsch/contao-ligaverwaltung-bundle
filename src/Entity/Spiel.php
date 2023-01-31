@@ -23,17 +23,9 @@ use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
  */
 class Spiel
 {
-    /**
-     * @var array
-     */
-    protected $data;
+    protected array $data;
 
-    /**
-     * Spiel constructor.
-     *
-     * @param array $data
-     */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->data = $data;
     }
@@ -43,7 +35,7 @@ class Spiel
      *
      * @return int
      */
-    public function getScoreHome()
+    public function getScoreHome(): int
     {
         if ($this->data['legs_home'] === $this->data['legs_away']) {
             return 0;
@@ -57,7 +49,7 @@ class Spiel
      *
      * @return int
      */
-    public function getScoreAway()
+    public function getScoreAway(): int
     {
         if ($this->data['legs_home'] === $this->data['legs_away']) {
             return 0;
@@ -69,7 +61,7 @@ class Spiel
     /**
      * @return int
      */
-    public function getLegsHome()
+    public function getLegsHome(): int
     {
         return $this->data['legs_home'];
     }
@@ -77,7 +69,7 @@ class Spiel
     /**
      * @return int
      */
-    public function getLegsAway()
+    public function getLegsAway(): int
     {
         return $this->data['legs_away'];
     }
@@ -85,7 +77,7 @@ class Spiel
     /**
      * @return int
      */
-    public function getPunkteHome()
+    public function getPunkteHome(): int
     {
         return $this->getPunkte(sprintf('%d:%d', $this->data['legs_home'], $this->data['legs_away']));
     }
@@ -95,7 +87,7 @@ class Spiel
      *
      * @return int
      */
-    public function getPunkteAway()
+    public function getPunkteAway(): int
     {
         return $this->getPunkte(sprintf('%d:%d', $this->data['legs_away'], $this->data['legs_home']));
     }
@@ -107,17 +99,14 @@ class Spiel
      * Systeme gegenseitig ausschließen!
      * Bsp.: "3:1" => es wurde best of 5 gespielt, bei best of 3 kann es kein "3:1" geben!
      *
-     * @param string $score
-     *
-     * @return int
      */
-    public function getPunkte($score)
+    public function getPunkte(string $score): int
     {
         // Wie soll das Ranking ermittelt werden
         $ranking_model = Config::get('ligaverwaltung_ranking_model');
         // 'options'   => [ 1 => 'nach Punkten', 2 => 'nach gewonnenen Spielen' ],
 
-        /** @var RankingHelperInterface */
+        /** @var $helper RankingHelperInterface */
         $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
 
         return $helper->getPunkte($score, $ranking_model);

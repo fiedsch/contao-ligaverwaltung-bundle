@@ -16,11 +16,12 @@ namespace Fiedsch\LigaverwaltungBundle\Helper;
 
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Exception;
 
 class Spielplan
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getSpielplan(BegegnungModel $begegnungModel): array
     {
@@ -47,7 +48,7 @@ class Spielplan
                     ['home' => [0], 'away' => [2]],
                     ['home' => [1], 'away' => [3]],
                 ];
-                break;
+                //break;
 
             case LigaModel::SPIELPLAN_16E2D:
                 return [
@@ -70,7 +71,7 @@ class Spielplan
                     ['home' => [0, 2], 'away' => [1, 3]],
                     ['home' => [1, 3], 'away' => [0, 2]],
                 ];
-                break;
+                //break;
 
             case LigaModel::SPIELPLAN_16E4D:
                 return [
@@ -95,7 +96,7 @@ class Spielplan
                     ['home' => [0, 2], 'away' => [0, 2]],
                     ['home' => [1, 3], 'away' => [1, 3]],
                 ];
-                break;
+                //break;
 
             case LigaModel::SPIELPLAN_6E3D:
                 return [
@@ -109,7 +110,7 @@ class Spielplan
                     ['home' => [2, 3], 'away' => [2, 3]],
                     ['home' => [4, 5], 'away' => [4, 5]],
                 ];
-                break;
+                //break;
 
             case LigaModel::SPIELPLAN_8E2D:
                 return [
@@ -124,7 +125,7 @@ class Spielplan
                     ['home' => [0, 2], 'away' => [0, 2]],
                     ['home' => [1, 3], 'away' => [1, 3]],
                 ];
-                break;
+                //break;
 
             default:
                 return [
@@ -142,23 +143,23 @@ class Spielplan
         switch ($spielplanCode) {
             case LigaModel::SPIELPLAN_16E:
                 return "/* SPIELPLAN_16E */ $baseFourSkip $allCss";
-                break;
+                //break;
 
             case LigaModel::SPIELPLAN_16E2D:
                 return "/* SPIELPLAN_16E2D */ $baseFourSkip $doublesSkip $allCss";
-                break;
+                //break;
 
             case LigaModel::SPIELPLAN_16E4D:
                 return "/* SPIELPLAN_16E4D */ $baseFourSkip $doublesSkip $allCss";
-                break;
+                //break;
 
             case LigaModel::SPIELPLAN_6E3D:
                 return "/* SPIELPLAN_6E3D */ $baseTwoSkip  $doublesSkip $allCss";
-                break;
+                //break;
 
             case LigaModel::SPIELPLAN_8E2D:
                 return "/* SPIELPLAN_8E2D */ $baseFourSkip $doublesSkip $allCss";
-                break;
+                //break;
 
             default:
                 return "/* DEFAULT */ $baseFourSkip $allCss";

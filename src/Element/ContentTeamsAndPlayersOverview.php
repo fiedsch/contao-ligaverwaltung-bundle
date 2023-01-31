@@ -32,7 +32,7 @@ class ContentTeamsAndPlayersOverview extends ContentElement
     protected $strTemplate = 'ce_teamsandplayersoverview';
 
 
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');

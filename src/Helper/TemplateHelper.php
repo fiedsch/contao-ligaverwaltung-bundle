@@ -14,19 +14,17 @@ declare(strict_types=1);
 
 namespace Fiedsch\LigaverwaltungBundle\Helper;
 
+use function is_array;
+
 class TemplateHelper
 {
     /**
      * Render an array as List (<ul></ul>). The list will be nested
      * if the data array is multidimensional.
-     *
-     * @param array $data
-     *
-     * @return string
      */
-    public static function renderArrayAsList($data)
+    public static function renderArrayAsList(array $data): string
     {
-        if (!\is_array($data)) {
+        if (!is_array($data)) {
             return sprintf('<li>%s</li>', $data);
         }
         $result = '<ul>';

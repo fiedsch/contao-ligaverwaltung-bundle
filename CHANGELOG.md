@@ -4,7 +4,7 @@
 ## Development
 
 * Use Contao\DataContainer constants in DCA files
-
+* Fix  (PHPStorm) code inspection warnings
 
 # Version 2.1.1
 

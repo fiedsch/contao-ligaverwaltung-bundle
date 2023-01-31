@@ -17,30 +17,23 @@ namespace Fiedsch\LigaverwaltungBundle\Controller;
 use Contao\BackendTemplate;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Symfony\Component\HttpFoundation\Response;
+use Exception;
 
 class PlayerHistoryController
 {
-    /**
-     * @var int
-     */
-    protected $memberid;
+    protected int $memberid;
 
-    /**
-     * PlayerHistoryController constructor.
-     *
-     * @param int $memberid
-     */
-    public function __construct($memberid)
+    public function __construct(int $memberid)
     {
         $this->memberid = $memberid;
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      *
      * @return Response
      */
-    public function run()
+    public function run(): Response
     {
         $template = new BackendTemplate('be_spielerhistory');
         $template->history = $this->getHistory();
@@ -49,11 +42,11 @@ class PlayerHistoryController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      *
      * @return array
      */
-    protected function getHistory()
+    protected function getHistory(): array
     {
         $history = [];
         $spieler = SpielerModel::findBy(['member_id=?'], [$this->memberid], ['pid ASC']);

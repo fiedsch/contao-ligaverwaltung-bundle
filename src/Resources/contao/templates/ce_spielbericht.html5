@@ -1,4 +1,8 @@
-<?php $this->extend('block_searchable'); ?>
+<?php
+
+use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+
+$this->extend('block_searchable'); ?>
 
 <?php $this->block('content'); ?>
 
@@ -50,10 +54,10 @@
 <tr>
     <td><?= $data['name'] ?></td>
     <td><?= $data['team'] ?></td>
-    <td><?= $data['highlights'][\Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_180] ?></td>
-    <td><?= $data['highlights'][\Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_171] ?></td>
-    <td><?= $data['highlights'][\Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_SHORTLEG] ?></td>
-    <td><?= $data['highlights'][\Fiedsch\LigaverwaltungBundle\Model\HighlightModel::TYPE_HIGHFINISH] ?></td>
+    <td><?= $data['highlights'][HighlightModel::TYPE_180] ?></td>
+    <td><?= $data['highlights'][HighlightModel::TYPE_171] ?></td>
+    <td><?= $data['highlights'][HighlightModel::TYPE_SHORTLEG] ?></td>
+    <td><?= $data['highlights'][HighlightModel::TYPE_HIGHFINISH] ?></td>
 </tr>
 <?php endforeach; ?>
 </tbody>

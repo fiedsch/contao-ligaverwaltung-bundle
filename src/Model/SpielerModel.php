@@ -19,6 +19,7 @@ use Contao\Model;
 use Contao\Model\Collection;
 use Contao\StringUtil;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Exception;
 
 /**
  * @property int    $id
@@ -46,13 +47,9 @@ class SpielerModel extends Model
     protected static $strTable = 'tl_spieler';
 
     /**
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return string
+     * @throws Exception
      */
-    public static function getNameById($id)
+    public static function getNameById(int $id): string
     {
         $spieler = self::findById($id);
 
@@ -68,10 +65,8 @@ class SpielerModel extends Model
 
     /**
      * Get the full name (lastname, firstname) for a member.
-     *
-     * @return string
      */
-    public static function getFullNameFor(MemberModel $member = null)
+    public static function getFullNameFor(MemberModel $member = null): string
     {
         if ($member) {
             return DCAHelper::makeSpielerName($member);
@@ -81,11 +76,11 @@ class SpielerModel extends Model
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      *
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
         /** @var MemberModel $member */
         $member = $this->getRelated('member_id');
@@ -115,11 +110,11 @@ class SpielerModel extends Model
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      *
      * @return string
      */
-    public function getNameAndMannschaft()
+    public function getNameAndMannschaft(): string
     {
         $result = self::getName();
         /** @var MannschaftModel $mannschaft */
@@ -133,11 +128,11 @@ class SpielerModel extends Model
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         /** @var MemberModel $member */
         $member = $this->getRelated('member_id');
@@ -146,7 +141,7 @@ class SpielerModel extends Model
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function getTcDetails(): array
     {
@@ -154,7 +149,7 @@ class SpielerModel extends Model
         $member = $this->getRelated('member_id');
 
         $kontaktdaten = [
-            'name' => '',
+            //'name' => '',
             'email' => '',
             'mobile' => '',
         ];

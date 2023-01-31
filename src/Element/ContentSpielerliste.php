@@ -22,6 +22,7 @@ namespace Fiedsch\LigaverwaltungBundle\Element;
 
 use Contao\ContentElement;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Exception;
 
 class ContentSpielerliste extends ContentElement
 {
@@ -35,7 +36,7 @@ class ContentSpielerliste extends ContentElement
     /**
      * Generate the content element.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function compile(): void
     {

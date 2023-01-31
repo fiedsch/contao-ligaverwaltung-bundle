@@ -22,11 +22,12 @@ use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use function html_entity_decode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Exception;
+use function html_entity_decode;
 
 /**
  * Erstellen einer Liste aller Spieler (inkl. Name etc. aus zugehörigem tl_member)
@@ -53,7 +54,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

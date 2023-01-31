@@ -25,6 +25,7 @@ use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Exception;
 use function Symfony\Component\String\u;
 
 /**
@@ -46,18 +47,18 @@ class ContentRanking extends ContentElement
     protected $strTemplate = 'ce_ranking';
 
     /**
-     * @throws \Exception
+     * @throws Exception
      *
      * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
             if ($liga) {
 
-                if ('1' === $this->rankingtype) {
+                if (1 === $this->rankingtype) {
                     $suffix = 'Mannschaften';
                     $subject = sprintf('%s %s %s',
                         $liga->getRelated('pid')->name,
@@ -74,6 +75,7 @@ class ContentRanking extends ContentElement
                     );
                 }
             } else {
+                $suffix = '';
                 $subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $this->liga);
             }
             $objTemplate->title = $this->headline;
@@ -85,7 +87,7 @@ class ContentRanking extends ContentElement
             return $objTemplate->parse();
         }
 
-        $appendCssClass = 'rankingtype_'.('1' === $this->rankingtype ? 'mannschaft' : 'spieler');
+        $appendCssClass = 'rankingtype_'.(1 === $this->rankingtype ? 'mannschaft' : 'spieler');
         $this->cssID = [$this->cssID[0] ?? '', ($this->cssID[1] ?? '') .' '.$appendCssClass];
 
         return parent::generate();
@@ -94,7 +96,7 @@ class ContentRanking extends ContentElement
     /**
      * Generate the content element.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function compile(): void
     {
@@ -118,7 +120,7 @@ class ContentRanking extends ContentElement
      * Achtung: Spiele vom spieltype "Doppel" gehen wie "Einzel" mit in die Berechnung
      * ein. (d.h. hier ohne Fallunterscheidung).
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function compileMannschaftenranking(): void
     {
@@ -169,7 +171,6 @@ class ContentRanking extends ContentElement
 
         /** @var Begegnung $begegnung */
         foreach ($begegnungen as $key => $begegnung) {
-            /** @noinspection PhpUnusedLocalVariableInspection */
             [$spieltag, $home, $away] = explode(':', $key);
             unset($spieltag); // wird nicht benötigt
 
@@ -215,7 +216,7 @@ class ContentRanking extends ContentElement
             $results[$away]['verloren'] += $begegnung->isVerlorenAway() ? 1 : 0;
         }
 
-        /** @var RankingHelperInterface */
+        /** @var $helper RankingHelperInterface */
         $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
         uasort(
             $results,
@@ -241,7 +242,7 @@ class ContentRanking extends ContentElement
         foreach (array_keys($results) as $id) {
             $mannschaft = MannschaftModel::findById($id);
 
-            if (!$mannschaft || '1' !== $mannschaft->active) {
+            if (!$mannschaft?->active) {
                 unset($results[$id]);
                 continue;
             }
@@ -270,7 +271,7 @@ class ContentRanking extends ContentElement
      *
      * ohne ausgewählte Mannschaft => Ranking aller Spieler der Liga
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function compileSpielerranking(): void
     {
@@ -352,7 +353,7 @@ class ContentRanking extends ContentElement
             }
         }
 
-        /** @var RankingHelperInterface */
+        /** @var $helper RankingHelperInterface */
         $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
         uasort(
             $results,
@@ -380,7 +381,7 @@ class ContentRanking extends ContentElement
             $spieler = SpielerModel::findById($id);
             $mannschaft = MannschaftModel::findById($results[$id]['mannschaft_id']);
 
-            if (!$spieler || '1' !== $spieler->active || !$mannschaft || '1' !== $mannschaft->active) {
+            if (!$spieler?->active || !$mannschaft?->active) {
                 unset($results[$id]);
                 continue;
             }
@@ -409,8 +410,8 @@ class ContentRanking extends ContentElement
                 // gleicher Rang und beim nächsten einen Rang mehr auslassen
                 ++$rang_skip;
             } else {
-                // ein Rang weiter und keinen folgenden auslassen,
-                // aber die ggf. vorherige Auslassung berücksichtigen)
+                // Ein Rang weiter und keinen folgenden auslassen,
+                // (aber die ggf. vorherige Auslassung berücksichtigen)
                 $rang += $rang_skip;
                 $rang_skip = 1;
             }
@@ -445,7 +446,7 @@ class ContentRanking extends ContentElement
      *
      * @return bool
      */
-    protected function isTie(array $result, array $lastresult)
+    protected function isTie(array $result, array $lastresult): bool
     {
         return $result['punkte_self'] === $lastresult['punkte_self']
                 && $result['spiele_self'] - $result['spiele_other'] === $lastresult['spiele_self'] - $lastresult['spiele_other']

@@ -15,6 +15,7 @@ declare(strict_types=1);
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Contao\DataContainer;
+//use Exception;
 
 \Contao\System::loadLanguageFile('default');
 
@@ -169,7 +170,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
                 }
 
                 if (!preg_match('/^\d+(,*\\d{1,2})?$/', $value)) {
-                    throw new \Exception("Ungültiger Wert: $value");
+                    throw new Exception("Ungültiger Wert: $value");
                 }
 
                 return $value;
@@ -186,7 +187,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
                 }
 
                 if (!preg_match('/^\d+(,*\\d{1,2})?$/', $value)) {
-                    throw new \Exception("UngültigerWert: $value");
+                    throw new Exception("UngültigerWert: $value");
                 }
 
                 return $value;

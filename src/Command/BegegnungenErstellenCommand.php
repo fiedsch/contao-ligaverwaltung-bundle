@@ -24,6 +24,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use function count;
 
 /**
  * Create Records in `tl_begegnung` (all by all).
@@ -52,7 +53,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Contao "booten"
         $this->getFramework()->initialize();
@@ -122,11 +123,11 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
         }
 
         // Bei ungerader Anzahl von Mannschaften hat je Spieltag immer eine Mannschaft
-        // Spielfrei. Diese Begegnungenn nun auch anlegen (Hin und Rückrunde jeweils
+        // spielfrei. Diese Begegnungen nun auch anlegen (Hin- und Rückrunde jeweils
         // als Heimspiel).
 
-        // Ungerade Anzahl von Mannschaften? Dann hat jede ein Mal Spielfrei!
-        if (\count($mannschaftIds) % 2) {
+        // Ungerade Anzahl von Mannschaften? Dann hat jede ein Mal spielfrei!
+        if (count($mannschaftIds) % 2) {
             foreach ($mannschaftIds as $idHome) {
                 $begegnung = BegegnungModel::findBy(
                     ['pid=?', 'home=?', 'away=?'],

@@ -47,7 +47,7 @@ class ContentLigenliste extends ContentElement
      */
     public function compile(): void
     {
-        if ('' === $this->verband) {
+        if (!$this->verband) {
             return;
         }
         $saisonIds = StringUtil::deserialize($this->saison);

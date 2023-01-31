@@ -43,7 +43,7 @@ class ModuleSpielortseitenReader extends Module
      *
      * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');

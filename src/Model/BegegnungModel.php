@@ -29,7 +29,7 @@ use function count;
  * @property int    $home
  * @property int    $away
  * @property string $name
- * @property int    $spiel_am
+ * @property string $spiel_am
  * @property int    $tstamp
  * @property int    $spiel_tag
  * @property bool   $published
@@ -50,15 +50,13 @@ class BegegnungModel extends Model
 
     /**
      * YAML-data column (@see YamlGetterSetterTrait).
-     *
-     * @var string
      */
-    protected static $strYamlColumn = 'begegnung_data';
+    protected static string $strYamlColumn = 'begegnung_data';
 
     /**
      * @return string Ergebnis der Begegnung
      */
-    public function getScore()
+    public function getScore(): string
     {
         if (!$this->published) {
             return '';
@@ -90,7 +88,7 @@ class BegegnungModel extends Model
     /**
      * @return string Ergebnis der Begegnung in Legs
      */
-    public function getLegs()
+    public function getLegs(): string
     {
         if (!$this->published) {
             return '';
@@ -115,8 +113,8 @@ class BegegnungModel extends Model
             ++$eingesetzte_spieler['away'][$spiel->away];
         }
         // nicht angetreten?
-        $is_noshow_home = 1 === \count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
-        $is_noshow_away = 1 === \count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
+        $is_noshow_home = 1 === count(array_keys($eingesetzte_spieler['home'])) && 0 === array_keys($eingesetzte_spieler['home'])[0];
+        $is_noshow_away = 1 === count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
 
         if ($is_noshow_home && $is_noshow_away) {
             return 'Nicht angetreten';
@@ -140,7 +138,7 @@ class BegegnungModel extends Model
      *
      * @return string
      */
-    public function getLabel($mode = 'full')
+    public function getLabel(string $mode = 'full'): string
     {
         switch ($mode) {
             case 'full':
@@ -152,7 +150,7 @@ class BegegnungModel extends Model
                     $this->spiel_am ? ', ' : '',
                         $this->spiel_am ? Date::parse(Config::get('dateFormat'), $this->spiel_am) : ''
                 );
-                break;
+                //break;
 
             case 'medium':
                 return sprintf('%s:%s (%s %s)',
@@ -161,7 +159,7 @@ class BegegnungModel extends Model
                     $this->getRelated('pid')->name,
                     $this->getRelated('pid')->getRelated('saison')->name
                 );
-                break;
+                //break;
 
             case 'short':
             default:
@@ -169,7 +167,7 @@ class BegegnungModel extends Model
                     $this->getRelated('home')?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
                     $this->getRelated('away')?->name
                 );
-            break;
+            //break;
         }
     }
 
@@ -178,7 +176,7 @@ class BegegnungModel extends Model
      *
      * @return string
      */
-    public function getLinkedScore()
+    public function getLinkedScore(): string
     {
         if (!$this->published) {
             return '';

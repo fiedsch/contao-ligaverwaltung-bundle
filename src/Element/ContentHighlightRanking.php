@@ -28,6 +28,7 @@ use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use function Symfony\Component\String\u;
+use function is_array;
 
 /**
  * Content element "Liste aller Spieler einer Mannaschft".
@@ -173,10 +174,7 @@ class ContentHighlightRanking extends ContentElement
         $this->Template->listitems = $results;
     }
 
-    /**
-     * @return string
-     */
-    protected function getRankingTypeFilter(string $tablealias)
+    protected function getRankingTypeFilter(string $tablealias): string
     {
         switch ($this->rankingfield) {
             case HighlightModel::TYPE_171:
@@ -444,11 +442,11 @@ class ContentHighlightRanking extends ContentElement
 
     /**
      * flatten an array. E.g. [1,2,[3,4],5] becomes [1,2,3,4,5].
-     * Additionally the array elements will be casted to integers.
+     * Additionally the array elements will be cast to integers.
      *
      * @return array (of integers)
      */
-    protected static function flattenToIntArray(array $a)
+    protected static function flattenToIntArray(array $a): array
     {
         $it = new RecursiveIteratorIterator(new RecursiveArrayIterator($a));
         $result = [];
@@ -460,14 +458,9 @@ class ContentHighlightRanking extends ContentElement
         return $result;
     }
 
-    /**
-     * @param string|array $value
-     *
-     * @return string
-     */
-    protected static function prettyPrintSorted($value, string $order)
+    protected static function prettyPrintSorted(string|array $value, string $order): string
     {
-        if (\is_array($value)) {
+        if (is_array($value)) {
             $data = $value;
         } else {
             $data = explode(',', $value);
@@ -489,10 +482,8 @@ class ContentHighlightRanking extends ContentElement
     /**
      * Compress an array of results
      * i.e. display "15,15,15,16,..." as "3x15,16,...".
-     *
-     * @return string
      */
-    protected static function compressResultsArray(array $data)
+    protected static function compressResultsArray(array $data): string
     {
         $aggregated = [];
         $current = null;

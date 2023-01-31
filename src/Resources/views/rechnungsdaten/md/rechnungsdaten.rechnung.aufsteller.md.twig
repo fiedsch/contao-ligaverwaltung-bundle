@@ -12,7 +12,7 @@ Provison Aufsteller Saison {{ saison|raw }}
 
 
 | Wirt | Mannschaft | Liga | Betrag |
-| :--- |:---| :--- | -----:|
+|:-----|:-----------|:-----|-------:|
 {% for mannschaft in empfaenger.mannschaften %}
 | {{ mannschaft.spielort|raw }} | {{ mannschaft.name|raw }} | {{ mannschaft.liga|raw }} | {{ mannschaft.rechnungsbetrag_aufsteller|number_format(2, ',', '.') }} € |
 {% endfor %}

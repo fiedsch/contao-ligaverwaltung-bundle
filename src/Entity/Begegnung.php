@@ -16,6 +16,7 @@ namespace Fiedsch\LigaverwaltungBundle\Entity;
 
 use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
+use function count;
 
 /**
  * Class Begegnung.
@@ -24,21 +25,16 @@ use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
  */
 class Begegnung
 {
-    /**
-     * @var RankingHelperInterface
-     */
-    protected $rankingHelper;
+    protected RankingHelperInterface $rankingHelper;
 
-    /**
-     * @var array
-     */
-    protected $spiele;
+    protected array $spiele;
 
     /**
      * Begegnung constructor.
      */
     public function __construct()
     {
+        /** @noinspection PhpFieldAssignmentTypeMismatchInspection */
         $this->rankingHelper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
     }
 
@@ -50,7 +46,7 @@ class Begegnung
     /**
      * @return int
      */
-    public function getLegsHome()
+    public function getLegsHome(): int
     {
         $result = 0;
         /** @var Spiel $spiel */
@@ -64,7 +60,7 @@ class Begegnung
     /**
      * @return int
      */
-    public function getLegsAway()
+    public function getLegsAway(): int
     {
         $result = 0;
         /** @var Spiel $spiel */
@@ -78,7 +74,7 @@ class Begegnung
     /**
      * @return int
      */
-    public function getSpieleHome()
+    public function getSpieleHome(): int
     {
         $result = 0;
         /** @var Spiel $spiel */
@@ -92,7 +88,7 @@ class Begegnung
     /**
      * @return int
      */
-    public function getSpieleAway()
+    public function getSpieleAway(): int
     {
         $result = 0;
         /** @var Spiel $spiel */
@@ -106,15 +102,15 @@ class Begegnung
     /**
      * @return int
      */
-    public function getNumSpiele()
+    public function getNumSpiele(): int
     {
-        return \count($this->spiele);
+        return count($this->spiele);
     }
 
     /**
      * @return bool
      */
-    public function isGewonnenHome()
+    public function isGewonnenHome(): bool
     {
         return $this->rankingHelper::PUNKTE_GEWONNEN === $this->getPunkteHome();
     }
@@ -124,7 +120,7 @@ class Begegnung
      *
      * @return int
      */
-    public function getPunkteHome()
+    public function getPunkteHome(): int
     {
         $punkte_home = 0;
         $punkte_away = 0;
@@ -144,7 +140,7 @@ class Begegnung
     /**
      * @return bool
      */
-    public function isGewonnenAway()
+    public function isGewonnenAway(): bool
     {
         return $this->rankingHelper::PUNKTE_GEWONNEN === $this->getPunkteAway();
     }
@@ -154,7 +150,7 @@ class Begegnung
      *
      * @return int
      */
-    public function getPunkteAway()
+    public function getPunkteAway(): int
     {
         $punkte_home = 0;
         $punkte_away = 0;
@@ -174,7 +170,7 @@ class Begegnung
     /**
      * @return bool
      */
-    public function isUnentschieden()
+    public function isUnentschieden(): bool
     {
         return $this->rankingHelper::PUNKTE_UNENTSCHIEDEN === $this->getPunkteHome();
     }
@@ -182,7 +178,7 @@ class Begegnung
     /**
      * @return bool
      */
-    public function isVerlorenHome()
+    public function isVerlorenHome(): bool
     {
         return $this->rankingHelper::PUNKTE_VERLOREN === $this->getPunkteHome();
     }
@@ -190,7 +186,7 @@ class Begegnung
     /**
      * @return bool
      */
-    public function isVerlorenAway()
+    public function isVerlorenAway(): bool
     {
         return $this->rankingHelper::PUNKTE_VERLOREN === $this->getPunkteAway();
     }

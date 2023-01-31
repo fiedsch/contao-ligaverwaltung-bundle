@@ -46,7 +46,7 @@ class HighlightModel extends Model
     /**
      * @return array
      */
-    public static function getOptionsArray()
+    public static function getOptionsArray(): array
     {
         return [
             self::TYPE_180 => '180',

@@ -1,9 +1,13 @@
-<?php $this->extend('block_searchable'); ?>
+<?php
+
+use Fiedsch\LigaverwaltungBundle\Helper\TemplateHelper;
+
+$this->extend('block_searchable'); ?>
 
 <?php $this->block('content'); ?>
 
 <?php if ($this->listitems): ?>
-  <?= \Fiedsch\LigaverwaltungBundle\Helper\TemplateHelper::renderArrayAsList($this->listitems) ?>
+  <?= TemplateHelper::renderArrayAsList($this->listitems) ?>
 <?php endif; ?>
 
 <?php $this->endblock(); ?>

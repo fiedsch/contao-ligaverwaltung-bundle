@@ -31,6 +31,7 @@ use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
+use Exception;
 use function Symfony\Component\String\u;
 
 class ContentSpielplan extends ContentElement
@@ -45,11 +46,11 @@ class ContentSpielplan extends ContentElement
     /**
      * Generate the content element.
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
             return $this->generateBackendView();
@@ -61,7 +62,7 @@ class ContentSpielplan extends ContentElement
     /**
      * Generate the content element.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function compile(): void
     {
@@ -139,16 +140,16 @@ class ContentSpielplan extends ContentElement
                 continue;
             }
 
-            // "(geplant) Spielfrei" oder "Gegner nicht mehr aktiv":
+            // "(geplant) spielfrei" oder "Gegner nicht mehr aktiv":
             //
-            // Reguläres Spielfrei oder Gegner nicht mehr aktiv und
+            // Reguläres spielfrei oder Gegner nicht mehr aktiv und
             // Spiel noch nicht gespielt gewesen
             $spielfrei_home = !$away || (!$away->active && !$already_played);
             $spielfrei_away = !$home || (!$home->active && !$already_played);
             $spielfrei = $spielfrei_home || $spielfrei_away;
 
             // Nicht mehr aktive Heimmanschaft, die an diesem Spieltag
-            // Spielfrei gehabt hätte (wäre dann Spielfrei gegen Spielfrei)
+            // spielfrei gehabt hätte (wäre dann spielfrei gegen Spielfrei)
             if (!$home->active && !$away) {
                 continue;
             }
@@ -214,9 +215,9 @@ class ContentSpielplan extends ContentElement
     /**
      * generate the view for the back end.
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function generateBackendView()
+    protected function generateBackendView(): string
     {
         $objTemplate = new BackendTemplate('be_wildcard');
 
@@ -235,6 +236,7 @@ class ContentSpielplan extends ContentElement
                 $saison->name
             );
         } else {
+            $ligalabel = '';
             $subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $this->liga);
         }
         $suffix = sprintf('%s %s', $ligalabel, $filter);

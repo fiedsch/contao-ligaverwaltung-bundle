@@ -24,8 +24,10 @@ use Contao\BackendTemplate;
 use Contao\ContentModel;
 use Contao\Input;
 use Contao\Module;
+use Contao\PageModel;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielbericht;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Exception;
 use function Symfony\Component\String\u;
 
 class ModuleSpielberichtReader extends Module
@@ -42,7 +44,7 @@ class ModuleSpielberichtReader extends Module
      *
      * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
@@ -63,11 +65,11 @@ class ModuleSpielberichtReader extends Module
     /**
      * Generate the module.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function compile(): void
     {
-        /** @var \PageModel $objPage */
+        /** @var PageModel $objPage */
         // global $objPage;
 
         // Falls wir einen Back-Link einbauen wollen:

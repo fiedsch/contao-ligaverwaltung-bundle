@@ -31,24 +31,21 @@ use Symfony\Component\HttpFoundation\Response;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
+use Exception;
 
 class IcalController
 {
     /**
      * @var int
      */
-    protected $ligaid;
+    protected int $ligaid;
 
     /**
      * @var int
      */
-    protected $mannschaftid;
+    protected int $mannschaftid;
 
-    /**
-     * @param int $ligaid
-     * @param int $mannschaftid
-     */
-    public function __construct($ligaid, $mannschaftid)
+    public function __construct(int $ligaid, int $mannschaftid)
     {
         $this->ligaid = $ligaid;
         $this->mannschaftid = $mannschaftid;
@@ -57,9 +54,9 @@ class IcalController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function run()
+    public function run(): Response
     {
         // Name für den Kalender aus der (ersten) Root-Page
         $rootPages = PageModel::findBy(
@@ -127,9 +124,7 @@ class IcalController
     }
 
     /**
-     * @throws \Exception
-     *
-     * @return Event
+     * @throws Exception
      */
     protected function generateIcalEvent(BegegnungModel $begegnung): Event
     {
@@ -154,7 +149,7 @@ class IcalController
                 $spielort->city
         );
 
-        $dtStart = new DateTime(date('Y-m-d H:i:s', (int) $begegnung->spiel_am), new DateTimeZone(Config::get('timeZone')));
+        $dtStart = new DateTime(date('Y-m-d H:i:s', (int)$begegnung->spiel_am), new DateTimeZone(Config::get('timeZone')));
 
         // Did they change the default configuration (date + time) to date only in
         // the site's contfiguration? Then add a default time here:

@@ -41,7 +41,7 @@ class ContentBegegnungsauswahl extends ContentElement
      */
     protected $strTemplate = 'ce_begegnungsauswahl';
 
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
