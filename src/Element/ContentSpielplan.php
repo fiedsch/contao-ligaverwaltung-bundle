@@ -122,7 +122,7 @@ class ContentSpielplan extends ContentElement
                 continue;
             }
 
-            // Ergsbnis und daraus abgeleitet: hat die Begegnung bereits statt gefunden
+            // Ergebnis und daraus abgeleitet: hat die Begegnung bereits statt gefunden
             $linked_score = $begegnung->getLinkedScore();
             $already_played = '' !== $linked_score;
 
@@ -160,9 +160,9 @@ class ContentSpielplan extends ContentElement
             $inactive = (!$home?->active) || (!$away?->active);
 
             $homelabel = !$home?->active && !$already_played
-                ? 'Spielfrei' : $home->getLinkedName();
+                ? 'Spielfrei' : $home?->getLinkedName();
             $awaylabel = !$away?->active && !$already_played
-                ? 'Spielfrei' : $away->getLinkedName();
+                ? 'Spielfrei' : $away?->getLinkedName();
 
             $spielortlabel = $spielort->name;
 
