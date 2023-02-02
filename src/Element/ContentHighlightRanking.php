@@ -293,12 +293,12 @@ class ContentHighlightRanking extends ContentElement
             // Aggregieren
             switch ($highlights->type) {
                 case HighlightModel::TYPE_171:
-                    $results[$credit_to]['hl_171'] += $highlights->value;
+                    $results[$credit_to]['hl_171'] += (int)$highlights->value;
                     $results[$credit_to]['hl_punkte'][] = $highlights->value;
                     break;
 
                 case HighlightModel::TYPE_180:
-                    $results[$credit_to]['hl_180'] += $highlights->value;
+                    $results[$credit_to]['hl_180'] += (int)$highlights->value;
                     $results[$credit_to]['hl_punkte'][] = $highlights->value;
                     break;
 
