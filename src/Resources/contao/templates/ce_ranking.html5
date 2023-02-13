@@ -11,19 +11,19 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Platz</th>
-        <th>Mannschaft</th>
-        <th>Spiele</th>
+        <th class="rank">Platz</th>
+        <th class="team">Mannschaft</th>
+        <th class="team-matches">Spiele</th>
         <?php if ($ranking_model == 2): ?>
-          <th>Punkte</th>
+          <th class="points">Punkte</th>
         <?php endif; ?>
-        <th>g</th>
-        <th>u</th>
-        <th>v</th>
-        <th>Legs</th>
-        <th>Spiele</th>
+        <th class="won">g</th>
+        <th class="draw">u</th>
+        <th class="lost">v</th>
+        <th class="">Legs</th>
+        <th class="player-matches">Spiele</th>
         <?php if ($ranking_model != 2): ?>
-          <th>Punkte</th>
+          <th class="points">Punkte</th>
         <?php endif; ?>
       </tr>
     </thead>
