@@ -20,7 +20,7 @@
         <th class="won">g</th>
         <th class="draw">u</th>
         <th class="lost">v</th>
-        <th class="">Legs</th>
+        <th class="legs">Legs</th>
         <th class="player-matches">Spiele</th>
         <?php if ($ranking_model != 2): ?>
           <th class="points">Punkte</th>
@@ -30,19 +30,19 @@
     <tbody>
     <?php foreach ($this->listitems as $listitem): ?>
       <tr>
-          <td><?= $listitem['rang'] ?></td>
-          <td><?= $listitem['name'] ?></td>
-          <td><?= $listitem['begegnungen'] ?></td>
+          <td class="rank"><?= $listitem['rang'] ?></td>
+          <td class="team"><?= $listitem['name'] ?></td>
+          <td class="team-matches"><?= $listitem['begegnungen'] ?></td>
           <?php if ($ranking_model == 2): ?>
-          <td><?= $listitem['punkte_self'] ?></td>
+          <td class="points"><?= $listitem['punkte_self'] ?></td>
           <?php endif;?>
-          <td><?= $listitem['gewonnen'] ?></td>
-          <td><?= $listitem['unentschieden'] ?></td>
-          <td><?= $listitem['verloren'] ?></td>
-          <td><?= $listitem['legs_self'] ?>:<?= $listitem['legs_other'] ?></td>
-          <td><?= $listitem['spiele_self'] ?>:<?= $listitem['spiele_other'] ?></td>
+          <td class="won"><?= $listitem['gewonnen'] ?></td>
+          <td class="draw"><?= $listitem['unentschieden'] ?></td>
+          <td class="lost"><?= $listitem['verloren'] ?></td>
+          <td class="legs"><?= $listitem['legs_self'] ?>:<?= $listitem['legs_other'] ?></td>
+          <td class="player-matches"><?= $listitem['spiele_self'] ?>:<?= $listitem['spiele_other'] ?></td>
           <?php if ($ranking_model != 2): ?>
-            <td><?= $listitem['punkte_self'] ?>:<?= $listitem['punkte_other'] ?></td>
+            <td class="points"><?= $listitem['punkte_self'] ?>:<?= $listitem['punkte_other'] ?></td>
           <?php endif; ?>
       </tr>
     <?php endforeach; ?>

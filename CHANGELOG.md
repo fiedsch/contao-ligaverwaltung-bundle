@@ -4,6 +4,11 @@
 ## Development
 
 
+# Version 2.1.3
+
+* Fix omission. Add CSS classes to `<td>`s also
+
+
 # Version 2.1.2
 
 * Extend templates to allow easier styling
