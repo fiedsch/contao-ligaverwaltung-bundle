@@ -3,8 +3,13 @@
 
 ## Development
 
+
+# Version 2.1.2
+
+* Extend templates to allow easier styling
 * Use Contao\DataContainer constants in DCA files
 * Fix  (PHPStorm) code inspection warnings
+
 
 # Version 2.1.1
 
