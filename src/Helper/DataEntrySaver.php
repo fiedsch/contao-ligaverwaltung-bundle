@@ -209,7 +209,7 @@ class DataEntrySaver
                 //$highlightModel->type = $highlightType;
             }
             $highlightModel->tstamp = time();
-            $highlightModel->type = $highlightType;
+            $highlightModel->type = (int)$highlightType;
             $highlightModel->value = $v;
             $highlightModel->save();
             // Bookkeeping

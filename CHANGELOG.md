@@ -4,6 +4,11 @@
 ## Development
 
 
+# Version 2.1.4
+
+* Bugfix in `ContentSpielbericht` (list highlights)
+
+
 # Version 2.1.3
 
 * Fix omission. Add CSS classes to `<td>`s also
