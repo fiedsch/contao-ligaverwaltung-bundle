@@ -18,4 +18,7 @@ services:
     fiedsch.command.begegnungenerstellen:
         class: Fiedsch\LigaverwaltungBundle\Command\BegegnungenErstellenCommand
 
+    fiedsch.command.fixdata:
+            class: Fiedsch\LigaverwaltungBundle\Command\FixDataCommand
+
 

@@ -4,6 +4,13 @@
 ## Development
 
 
+# Version 2.1.5
+
+* Bugfix in `DataEntrySaver`: add missing `break;` that would cause `highfinish`es not to be saved properly
+* Change visibility of `DataEntrySaver::handleHighlights()` to allow external usage (see `FixDataCommand` below)
+* Add `FixDataCommand` to allow re-saving `tl_begegnung` entries to trigger genaration of `tl_highlight` entries
+  without manually clicking in the back end
+
 # Version 2.1.4
 
 * Bugfix in `ContentSpielbericht` (list highlights)

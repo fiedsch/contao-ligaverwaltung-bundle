@@ -162,7 +162,7 @@ class DataEntrySaver
     /**
      * @return int Anzahl gespeicherte HighlightlModel
      */
-    protected static function handleHighlights(int $begegnung, array $data): int
+    public static function handleHighlights(int $begegnung, array $data): int
     {
         $existingHighlightsIds = Database::getInstance()
             ->prepare('SELECT id FROM tl_highlight WHERE begegnung_id=?')
@@ -193,6 +193,7 @@ class DataEntrySaver
 
                 case 'highfinish':
                     $highlightType = HighlightModel::TYPE_HIGHFINISH;
+                    break;
                 default:
                     $highlightType = '';
             }
