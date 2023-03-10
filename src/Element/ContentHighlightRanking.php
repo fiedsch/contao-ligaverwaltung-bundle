@@ -158,7 +158,7 @@ class ContentHighlightRanking extends ContentElement
             $results[] = [
                 'datum' => Date::parse(Config::get('dateFormat'), $highlights->spiel_am),
                 'mannschaft' => $highlights->mannschaft,
-                'hl_171' => HighlightModel::TYPE_171 === $highlights->type ? $highlights->value : '',
+                'hl_171' => HighlightModel::TYPE_171 === $highlights->type ? $highlights->value : '', // FIXME === vs == (vs. Konstanten ändern)
                 'hl_180' => HighlightModel::TYPE_180 === $highlights->type ? $highlights->value : '',
                 'hl_highfinish' => HighlightModel::TYPE_HIGHFINISH === $highlights->type ? $highlights->value : '',
                 'hl_shortleg' => HighlightModel::TYPE_SHORTLEG === $highlights->type ? $highlights->value : '',
