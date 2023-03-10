@@ -123,16 +123,10 @@ class LigaverwaltungFrontendController
             $appData = [];
         }
 
-        // // TODO: do not use REQUEST_TOKEN constant. Instead use the ContaoCsrfTokenManager from the container
-        // // TODO: why doe we get different results with REQUEST_TOKEN and $requestToken?
-        // // TODO: when fixed also change in dca/tl_member.php, LigaverwwaltungBackendController and DCAHelper
-        // /** @var ContaoCsrfTokenManager $requestTokenManager */
-        // $requestTokenManager = System::getContainer()->get('contao.csrf.token_manager');
-        // $requestToken = $requestTokenManager->getDefaultTokenValue();
-        // dd(REQUEST_TOKEN, $requestToken);
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
 
         $appData['webserviceUrl'] = '/ligaverwaltung/begegnung_fe';
-        $appData['requestToken'] = REQUEST_TOKEN;
+        $appData['requestToken'] = $requestToken;
         $appData['begegnungId'] = $begegnung;
         $appData['numSlots'] = 8;
         $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);

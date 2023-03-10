@@ -1,8 +1,8 @@
 <?php
 
-use Contao\DataContainer;
-
 declare(strict_types=1);
+
+use Contao\DataContainer;
 
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.

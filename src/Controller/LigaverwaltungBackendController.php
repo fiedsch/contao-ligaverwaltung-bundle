@@ -91,8 +91,9 @@ class LigaverwaltungBackendController
         if (!is_array($appData)) {
             $appData = [];
         }
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         $appData['webserviceUrl'] = '/ligaverwaltung/begegnung';
-        $appData['requestToken'] = REQUEST_TOKEN;
+        $appData['requestToken'] = $requestToken;
         $appData['begegnungId'] = $begegnung;
         $appData['numSlots'] = 8;
         $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);

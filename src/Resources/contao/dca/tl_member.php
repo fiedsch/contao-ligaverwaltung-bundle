@@ -16,11 +16,14 @@ use Contao\Database;
 use Contao\DataContainer;
 use Contao\Image;
 use Contao\MemberModel;
+use Contao\System;
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
     'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
         $member = MemberModel::findById($arrRow['id']);
+
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
 
         return sprintf(
             '<a href="ligaverwaltung/player/history/%s?popup=1&amp;rt=%s"'
@@ -29,7 +32,7 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
             .'>'
             .'%s</a>',
             $arrRow['id'],
-            REQUEST_TOKEN,
+            $requestToken,
             $member->firstname.' '.$member->lastname,
             // getHtml(a, foo, c) setzt mit foo das alt-Attribut, wir benötigen aber das title-Attribut
             // das wir im dritten Parameter "manuell" setzen.

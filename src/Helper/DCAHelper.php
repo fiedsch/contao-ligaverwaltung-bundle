@@ -14,11 +14,12 @@ declare(strict_types=1);
 
 namespace Fiedsch\LigaverwaltungBundle\Helper;
 
-use function array_keys;
+
 use Contao\Config;
 use Contao\Database;
 use Contao\Database\Result;
 use Contao\DataContainer;
+use Contao\System;
 use Contao\Image;
 use Contao\MemberModel;
 use Contao\StringUtil;
@@ -38,6 +39,7 @@ use function count;
 use function in_array;
 use function preg_match;
 use function str_replace;
+use function array_keys;
 
 class DCAHelper
 {
@@ -424,8 +426,10 @@ class DCAHelper
             return '';
         }
 
+        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+
         return '<a href="contao/main.php?do=member&amp;act=edit&amp;id='.$dc->value
-            .'&amp;popup=1&amp;rt='.REQUEST_TOKEN
+            .'&amp;popup=1&amp;rt='.$requestToken
             .'" title="'.StringUtil::specialchars($GLOBALS['TL_LANG']['tl_spieler']['editmember'][1]).'"'
             .' style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\''
             .StringUtil::specialchars(str_replace("'", "\\'", StringUtil::specialchars($GLOBALS['TL_LANG']['tl_spieler']['editmember'][1])))

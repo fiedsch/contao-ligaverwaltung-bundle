@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
+use Contao\DC_Table;
 use Contao\Config;
 use Contao\Input;
 use Contao\System;

@@ -41,6 +41,8 @@ use Fiedsch\LigaverwaltungBundle\Module\ModuleMannschaftsseitenReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielberichtReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielortseitenReader;
 use Contao\ArrayUtil;
+use Contao\System;
+use Symfony\Component\HttpFoundation\Request;
 
 //ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
 ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
@@ -102,8 +104,16 @@ $GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = ModuleSpielberichtR
 
 $GLOBALS['TL_HOOKS']['addCustomRegexp'][] = [DCAHelper::class, 'addCustomRegexp'];
 
+
+
+
+
+
 /* Add to Backend CSS */
-if (TL_MODE === 'BE') {
+//if (TL_MODE === 'BE') {
+if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(
+    System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')
+)) {
     $GLOBALS['TL_CSS'][] = 'bundles/fiedschligaverwaltung/backend.css';
 }
 

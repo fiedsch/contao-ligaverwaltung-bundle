@@ -160,7 +160,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             //'eval'       => ['tl_style'=>'w50'],
             'sql' => "char(1) NOT NULL default ''",
         ],
-
+/*
         'avatar' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['avatar'],
             'input_field_callback' => static function (DataContainer $dc) {
@@ -186,7 +186,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
                     ;
             },
         ],
-
+*/
         'haspaid' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['haspaid'],
             'inputType' => 'checkbox',

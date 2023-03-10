@@ -16,10 +16,9 @@ use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Contao\DataContainer;
 use Contao\DC_Table;
+use Contao\System;
 
-//use Exception;
-
-\Contao\System::loadLanguageFile('default');
+System::loadLanguageFile('default');
 
 $GLOBALS['TL_DCA']['tl_liga'] = [
     'config' => [
