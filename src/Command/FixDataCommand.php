@@ -69,8 +69,6 @@ class FixDataCommand extends Command implements FrameworkAwareInterface
             return 0;
         }
 
-        print_r(['Saison'=>$saison]);
-
         // Ligen der angegebenen Saison
         $ligen = LigaModel::findBy(['saison=?'], [$saison->id]);
 
