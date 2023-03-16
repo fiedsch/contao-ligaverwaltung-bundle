@@ -3,7 +3,10 @@
 
 ## Development
 
-* TODO: FIXME inContentHighlightRanking::compileMannschaftenranking()
+
+# Version 2.1.6
+
+* Bugfix do not use too strict comparisons in `ContentHighlightRanking`
 
 
 # Version 2.1.5
