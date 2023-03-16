@@ -158,10 +158,10 @@ class ContentHighlightRanking extends ContentElement
             $results[] = [
                 'datum' => Date::parse(Config::get('dateFormat'), $highlights->spiel_am),
                 'mannschaft' => $highlights->mannschaft,
-                'hl_171' => HighlightModel::TYPE_171 === $highlights->type ? $highlights->value : '', // FIXME === vs == (vs. Konstanten ändern)
-                'hl_180' => HighlightModel::TYPE_180 === $highlights->type ? $highlights->value : '',
-                'hl_highfinish' => HighlightModel::TYPE_HIGHFINISH === $highlights->type ? $highlights->value : '',
-                'hl_shortleg' => HighlightModel::TYPE_SHORTLEG === $highlights->type ? $highlights->value : '',
+                'hl_171' => HighlightModel::TYPE_171 == $highlights->type ? $highlights->value : '', // FIXME === vs == (vs. Konstanten ändern)
+                'hl_180' => HighlightModel::TYPE_180 == $highlights->type ? $highlights->value : '',
+                'hl_highfinish' => HighlightModel::TYPE_HIGHFINISH == $highlights->type ? $highlights->value : '',
+                'hl_shortleg' => HighlightModel::TYPE_SHORTLEG == $highlights->type ? $highlights->value : '',
                 'hl_punkte' => [],
                 'hl_rang' => 0,
             ];
@@ -176,7 +176,7 @@ class ContentHighlightRanking extends ContentElement
 
     protected function getRankingTypeFilter(string $tablealias): string
     {
-        switch ($this->rankingfield) {
+        switch ($this->rankingfield) { // note: switch is not type sensitive (i.e. we are implicitly using == here)
             case HighlightModel::TYPE_171:
             case HighlightModel::TYPE_180:
                 $result = sprintf('%s.type IN (%d,%d)',
@@ -285,8 +285,15 @@ class ContentHighlightRanking extends ContentElement
                 ];
             }
             // Spieler hat in versch. Mannschaften gespielt?
+            // Bei Wechsel der Mannschaft eines Spielers innerhalb der Saison können es mehrere Mannschaften sein!
+            if (!isset($results[$credit_to]['mannschaft'][$highlights->mannschaft])) {
+                $results[$credit_to]['mannschaft'][$highlights->mannschaft] = 0;
+            }
+            if (!isset($results[$credit_to]['mannschaftsid'][$highlights->maid])) {
+                $results[$credit_to]['mannschaftsid'][$highlights->maid] = 0;
+            }
             ++$results[$credit_to]['mannschaft'][$highlights->mannschaft]; // Label
-            //++$results[$credit_to]['mannschaftsid'][$highlights->maid]; // ID
+            ++$results[$credit_to]['mannschaftsid'][$highlights->maid]; // ID
             // Spieler ist (noch) aktiv?
             $results[$credit_to]['active'] |= $highlights->sactive && $highlights->mactive; // aktiver Spieler in einer aktiven Mannschaft
 
@@ -303,13 +310,13 @@ class ContentHighlightRanking extends ContentElement
                     break;
 
                 case HighlightModel::TYPE_HIGHFINISH:
-                    $results[$credit_to]['hl_highfinish'][] = $highlights->value;
-                    $results[$credit_to]['hl_punkte'][] = explode(',', $highlights->value);
+                    $results[$credit_to]['hl_highfinish'][] = rtrim($highlights->value, ',');
+                    $results[$credit_to]['hl_punkte'][] = explode(',', rtrim($highlights->value, ','));
                     break;
 
                 case HighlightModel::TYPE_SHORTLEG:
-                    $results[$credit_to]['hl_shortleg'][] = $highlights->value;
-                    $results[$credit_to]['hl_punkte'][] = explode(',', $highlights->value);
+                    $results[$credit_to]['hl_shortleg'][] = rtrim($highlights->value, ',');
+                    $results[$credit_to]['hl_punkte'][] = explode(',', rtrim($highlights->value, ','));
                     break;
             }
         }
@@ -323,7 +330,7 @@ class ContentHighlightRanking extends ContentElement
                 continue;
             }
 
-            switch ($this->rankingfield) {
+            switch ($this->rankingfield) { // note: switch is not type sensitive (i.e. we are implicitly using == here)
                 case HighlightModel::TYPE_171:
                 case HighlightModel::TYPE_180:
                     $results[$id]['hl_punkte'] = [array_sum($results[$id]['hl_punkte'])];
@@ -379,7 +386,7 @@ class ContentHighlightRanking extends ContentElement
 
         // Sortieren
 
-        if (HighlightModel::TYPE_ALL === $this->rankingfield) {
+        if (HighlightModel::TYPE_ALL == $this->rankingfield) {
             uasort(
                 $results,
                 static function ($a, $b) {
@@ -398,7 +405,7 @@ class ContentHighlightRanking extends ContentElement
                     // * bei Highfinish die Nebenbedingung gilt, daß die Werte > 100 und <180 sind!
                     //   Es kann also nicht das "Zahlen als Strings sortiert"-Problem auftauchen --
                     //   falsch: "1", "11", "2" vs. korrekt: 1, 2, 11.
-                    if (HighlightModel::TYPE_SHORTLEG === $this->rankingfield || HighlightModel::TYPE_HIGHFINISH === $this->rankingfield) {
+                    if (HighlightModel::TYPE_SHORTLEG == $this->rankingfield || HighlightModel::TYPE_HIGHFINISH == $this->rankingfield) {
                         return strcmp(implode('', $b['hl_punkte']), implode('', $a['hl_punkte']));
                     }
                     // Bei allen anderen Rankings hat ['hl_punkte'] nur einen numerischen Eintrag, nach dem
