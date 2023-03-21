@@ -3,6 +3,8 @@
 
 ## Development
 
+* Fix 'dataContainer' entries
+
 
 # Version 2.1.6
 

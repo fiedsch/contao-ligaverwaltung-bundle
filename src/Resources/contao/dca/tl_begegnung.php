@@ -16,6 +16,7 @@ use Contao\Config;
 use Contao\Input;
 use Contao\System;
 use Contao\DataContainer;
+use Contao\DC_Table;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 
@@ -23,7 +24,7 @@ System::loadLanguageFile('default');
 
 $GLOBALS['TL_DCA']['tl_begegnung'] = [
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => DC_Table::class,
         'enableVersioning' => true,
         'ptable' => 'tl_liga',
         'ctable' => ['tl_spiel'],

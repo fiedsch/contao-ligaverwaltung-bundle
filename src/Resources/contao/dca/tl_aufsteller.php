@@ -15,12 +15,13 @@ declare(strict_types=1);
  */
 
 use Contao\System;
+use Contao\DC_Table;
 
 System::loadLanguageFile('default');
 
 $GLOBALS['TL_DCA']['tl_aufsteller'] = [
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => DC_Table::class,
         'enableVersioning' => true,
         'sql' => [
             'keys' => [

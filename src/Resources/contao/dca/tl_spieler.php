@@ -15,13 +15,15 @@ declare(strict_types=1);
 use Contao\DataContainer;
 use Contao\FilesModel;
 use Contao\MemberModel;
+use Contao\DC_Table;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+
 
 \Contao\System::loadLanguageFile('default');
 
 $GLOBALS['TL_DCA']['tl_spieler'] = [
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => DC_Table::class,
         'ptable' => 'tl_mannschaft',
         'switchToEdit' => true,
         'enableVersioning' => true,

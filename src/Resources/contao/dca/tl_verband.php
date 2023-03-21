@@ -14,12 +14,13 @@ declare(strict_types=1);
 
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Contao\DataContainer;
+use Contao\DC_Table;
 
 \Contao\System::loadLanguageFile('default');
 
 $GLOBALS['TL_DCA']['tl_verband'] = [
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => DC_Table::class,
         'ctable' => ['tl_liga'],
         'enableVersioning' => true,
         'sql' => [
