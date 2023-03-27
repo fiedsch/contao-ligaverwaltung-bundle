@@ -3,7 +3,7 @@
 
 ## Development
 
-* Fix 'dataContainer' entries
+* Fix 'dataContainer' entries (use `Contao\DC_Table` instead of `Table`)
 
 
 # Version 2.1.6
