@@ -89,8 +89,8 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
             'exclude' => true,
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
-            'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],
-            'sql' => "varchar(128) NOT NULL default ''",
+            'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
+            'sql' => "varchar(128) default NULL",
         ],
     ],
 ];

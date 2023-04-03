@@ -3,7 +3,11 @@
 
 ## Development
 
+
+# Version 2.1.7
+
 * Fix 'dataContainer' entries (use `Contao\DC_Table` instead of `Table`)
+* Avoid ` Integrity constraint violation`s caused by duplicate enties with in combined unique keys
 
 
 # Version 2.1.6

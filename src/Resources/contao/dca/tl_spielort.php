@@ -92,7 +92,7 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],
-            'sql' => "varchar(128) NOT NULL default ''",
+            'sql' => "varchar(128) default NULL",
         ],
         'street' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spielort']['street'],

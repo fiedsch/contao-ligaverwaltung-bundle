@@ -95,7 +95,7 @@ class DCAHelper
         $saison = SaisonModel::findById($row['saison']);
         $class = $row['aktiv'] ? 'tl_green' : 'tl_gray';
 
-        return sprintf("<span class='%s'>%s %s</span>", $class, $label, $saison->name);
+        return sprintf("<span class='%s'>%s %s</span>", $class, $label, $saison?->name);
     }
 
     /* Helper für tl_mannschaft */

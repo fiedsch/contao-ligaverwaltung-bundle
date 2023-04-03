@@ -177,7 +177,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             //'flag'             => DataContainer::SORT_ASC,
             'inputType' => 'select',
             'foreignKey' => 'tl_liga.name',
-            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true, 'mandatory' => true],
             'options_callback' => [DCAHelper::class, 'getAktiveLigenForSelect'],
             'relation' => ['type' => 'belongsTo'],
             'sql' => "int(10) unsigned NOT NULL default '0'",
