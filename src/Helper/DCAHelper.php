@@ -922,10 +922,10 @@ class DCAHelper
      *
      * @return string
      */
-    public static function makeSpielerName(MemberModel|Result $member): string
+    public static function makeSpielerName(/*MemberModel|Result*/ $member = null): string
     {
         if (!$member) {
-            return '<span class="tl_error">MITGLIED EXISTIERT NICHT (mehr)</span>';
+            return '<span class="tl_error">MITGLIED existiert nicht mehr (oder ist noch nicht angegeben)</span>';
         }
         return self::makeSpielerNameFromParts($member->firstname ?? '', $member->lastname ?? '', (bool) $member->anonymize);
     }

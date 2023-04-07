@@ -4,6 +4,14 @@
 ## Development
 
 
+# Version 2.1.8
+
+* Avoid `DCAHelper::makeSpielerName()` argument can not be null when creating an new "Spieler"
+* Fix `tl_spieler`:
+  - `avatar.input_field_callback` did not handle `null` values (when creating new entries)
+  - `member_id` `sql` definition allow `NULL`
+
+
 # Version 2.1.7
 
 * Fix 'dataContainer' entries (use `Contao\DC_Table` instead of `Table`)

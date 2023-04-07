@@ -117,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             //'foreignKey'       => 'tl_member.CONCAT(lastname, ", ", firstname)',
             'foreignKey' => 'tl_member.CONCAT(firstname, " ", lastname)',
             'relation' => ['type' => 'hasOne', 'table' => 'tl_member', 'load' => 'eager'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => "int(10) unsigned NULL",
         ],
         'teamcaptain' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['teamcaptain'],
@@ -166,6 +166,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'input_field_callback' => static function (DataContainer $dc) {
                 $member_id = $dc->activeRecord->row()['member_id'];
                 $member = MemberModel::findById($member_id);
+                if (!$member) { return ''; }
                 $avatar = $member ? FilesModel::findById($member->avatar)?->path : null;
 
                 return '<div class="widget">'
