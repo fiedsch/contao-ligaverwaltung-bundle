@@ -4,6 +4,12 @@
 ## Development
 
 
+# Version 2.1.9
+
+* Bugfix: you could not add "Spieler" to a "Mannschaft" as the query in `MDCAHelper::getSpielerForSelect()`
+  yielded an empty result due to NULL values (probably introduced by the `tl_spieler` changes in 2.1.8)
+
+
 # Version 2.1.8
 
 * Avoid `DCAHelper::makeSpielerName()` argument can not be null when creating an new "Spieler"

@@ -347,6 +347,7 @@ class DCAHelper
                 .' AND m.active=\'1\''
                 .' AND s.active=\'1\''
                 .' AND s.ersatzspieler<>\'1\''
+                .' AND s.member_id IS NOT NULL'
                 .')'
                 .' AND tl_member.disable=\'\''
                 //. ' ORDER BY tl_member.lastname';
@@ -368,6 +369,7 @@ class DCAHelper
                 .' AND m.active=\'1\''
                 .' AND s.active=\'1\''
                 .' AND s.ersatzspieler<>\'1\''
+                .' AND s.member_id IS NOT NULL'
                 .')'
                 .' AND tl_member.disable=\'\''
                 .' ORDER BY tl_member.lastname';
