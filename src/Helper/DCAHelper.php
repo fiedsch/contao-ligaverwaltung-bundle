@@ -19,7 +19,6 @@ use Contao\Config;
 use Contao\Database;
 use Contao\Database\Result;
 use Contao\DataContainer;
-use Contao\DC_Table;
 use Contao\Image;
 use Contao\MemberModel;
 use Contao\StringUtil;
@@ -399,6 +398,12 @@ class DCAHelper
         $co_teamcaptain_label = $arrRow['co_teamcaptain'] ? ('(Co-Teamcaptain: '.$member->email.')') : '';
         $active_label = '1' === $arrRow['active'] ? '' : '<span class="tl_red">nicht aktiv</span>';
         $ersatzspieler_label = '' === $arrRow['ersatzspieler'] ? '' : '<span class="tl_red">Ersatzspieler</span>';
+
+        $member_no_longer_exists = (!$member && $arrRow['member_id'] > 0);
+
+        if ($member_no_longer_exists) {
+            return sprintf('Mitglied mit der ID %d existiert nicht mehr', $arrRow['member_id']);
+        }
 
         return sprintf('<div class="tl_content_left">%s %s%s %s %s</div>',
             self::makeSpielerName($member),
@@ -926,18 +931,15 @@ class DCAHelper
      */
     public static function makeSpielerName(/*MemberModel|Result*/ $member = null): string
     {
-        if (!$member) {
-            return '<span class="tl_error">MITGLIED existiert nicht mehr (oder ist noch nicht angegeben)</span>';
-        }
-        return self::makeSpielerNameFromParts($member->firstname ?? '', $member->lastname ?? '', (bool) $member->anonymize);
+        return self::makeSpielerNameFromParts($member?->firstname ?? '-', $member?->lastname ?? '-');
     }
 
-    public static function makeSpielerNameFromParts(string $firstname, string $lastname, bool $anonymize): string
+    public static function makeSpielerNameFromParts(string $firstname, string $lastname, bool $anonymize = false): string
     {
         if ($anonymize) {
             return SpielerModel::ANONYM_LABEL;
         }
-        // return sprintf("%s, %s", $lastname, $firstname);
+
         return sprintf('%s %s', $firstname, $lastname);
     }
 }

@@ -3,6 +3,8 @@
 
 ## Development
 
+* Improve `DCAHelper::makeSpielerName()`
+
 
 # Version 2.1.9
 

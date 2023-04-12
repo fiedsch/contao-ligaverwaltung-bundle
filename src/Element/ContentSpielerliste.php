@@ -41,7 +41,7 @@ class ContentSpielerliste extends ContentElement
     public function compile(): void
     {
         $allespieler = SpielerModel::findAll([
-            'column' => ['pid=?', 'tl_spieler.active=?'],
+            'column' => ['pid=?', 'tl_spieler.active=?', 'tl_spieler.member_id>0'],
             'value' => [$this->mannschaft, '1'],
             //'order'  => 'teamcaptain DESC, co_teamcaptain DESC, lastname ASC, firstname ASC',
             'order' => 'teamcaptain DESC, co_teamcaptain DESC, firstname ASC, lastname ASC',
