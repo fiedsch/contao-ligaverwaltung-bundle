@@ -17,7 +17,6 @@ use Contao\Config;
 use Contao\Input;
 use Contao\System;
 use Contao\DataContainer;
-use Contao\DC_Table;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 
