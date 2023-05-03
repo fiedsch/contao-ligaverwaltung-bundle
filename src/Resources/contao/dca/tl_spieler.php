@@ -164,7 +164,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
         'avatar' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['avatar'],
             'input_field_callback' => static function (DataContainer $dc) {
-                $member_id = $dc->activeRecord->row()['member_id'];
+                $member_id = $dc->activeRecord->member_id;
                 $member = MemberModel::findById($member_id);
                 if (!$member) { return ''; }
                 $avatar = $member ? FilesModel::findById($member->avatar)?->path : null;
