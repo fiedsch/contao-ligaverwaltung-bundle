@@ -916,7 +916,7 @@ class DCAHelper
                 }
                 break;
         }
-        //throw new RuntimeException("TEST".print_r($dc->activeRecord->row(), true));
+
         return implode(',', $entries);
     }
 
