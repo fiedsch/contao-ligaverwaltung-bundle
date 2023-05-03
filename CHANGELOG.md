@@ -3,6 +3,13 @@
 
 ## Development
 
+* Remove legacy code (`activeRecord->row()['field']` becomes `activeRecord-field`)
+* Remove all unnecessary sorting fields
+
+
+# Version 2.1.10
+
+* Remove a sorting field (as the query would otherwise crash with an out out of memory
 * Improve `DCAHelper::makeSpielerName()`
 
 

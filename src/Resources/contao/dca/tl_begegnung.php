@@ -267,7 +267,7 @@ if ('liga.begegnung' === Input::get('do')) {
     $GLOBALS['TL_DCA']['tl_begegnung']['list']['sorting'] = [
         'mode' => DataContainer::MODE_SORTABLE,
         'flag' => DataContainer::SORT_ASC,
-        'fields' => ['pid', 'home', /*'away'*/],
+        'fields' => ['pid'],
         'panelLayout' => 'sort,filter;search,limit',
         'disableGrouping' => false,
         'filter' => [
