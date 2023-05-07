@@ -44,7 +44,6 @@ use Contao\ArrayUtil;
 use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
 
-//ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
 ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
     'liga' => [
         'liga.spielort' => [
