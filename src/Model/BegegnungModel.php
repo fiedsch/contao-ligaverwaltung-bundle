@@ -192,9 +192,9 @@ class BegegnungModel extends Model
             $spielberichtpage = PageModel::findById($spielberichtpageId);
 
             if (Config::get('folderUrl')) {
-                $url = Controller::generateFrontendUrl($spielberichtpage->row(), '/id/'.$this->id);
+                $url = $spielberichtpage->getFrontendUrl('/id/'.$this->id);
             } else {
-                $url = Controller::generateFrontendUrl($spielberichtpage->row()).'?id='.$this->id;
+                $url = $spielberichtpage->getFrontendUrl('?id='.$this->id);
             }
 
             return sprintf("<a href='%s'>%s</a>",

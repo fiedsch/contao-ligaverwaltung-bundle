@@ -93,9 +93,9 @@ class MannschaftModel extends Model
             $teampage = PageModel::findById($teampageId);
 
             if (Config::get('folderUrl')) {
-                $url = Controller::generateFrontendUrl($teampage->row(), '/id/'.$this->id);
+                $url = $teampage->getFrontendUrl('/id/'.$this->id);
             } else {
-                $url = Controller::generateFrontendUrl($teampage->row()).'?id='.$this->id;
+                $url = $teampage->getFrontendUrl('?id='.$this->id);
             }
             $result = sprintf("<a href='%s'>%s</a>",
                 $url,

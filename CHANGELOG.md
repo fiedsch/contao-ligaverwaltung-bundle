@@ -3,6 +3,7 @@
 
 ## Development
 
+* Fix FrontendUrl generation
 * Fix `TL_MODE` usages
 * Fixes for Contao 5 (while trying to still be compatible with Contao 4.x)
 * Remove legacy code (`activeRecord->row()['field']` becomes `activeRecord->field`)
