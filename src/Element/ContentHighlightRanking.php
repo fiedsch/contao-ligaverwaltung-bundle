@@ -25,6 +25,7 @@ use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use function Symfony\Component\String\u;
@@ -37,6 +38,8 @@ use function is_array;
  */
 class ContentHighlightRanking extends ContentElement
 {
+    use TlModeTrait;
+
     /**
      * alles bis inkl. 20 Darts ist ein Shortleg.
      */
@@ -53,7 +56,7 @@ class ContentHighlightRanking extends ContentElement
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if ($this->isBackend()) {
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
             $suffix = '';

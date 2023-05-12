@@ -29,6 +29,7 @@ use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
 use Exception;
+use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 /**
@@ -36,6 +37,7 @@ use function Symfony\Component\String\u;
  */
 class ContentSpielbericht extends ContentElement
 {
+    use TlModeTrait;
     /**
      * Template.
      *
@@ -50,7 +52,7 @@ class ContentSpielbericht extends ContentElement
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if ($this->isBackend()) {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
             $begegnunglabel = BegegnungModel::findById($this->begegnung) ? BegegnungModel::findById($this->begegnung)->getLabel('full') : 'Begegnung nicht gefunden!';

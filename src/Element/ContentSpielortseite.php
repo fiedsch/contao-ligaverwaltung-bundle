@@ -27,12 +27,15 @@ use Contao\StringUtil;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 use function array_filter;
 use function in_array;
 
 class ContentSpielortseite extends ContentElement
 {
+    use TlModeTrait;
+
     /**
      * Template.
      *
@@ -45,7 +48,7 @@ class ContentSpielortseite extends ContentElement
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if ($this->isBackend()) {
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $headline = $this->headline;

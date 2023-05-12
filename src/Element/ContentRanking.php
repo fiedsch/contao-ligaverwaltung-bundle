@@ -26,6 +26,7 @@ use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Exception;
+use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 /**
@@ -39,6 +40,8 @@ use function Symfony\Component\String\u;
  */
 class ContentRanking extends ContentElement
 {
+    use TlModeTrait;
+
     /**
      * Template.
      *
@@ -53,7 +56,7 @@ class ContentRanking extends ContentElement
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if ($this->isBackend()) {
             $objTemplate = new BackendTemplate('be_wildcard');
             $liga = LigaModel::findById($this->liga);
             if ($liga) {

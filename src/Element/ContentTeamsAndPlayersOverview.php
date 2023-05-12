@@ -20,10 +20,12 @@ use Contao\StringUtil;
 use Contao\System;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
+use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 class ContentTeamsAndPlayersOverview extends ContentElement
 {
+    use TlModeTrait;
     /**
      * Template.
      *
@@ -34,7 +36,7 @@ class ContentTeamsAndPlayersOverview extends ContentElement
 
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if ($this->isBackend()) {
             $objTemplate = new BackendTemplate('be_wildcard');
 
             $headline = $this->headline;

@@ -28,6 +28,7 @@ use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Exception;
+use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 /**
@@ -35,6 +36,8 @@ use function Symfony\Component\String\u;
  */
 class ContentMannschaftenuebersicht extends ContentElement
 {
+    use TlModeTrait;
+
     /**
      * Template.
      *
@@ -44,7 +47,7 @@ class ContentMannschaftenuebersicht extends ContentElement
 
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if ($this->isBackend()) {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
             $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'][0])->upper().' ###';

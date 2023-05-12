@@ -24,6 +24,7 @@ use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\StringUtil;
 use Contao\System;
+use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use function Symfony\Component\String\u;
 
@@ -34,6 +35,9 @@ use function Symfony\Component\String\u;
  */
 class ContentBegegnungsauswahl extends ContentElement
 {
+
+    use TlModeTrait;
+
     /**
      * Template.
      *
@@ -43,7 +47,7 @@ class ContentBegegnungsauswahl extends ContentElement
 
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if ($this->isBackend()) {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->title = $this->headline;
             $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['begegnungsauswahl'][0])->upper().' ###';

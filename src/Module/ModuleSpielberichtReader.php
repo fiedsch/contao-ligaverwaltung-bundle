@@ -28,10 +28,12 @@ use Contao\PageModel;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielbericht;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Exception;
+use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 class ModuleSpielberichtReader extends Module
 {
+    use TlModeTrait;
     /**
      * Template.
      *
@@ -46,7 +48,7 @@ class ModuleSpielberichtReader extends Module
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if ($this->isBackend()) {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
 

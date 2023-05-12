@@ -32,10 +32,12 @@ use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Exception;
+use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 class ContentSpielplan extends ContentElement
 {
+    use TlModeTrait;
     /**
      * Template.
      *
@@ -52,7 +54,7 @@ class ContentSpielplan extends ContentElement
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        if ($this->isBackend()) {
             return $this->generateBackendView();
         }
 
