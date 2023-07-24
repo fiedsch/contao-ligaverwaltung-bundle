@@ -25,6 +25,7 @@ use Contao\ContentElement;
 use Contao\StringUtil;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Exception;
 use function Symfony\Component\String\u;
@@ -83,7 +84,8 @@ class ContentMannschaftenuebersicht extends ContentElement
             if (null === $mannschaften) {
                 continue;
             }
-            $arrLigen[$liga->id] = $liga->name;
+            $saison = SaisonModel::findById(LigaModel::findById($liga->id)?->saison)?->name;
+            $arrLigen[$liga->id] = $liga->name . ' ' . $saison;
             $arrDetails[$liga->id] = [];
 
             foreach ($mannschaften as $mannschaft) {
