@@ -99,12 +99,12 @@ $GLOBALS['TL_DCA']['tl_spielort']['palettes'] = str_replace(',aufsteller', '', $
 
 ### Aktive und inaktive Ligen
 
-Unter Ligaverwaltung ➜ Verbände/Ligen können eingetragenen Ligen als aktiv ("Diese Liga ist Aktiv (es finden aktuell
+Unter Ligaverwaltung ➜ Verbände/Ligen können eingetragenen Ligen als aktiv ("Diese Liga ist aktiv (es finden aktuell
 Spiele statt)") oder inaktiv markiert werden. Mit Hilfe dieser Markierung werden unter Ligaverwaltung ➜ Begegnungen nur
 Begegnungen aktiver Ligen angezeigt (Begegnungen inaktiver Ligen sind jedoch immer noch über Ligaverwaltung ➜
 Verbände/Ligen ➜ &lt;Auswahl des Verbands> ➜ &lt;Auswahl der Liga> zugänglich).
 
-Um auch bei der Anzeige der Mannschaften nur Mannschaften aktiver Ligen anzuzeigen kann folgentdes konfiguriert werden:
+Um auch bei der Anzeige der Mannschaften nur Mannschaften aktiver Ligen anzuzeigen kann folgendes konfiguriert werden:
 
 Datei `contao/dca/tl_mannschaft.php` (Verzeichnisse und Dateien ggf. anlegen):
 ```
