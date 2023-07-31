@@ -83,3 +83,8 @@ $GLOBALS['TL_LANG']['tl_spieler']['avatar'] = [
     'Bild',
     'Bild des Spielers (Bearbeiten im zugehörigen Mitglied!).',
 ];
+
+$GLOBALS['TL_LANG']['tl_spieler']['haspaid'] = [
+    'Bezahlt',
+    'Spieler hat (für die laufende Saison) bezahlt.',
+];

@@ -3,3 +3,10 @@ services:
     fiedsch_ligaverwaltung.rankinghelper:
         class: Fiedsch\LigaverwaltungBundle\Helper\RankingHelper
         public: true
+
+    fiedsch_ligaverwaltung.migration.haspaidmigration:
+        class: Fiedsch\LigaverwaltungBundle\Migration\HasPaidMigration
+        arguments:
+            - '@database_connection'
+        tags:
+            - { name: contao.migration, priority: 0 }

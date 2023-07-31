@@ -19,11 +19,6 @@ $GLOBALS['TL_LANG']['tl_member']['passnummer'] = [
     'Nummer des Spielers im Spielerpass',
 ];
 
-$GLOBALS['TL_LANG']['tl_member']['haspaidcurrentseason'] = [
-    'Bezahlt',
-    'Spieler hat für die laufende Saison bezahlt.',
-];
-
 $GLOBALS['TL_LANG']['tl_member']['spielerhistorie'] = [
     'Spielerhistorie anzeigen',
     'Die Historie eines Spielers anzeigen: bei welchen Mannschaften/in welchen Ligen hat er/sie im Laufe der Zeit gespielt?',

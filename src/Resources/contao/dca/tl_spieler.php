@@ -88,7 +88,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
     ],
 
     'palettes' => [
-        'default' => '{member_legend},member_id;{details_legend},teamcaptain,co_teamcaptain,active,ersatzspieler,jugendlich,avatar',
+        'default' => '{member_legend},member_id;{details_legend},teamcaptain,co_teamcaptain,active,ersatzspieler,jugendlich,avatar,haspaid',
     ],
 
     'fields' => [
@@ -186,5 +186,14 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
                     ;
             },
         ],
+
+        'haspaid' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spieler']['haspaid'],
+            'inputType' => 'checkbox',
+            'filter' => true,
+            'eval' => ['tl_class' => 'w50  m12'],
+            'sql' => "char(1) NOT NULL default ''",
+        ],
+
     ],
 ];
