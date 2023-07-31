@@ -30,7 +30,8 @@ use Exception;
  * @property bool   $active
  * @property bool   $ersatzspieler
  * @property bool   $jugendlich
- *
+ * @property bool   $haspaid
+ * 
  * @method static SpielerModel|null findById($id, array $opt = [])
  * @method static Collection|SpielerModel|null findByPid($id, array $opt = [])
  * @method static Collection|Model|null getRelated($tablename)
