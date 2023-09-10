@@ -23,8 +23,10 @@ namespace Fiedsch\LigaverwaltungBundle\Element;
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
+use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Exception;
+use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use function Symfony\Component\String\u;
 
 class ContentMannschaftsseite extends ContentElement
@@ -140,6 +142,10 @@ class ContentMannschaftsseite extends ContentElement
         $this->Template->highlightranking = $contentElement->generate();
 
         $this->Template->mannschaft_name = $mannschaftModel->name;
+        $liga = LigaModel::findById($mannschaftModel->liga);
+        $this->Template->liga = $liga?->name;
+        $this->Template->saison = SaisonModel::findById($liga?->saison)?->name;
+
     }
 
     /**

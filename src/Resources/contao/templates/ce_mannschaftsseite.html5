@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-  <h1>Mannschaftsseite <?= $this->mannschaft_name ?></h1>
+  <h1>Mannschaftsseite <?= $this->mannschaft_name ?> <?= $this->liga ?> <?= $this->saison ?></h1>
   </div>
 </div>
 
