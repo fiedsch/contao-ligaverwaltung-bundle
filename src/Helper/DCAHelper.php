@@ -166,9 +166,9 @@ class DCAHelper
 
         foreach ($ligen as $liga) {
             $result[$liga->id] = sprintf('%s %s %s',
-                $liga->getRelated('pid')->name,
+                $liga->getRelated('pid')?->name,
                 $liga->name,
-                $liga->getRelated('saison')->name
+                $liga->getRelated('saison')?->name
             );
         }
 
