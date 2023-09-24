@@ -172,8 +172,8 @@ class IcalController
                     new IcalDateTime($dtStart->add(new DateInterval('PT2H')), true) // hard coded 2 hours duration
                 )
             )
-            ->setSummary($summary)
-            ->setLocation(new Location($location))
+            ->setSummary(html_entity_decode($summary))
+            ->setLocation(new Location(html_entity_decode($location)))
         ;
 
         return $vEvent;
