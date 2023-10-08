@@ -158,6 +158,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
                 LigaModel::SPIELPLAN_8E2D => '8E,2D',
                 LigaModel::SPIELPLAN_6E3D => '6E,3D',
                 LigaModel::SPIELPLAN_16E => '16E',
+                LigaModel::SPIELPLAN_4E1D => '4E1D',
             ],
             'eval' => ['mandatory' => true, 'includeBlankOption' => true, 'tl_class' => 'w50'],
             'sql' => "int(10) unsigned NOT NULL default '0'",

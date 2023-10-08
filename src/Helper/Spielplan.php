@@ -126,6 +126,15 @@ class Spielplan
                     ['home' => [1, 3], 'away' => [1, 3]],
                 ];
                 //break;
+            case LigaModel::SPIELPLAN_4E1D:
+                return [
+                    ['home' => [0], 'away' => [0]],
+                    ['home' => [1], 'away' => [1]],
+                    ['home' => [0], 'away' => [1]],
+                    ['home' => [1], 'away' => [0]],
+                    ['home' => [0, 1], 'away' => [0, 1]],
+                ];
+            //break;
 
             default:
                 return [

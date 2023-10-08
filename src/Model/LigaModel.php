@@ -35,6 +35,7 @@ class LigaModel extends Model
     const SPIELPLAN_8E2D = 6;
     const SPIELPLAN_6E3D = 8;
     const SPIELPLAN_16E = 16;
+    const SPIELPLAN_4E1D = 32;
 
     /**
      * Table name.
