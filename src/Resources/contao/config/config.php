@@ -65,6 +65,7 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
         ],
         // 'liga.highlight' => [
         //     'tables' => ['tl_highlight'],
+        //     'stylesheet' => 'bundles/fiedschligaverwaltung/tl_highlight.css',
         // ],
     ],
 ]);
