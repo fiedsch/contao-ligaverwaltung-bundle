@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
         'sql' => [
             'keys' => [
                 'id' => 'primary',
-                'name' => 'unique',
+                'alias' => 'unique',
             ],
         ],
     ],
@@ -36,8 +36,8 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
             'panelLayout' => 'sort,filter;search,limit',
         ],
         'label' => [
-            'fields' => ['name'],
-            'format' => '%s',
+            'fields' => ['alias', 'name'],
+            'format' => '[<code>%s</code>] %s',
         ],
         'global_operations' => [
             'all' => [
@@ -73,7 +73,7 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
     ],
 
     'palettes' => [
-        'default' => '{title_legend},name',
+        'default' => '{title_legend},alias,name',
     ],
 
     'fields' => [
@@ -85,6 +85,15 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
         ],
         'name' => [
             'label' => &$GLOBALS['TL_LANG']['tl_saison']['name'],
+            'sorting' => true,
+            'exclude' => true,
+            'flag' => DataContainer::SORT_ASC,
+            'inputType' => 'text',
+            'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
+            'sql' => "varchar(128) default NULL",
+        ],
+        'alias' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_saison']['alias'],
             'sorting' => true,
             'exclude' => true,
             'flag' => DataContainer::SORT_ASC,

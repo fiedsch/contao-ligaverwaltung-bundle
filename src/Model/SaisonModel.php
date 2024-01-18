@@ -20,6 +20,7 @@ use Contao\Model;
  * @property int    $id
  * @property int    $pid
  * @property string $name
+ * @property string $alias
  *
  * @method static SaisonModel|null findById($id, array $opt=array())
  */

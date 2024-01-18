@@ -126,7 +126,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'inputType' => 'select',
             'filter' => true,
             'exclude' => true,
-            'foreignKey' => 'tl_saison.name',
+            'foreignKey' => 'tl_saison.alias',
             'eval' => ['chosen' => true, 'includeBlankOption' => true, 'tl_class' => 'w50', 'mandatory' => true],
             'relation' => ['type' => 'belongsTo', 'load' => 'eager'],
             'sql' => "int(10) unsigned NOT NULL default '0'",

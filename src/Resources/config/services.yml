@@ -10,3 +10,10 @@ services:
             - '@database_connection'
         tags:
             - { name: contao.migration, priority: 0 }
+
+    fiedsch_ligaverwaltung.migration.patchsaisonmigration:
+        class: Fiedsch\LigaverwaltungBundle\Migration\PatchSaisonMigration
+        arguments:
+            - '@database_connection'
+        tags:
+            - { name: contao.migration, priority: 0 }

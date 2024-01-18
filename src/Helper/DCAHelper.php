@@ -94,7 +94,7 @@ class DCAHelper
         $saison = SaisonModel::findById($row['saison']);
         $class = $row['aktiv'] ? 'tl_green' : 'tl_gray';
 
-        return sprintf("<span class='%s'>%s %s</span>", $class, $label, $saison?->name);
+        return sprintf("<span class='%s'>%s %s</span><code class='tl_gray'>[%s]</code>", $class, $label, $saison?->name, $saison?->alias);
     }
 
     /* Helper für tl_mannschaft */
@@ -250,7 +250,7 @@ class DCAHelper
                         <span class='tl_gray'>%s</span>",
             $verband->name,
             $liga->name,
-            $liga->getRelated('saison')->name,
+            $liga->getRelated('saison')->alias,
             $row['spiel_tag'],
             $home?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
             $away ? 'vs' : 'hat',
@@ -741,7 +741,7 @@ class DCAHelper
             $result[$liga->id] = sprintf('%s %s %s',
                 $liga->name,
                 $liga->getRelated('pid')->name,
-                $liga->getRelated('saison')->name
+                $liga->getRelated('saison')->alias
             );
         }
 
@@ -780,7 +780,7 @@ class DCAHelper
             $result[$mannschaft->id] = sprintf('%s (%s %s)',
                 $mannschaft->name,
                 $liga ? $liga->name : 'keine Liga :-(',
-                $saison ? $saison->name : 'keine Saison :-('
+                $saison ? $saison->alias : 'keine Saison :-('
             );
         }
         // nicht bei der Spielerliste, da wir dort zusätzlich eine Auswahl der

@@ -39,6 +39,11 @@ $GLOBALS['TL_LANG']['tl_saison']['show'] = [
 ];
 
 $GLOBALS['TL_LANG']['tl_saison']['name'] = [
-    'Name',
-    'Name der Saison',
+    'Name/Label',
+    'Bezeichnung der der Saison (wird im Frontend verwendet)',
+];
+
+$GLOBALS['TL_LANG']['tl_saison']['alias'] = [
+    'Alias (eindeutige ID)',
+    'Alias der Saison (wird in Auswahllisten im Backend verwendet)',
 ];

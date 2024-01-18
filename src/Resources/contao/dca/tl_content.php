@@ -34,7 +34,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['verband'] = [
 $GLOBALS['TL_DCA']['tl_content']['fields']['saison'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['saison'],
     'exclude' => true,
-    'foreignKey' => 'tl_saison.name',
+    'foreignKey' => 'tl_saison.alias',
     'inputType' => 'checkboxWizard',
     'eval' => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'w50 clr'],
     //'options_callback' => [DCAHelper::class, 'getAlleVerbaendeForSelect'],
