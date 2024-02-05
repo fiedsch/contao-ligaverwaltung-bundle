@@ -103,6 +103,7 @@ class LigaverwaltungBackendController
             'headline' => $begegnungModel->getLabel(),
             'app_data' => $appData,
         ];
+        /** @var \Twig\Environment $twig */
         $twig = System::getContainer()->get('twig');
         $template = '@FiedschLigaverwaltung/begegnung_dataentry_be.html.twig';
 
