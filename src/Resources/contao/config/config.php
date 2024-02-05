@@ -43,6 +43,7 @@ use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielortseitenReader;
 use Contao\ArrayUtil;
 use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
+use Fiedsch\LigaverwaltungBundle\Callback\BegegnungDataEntryForm;
 
 ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
     'liga' => [
@@ -64,10 +65,10 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
         'liga.begegnung' => [
             'tables' => ['tl_begegnung', 'tl_spiel'],
         ],
-        // 'liga.highlight' => [
-        //     'tables' => ['tl_highlight'],
-        //     'stylesheet' => 'bundles/fiedschligaverwaltung/tl_highlight.css',
-        // ],
+        'liga.editbegegnung' => [ // hidden in backend.css (if it is the last li of the group (uses li:last-child))
+            'callback' => BegegnungDataEntryForm::class,
+            'tables' => ['tl_begegnung'],
+        ],
     ],
 ]);
 

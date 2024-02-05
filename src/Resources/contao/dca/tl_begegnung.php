@@ -72,87 +72,31 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             ],
         ],
         'operations' => [
+            'edit',
             'editform' => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editform'],
-                // 'href' => '', // see button_callback for URL generation
                 'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
-                    $numSpiele = SpielModel::countBy('pid', $arrRow['id']);
+                    // TODO (?): check if begegnung is already punblished and then disable icon (using children_.svg)
+                    // $icon = $arrRow['published'] ? 'children_.svg' : 'children.svg';
+                    // Problem hierbei: ein klick auf das Auge ändert zwar den Status in published, aber nicht gleichzeitig das 'children' Icon.
+                    // Im Zweiewlsfall gibt es aber eine Meldung vom LigaverwaltungBackendController::begegnungDataSaveAction(). Daher:
+                    $icon = 'children.svg';
+                    return "<a href='contao?do=liga.editbegegnung&table=tl_begegnung&id=$arrRow[id]' title='die Spiele der Begegnung bearbeiten' class='edit'><img src='system/themes/flexible/icons/$icon' alt='bearbeiten'></a>&nbsp;";
 
-                    // Legacy-Check: wenn wir bereits tl_spiel Records haben, aber keine Daten
-                    // in begegnung_data gespeichert (=alte Dateneingabe), dann diesen Button
-                    // "disablen". Änderung dann (wie früher) nur noch über die einzelnen
-                    // tl_spiel-Records!
-                    if ('0' === $arrRow['away']) {
-                        return '<img src="bundles/fiedschligaverwaltung/icons/all_.svg" title="Spielfrei!">&nbsp;';
-                    }
-
-                    if ($numSpiele > 0 && '' === $arrRow['begegnung_data']) {
-                        return '<img src="bundles/fiedschligaverwaltung/icons/all_.svg" title="Begegnung wurde mit dem alten System erfasst!">&nbsp;';
-                    }
-
-                    return sprintf('<a href="%s" title="die Begegnung bearbeiten (neuer Modus)" class="edit">%s</a>',
-                        System::getContainer()->get('router')->generate('begegnung_dataentry_form', ['begegnung' => $arrRow['id']]),
-                        '<img src="bundles/fiedschligaverwaltung/icons/all.svg" alt="erfassen">&nbsp;'
-                    );
-
-                // <a
-                    //   href="contao?do=liga.begegnung&amp;act=copy&amp;id=2904&amp;rt=7cyllBJISr6p5rN8YH8wOYBIlRUnnUPfusPaGVAc25Y&amp;ref=yC4LvTWP"
-                    //   title=""
-                    //   class="copy"
-                    // >
-                    //   <img src="system/themes/flexible/icons/copy.svg" width="16" height="16" alt="kopieren">
-                    // </a>
+                    // return sprintf('<a href="%s" title="die Begegnung bearbeiten (neuer Modus)" class="edit">%s</a>',
+                    //     System::getContainer()->get('router')->generate('begegnung_dataentry_form', ['begegnung' => $arrRow['id']]),
+                    //     '<img src="bundles/fiedschligaverwaltung/icons/all.svg" alt="erfassen">&nbsp;'
+                    // );
                 },
             ],
-            'edit' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['edit'],
-                'href' => 'table=tl_spiel', // also see 'button_callback'!
-                'icon' => 'edit.svg',
-                'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
-                    // Legacy-Check: nur anzeigen, wenn
-                    // im tl_begegnung-Record keine 'begegnung_data'-Daten gespeichert sind
-                    // und gleichzeitig aber tl_spiel Daten vorhanden sind.
-                    $numSpiele = SpielModel::countBy('pid', $arrRow['id']);
-                    // Negierung der Bedingung beim 'editform'-'button_callback', also immer nur einen
-                    // von beiden Buttons anzeigen
-                    if ('0' === $arrRow['away']) {
-                        return '<img src="system/themes/flexible/icons/edit_.svg" title="Spielfrei!">&nbsp;';
-                    }
-
-                    if ('' !== $arrRow['begegnung_data'] || 0 === $numSpiele) {
-                        return '<img src="system/themes/flexible/icons/edit_.svg" title="Begegnung wird über die Eingabemaske verwaltet!">&nbsp;';
-                    }
-
-                    return "<a href='contao?do=liga.begegnung&table=tl_spiel&id=$arrRow[id]' title='die Begegnung bearbeiten (alter Modus)' class='edit'><img src='system/themes/flexible/icons/edit.svg' alt='bearbeiten'></a>&nbsp;";
-                },
-            ],
-
-            'editheader' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editheader'],
-                'href' => 'act=edit',
-                'icon' => 'header.svg',
-            ],
-            'copy' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['copy'],
-                'href' => 'act=copy',
-                'icon' => 'copy.svg',
-            ],
-            'delete' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['delete'],
-                'href' => 'act=delete',
-                'icon' => 'delete.svg',
-                'attributes' => 'onclick="if(!confirm(\''.$GLOBALS['TL_LANG']['MSC']['deleteConfirm'].'\'))return false;Backend.getScrollOffset()"',
-            ],
-            'toggle' => [
+            'copy',
+            'delete',
+            'toggle' /* => [
                 'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['toggle'],
                 'href' => 'act=toggle&amp;field=published',
                 'icon' => 'visible.svg',
-            ],
-            'show' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['show'],
-                'href' => 'act=show',
-                'icon' => 'show.svg',
-            ],
+            ] */,
+            'show',
         ],
     ],
 
