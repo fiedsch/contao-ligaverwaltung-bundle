@@ -17,3 +17,11 @@ services:
             - '@database_connection'
         tags:
             - { name: contao.migration, priority: 0 }
+    fiedsch_ligaverwaltung.controller.backend_controller:
+        class: Fiedsch\LigaverwaltungBundle\Controller\LigaverwaltungBackendController
+        tags: ['controller.service_arguments']
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+
+    # Siehe auch https://contao.slack.com/archives/CK4J0KNDB/p1704882456107879
+    # Slack Account cms@andreas-fieger.de
