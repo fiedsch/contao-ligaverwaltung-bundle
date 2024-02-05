@@ -59,6 +59,8 @@ class LigaverwaltungBackendController
     /**
      * Einbagemaske Begegnungserfassung.
      *
+     * TODO: sollte entfernen, sobald wir mitdem Weg über den button_callback in tl_begegnung zufrieden sind (siehe Commit #622554c26ccda2cc55b2901aebf8201a85b4e428)
+     *
      * @param int $begegnung
      *
      * @throws Exception
