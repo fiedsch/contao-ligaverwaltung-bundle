@@ -23,4 +23,10 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class FiedschLigaverwaltungBundle extends Bundle
 {
+    // TODO: aktivieren nachdem src/Resources/contao/ nach contao/ verschoben wurde
+    // public function getPath(): string
+    // {
+    //     return \dirname(__DIR__);
+    // }
+
 }
