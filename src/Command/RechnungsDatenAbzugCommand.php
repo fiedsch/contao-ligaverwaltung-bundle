@@ -76,7 +76,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         $this->getFramework()->initialize();
 
         $saisonParameter = $input->getArgument('saison');
-        $saison = SaisonModel::findBy('name', $saisonParameter);
+        $saison = SaisonModel::findBy('alias', $saisonParameter);
 
         if (null === $saison) {
             $output->writeln("Saison '$saisonParameter' nicht gefunden!");
