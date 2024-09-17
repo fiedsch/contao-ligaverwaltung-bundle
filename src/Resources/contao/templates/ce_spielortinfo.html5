@@ -9,10 +9,10 @@
   $rawAddress = $this->spielort->street . ',' . $this->spielort->postal . ' ' . $this->spielort->city;
   $encodedAddress = urlencode($rawAddress);
   ?>
-  <a target="_blank" href="https://www.google.de/maps/place/<?=$encodedAddress?>">
+  <a target="_blank" class="link-spielortinfo" href="https://www.google.de/maps/place/<?=$encodedAddress?>">
   <?= $this->spielort->street; ?><br>
   <?= $this->spielort->postal; ?> <?= $this->spielort->city; ?>
-  </a>
+  </a><i class="fas fa-external-link-square-alt"></i>
 </div>
 
 <div class="contact">
