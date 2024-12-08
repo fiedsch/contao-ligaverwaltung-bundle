@@ -53,10 +53,16 @@ class PlayerHistoryController
 
         if ($spieler) {
             foreach ($spieler as $sp) {
-                $liga = $sp->getRelated('pid')->getRelated('liga');
+                $mannschaft = $sp->getRelated('pid');
+                if (null == $mannschaft) { continue; } // skip if parent data has already been deleted
+                // dd(['sp'=>$sp,'mannschaft'=>$mannschaft, 'liga'=>$sp->getRelated('pid')->getRelated('liga')]);
+                $liga = $mannschaft->getRelated('liga');
+                if (null == $liga) { continue; } // skip if parent data has already been deleted
+                $saison = $liga->getRelated('saison');
+                if (null == $saison) { continue; } // skip if parent data has already been deleted
                 $history[] = [
-                    'mannschaft' => $sp->getRelated('pid')->name,
-                    'saison' => $liga->name.' '.$liga->getRelated('saison')->name,
+                    'mannschaft' => $mannschaft->name,
+                    'saison' => $liga->name.' '.$saison->name,
                 ];
             }
         }
