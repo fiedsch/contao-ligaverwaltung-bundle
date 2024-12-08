@@ -14,40 +14,40 @@ declare(strict_types=1);
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
+use Contao\Controller;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Attribute\Route;
 
 class JsonController
 {
-    protected int $ligaid;
-
-    protected int $mannschaftid;
-
-    public function __construct(int $ligaid, int $mannschaftid)
+    public function __construct(private readonly ContaoFramework $framework)
     {
-        $this->ligaid = $ligaid;
-        $this->mannschaftid = $mannschaftid;
+        $this->framework->initialize();
         $this->initialize();
+        //Controller::loadDataContainer('tl_begegnung'); // see generateIcalEvent()
     }
 
     /**
      * @return JsonResponse
      */
-    public function run(): JsonResponse
+    #[Route("/ligaverwaltung/spielplan/json/{ligaid}/{mannschaftid}", name: "spielplan_json", requirements: ["ligaid" => "\d+", "mannschaftid" => "\d+"], defaults: ["mannschaftid" => "0"])]
+    public function __invoke(int $ligaid, int $mannschaftid): JsonResponse
     {
         // Spiele auslesen
 
         $columns = ['pid=?'];
-        $conditions[] = $this->ligaid;
+        $conditions[] = $ligaid;
 
-        if ($this->mannschaftid) {
+        if ($mannschaftid) {
             $columns[] = '(home=? OR away=?)';
-            $conditions[] = $this->mannschaftid;
-            $conditions[] = $this->mannschaftid;
+            $conditions[] = $mannschaftid;
+            $conditions[] = $mannschaftid;
         }
 
         $begegnungen = BegegnungModel::findBy(
@@ -65,7 +65,7 @@ class JsonController
                     // Mannschaft hat Spielfrei
                     continue;
                 }
-                $responseData[] = $this->generateEventData($begegnung);
+                $responseData[] = $this->generateEventData($begegnung, $mannschaftid);
             }
         }
 
@@ -78,7 +78,7 @@ class JsonController
         date_default_timezone_set($tz);
     }
 
-    protected function generateEventData(BegegnungModel $begegnung): array
+    protected function generateEventData(BegegnungModel $begegnung, int $mannschaftid): array
     {
         $liga = LigaModel::findById($begegnung->pid);
         $saison = SaisonModel::findById($liga->saison);
@@ -107,10 +107,10 @@ class JsonController
             'saison' => $saison->name,
         ];
 
-        if ($this->mannschaftid) {
+        if ($mannschaftid) {
             // Bei den Daten für "nur eine Mannschaft" zusätzlich
             // bestimmen, ob es ein Heim- oder ein Auswärtsspiel ist.
-            $result['is_home_game'] = $home->id === $this->mannschaftid;
+            $result['is_home_game'] = $home->id === $mannschaftid;
         }
 
         return $result;

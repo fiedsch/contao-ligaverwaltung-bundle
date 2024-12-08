@@ -136,18 +136,13 @@ class DCAHelper
             $anzahlSpieler = sprintf('%d Spieler', $spieler->n);
         }
 
-        if ('' === $arrRow['active']) {
-            $inaktiv = ', <span class=\'tl_red\'>Mannschaft nicht aktiv</span>';
-        }
-
-        return sprintf('<div class="tl_content_left">%s, %s %s %s (%s, %s%s)</div>',
+        return sprintf('<div class="tl_content_left">%s, %s %s %s (%s, %s)</div>',
             $arrRow['name'],
             $liga->getRelated('pid')->name,
             $liga->name,
             $liga->getRelated('saison')->name,
             $spielort->name,
-            $anzahlSpieler,
-            $inaktiv
+            $anzahlSpieler
         );
     }
 
@@ -396,10 +391,11 @@ class DCAHelper
     {
         $member = MemberModel::findById($arrRow['member_id']);
 
-        $teamcaptain_label = $arrRow['teamcaptain'] ? ('(Teamcaptain: '.$member->email.')') : '';
-        $co_teamcaptain_label = $arrRow['co_teamcaptain'] ? ('(Co-Teamcaptain: '.$member->email.')') : '';
-        $active_label = '1' === $arrRow['active'] ? '' : '<span class="tl_red">nicht aktiv</span>';
-        $ersatzspieler_label = '' === $arrRow['ersatzspieler'] ? '' : '<span class="tl_red">Ersatzspieler</span>';
+        $printedEMail = !empty($member->email) ? $member->email : 'E-Mail-Adresse nicht hinterlegt';
+
+        $teamcaptain_label = $arrRow['teamcaptain'] ? (', <span>Teamcaptain</span> ('.$printedEMail.')') : '';
+        $co_teamcaptain_label = $arrRow['co_teamcaptain'] ? ('(Co-Teamcaptain: '.$printedEMail.')') : '';
+        $ersatzspieler_label = '' === $arrRow['ersatzspieler'] ? '' : ', <span class="tl_red">Ersatzspieler</span>';
 
         $member_no_longer_exists = (!$member && $arrRow['member_id'] > 0);
 
@@ -407,11 +403,10 @@ class DCAHelper
             return sprintf('Mitglied mit der ID %d existiert nicht mehr', $arrRow['member_id']);
         }
 
-        return sprintf('<div class="tl_content_left">%s %s%s %s %s</div>',
+        return sprintf('<div class="tl_content_left">%s<span class="tl_gray">%s%s</span>%s</div>',
             self::makeSpielerName($member),
             $teamcaptain_label,
             $co_teamcaptain_label,
-            $active_label,
             $ersatzspieler_label
         );
     }

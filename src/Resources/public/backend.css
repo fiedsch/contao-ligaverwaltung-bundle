@@ -9,7 +9,7 @@
  * Den Eintrag für liga.editbegegnung verstecken.
  * Wir wollen diesen nie direkt aufrufen. Er dient nur als Ziel für den tl_begegnung.editform.button_callback
  */
-#liga li:last-child {
+/*#liga li:last-child {
     display: none;
-}
+}*/
 

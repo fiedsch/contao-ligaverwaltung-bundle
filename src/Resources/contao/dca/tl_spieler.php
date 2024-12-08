@@ -58,32 +58,12 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             ],
         ],
         'operations' => [
-            'edit' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_spieler']['edit'],
-                'href' => 'act=edit',
-                'icon' => 'edit.svg',
-            ],
-            'copy' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_spieler']['copy'],
-                'href' => 'act=paste&amp;mode=copy',
-                'icon' => 'copy.svg',
-            ],
-            'cut' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_spieler']['cut'],
-                'href' => 'act=paste&amp;mode=cut',
-                'icon' => 'cut.svg',
-            ],
-            'delete' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_spieler']['delete'],
-                'href' => 'act=delete',
-                'icon' => 'delete.svg',
-                'attributes' => 'onclick="if(!confirm(\''.$GLOBALS['TL_LANG']['MSC']['deleteConfirm'].'\'))return false;Backend.getScrollOffset()"',
-            ],
-            'show' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_spieler']['show'],
-                'href' => 'act=show',
-                'icon' => 'show.svg',
-            ],
+            'edit',
+            'copy',
+            'cut',
+            'delete',
+            'toggle',
+            'show',
         ],
     ],
 
@@ -137,6 +117,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'search' => false,
             'filter' => true,
             'sorting' => false,
+            'toggle' => true,
             //'eval'       => ['tl_style'=>'w50'],
             'sql' => "char(1) NOT NULL default '1'",
         ],

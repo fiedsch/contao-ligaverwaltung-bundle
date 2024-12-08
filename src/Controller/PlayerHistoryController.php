@@ -18,14 +18,15 @@ use Contao\BackendTemplate;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Symfony\Component\HttpFoundation\Response;
 use Exception;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/ligaverwaltung/player/history/{memberid}', name: 'player_history', requirements: [ "memberid" => "[0-9]+"], defaults: ['_scope' => 'backend','token_check' => true])]
+#[AsController]
 class PlayerHistoryController
 {
-    protected int $memberid;
-
-    public function __construct(int $memberid)
+    public function __construct()
     {
-        $this->memberid = $memberid;
     }
 
     /**
@@ -33,10 +34,10 @@ class PlayerHistoryController
      *
      * @return Response
      */
-    public function run(): Response
+    public function __invoke(int $memberid): Response
     {
         $template = new BackendTemplate('be_spielerhistory');
-        $template->history = $this->getHistory();
+        $template->history = $this->getHistory($memberid);
 
         return new Response($template->parse());
     }
@@ -46,10 +47,10 @@ class PlayerHistoryController
      *
      * @return array
      */
-    protected function getHistory(): array
+    private function getHistory(int $memberid): array
     {
         $history = [];
-        $spieler = SpielerModel::findBy(['member_id=?'], [$this->memberid], ['pid ASC']);
+        $spieler = SpielerModel::findBy(['member_id=?'], [$memberid], ['pid ASC']);
 
         if ($spieler) {
             foreach ($spieler as $sp) {

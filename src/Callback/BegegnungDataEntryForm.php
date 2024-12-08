@@ -21,9 +21,9 @@ class BegegnungDataEntryForm
         $this->twig = $container->get('twig');
     }
 
-    public function generate(): string
+    public function generate(int $id = null): string
     {
-        $id = Input::get('id');
+        $id = $id ?? Input::get('id');
         $begegnungModel = BegegnungModel::findById($id);
 
         if (!$begegnungModel) {
@@ -40,8 +40,8 @@ class BegegnungDataEntryForm
         $appData['begegnungId'] = $id;
         $appData['numSlots'] = 8;
         $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);
+        $appData['disabled'] = $begegnungModel->published === "1";
         $appData = DataEntrySaver::augment($appData);
-        // dd($appData);
 
         $template = '@FiedschLigaverwaltung/begegnung_dataentry_vue.html.twig';
         return $this->twig->render($template, ['app_data' => $appData]);

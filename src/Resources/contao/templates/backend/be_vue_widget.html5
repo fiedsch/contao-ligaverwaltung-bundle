@@ -1,10 +1,17 @@
-<div class="tl_listing_container" data-turbo="false">
+<h3><?= $this->generateLabel().$this->xlabel ?></h3>
+<?= $this->generateWithError(true) ?>
+
+<script src="/bundles/fiedschligaverwaltung/vue.js"></script>
+
+
+
+<div class="tl_listing_container">
     <script>
-        var data = {{ app_data|json_encode()|raw }}
+        var data = <?php echo json_encode($this->app_data) ?>;
     </script>
 
     {# hier wird die App injiziert #}
-    <div id="app"></div>
+    <div id="app" data-turbo="false"></div>
 
     {# JS und CSS Code für die App #}
     <script src="/bundles/fiedschligaverwaltung/js/chunk-vendors.js"></script>
@@ -13,13 +20,5 @@
 </div>
 
 <style>
-    {{ app_data.spielplanCss|raw }}
-
-    .tl_formbody_submit.vue_app { display: none; }
+    <?php echo $this->app_data['spielplanCss'] ?>
 </style>
-
-{#
-    <pre>
-       {{ app_data|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
-    </pre>
-#}

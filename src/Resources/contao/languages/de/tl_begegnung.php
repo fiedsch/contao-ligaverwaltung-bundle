@@ -18,6 +18,8 @@ $GLOBALS['TL_LANG']['tl_begegnung']['details_legend'] = 'Details';
 
 $GLOBALS['TL_LANG']['tl_begegnung']['internal_legend'] = '(Interne) Daten';
 
+$GLOBALS['TL_LANG']['tl_begegnung']['vueapp_legend'] = 'Eingabe der Ergebnisse';
+
 $GLOBALS['TL_LANG']['tl_begegnung']['new'] = [
     'Neue Begegnung erstellen',
     'Eine neue Begegnung (Spiel zwischen zwei Mannschaften) erstellen',
@@ -101,4 +103,10 @@ $GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'] = [
 $GLOBALS['TL_LANG']['tl_begegnung']['postponed'] = [
     'Verschoben',
     'Diese Begegnung wurde bis auf weiteres verschoben. Ein neuer Termin steht noch nicht fest.',
+];
+
+
+$GLOBALS['TL_LANG']['tl_begegnung']['vue_app'] = [
+    'Dateneingabemaske',
+    'Dateneingabemaske zur Generierung der Daten in tl_begegnung.begegnung_data und der tl_spiel- und tl_highlight-Records'
 ];

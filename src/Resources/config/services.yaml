@@ -1,4 +1,6 @@
 services:
+    _defaults:
+        autoconfigure: true
 
     fiedsch_ligaverwaltung.rankinghelper:
         class: Fiedsch\LigaverwaltungBundle\Helper\RankingHelper
@@ -23,5 +25,17 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
 
-    # Siehe auch https://contao.slack.com/archives/CK4J0KNDB/p1704882456107879
-    # Slack Account cms@andreas-fieger.de
+    #fiedsch_ligaverwaltung.controller.ical_controller:
+    #    class: Fiedsch\LigaverwaltungBundle\Controller\IcalController
+    Fiedsch\LigaverwaltungBundle\Controller\IcalController:
+        arguments:
+            - '@contao.framework'
+        tags: ['controller.service_arguments']
+
+    #fiedsch_ligaverwaltung.controller.json_controller:
+    #    class: Fiedsch\LigaverwaltungBundle\Controller\JsonController
+    Fiedsch\LigaverwaltungBundle\Controller\JsonController:
+        arguments:
+            - '@contao.framework'
+        tags: ['controller.service_arguments']
+

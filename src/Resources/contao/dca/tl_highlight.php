@@ -69,27 +69,10 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             ],
         ],
         'operations' => [
-            'edit' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_highlight']['edit'],
-                'href' => 'act=edit',
-                'icon' => 'edit.svg',
-            ],
-            'copy' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_highlight']['copy'],
-                'href' => 'act=copy',
-                'icon' => 'copy.svg',
-            ],
-            'delete' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_highlight']['delete'],
-                'href' => 'act=delete',
-                'icon' => 'delete.svg',
-                'attributes' => 'onclick="if(!confirm(\''.$GLOBALS['TL_LANG']['MSC']['deleteConfirm'].'\'))return false;Backend.getScrollOffset()"',
-            ],
-            'show' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_highlight']['show'],
-                'href' => 'act=show',
-                'icon' => 'show.svg',
-            ],
+            'edit',
+            'copy',
+            'delete',
+            'show',
         ],
     ],
 

@@ -21,6 +21,7 @@ use Contao\Model;
 use Contao\PageModel;
 use Exception;
 use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
+use http\QueryString;
 use function count;
 
 /**
@@ -32,8 +33,8 @@ use function count;
  * @property string $spiel_am
  * @property int    $tstamp
  * @property int    $spiel_tag
- * @property bool   $published
- * @property bool   $postponed
+ * @property string   $published
+ * @property string   $postponed
  *
  * @method static BegegnungModel|null findById($id, array $opt=array())
  */

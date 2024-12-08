@@ -14,75 +14,44 @@ declare(strict_types=1);
 
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
+use Contao\CoreBundle\Controller\AbstractBackendController;
 use Contao\CoreBundle\Exception\RedirectResponseException;
 use Contao\System;
 use Exception;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
 use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use function is_array;
 
-/**
- * Handles the bundle's backend routes.
- *
- * @Route(defaults={"_scope" = "backend", "_token_check" = true})
- */
-class LigaverwaltungBackendController
+#[Route('/ligaverwaltung/begegnung', defaults: ['_scope' => 'backend', 'token_check' => true ])]
+class LigaverwaltungBackendController //extends AbstractBackendController
 {
-    /**
-     * Spielerhistorie.
-     *
-     * @param int $memberid
-     *
-     * @throws Exception
-     *
-     * @return Response
-     *
-     * @Route(
-     *     "/ligaverwaltung/player/history/{memberid}",
-     *     name="player_history",
-     *     requirements={
-     *       "memberid": "[0-9]+"
-     *     }
-     * )
-     */
-    public function playerhistoryAction(int $memberid): Response
-    {
-        $controller = new PlayerHistoryController($memberid);
+    private ContainerInterface $container;
 
-        return $controller->run();
+    public function setContainer(ContainerInterface $container): void
+    {
+        $this->container = $container;
     }
 
     /**
      * Einbagemaske Begegnungserfassung.
      *
-     * TODO: sollte entfernen, sobald wir mitdem Weg über den button_callback in tl_begegnung zufrieden sind (siehe Commit #622554c26ccda2cc55b2901aebf8201a85b4e428)
+     * TODO: sollte entfernen werden, sobald die Eingabemaske über ein Widget fertig ist!
      *
      * @param int $begegnung
      *
      * @throws Exception
      *
      * @return Response
-     *
-     * @Route(
-     *     "/ligaverwaltung/begegnung/{begegnung}",
-     *     name="begegnung_dataentry_form",
-     *     requirements={
-     *       "begegnung": "[0-9]+"
-     *     },
-     *     defaults = {
-     *         "_backend_module" = "liga.begegnung",
-     *     },
-     *     methods={"GET"}
-     * )
      */
+    #[Route('/{begegnung}', name: 'begegnung_dataentry_form', requirements: ['begegnung' => '\d+'], methods: [Request::METHOD_GET])]
     public function begegnungDataEntryAction(int $begegnung): Response
     {
         $begegnungModel = BegegnungModel::findById($begegnung);
-
         if (!$begegnungModel) {
             throw new RedirectResponseException('/contao?do=liga.begegnung');
             // ODER: 'contao/main.php?act=error' ?
@@ -93,7 +62,8 @@ class LigaverwaltungBackendController
         if (!is_array($appData)) {
             $appData = [];
         }
-        $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+        //$requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
+        $requestToken = $this->container->get('contao.csrf.token_manager')->getDefaultTokenValue();
         $appData['webserviceUrl'] = '/ligaverwaltung/begegnung';
         $appData['requestToken'] = $requestToken;
         $appData['begegnungId'] = $begegnung;
@@ -106,24 +76,18 @@ class LigaverwaltungBackendController
             'app_data' => $appData,
         ];
         /** @var \Twig\Environment $twig */
-        $twig = System::getContainer()->get('twig');
+        //$twig = System::getContainer()->get('twig');
+        $twig = $this->container->get('twig');
         $template = '@FiedschLigaverwaltung/begegnung_dataentry_be.html.twig';
 
-        return new Response($twig->render($template, $data));
+        //return new Response($twig->render($template, $data));
+        return $this->render($template, $data);
     }
 
     /**
      * Datenverarbeitung Begegnungserfassung.
-     *
-     * @Route(
-     *     "/ligaverwaltung/begegnung/{begegnung}",
-     *     name="begegnung_dataentry_save",
-     *     requirements={
-     *       "begegnung": "[0-9]+"
-     *     },
-     *     methods={"POST"}
-     *     )
      */
+    #[Route('/{begegnung}', name: 'begegnung_dataentry_save', requirements: ['begegnung' => '\d+'], methods: [Request::METHOD_POST])]
     public function begegnungDataSaveAction(Request $request, int $begegnung): Response
     {
         $requestData = json_decode($request->request->get('json_data'), true);

@@ -40,6 +40,7 @@ use Fiedsch\LigaverwaltungBundle\Model\VerbandModel;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleMannschaftsseitenReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielberichtReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielortseitenReader;
+use Fiedsch\LigaverwaltungBundle\Widget\Backend\VueWidget;
 use Contao\ArrayUtil;
 use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,10 +66,10 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
         'liga.begegnung' => [
             'tables' => ['tl_begegnung', 'tl_spiel'],
         ],
-        'liga.editbegegnung' => [ // hidden in backend.css (if it is the last li of the group (uses li:last-child))
-            'callback' => BegegnungDataEntryForm::class,
-            'tables' => ['tl_begegnung'],
-        ],
+        // 'liga.editbegegnung' => [ // hidden in backend.css (if it is the last li of the group (uses li:last-child))
+        //     'callback' => BegegnungDataEntryForm::class,
+        //     'tables' => ['tl_begegnung'],
+        // ],
     ],
 ]);
 
@@ -130,3 +131,9 @@ $GLOBALS['TL_MODELS']['tl_spieler'] = SpielerModel::class;
 $GLOBALS['TL_MODELS']['tl_spiel'] = SpielModel::class;
 $GLOBALS['TL_MODELS']['tl_spielort'] = SpielortModel::class;
 $GLOBALS['TL_MODELS']['tl_verband'] = VerbandModel::class;
+
+
+/*
+ * Widgets
+ */
+$GLOBALS['BE_FFL']['vue_widget'] = VueWidget::class;

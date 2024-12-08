@@ -25,72 +25,15 @@ use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use function is_array;
 
 /**
  * Handles the bundle's frontend routes.
- *
- * @Route(defaults={"_scope" = "frontend", "_token_check" = true})
  */
+#[Route('/ligaverwaltung/begegnung_fe', defaults: ['_scope' => 'frontend', 'token_check' => true ])]
 class LigaverwaltungFrontendController
 {
-    /**
-     * Spielplan als Ical.
-     *
-     * @param int $ligaid
-     * @param int $mannschaftid
-     *
-     * @throws Exception
-     *
-     * @return Response
-     *
-     * @Route(
-     *     "/ligaverwaltung/spielplan/ical/{ligaid}/{mannschaftid}",
-     *     name="spielplan_ical",
-     *     requirements={
-     *       "ligaid":"\d+",
-     *       "mannschaftid":"\d+"
-     *     },
-     *     defaults={
-     *       "mannschaftid":"0"
-     *     }
-     * )
-     */
-    public function icalAction(int $ligaid, int $mannschaftid = 0): Response
-    {
-        $controller = new IcalController($ligaid, $mannschaftid);
-
-        return $controller->run();
-    }
-
-    /**
-     * Spielplan als JSON.
-     *
-     * @param int $ligaid
-     * @param int $mannschaftid
-     *
-     * @return JsonResponse
-     *
-     * @Route(
-     *     "/ligaverwaltung/spielplan/json/{ligaid}/{mannschaftid}",
-     *     name="spielplan_json",
-     *     requirements={
-     *       "ligaid":"\d+",
-     *       "mannschaftid":"\d+"
-     *     },
-     *     defaults={
-     *       "mannschaftid":"0"
-     *     }
-     * )
-     */
-    public function jsonAction(int $ligaid, int $mannschaftid = 0): Response
-    {
-        $controller = new JsonController($ligaid, $mannschaftid);
-
-        return $controller->run();
-    }
-
     /**
      * Einbagemaske Begegnungserfassung.
      *
@@ -105,6 +48,7 @@ class LigaverwaltungFrontendController
      *     methods={"GET"}
      * )
      */
+    #[Route('/{begegnung}', name: 'begegnung_dataentry_form_fe', methods: [Request::METHOD_GET])]
     public function begegnungDataEntryAction(int $begegnung): Response
     {
         $begegnungModel = BegegnungModel::findById($begegnung);

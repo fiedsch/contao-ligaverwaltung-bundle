@@ -72,41 +72,51 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             ],
         ],
         'operations' => [
+            // 'edit' => [
+            //     //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['edit'],
+            //     'href' => 'table=tl_spiel',
+            //     'icon' => 'edit.svg',
+            // ],
+            // 'editheader' => [ // siehe 'children' unten!
+            //     'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editheader'],
+            //     'href' => 'act=edit',
+            //     'icon' => 'header.svg',
+            // ],
+            // // 'editform' => [
+            // //     'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editform'],
+            // //     'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
+            // //         // TODO (?): check if begegnung is already published and then disable icon (using children_.svg)
+            // //         // $icon = $arrRow['published'] ? 'children_.svg' : 'children.svg';
+            // //         // Problem hierbei: ein klick auf das Auge ändert zwar den Status in published, aber nicht gleichzeitig das 'children' Icon.
+            // //         // Im Zweiewlsfall gibt es aber eine Meldung vom LigaverwaltungBackendController::begegnungDataSaveAction(). Daher:
+            // //         $icon = 'children.svg';
+            // //         return "<a href='contao?do=liga.editbegegnung&table=tl_begegnung&id=$arrRow[id]' title='die Spiele der Begegnung bearbeiten' class='edit'><img src='system/themes/flexible/icons/$icon' alt='bearbeiten'></a>&nbsp;";
+            // //
+            // //         // return sprintf('<a href="%s" title="die Begegnung bearbeiten (neuer Modus)" class="edit">%s</a>',
+            // //         //     System::getContainer()->get('router')->generate('begegnung_dataentry_form', ['begegnung' => $arrRow['id']]),
+            // //         //     '<img src="bundles/fiedschligaverwaltung/icons/all.svg" alt="erfassen">&nbsp;'
+            // //         // );
+            // //     },
+            // // ],
             'edit',
-            'editform' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editform'],
-                'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
-                    // TODO (?): check if begegnung is already punblished and then disable icon (using children_.svg)
-                    // $icon = $arrRow['published'] ? 'children_.svg' : 'children.svg';
-                    // Problem hierbei: ein klick auf das Auge ändert zwar den Status in published, aber nicht gleichzeitig das 'children' Icon.
-                    // Im Zweiewlsfall gibt es aber eine Meldung vom LigaverwaltungBackendController::begegnungDataSaveAction(). Daher:
-                    $icon = 'children.svg';
-                    return "<a href='contao?do=liga.editbegegnung&table=tl_begegnung&id=$arrRow[id]' title='die Spiele der Begegnung bearbeiten' class='edit'><img src='system/themes/flexible/icons/$icon' alt='bearbeiten'></a>&nbsp;";
-
-                    // return sprintf('<a href="%s" title="die Begegnung bearbeiten (neuer Modus)" class="edit">%s</a>',
-                    //     System::getContainer()->get('router')->generate('begegnung_dataentry_form', ['begegnung' => $arrRow['id']]),
-                    //     '<img src="bundles/fiedschligaverwaltung/icons/all.svg" alt="erfassen">&nbsp;'
-                    // );
-                },
-            ],
-            'copy',
+            // 'children', // entfällt zugunsten des Vue-Widgets, mit dem die tl_spiel-Records automatisch generiert bzw. bearbeitet werden (TODO (?): für Admin-User einblenden; Problem: beim Bearbeiten von tl_spiel-Records könnten Inkonsistenzen mit tl_begegnung.begegnung_data entstehen)
+            // 'copy',
+            // 'cut',
             'delete',
-            'toggle' /* => [
-                'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['toggle'],
-                'href' => 'act=toggle&amp;field=published',
-                'icon' => 'visible.svg',
-            ] */,
+            'toggle',
             'show',
         ],
     ],
 
     'palettes' => [
-        'default' => '{title_legend},pid,home,away;{details_legend},spiel_tag,spiel_am,published,postponed,kommentar,{internal_legend},begegnung_data',
+        // Note: never show {internal_legend},begegnung_data as this will break our data saving as we (a) save the vue_app's data in its callback to begegnung_data ant (b) save (the old value) of begegnung_data itself.
+        // If we don't show it (b) won't happen!
+        'default' => '{title_legend},pid,home,away;{details_legend},spiel_tag,spiel_am,published,postponed,kommentar;{vueapp_legend},vue_app',
     ],
 
     'fields' => [
         'id' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['id'],
+            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['id'],
             'search' => true,
             'sql' => 'int(10) unsigned NOT NULL auto_increment',
         ],
@@ -114,7 +124,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
         'pid' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['pid'],
+            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['pid'],
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
@@ -127,7 +137,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
         'published' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['published'],
+            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['published'],
             'inputType' => 'checkbox',
             'filter' => true,
             'exclude' => true,
@@ -136,7 +146,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => "char(1) NOT NULL default ''",
         ],
         'home' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['home'],
+            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['home'],
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
@@ -149,7 +159,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => "int(10) NOT NULL default '0'",
         ],
         'away' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['away'],
+            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['away'],
             'filter' => true,
             'exclude' => true,
             'sorting' => true,
@@ -163,7 +173,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => "int(10) NOT NULL default '0'",
         ],
         'spiel_tag' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_tag'],
+            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_tag'],
             'exclude' => true,
             'sorting' => true,
             'filter' => true,
@@ -172,14 +182,14 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => "int(10) unsigned NOT NULL default '1'",
         ],
         'spiel_am' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'],
+            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'],
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
             'sql' => "varchar(11) NOT NULL default ''",
         ],
         'kommentar' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['kommentar'],
+            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['kommentar'],
             'exclude' => true,
             'search' => true,
             'inputType' => 'textarea',
@@ -187,13 +197,18 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => 'mediumtext NULL',
         ],
         'begegnung_data' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'],
+            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'],
             'inputType' => 'yamlWidget',
             'exclude' => true,
             'eval' => ['rte' => 'ace|yaml' /*, 'helpwizard' => true*/],
             'default' => '',
             'sql' => 'blob NOT NULL',
             //'explanation' => 'begegnung_data_explanation',
+        ],
+        'vue_app' => [
+            'inputType' => 'vue_widget',
+            'eval'      => ['tl_class' => 'clr long', 'doNotSaveEmpty' => true],
+            'sql' => null,
         ],
         'postponed' => [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['postponed'],

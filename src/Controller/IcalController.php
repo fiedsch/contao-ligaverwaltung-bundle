@@ -15,8 +15,9 @@ declare(strict_types=1);
 namespace Fiedsch\LigaverwaltungBundle\Controller;
 
 use Contao\Config;
-use Contao\Controller;
 use Contao\PageModel;
+use Contao\Controller;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Domain\Entity\Event;
 use Eluceo\iCal\Domain\ValueObject\Location;
@@ -27,36 +28,29 @@ use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
 use Exception;
+//use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/ligaverwaltung/spielplan/ical/{ligaid}/{mannschaftid}', name: 'spielplan_ical', requirements: [ "ligaid" => "\d+", "mannschaftid"=> "\d+"], defaults: ['mannschaftid' => '0'])]
+// #[AsController]
 class IcalController
 {
-    /**
-     * @var int
-     */
-    protected int $ligaid;
-
-    /**
-     * @var int
-     */
-    protected int $mannschaftid;
-
-    public function __construct(int $ligaid, int $mannschaftid)
+    public function __construct(private readonly ContaoFramework $framework)
     {
-        $this->ligaid = $ligaid;
-        $this->mannschaftid = $mannschaftid;
-        $this->initialize();
+        $this->framework->initialize();
         Controller::loadDataContainer('tl_begegnung'); // see generateIcalEvent()
     }
 
     /**
      * @throws Exception
      */
-    public function run(): Response
+    public function __invoke(int $ligaid, int $mannschaftid): Response
     {
         // Name für den Kalender aus der (ersten) Root-Page
         $rootPages = PageModel::findBy(
@@ -73,12 +67,12 @@ class IcalController
         // Spiele auslesen
 
         $columns = ['pid=?'];
-        $conditions[] = $this->ligaid;
+        $conditions[] = $ligaid;
 
-        if ($this->mannschaftid) {
+        if ($mannschaftid) {
             $columns[] = '(home=? OR away=?)';
-            $conditions[] = $this->mannschaftid;
-            $conditions[] = $this->mannschaftid;
+            $conditions[] = $mannschaftid;
+            $conditions[] = $mannschaftid;
         }
 
         $begegnungen = BegegnungModel::findBy(
@@ -103,12 +97,11 @@ class IcalController
         // Kalender anlegen
         $vCalendar = new Calendar($events);
 
-        $calendarName = sprintf('%s-%d-%d.ics',
+        $calendarName = sprintf('%s-%d-%s.ics',
             $calendarBaseName,
-            $this->ligaid,
-            $this->mannschaftid ?: 'alle'
+            $ligaid,
+            $mannschaftid > 0 ? $mannschaftid : 'alle'
         );
-
         $iCalendarComponent = (new CalendarFactory())->createCalendar($vCalendar);
         $response = new Response((string)$iCalendarComponent);
         $response->headers->add(['Content-Type' => 'text/calendar; charset=utf-8']);
