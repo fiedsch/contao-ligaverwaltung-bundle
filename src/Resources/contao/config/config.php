@@ -12,7 +12,6 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-//use Contao\ArrayUtil;
 use Fiedsch\LigaverwaltungBundle\Element\ContentBegegnungsauswahl;
 use Fiedsch\LigaverwaltungBundle\Element\ContentHighlightRanking;
 use Fiedsch\LigaverwaltungBundle\Element\ContentLigenliste;

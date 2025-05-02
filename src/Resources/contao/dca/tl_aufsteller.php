@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use Contao\DataContainer;
+
+
 
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
@@ -16,6 +17,7 @@ use Contao\DataContainer;
 
 use Contao\System;
 use Contao\DC_Table;
+use Contao\DataContainer;
 
 System::loadLanguageFile('default');
 
