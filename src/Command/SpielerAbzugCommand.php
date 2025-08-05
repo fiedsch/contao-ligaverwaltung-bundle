@@ -82,6 +82,8 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
             'Geschlecht',
             'Spielerpass',
             'Mannschaft',
+            'TC',
+            'Co-TC',
             'Liga',
             'Saison',
             'Geburtsdatum',
@@ -102,27 +104,28 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                         ['pid=?'],
                         [$mannschaft->id]
                     );
+                    if ($spieler) {
+                        foreach ($spieler as $s) {
+                            /** @var MemberModel $member */
+                            $member = $s->getRelated('member_id');
+                            if (null === $member) {
+                                continue;
+                            }
 
-                    foreach ($spieler as $s) {
-                        /** @var MemberModel $member */
-                        $member = $s->getRelated('member_id');
-                        if (null === $member) {
-                            continue;
                             printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+                                html_entity_decode($member->lastname ?? ''),
+                                html_entity_decode($member->firstname ?? ''),
+                                $member->gender,
+                                $member->passnummer,
+                                html_entity_decode($mannschaft->name),
                                 $s->teamcaptain == '1' ? 'ja' : '',
                                 $s->co_teamcaptain == '1' ? 'ja' : '',
+                                html_entity_decode($liga->name),
+                                html_entity_decode($saison->name),
+                                Date::parse('Y-m-d', $member->dateOfBirth),
+                                '' // Platzhalter für "bezahlt" Spalte
+                            );
                         }
-
-                            html_entity_decode($member->lastname ?? ''),
-                            html_entity_decode($member->firstname ?? ''),
-                            $member->gender,
-                            $member->passnummer,
-                            html_entity_decode($mannschaft->name),
-                            html_entity_decode($liga->name),
-                            html_entity_decode($saison->name),
-                            Date::parse('Y-m-d', $member->dateOfBirth),
-                            '' // Platzhalter für "bezahlt" Spalte
-                        );
                     }
                 }
             } else {
