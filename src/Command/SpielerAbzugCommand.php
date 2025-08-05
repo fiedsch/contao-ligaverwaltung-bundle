@@ -76,7 +76,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
 
         // Kopfzeile
 
-        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
             'Nachname',
             'Vorname',
             'Geschlecht',
@@ -108,9 +108,11 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                         $member = $s->getRelated('member_id');
                         if (null === $member) {
                             continue;
+                            printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+                                $s->teamcaptain == '1' ? 'ja' : '',
+                                $s->co_teamcaptain == '1' ? 'ja' : '',
                         }
 
-                        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
                             html_entity_decode($member->lastname ?? ''),
                             html_entity_decode($member->firstname ?? ''),
                             $member->gender,
