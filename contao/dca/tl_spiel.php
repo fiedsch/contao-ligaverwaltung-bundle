@@ -1,0 +1,167 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of fiedsch/ligaverwaltung-bundle.
+ *
+ * (c) 2016-2025 Andreas Fieger
+ *
+ * @package Ligaverwaltung
+ * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
+ * @license https://opensource.org/licenses/MIT
+ */
+
+use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Contao\DataContainer;
+use Contao\DC_Table;
+
+$GLOBALS['TL_DCA']['tl_spiel'] = [
+    'config' => [
+        'dataContainer' => DC_Table::class,
+        'enableVersioning' => true,
+        'ptable' => 'tl_begegnung',
+        'sql' => [
+            'keys' => [
+                'id' => 'primary',
+                'pid' => 'index',
+                'home' => 'index',
+                'away' => 'index',
+                //'pid,home,away' => 'unique',
+            ],
+        ],
+    ],
+
+    'list' => [
+        'sorting' => [
+            'mode' => DataContainer::MODE_PARENT,
+            'flag' => DataContainer::SORT_ASC,
+            'fields' => ['slot'],
+            'panelLayout' => 'sort,filter;search,limit',
+            'headerFields' => ['home', 'away', 'pid'],
+            'child_record_callback' => [DCAHelper::class, 'listSpielCallback'],
+            'child_record_class' => 'no_padding',
+            'disableGrouping' => true,
+        ],
+        'label' => [
+            'fields' => ['home', 'away'],
+            'format' => '%s : %s',
+            //'label_callback' => [DCAHelper::class, 'begegnungLabelCallback'],
+        ],
+        'global_operations' => [
+            'all' => [
+                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
+                'href' => 'act=select',
+                'class' => 'header_edit_all',
+                'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
+            ],
+        ],
+        'operations' => [
+            'edit',
+            'copy',
+            'delete',
+            'show',
+        ],
+    ],
+
+    'palettes' => [
+        '__selector__' => ['spieltype'],
+        'default' => '{title_legend},pid,spieltype,slot,score_home,score_away',
+    ],
+
+    'subpalettes' => [
+        'spieltype_'.SpielModel::TYPE_EINZEL => 'home,away',
+        'spieltype_'.SpielModel::TYPE_DOPPEL => 'home,away,home2,away2',
+    ],
+
+    'fields' => [
+        'id' => [
+            'sql' => 'int(10) unsigned NOT NULL auto_increment',
+        ],
+        'tstamp' => [
+            'sql' => "int(10) unsigned NOT NULL default '0'",
+        ],
+        'pid' => [
+            'sql' => "int(10) unsigned NOT NULL default '0'",
+        ],
+        'slot' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['slot'],
+            'inputType' => 'text',
+            'sorting' => true,
+            'eval' => ['rgxp' => 'digit', 'minval' => 1],
+            'sql' => "int(10) unsigned NOT NULL default '1'",
+        ],
+        'home' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['home'],
+            'filter' => true,
+            'exclude' => true,
+            'sorting' => true,
+            'flag' => DataContainer::SORT_ASC,
+            'inputType' => 'select',
+            'eval' => ['tl_class' => 'w50 clr', 'chosen' => true, 'mandatory' => false, 'includeBlankOption' => true],
+            'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
+            'options_callback' => [DCAHelper::class, 'getHomeSpielerForSelect'],
+            'sql' => "int(10) NOT NULL default '0'",
+        ],
+        'away' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['away'],
+            'filter' => true,
+            'exclude' => true,
+            'sorting' => true,
+            'flag' => DataContainer::SORT_ASC,
+            'inputType' => 'select',
+            'eval' => ['tl_class' => 'w50', 'chosen' => true, 'mandatory' => false, 'includeBlankOption' => true],
+            'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
+            'options_callback' => [DCAHelper::class, 'getAwaySpielerForSelect'],
+            'sql' => "int(10) NOT NULL default '0'",
+        ],
+        'score_home' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['score_home'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['tl_class' => 'w50 clr', 'mandatory' => true, 'rgxp' => 'digit'],
+            'sql' => "int(10) NOT NULL default '0'",
+        ],
+        'score_away' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['score_away'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'rgxp' => 'digit'],
+            'sql' => "int(10) NOT NULL default '0'",
+        ],
+
+        'spieltype' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['spieltype'],
+            'exclude' => true,
+            'inputType' => 'select',
+            'options' => [SpielModel::TYPE_EINZEL => 'Einzel', SpielModel::TYPE_DOPPEL => 'Doppel'],
+            'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
+            'sql' => "int(10) NOT NULL default '0'",
+        ],
+        'home2' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['home2'],
+            'filter' => true,
+            'exclude' => true,
+            'sorting' => true,
+            'flag' => DataContainer::SORT_ASC,
+            'inputType' => 'select',
+            'eval' => ['tl_class' => 'w50 clr', 'chosen' => true, 'mandatory' => true, 'includeBlankOption' => true],
+            'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
+            'options_callback' => [DCAHelper::class, 'getHomeSpielerForSelect'],
+            'sql' => "int(10) NOT NULL default '0'",
+        ],
+        'away2' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['away2'],
+            'filter' => true,
+            'exclude' => true,
+            'sorting' => true,
+            'flag' => DataContainer::SORT_ASC,
+            'inputType' => 'select',
+            'eval' => ['tl_class' => 'w50', 'chosen' => true, 'mandatory' => true, 'includeBlankOption' => true],
+            'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
+            'options_callback' => [DCAHelper::class, 'getAwaySpielerForSelect'],
+            'sql' => "int(10) NOT NULL default '0'",
+        ],
+    ],
+];

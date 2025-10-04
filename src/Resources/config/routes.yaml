@@ -1,3 +1,0 @@
-fiedsch_ligaverwaltung:
-    resource: "@FiedschLigaverwaltungBundle/Controller"
-    type: attribute

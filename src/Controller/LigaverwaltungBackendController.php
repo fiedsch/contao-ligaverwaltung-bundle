@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2023 Andreas Fieger
+ * (c) 2016-2025 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -78,7 +78,7 @@ class LigaverwaltungBackendController //extends AbstractBackendController
         /** @var \Twig\Environment $twig */
         //$twig = System::getContainer()->get('twig');
         $twig = $this->container->get('twig');
-        $template = '@FiedschLigaverwaltung/begegnung_dataentry_be.html.twig';
+        $template = '@Contao_FiedschLigaverwaltungBundle/begegnung_dataentry_be.html.twig';
 
         //return new Response($twig->render($template, $data));
         return $this->render($template, $data);

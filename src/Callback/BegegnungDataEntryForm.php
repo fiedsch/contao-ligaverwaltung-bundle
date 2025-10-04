@@ -43,7 +43,7 @@ class BegegnungDataEntryForm
         $appData['disabled'] = $begegnungModel->published === "1";
         $appData = DataEntrySaver::augment($appData);
 
-        $template = '@FiedschLigaverwaltung/begegnung_dataentry_vue.html.twig';
+        $template = '@Contao_FiedschLigaverwaltungBundle/begegnung_dataentry_vue.html.twig';
         return $this->twig->render($template, ['app_data' => $appData]);
     }
 }

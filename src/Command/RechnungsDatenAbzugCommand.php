@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2023 Andreas Fieger
+ * (c) 2016-2025 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -263,7 +263,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
     protected function render(array $data, string $format, OutputInterface $output): void
     {
         $output->writeln($this->twig->render(
-            "@FiedschLigaverwaltung/rechnungsdaten/$format/rechnungsdaten.$format.twig",
+            "@Contao_FiedschLigaverwaltungBundle/rechnungsdaten/$format/rechnungsdaten.$format.twig",
             [
                 'saison' => $data['saisonname'],
                 'spielorte' => $data['spielorte'],

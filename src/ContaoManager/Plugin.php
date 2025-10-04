@@ -7,7 +7,7 @@ declare(strict_types=1);
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2023 Andreas Fieger
+ * (c) 2016-2025 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -34,7 +34,7 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface
     {
         return [
             BundleConfig::create(FiedschLigaverwaltungBundle::class)
-                ->setLoadAfter([ContaoCoreBundle::class]),
+                ->setLoadAfter([ContaoCoreBundle::class])
         ];
     }
 
@@ -44,8 +44,8 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
     {
         return $resolver
-            ->resolve(__DIR__.'/../Resources/config/routes.yaml')
-            ->load(__DIR__.'/../Resources/config/routes.yaml')
+            ->resolve(__DIR__ . '/../../config/routes.yaml')
+            ->load(__DIR__ . '/../../config/routes.yaml')
         ;
     }
 }

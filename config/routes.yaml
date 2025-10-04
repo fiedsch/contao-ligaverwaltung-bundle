@@ -1,0 +1,3 @@
+fiedsch_ligaverwaltung:
+    resource: ../src/Controller
+    type: attribute

@@ -1,0 +1,26 @@
+# Rechnungsdaten für die Saison {{ saison }}
+
+{% set MWSTSATZ = 19 %}
+{% set absender = '' %}
+
+## Spielorte
+
+{% for sp in spielorte %}
+
+{% set empfaenger = sp %}
+{% include '@Contao_FiedschLigaverwaltungBundle/rechnungsdaten/md/rechnungsdaten.rechnung.spielort.md.twig' %}
+{% include '@Contao_FiedschLigaverwaltungBundle/rechnungsdaten/md/rechnungsdaten.standardtext.md.twig' %}
+
+{% endfor %}
+
+
+## Aufsteller
+
+{% for au in aufsteller %}
+
+{% set empfaenger = au %}
+{% include '@Contao_FiedschLigaverwaltungBundle/rechnungsdaten/md/rechnungsdaten.rechnung.aufsteller.md.twig' %}
+{% include '@Contao_FiedschLigaverwaltungBundle/rechnungsdaten/md/rechnungsdaten.standardtext.md.twig' %}
+
+{% endfor %}
+
