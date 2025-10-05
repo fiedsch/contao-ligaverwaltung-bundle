@@ -1,0 +1,108 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <pre>
+             RANKING {{ suffix }} {{ subject }}
+         </pre>
+     {% endblock %}
+
+  {% else %}
+
+      {% if rankingtype == constant('Fiedsch\\LigaverwaltungBundle\\Controller\\ContentElement\\RankingController::RANKING_TYPE_S_MANNSCHAFTEN') %}
+
+          {% if (listitems)  %}
+              <div class="table-responsive">
+                  <table class="table table-hover">
+                      <thead>
+                      <tr>
+                          <th class="rank">Platz</th>
+                          <th class="team">Mannschaft</th>
+                          <th class="team-matches">Spiele</th>
+                          {% if ranking_model == constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                              <th class="points">Punkte</th>
+                          {% endif %}
+                          <th class="won">g</th>
+                          <th class="draw">u</th>
+                          <th class="lost">v</th>
+                          <th class="legs">Legs</th>
+                          <th class="player-matches">Spiele</th>
+                          {%  if ranking_model != constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                              <th class="points">Punkte</th>
+                          {% endif %}
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {% for listitem in listitems %}
+                          <tr>
+                              <td class="rank">{{ listitem['rang'] }}</td>
+                              <td class="team">{{ listitem['name'] | raw }}</td>
+                              <td class="team-matches">{{ listitem['begegnungen'] }}</td>
+                              {%  if ranking_model == constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                                  <td class="points">{{ listitem['punkte_self'] }}</td>
+                              {% endif %}
+                              <td class="won">{{ listitem['gewonnen'] }}</td>
+                              <td class="draw">{{ listitem['unentschieden'] }}</td>
+                              <td class="lost">{{ listitem['verloren'] }}</td>
+                              <td class="legs">{{ listitem['legs_self']  }}:{{ listitem['legs_other']  }}</td>
+                              <td class="player-matches">{{ listitem['spiele_self']  }}:{{ listitem['spiele_other']  }}</td>
+                              {% if ranking_model != constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                                  <td class="points">{{ listitem['punkte_self']  }}:{{ listitem['punkte_other']  }}</td>
+                              {% endif %}
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          {% else  %}
+              <code>Es liegen noch keine Ergebnisse vor.</code>
+          {%  endif %}
+      {%  endif %}
+
+      {% if rankingtype == constant('Fiedsch\\LigaverwaltungBundle\\Controller\\ContentElement\\RankingController::RANKING_TYPE_S_SPIELER') %}
+
+          {% if listitems %}
+              <div class="table-responsive">
+                  <table class="table table-hover">
+                      <thead>
+                      <tr>
+                          <th>Platz</th>
+                          <th>Name</th>
+                          {% if rankingsubtype == 'alle' %}
+                              <th>Mannschaft</th>
+                          {% endif %}
+                          <th>Legs</th>
+                          <th>Spiele</th>
+                          {% if ranking_model != constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                              <th>Punkte</th>
+                          {% endif %}
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {% for listitem in listitems %}
+                          <tr class="{{ listitem['CSS'] }}">
+                              <td>{{ listitem['rang']  }}</td>
+                              <td>{{ listitem['name']  }}</td>
+                              {% if rankingsubtype == 'alle' %}
+                                  <td>{{ listitem['mannschaft'] |raw }}</td>
+                              {% endif %}
+                              <td>{{ listitem['legs_self']  }} : {{ listitem['legs_other']  }}</td>
+                              <td>{{ listitem['spiele_self']  }} : {{ listitem['spiele_other']  }}</td>
+                              {% if ranking_model != constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY')  %}
+                                  <td>{{ listitem['punkte_self']  }}</td>
+                              {% endif %}
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          {% else %}
+              <code>Es liegen noch keine Ergebnisse vor.</code>
+          {% endif %}
+      {% endif %}
+  {% endif %}
+
+{% endblock %}

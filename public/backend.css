@@ -5,11 +5,3 @@
     background: url(logo.svg) 3px 2px no-repeat;
 }
 
-/*
- * Den Eintrag für liga.editbegegnung verstecken.
- * Wir wollen diesen nie direkt aufrufen. Er dient nur als Ziel für den tl_begegnung.editform.button_callback
- */
-/*#liga li:last-child {
-    display: none;
-}*/
-

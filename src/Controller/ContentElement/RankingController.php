@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 declare(strict_types=1);
 
@@ -12,25 +12,28 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Element;
+namespace Fiedsch\LigaverwaltungBundle\Controller\ContentElement;
 
-use Contao\BackendTemplate;
-use Contao\ContentElement;
+use Contao\ContentModel;
+use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\Database;
 use Contao\MemberModel;
-use Contao\System;
+use Contao\Template;
+use Contao\Config;
+use Exception;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Fiedsch\LigaverwaltungBundle\Entity\Begegnung;
 use Fiedsch\LigaverwaltungBundle\Entity\Spiel;
 use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use Exception;
 use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
-use function Symfony\Component\String\u;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Content element "Liste aller Spieler einer Mannaschft".
+ * Content element "Liste aller Spieler einer Mannschaft".
  *
  * @author Andreas Fieger <https://github.com/fiedsch>
  *
@@ -38,83 +41,87 @@ use function Symfony\Component\String\u;
  * @property int $liga
  * @property int $mannschaft
  */
-class ContentRanking extends ContentElement
+#[AsContentElement(
+    type: 'ranking',
+    category: 'ligaverwaltung',
+    template: 'content_element/ranking'
+)]
+class RankingController extends AbstractContentElementController
 {
+    /** @noinspection PhpUnused */
+    const int RANKING_TYPE_MANNSCHAFTEN = 1;
+    /** @noinspection PhpUnused */
+    const string RANKING_TYPE_S_MANNSCHAFTEN = 'mannschaften';
+
+    const int RANKING_TYPE_SPIELER = 2;
+
+    /** @noinspection PhpUnused */
+    const string RANKING_TYPE_S_SPIELER = 'spieler';
+
+    public function __construct(private readonly RankingHelperInterface $rankingHelper)
+    {
+    }
+
     use TlModeTrait;
 
     /**
-     * Template.
+     * changed scope from protected (as in AbstractContentElementController) to public
+     * because we need to call this method in ContentMannschaftsseite.
      *
-     * @var string
-     */
-    protected $strTemplate = 'ce_ranking';
-
-    /**
      * @throws Exception
-     *
-     * @return string
      */
-    public function generate(): string
+    public function getResponse(Template $template, ContentModel $model, Request $request): Response
     {
-        if ($this->isBackend()) {
-            $objTemplate = new BackendTemplate('be_wildcard');
-            $liga = LigaModel::findById($this->liga);
-            if ($liga) {
+        $this->setData($template, $model);
 
-                if (1 === $this->rankingtype) {
-                    $suffix = 'Mannschaften';
-                    $subject = sprintf('%s %s %s',
-                        $liga->getRelated('pid')->name,
-                        $liga->name,
-                        $liga->getRelated('saison')->name
-                    );
-                } else {
-                    $suffix = 'Spieler';
-                    $mannschaft = MannschaftModel::findById($this->mannschaft);
-                    $subject = sprintf('%s %s %s',
-                        '(Mannschaft: ' . ($mannschaft?->name ?: 'alle') . ')',
-                        $liga->name,
-                        $liga->getRelated('saison')->name
-                    );
-                }
-            } else {
-                $suffix = '';
-                $subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $this->liga);
-            }
-            $objTemplate->title = $this->headline;
-            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['ranking'][0])->upper()." $suffix $subject ###";
-            // $objTemplate->id = $this->id;
-            // $objTemplate->link = 'the text that will be linked with href';
-            // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
-
-            return $objTemplate->parse();
-        }
-
-        $appendCssClass = 'rankingtype_'.(1 === $this->rankingtype ? 'mannschaft' : 'spieler');
-        $this->cssID = [$this->cssID[0] ?? '', ($this->cssID[1] ?? '') .' '.$appendCssClass];
-
-        return parent::generate();
+        return $template->getResponse();
     }
 
     /**
-     * Generate the content element.
-     *
      * @throws Exception
      */
-    public function compile(): void
+    private function setData(Template $template, ContentModel $model): void
     {
-        switch ($this->rankingtype) {
-            case 1:
-                $this->compileMannschaftenranking();
-                break;
+        $liga = LigaModel::findById($model->liga);
 
-            case 2:
-                $this->compileSpielerranking();
-                break;
-
-            default:
-                $this->Template->subject = 'Undefined '.$this->rankingtype;
+        // Daten für die Backend-Ansicht
+        if (!$liga) {
+            $template->suffix = '';
+            $template->subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $model->liga);
+            return;
         }
+        $template->rankingtype = $model->rankingtype;
+        switch ($model->rankingtype) {
+            case 1:
+                $template->suffix = 'Mannschaften';
+                $template->subject = sprintf('%s %s %s',
+                    $liga->getRelated('pid')->name,
+                    $liga->name,
+                    $liga->getRelated('saison')->name
+                );
+                $this->compileMannschaftenranking($template, $model);
+                break;
+            case 2:
+                $template->suffix = 'Spieler';
+                $mannschaft = MannschaftModel::findById($model->mannschaft);
+                $template->subject = sprintf('%s %s %s',
+                    '(Mannschaft: ' . ($mannschaft?->name ?: 'alle') . ')',
+                    $liga->name,
+                    $liga->getRelated('saison')->name
+                );
+                $this->compileSpielerranking($template, $model);
+                break;
+            default:
+                $template->suffix = '';
+                $template->subject = '';
+        }
+
+        // TODO (jeweils Variablen für Twig Template vs PHP Template) und $this->... wird $model->...
+        // $appendCssClass = 'rankingtype_'.(1 === $this->rankingtype ? 'mannschaft' : 'spieler');
+        // $this->cssID = [$this->cssID[0] ?? '', ($this->cssID[1] ?? '') .' '.$appendCssClass];
+
+        $template->ranking_model = Config::get('ligaverwaltung_ranking_model');
+
     }
 
     /**
@@ -125,11 +132,11 @@ class ContentRanking extends ContentElement
      *
      * @throws Exception
      */
-    protected function compileMannschaftenranking(): void
+    protected function compileMannschaftenranking(Template $template, ContentModel $model): void
     {
-        $liga = LigaModel::findById($this->liga);
+        $liga = LigaModel::findById($model->liga);
 
-        $this->Template->subject = sprintf('Ranking aller Mannschaften der %s %s %s',
+        $template->subject = sprintf('Ranking aller Mannschaften der %s %s %s',
             $liga->getRelated('pid')->name,
             $liga->name,
             $liga->getRelated('saison')->name
@@ -156,7 +163,7 @@ class ContentRanking extends ContentElement
                           AND m2.active='1'
                           AND b.published='1'
                           ")
-            ->execute($this->liga)
+            ->execute($model->liga)
         ;
 
         $begegnungen = [];
@@ -219,8 +226,7 @@ class ContentRanking extends ContentElement
             $results[$away]['verloren'] += $begegnung->isVerlorenAway() ? 1 : 0;
         }
 
-        /** @var $helper RankingHelperInterface */
-        $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
+        $helper = $this->rankingHelper;
         uasort(
             $results,
             static function ($a, $b) use ($helper) {
@@ -262,8 +268,8 @@ class ContentRanking extends ContentElement
             $lastresult = $results[$id];
         }
 
-        $this->Template->rankingtype = 'mannschaften';
-        $this->Template->listitems = $results;
+        $template->rankingtype = 'mannschaften';
+        $template->listitems = $results;
     }
 
     /**
@@ -276,7 +282,7 @@ class ContentRanking extends ContentElement
      *
      * @throws Exception
      */
-    protected function compileSpielerranking(): void
+    protected function compileSpielerranking(Template $template, ContentModel $model): void
     {
         $sql = "SELECT
                           s.score_home AS legs_home,
@@ -302,18 +308,18 @@ class ContentRanking extends ContentElement
                           AND b.published='1'
                           ";
 
-        if ($this->mannschaft > 0) {
+        if ($model->mannschaft > 0) {
             // eine bestimmte Mannschaft
-            $mannschaft = MannschaftModel::findById($this->mannschaft);
-            $this->Template->subject = 'Ranking aller Spieler der Mannschaft '.$mannschaft->name;
+            $mannschaft = MannschaftModel::findById($model->mannschaft);
+            $template->subject = 'Ranking aller Spieler der Mannschaft '.$mannschaft->name;
             $sql .= ' AND (b.home=? OR b.away=?)';
             $spiele = Database::getInstance()
-                ->prepare($sql)->execute($this->liga, $this->mannschaft, $this->mannschaft);
+                ->prepare($sql)->execute($model->liga, $model->mannschaft, $model->mannschaft);
         } else {
             // alle Mannschaften
-            $this->Template->subject = 'Ranking aller Spieler';
+            $template->subject = 'Ranking aller Spieler';
             $spiele = Database::getInstance()
-                ->prepare($sql)->execute($this->liga);
+                ->prepare($sql)->execute($model->liga);
         }
 
         $results = [];
@@ -348,16 +354,15 @@ class ContentRanking extends ContentElement
 
         // Bei mannschaftsinternen Rankings alle Spieler löschen, die nicht
         // zur betrachteten Mannschaft gehören.
-        if ($this->mannschaft > 0) {
+        if ($model->mannschaft > 0) {
             foreach ($results as $id => $data) {
-                if ($data['mannschaft_id'] !== $this->mannschaft) {
+                if ($data['mannschaft_id'] !== $model->mannschaft) {
                     unset($results[$id]);
                 }
             }
         }
 
-        /** @var $helper RankingHelperInterface */
-        $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
+        $helper = $this->rankingHelper;
         uasort(
             $results,
             static function ($a, $b) use ($helper) {
@@ -430,15 +435,15 @@ class ContentRanking extends ContentElement
             ];
         }
 
-        $this->Template->rankingtype = 'spieler';
+        $template->rankingtype = 'spieler';
 
-        if ($this->mannschaft > 0) {
-            $this->Template->rankingsubtype = 'mannschaft';
+        if ($model->mannschaft > 0) {
+            $template->rankingsubtype = 'mannschaft';
         } else {
-            $this->Template->rankingsubtype = 'alle';
+            $template->rankingsubtype = 'alle';
         }
 
-        $this->Template->listitems = $results;
+        $template->listitems = $results;
     }
 
     /**

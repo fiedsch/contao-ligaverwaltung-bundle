@@ -23,9 +23,12 @@ namespace Fiedsch\LigaverwaltungBundle\Element;
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
+use Contao\System;
+use Exception;
+//use Fiedsch\LigaverwaltungBundle\Controller\ContentElement\ContentRanking;
+use Fiedsch\LigaverwaltungBundle\Controller\ContentElement\RankingController;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Exception;
 use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
 use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
@@ -75,7 +78,7 @@ class ContentMannschaftsseite extends ContentElement
     {
         $mannschaftModel = MannschaftModel::findById($this->mannschaft);
 
-        $this->addDescriptionToTlHead('Alles zur Mannschaft '.$mannschaftModel->name);
+        $this->addDescriptionToTlHead('Alles zur Mannschaft '.$mannschaModel->name);
 
         // Spielortinfo
         $contentModel = new ContentModel();
@@ -121,20 +124,21 @@ class ContentMannschaftsseite extends ContentElement
         $contentModel->type = 'ranking';
         $contentModel->liga = $mannschaftModel->liga;
         $contentModel->mannschaft = $mannschaftModel->id;
-        $contentModel->rankingtype = 2; // 'Spieler'
+        $contentModel->rankingtype = RankingController::RANKING_TYPE_SPIELER;
         $contentModel->headline = [
             'value' => 'Einzelspieler Ranking '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $contentElement = new ContentRanking($contentModel);
-        $this->Template->ranking = $contentElement->generate();
+        $contentElement = new RankingController(System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper'));
+
+        $this->Template->ranking = $contentElement->getResponse($this->Template, $contentModel, $this->requestStack->getCurrentRequest())->getContent();
 
         // Highlights
         $contentModel = new ContentModel();
         $contentModel->tstamp = time();
         $contentModel->type = 'highlightranking';
         $contentModel->liga = $mannschaftModel->liga;
-        $contentModel->rankingtype = 2; // 'Spieler'
+        $contentModel->rankingtype = RankingController::RANKING_TYPE_SPIELER;
         $contentModel->rankingfield = 99; // alle zusammen
         $contentModel->mannschaft = $mannschaftModel->id;
         $contentModel->headline = [

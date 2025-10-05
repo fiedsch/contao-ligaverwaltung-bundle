@@ -5,7 +5,7 @@ können wird im Anschluss erklärt.
 
 ## Spielerrankings
 
-Für die Ermittlung der Spielerrankings werden jedem Spieler pro gespieltem 
+Für die Ermittlung der Spielerrankings werden jedem Spieler pro gespieltem
 Spiel Punkte vergeben. Nach diesen Punkten wird sortiert. Bei Punktgleichheit
 wird wie folgt unterschieden:
 
@@ -14,9 +14,9 @@ wird wie folgt unterschieden:
 3. Ist auch die Legdifferenz gleich, dann nach gewonnenen Legs.
 
 
-### Ranking nach Punkten 
+### Ranking nach Punkten
 
-Hier werden je nach Ergebnis verschiedene Punkte vergeben. Motivation: 
+Hier werden je nach Ergebnis verschiedene Punkte vergeben. Motivation:
 ein deutlicher Sieg soll mehr Punkte ergeben, als ein knapper; eine
 knappe Niederlage soll besser bewertet werden, als eine klare "zu Null Niederlage".
 
@@ -29,7 +29,7 @@ Ergebnis | Punkte
 1:2 | 1
 0:2 | 0
 
-  
+
 ### Ranking nach gewonnenen Spielen
 
 Hier zählt nur das Ergebnis gewonnen oder verloren.
@@ -41,11 +41,11 @@ Ergebnis | Punkte
 2:0 | 1
 2:1 | 1
 1:2 | 0
-0:2 | 0 
+0:2 | 0
 
 
 ## Mannschaftenrankings
- 
+
 Bei den Rankings von Mannschaften werden ebenfalls Punkte vergeben:
 
 * gewonnen 3 Punkte
@@ -59,8 +59,10 @@ verfahren.
 ## Überschreiben der Standards
 
 Um die "mitgelieferten" Implementierungen (siehe `src/Helper/RankingHelper.php`) zu überschreiben
-muss ein `AppBundle` angelegt werden, das einene eigenen `Helper` registriert. In diesem können
+muss ein "`App` Bundle" angelegt werden, das einene eigenen `Helper` registriert. In diesem können
 dann die gewünschten Regeln hinterlegt werden.
+
+TODO: Update description to show the proper Contao 5 way of doing things
 
 Dazu müssen die folgenden Dateien angelegt werden:
 
@@ -88,7 +90,7 @@ class ContaoManagerPlugin implements BundlePluginInterface
     }
 
 }
-``` 
+```
 
 ```php
 <?php
@@ -160,7 +162,7 @@ class AppBundle extends Bundle
 	    "psr-4": {
 	        "AppBundle\\": "src/AppBundle/"
 	    }
-    } 
+    }
 ```
 
 

@@ -2,11 +2,10 @@ services:
     _defaults:
         autoconfigure: true
         autowire: false
-        public: true
 
     fiedsch_ligaverwaltung.rankinghelper:
         class: Fiedsch\LigaverwaltungBundle\Helper\RankingHelper
-        # public: true
+        public: true
 
     fiedsch_ligaverwaltung.migration.haspaidmigration:
         class: Fiedsch\LigaverwaltungBundle\Migration\HasPaidMigration
@@ -40,4 +39,3 @@ services:
         arguments:
             - '@contao.framework'
         tags: ['controller.service_arguments']
-

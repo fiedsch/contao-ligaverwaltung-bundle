@@ -32,6 +32,7 @@ class FiedschLigaverwaltungExtension extends Extension
             new FileLocator(__DIR__ . '/../../config')
         );
         $loader->load('services.yaml');
+        $loader->load('controller.yaml');
         $loader->load('commands.yaml');
     }
 }

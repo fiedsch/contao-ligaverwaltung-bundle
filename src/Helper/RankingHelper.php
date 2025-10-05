@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
 declare(strict_types=1);
 
@@ -18,11 +18,14 @@ use Contao\StringUtil;
 
 class RankingHelper implements RankingHelperInterface
 {
-    const PUNKTE_GEWONNEN = 3;
-    const PUNKTE_UNENTSCHIEDEN = 1;
-    const PUNKTE_VERLOREN = 0;
+    const int PUNKTE_GEWONNEN = 3;
+    const int PUNKTE_UNENTSCHIEDEN = 1;
+    const int PUNKTE_VERLOREN = 0;
 
-    public function getPunkte(string $score, int $ranking_model = 1): int
+    const int RANKING_MODEL_LEGS = 1;
+    const int RANKING_MODEL_TOTAL_ONLY = 2;
+
+    public function getPunkte(string $score, int $ranking_model = self::RANKING_MODEL_LEGS): int
     {
         // $ranking_model
         // 'options'   => [ 1 => 'nach gewonnenen Legs', 2 => 'nur gewonnen/verloren' ],
@@ -31,56 +34,24 @@ class RankingHelper implements RankingHelperInterface
             // 'nach gewonnenen Legs'
             // Deutlich gewonnen oder knapp verloren gibt mehr Punkte als
             // knapp gewonnen bzw. deutlich verloren
-            case 1:
-                switch ($score) {
-                    // mögliche Ergebnisse bei "best of 3"
-                    case '2:0':
-                        return 3;
-                        //break;
-
-                    case '2:1':
-                        return 2;
-                        //break;
-
-                    case '1:2':
-                        return 1;
-                        //break;
-
-                    case '0:2':
-                        return 0;
-                        //break;
-                    // mögliche Ergebnisse bei "best of 5"
-                    case '3:0':
-                        return 5;
-                       //break;
-
-                    case '3:1':
-                        return 4;
-                        //break;
-
-                    case '3:2':
-                        return 3;
-                        //break;
-
-                    case '2:3':
-                        return 2;
-                        //break;
-
-                    case '1:3':
-                        return 1;
-                        //break;
-
-                    case '0:3':
-                        return 0;
-                        //break;
-
-                    default:
-                        //\System::log("nicht vorgesehenes Spielergebnis ".$score, __METHOD__, TL_ERROR);
-                        return 0;
-                }
+            case self::RANKING_MODEL_LEGS:
+                /** @noinspection PhpDuplicateMatchArmBodyInspection */
+                return match ($score) {
+                    '2:0' => 3,
+                    '2:1' => 2,
+                    '1:2' => 1,
+                    '0:2' => 0,
+                    '3:0' => 5,
+                    '3:1' => 4,
+                    '3:2' => 3,
+                    '2:3' => 2,
+                    '1:3' => 1,
+                    '0:3' => 0,
+                    default => 0,
+                };
                 //break;
 
-            case 2:
+            case self::RANKING_MODEL_TOTAL_ONLY:
             // 'nur gewonnen/verloren'
             // gewonnen -> 1 Punkt, verloren 0 Punkte; wie gewonnen wurde spielt keine Rolle!
             default:

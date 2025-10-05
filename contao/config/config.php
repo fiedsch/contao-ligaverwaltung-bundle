@@ -12,13 +12,14 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
+use Contao\ArrayUtil;
+use Contao\System;
 use Fiedsch\LigaverwaltungBundle\Element\ContentBegegnungsauswahl;
 use Fiedsch\LigaverwaltungBundle\Element\ContentHighlightRanking;
 use Fiedsch\LigaverwaltungBundle\Element\ContentLigenliste;
 use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftenuebersicht;
 use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsliste;
 use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsseite;
-use Fiedsch\LigaverwaltungBundle\Element\ContentRanking;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielbericht;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielerliste;
 use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortinfo;
@@ -40,10 +41,7 @@ use Fiedsch\LigaverwaltungBundle\Module\ModuleMannschaftsseitenReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielberichtReader;
 use Fiedsch\LigaverwaltungBundle\Module\ModuleSpielortseitenReader;
 use Fiedsch\LigaverwaltungBundle\Widget\Backend\VueWidget;
-use Contao\ArrayUtil;
-use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
-use Fiedsch\LigaverwaltungBundle\Callback\BegegnungDataEntryForm;
 
 ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
     'liga' => [
@@ -65,10 +63,6 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
         'liga.begegnung' => [
             'tables' => ['tl_begegnung', 'tl_spiel'],
         ],
-        // 'liga.editbegegnung' => [ // hidden in backend.css (if it is the last li of the group (uses li:last-child))
-        //     'callback' => BegegnungDataEntryForm::class,
-        //     'tables' => ['tl_begegnung'],
-        // ],
     ],
 ]);
 
@@ -82,7 +76,7 @@ $GLOBALS['TL_CTE']['ligaverwaltung']['spielbericht'] = ContentSpielbericht::clas
 $GLOBALS['TL_CTE']['ligaverwaltung']['spielerliste'] = ContentSpielerliste::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['spielplan'] = ContentSpielplan::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['spielortinfo'] = ContentSpielortinfo::class;
-$GLOBALS['TL_CTE']['ligaverwaltung']['ranking'] = ContentRanking::class;
+// $GLOBALS['TL_CTE']['ligaverwaltung']['ranking'] = ContentRanking::class; // now a service registered using attributes (see RankingController)
 $GLOBALS['TL_CTE']['ligaverwaltung']['highlightranking'] = ContentHighlightRanking::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsseite'] = ContentMannschaftsseite::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['spielortseite'] = ContentSpielortseite::class;
