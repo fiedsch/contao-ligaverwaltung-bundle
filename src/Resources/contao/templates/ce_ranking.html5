@@ -50,7 +50,7 @@
   </table>
   </div>
 <?php else: ?>
-   <code>Es liegen noch keine Ergebnise vor.</code>
+   <code>Es liegen noch keine Ergebnisse vor.</code>
 <?php endif; ?>
 
 <?php endif; ?>
@@ -94,7 +94,7 @@
   </table>
   </div>
 <?php else: ?>
-  <code>Es liegen noch keine Ergebnise vor.</code>
+  <code>Es liegen noch keine Ergebnisse vor.</code>
 <?php endif; ?>
 
 <?php endif; ?>
