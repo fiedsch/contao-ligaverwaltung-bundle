@@ -15,8 +15,9 @@ declare(strict_types=1);
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Contao\DataContainer;
 use Contao\DC_Table;
+use Contao\System;
 
-\Contao\System::loadLanguageFile('default');
+System::loadLanguageFile('default');
 
 $GLOBALS['TL_DCA']['tl_mannschaft'] = [
     'config' => [
@@ -88,7 +89,6 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             // 'cut',
             'delete',
             'toggle', // Nicht mit Standardfeld 'published', sondern mit 'active', daher 'toggle' => true in der Felddefinition unten
-                      // TODO: dies kann aber nicht im (vom Bundle implementierten) custom label berücksichtigt werden ->  'label_callback' => [DCAHelper::class, 'mannschaftLabelCallback'] überarbeiten!
             'show',
         ],
     ],

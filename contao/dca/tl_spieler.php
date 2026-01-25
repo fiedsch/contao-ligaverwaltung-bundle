@@ -17,9 +17,9 @@ use Contao\FilesModel;
 use Contao\MemberModel;
 use Contao\DC_Table;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Contao\System;
 
-
-\Contao\System::loadLanguageFile('default');
+System::loadLanguageFile('default');
 
 $GLOBALS['TL_DCA']['tl_spieler'] = [
     'config' => [
@@ -40,8 +40,6 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
         'sorting' => [
             'mode' => DataContainer::MODE_PARENT,
             'headerFields' => ['name', 'spielort', 'liga'],
-            // TODO(?): wird flag bei mode 4 nicht berücksichtigt?
-            // Workaround: DESC als Teil des Feldnamens angeben
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'fields' => ['teamcaptain DESC,co_teamcaptain DESC'],
             'panelLayout' => '', // sort, search,filter etc. nicht anzeigen

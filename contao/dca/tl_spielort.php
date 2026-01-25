@@ -14,8 +14,9 @@ declare(strict_types=1);
 
 use Contao\DataContainer;
 use Contao\DC_Table;
+use Contao\System;
 
-\Contao\System::loadLanguageFile('default');
+System::loadLanguageFile('default');
 
 $GLOBALS['TL_DCA']['tl_spielort'] = [
     'config' => [

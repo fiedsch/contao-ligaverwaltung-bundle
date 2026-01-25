@@ -72,36 +72,10 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             ],
         ],
         'operations' => [
-            // 'edit' => [
-            //     //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['edit'],
-            //     'href' => 'table=tl_spiel',
-            //     'icon' => 'edit.svg',
-            // ],
-            // 'editheader' => [ // siehe 'children' unten!
-            //     'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editheader'],
-            //     'href' => 'act=edit',
-            //     'icon' => 'header.svg',
-            // ],
-            // // 'editform' => [
-            // //     'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['editform'],
-            // //     'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
-            // //         // TODO (?): check if begegnung is already published and then disable icon (using children_.svg)
-            // //         // $icon = $arrRow['published'] ? 'children_.svg' : 'children.svg';
-            // //         // Problem hierbei: ein klick auf das Auge ändert zwar den Status in published, aber nicht gleichzeitig das 'children' Icon.
-            // //         // Im Zweiewlsfall gibt es aber eine Meldung vom LigaverwaltungBackendController::begegnungDataSaveAction(). Daher:
-            // //         $icon = 'children.svg';
-            // //         return "<a href='contao?do=liga.editbegegnung&table=tl_begegnung&id=$arrRow[id]' title='die Spiele der Begegnung bearbeiten' class='edit'><img src='system/themes/flexible/icons/$icon' alt='bearbeiten'></a>&nbsp;";
-            // //
-            // //         // return sprintf('<a href="%s" title="die Begegnung bearbeiten (neuer Modus)" class="edit">%s</a>',
-            // //         //     System::getContainer()->get('router')->generate('begegnung_dataentry_form', ['begegnung' => $arrRow['id']]),
-            // //         //     '<img src="bundles/fiedschligaverwaltung/icons/all.svg" alt="erfassen">&nbsp;'
-            // //         // );
-            // //     },
-            // // ],
             'edit',
-            // 'children', // entfällt zugunsten des Vue-Widgets, mit dem die tl_spiel-Records automatisch generiert bzw. bearbeitet werden (TODO (?): für Admin-User einblenden; Problem: beim Bearbeiten von tl_spiel-Records könnten Inkonsistenzen mit tl_begegnung.begegnung_data entstehen)
-            // 'copy',
-            // 'cut',
+            // 'children', // entfällt zugunsten des Vue-Widgets, mit dem die tl_spiel-Records automatisch generiert bzw. bearbeitet werden
+            // 'copy', // ergibt hier keinen Sinn
+            // 'cut', // ergibt hier keinen Sinn
             'delete',
             'toggle',
             'show',

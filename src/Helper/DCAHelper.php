@@ -43,15 +43,11 @@ use function array_keys;
 
 class DCAHelper
 {
-    /* Helper für tl_verband */
-
     /**
-     * @param $row
-     * @param $label
-     *
-     * @return string
+     * Callback für das Label eines Verbands
+     * tl_verband.fields.label.label_callback
      */
-    public static function verbandLabelCallback($row, $label): string
+    public static function verbandLabelCallback(array $row, string $label): string
     {
         $ligen = Database::getInstance()
             ->prepare('SELECT COUNT(*) n FROM tl_liga WHERE pid=?')
@@ -61,37 +57,26 @@ class DCAHelper
         return sprintf('%s (%d Ligen)', $label, $ligen->n);
     }
 
-    /* Helper für tl_liga */
-
     /**
-     * * ('child_record_callback' in tl_liga).
-     *
-     * @param $arrRow
-     *
-     * @return string
+     * Callback für das Label eines Child Records tl_liga.child_record_callback
      */
-    public static function ligaListCallback($arrRow): string
+    public static function ligaListCallback(array $row): string
     {
         $begegnungen = Database::getInstance()
             ->prepare('SELECT COUNT(*) n FROM tl_begegnung WHERE pid=?')
-            ->execute($arrRow['id'])
+            ->execute($row['id'])
         ;
 
-        return self::ligaLabelCallback($arrRow, $arrRow['name'])
+        return self::ligaLabelCallback($row, $row['name'])
             .sprintf(' (%d Begegnungen)', $begegnungen->n)//. ' <span class="tl_gray">'. json_encode($arrRow).'</span>'
             ;
     }
 
     /**
      * Label für eine Liga
-     * * ('label_callback' in tl_mannschaft).
-     *
-     * @param $row
-     * @param $label
-     *
-     * @return string
+     * (tl_liga.fields.label.label_callback
      */
-    public static function ligaLabelCallback($row, $label): string
+    public static function ligaLabelCallback(array $row, string $label): string
     {
         $saison = SaisonModel::findById($row['saison']);
         $class = $row['aktiv'] ? 'tl_green' : 'tl_gray';
@@ -99,35 +84,29 @@ class DCAHelper
         return sprintf("<span class='%s'>%s %s</span><code class='tl_gray'>[%s]</code>", $class, $label, $saison?->name, $saison?->alias);
     }
 
-    /* Helper für tl_mannschaft */
-
     /**
      * Label für eine Mannschaft
-     * ('child_record_callback' in tl_mannschaft).
-     *
-     * @param $arrRow
-     *
+     * tl_mannschaft.fields.label.label_callback
      * @throws Exception
      *
-     * @return string
      */
-    public static function mannschaftLabelCallback($arrRow): string
+    public static function mannschaftLabelCallback(array $row): string
     {
-        $liga = LigaModel::findById($arrRow['liga']);
+        $liga = LigaModel::findById($row['liga']);
 
         if ('0' === $liga) {
-            return sprintf("%s <span class='tl_red'>Keiner Liga zugeordnet</span>", $arrRow['name']);
+            return sprintf("%s <span class='tl_red'>Keiner Liga zugeordnet</span>", $row['name']);
         }
 
         if (null === $liga) {
             return sprintf("%s <span class='tl_red'>Liga '%d' existiert nicht mehr!</span>",
-                $arrRow['name'],
-                $arrRow['liga']);
+                $row['name'],
+                $row['liga']);
         }
-        $spielort = SpielortModel::findById($arrRow['spielort']);
+        $spielort = SpielortModel::findById($row['spielort']);
         $spieler = Database::getInstance()
             ->prepare('SELECT COUNT(*) AS n FROM tl_spieler WHERE pid=?')
-            ->execute($arrRow['id'])
+            ->execute($row['id'])
         ;
         $anzahlSpieler = '<span class="tl_red">keine Spieler eingetragen</span>';
         $inaktiv = '';
@@ -136,8 +115,9 @@ class DCAHelper
             $anzahlSpieler = sprintf('%d Spieler', $spieler->n);
         }
 
-        return sprintf('<div class="tl_content_left">%s, %s %s %s (%s, %s)</div>',
-            $arrRow['name'],
+        return sprintf('<div class="tl_content_left %s">%s, %s %s %s (%s, %s)</div>',
+            $row['active'] ? '' : 'tl_gray',
+            $row['name'],
             $liga->getRelated('pid')->name,
             $liga->name,
             $liga->getRelated('saison')->name,
@@ -148,7 +128,7 @@ class DCAHelper
 
     /**
      * Alle zur Vefügung stehenden Ligen
-     * ('options_callback' in tl_mannschaft).
+     * tl_mannschaft.fields.liga.options_callback
      *
      * @throws Exception
      */
@@ -172,39 +152,11 @@ class DCAHelper
         return $result;
     }
 
-    /* Helper für tl_begegnung */
-
-    /**
-     * * ('child_record_callback' in tl_begegnung).
-     *
-     * @param $arrRow
-     * @param mixed $row
-     * @param mixed $label
-     *
-     * @return string
-     */
-    /*
-    public static function listBegegnungCallback($arrRow)
-    {
-        $home = MannschaftModel::findById($arrRow['home']);
-        if ($arrRow['away']) {
-            $away = MannschaftModel::findById($arrRow['away']);
-        } else {
-            // kein Eintrag bei away === kein Gegner === "Spielfrei"
-            $away = null;
-        }
-
-        return sprintf("%s %s %s",
-            $home->name,
-            $away ? 'vs' : 'hat',
-            $away ? $away->name : 'Spielfrei'
-        );
-    }
-    */
-
     /**
      * Label für eine Begegnung (Spiel zweier Mansnchaften gegeneinander)
-     * ('label_callback' in tl_begegnung).
+     * tl_begegnung.sorting.child_record_callback
+     * und
+     * tl_begegnung.fields.label.label_callback
      *
      * @throws Exception
      */
@@ -259,7 +211,7 @@ class DCAHelper
 
     /**
      * Einträge für ein Ligaauswahl Dropdown
-     * ('options_callback' in tl_begegnung).
+     * tl_begegnung.fields.pid.options_callback
      *
      * @throws Exception
      */
@@ -281,7 +233,9 @@ class DCAHelper
 
     /**
      * Einträge für ein Mannschaftsauswahl Dropdown -- nur aktive Mannschaften
-     * ('options_callback' in tl_begegnung).
+     * tl_begegnung.fields.home.options_callback
+     * und
+     * tl_begegnung.fields.away.options_callback
      */
     public static function getMannschaftenForSelect(DataContainer $dc): array
     {
@@ -310,7 +264,7 @@ class DCAHelper
 
     /**
      * Einträge für ein Spielerauswahl Dropdown.
-     * ('options_callback' in tl_spieler).
+     * tl_spieler.fields.member_id.options_callback
      *
      * @throws Exception
      */
@@ -381,7 +335,7 @@ class DCAHelper
 
     /**
      * Return HTML Code to display one team member
-     * ('child_record_callback' in tl_spieler).
+     * tl_spieler.list.child_record_callback
      *
      * @param $arrRow
      *
@@ -413,7 +367,7 @@ class DCAHelper
 
     /**
      * Button um das zum Spieler gehörige Mitglied (tl_member) in einem Modal-Window bearbeiten zu können
-     * ('wizard' in tl_spieler).
+     * tl_spieler.fields.member_id.wizard
      */
     public static function editMemberWizard(DataContainer $dc): string
     {
@@ -436,6 +390,7 @@ class DCAHelper
     /**
      * Sicherstellen, daß ein Spieler nur in einer Mannschaft gleichzeitig aktiv ist.
      * Ausnahme: er/sie ist als "ersatzspieler" markiert.
+     * tl_spieler.fields.active.save_callback
      *
      * @throws Exception
      */
@@ -522,11 +477,9 @@ class DCAHelper
         return $value;
     }
 
-    /* Helper für tl_spiel */
-
     /**
      * Spieler der Heimmannschaft
-     * ('options_callback' in tl_spiel).
+     *  tl_spiel.fields.home.options_callback
      */
     public static function getHomeSpielerForSelect(DataContainer $dc): array
     {
@@ -563,8 +516,8 @@ class DCAHelper
 
     /**
      * Spieler der Gastmannschaft
-     * ('options_callback' in tl_spiel).
-     */
+     *  tl_spiel.fields.away.options_callback
+ */
     public static function getAwaySpielerForSelect(DataContainer $dc): array
     {
         $initial = [0 => 'Kein Spieler (ID 0)'];
@@ -600,7 +553,7 @@ class DCAHelper
 
     /**
      * Label für ein Spiel
-     * ('child_record_callback' in tl_spiel).
+     * tl_spiel.list.sorting.child_record_callback
      *
      * @throws Exception
      */
@@ -699,11 +652,9 @@ class DCAHelper
         }
     }
 
-    /* Helper für tl_content */
-
     /**
      * Liste aller definierten Verbände
-     * ('options_callback' in tl_content).
+     * tl_content.fields.verband.options_callback
      */
     public static function getAlleVerbaendeForSelect(DataContainer $dc): array
     {
@@ -723,7 +674,7 @@ class DCAHelper
 
     /**
      * Liste aller definierte Ligen
-     * ('options_callback' in tl_content).
+     * tl_content.fields.liga.options_callback
      *
      * @throws Exception
      */
@@ -751,7 +702,7 @@ class DCAHelper
      * Einträge für ein Mannschaftsauswahl Dropdown. Da hier alle Ligen aller Saisons in
      * Betracht kommen und eine Mannschaft gleichen Namens daher mehrfach auftaucht,
      * hängen wir Liga und Saison an, um die Auswahl eindeutig zu machen.
-     * ('options_callback' in tl_content).
+     * tl_content.fields.mannschaft.options_callback
      *
      * @throws Exception
      */
@@ -795,6 +746,7 @@ class DCAHelper
     /**
      * Einträge für ein Dropdown in dem die Begegnung ausgewählt werden kann, für die
      * ein Spielbericht erstellt werden soll.
+     *  tl_content.fields.begegnung.options_callback
      *
      * @return array
      */
@@ -812,6 +764,10 @@ class DCAHelper
         return $result;
     }
 
+    /**
+     * tl_highlight.fields.spieler_id.options_callback
+     * @throws Exception
+     */
     public function getSpielerForHighlight(?DataContainer $dc): array
     {
         $result = [];
@@ -836,9 +792,9 @@ class DCAHelper
     }
 
     /**
+     * tl_highlight.fields.begegnung_id.options_callback
      * @throws Exception
      *
-     * @return array
      */
     public function getBegegnungenForHighlight(): array
     {
@@ -928,7 +884,7 @@ class DCAHelper
      *
      * @return string
      */
-    public static function makeSpielerName(/*MemberModel|Result*/ $member = null): string
+    public static function makeSpielerName(MemberModel|Result $member = null): string
     {
         return self::makeSpielerNameFromParts($member?->firstname ?? '-', $member?->lastname ?? '-');
     }
