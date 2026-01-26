@@ -124,6 +124,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
+            'search' => true,
             'exclude' => true,
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
             'sql' => "varchar(128) default NULL",
