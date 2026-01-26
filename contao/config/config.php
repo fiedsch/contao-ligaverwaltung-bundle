@@ -60,9 +60,6 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
         'liga_mannschaft' => [
             'tables' => ['tl_mannschaft', 'tl_spieler'],
         ],
-        'liga_begegnung' => [
-            'tables' => ['tl_begegnung', 'tl_spiel'],
-        ],
     ],
 ]);
 
