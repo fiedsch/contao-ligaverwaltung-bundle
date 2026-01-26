@@ -2,11 +2,13 @@
 
 namespace Fiedsch\LigaverwaltungBundle\Widget\Backend;
 
+use Contao\System;
 use Contao\Widget;
 use Contao\StringUtil;
+use Fiedsch\LigaverwaltungBundle\Controller\LigaverwaltungBackendController;
 use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Callback\BegegnungDataEntryForm;
+use Twig\Environment;
 
 class VueWidget extends Widget
 {
@@ -16,7 +18,7 @@ class VueWidget extends Widget
 
     public function generate(): string
     {
-        $form = new BegegnungDataEntryForm();
+        $form = new BegegnungDataEntryForm(System::getContainer()->get('twig'));
         return $form->generate($this->activeRecord->id);
     }
 
@@ -28,12 +30,13 @@ class VueWidget extends Widget
 
     public function validator($varInput)
     {
-        // TODO $this->addError(...); nach Bedarf
-        // TODO Daten in einem save_callback umwandeln und in tl_begegnung.begegnung_data schreiben (+die einzelnen tl_spiel- und tl_highhlight-Records erzeugen/verwalten)
-        // siehe Fiedsch\LigaverwaltungBundle\Callback\SaveModifiedDataCallback
-
         // Save the data to other fields (tl_begegnung.app_data and individual tl_spiel records)
-        $this->saveData(json_decode(StringUtil::decodeEntities($varInput), true));
+        try {
+            $this->saveData(json_decode(StringUtil::decodeEntities($varInput), true));
+        } catch (\Exception) {
+            // TODO $this->addError(...); nach Bedarf
+            $this->addError('TEst-Error');
+        }
 
         // The value is not supposed to be saved as there is no database field ($GLOBALS['TL_DCA']['tl_begegnung']['fields']['vue_app']['sql'] is set to null).
         // To achieve this, $GLOBALS['TL_DCA']['tl_begegnung']['fields']['vue_app']['eval']['doNotSaveEmpty'] is set to true, so returning an empty string prevents saving.
@@ -48,15 +51,12 @@ class VueWidget extends Widget
         // dd($inputData);
 
 
-        // Das folgende wird in DataEntrySaver::handleDataEntryData(...) "mit erledigt"
-        // $begegnung = BegegnungModel::findById($this->activeRecord->id);
-        // $begegnung->setYamlColumnData(['app_data' => $inputData]);
-        // $begegnung->save();
+        // Das folgende wird in
+        /* @see DataEntrySaver::handleDataEntryData(...) */
+        /* @see LigaverwaltungBackendController::begegnungDataSaveAction() */
+        // "mit erledigt"
 
-        // TODO: Die "alte" Logik von handleDataEntryData() -- insbes. der return value -- überarbeiten und dann hier $result geeignet weiterverarbeiten
-        //       um im Validator() ggf. geeignet reagieren zu können (z.B. dort eine Exception zu werfen, die dann im Backend angezeigt wird.
         $result = DataEntrySaver::handleDataEntryData($this->activeRecord->id /* == $inputData['begegnungId']*/, $inputData);
-
     }
 
 }

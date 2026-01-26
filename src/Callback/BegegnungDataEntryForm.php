@@ -14,11 +14,11 @@ use Twig\Environment;
 class BegegnungDataEntryForm
 {
 
-    private Environment $twig;
-    public function __construct()
+    // private Environment $twig;
+    public function __construct(private Environment $twig)
     {
         $container = System::getContainer();
-        $this->twig = $container->get('twig');
+        // $this->twig = $container->get('twig');
     }
 
     public function generate(int $id = null): string
