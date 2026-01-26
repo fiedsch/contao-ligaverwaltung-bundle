@@ -39,3 +39,6 @@ services:
         arguments:
             - '@contao.framework'
         tags: ['controller.service_arguments']
+
+    Fiedsch\LigaverwaltungBundle\EventListener\DataContainer\EditButtonsCallbackListener:
+        tags: ['controller.service_arguments']
