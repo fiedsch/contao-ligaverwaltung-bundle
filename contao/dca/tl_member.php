@@ -20,6 +20,8 @@ use Contao\System;
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
+    'prefetch' => false,
+    'primary' => true,
     'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
         $member = MemberModel::findById($arrRow['id']);
 
