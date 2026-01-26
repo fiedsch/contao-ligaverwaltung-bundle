@@ -78,7 +78,7 @@ class ContentMannschaftsseite extends ContentElement
     {
         $mannschaftModel = MannschaftModel::findById($this->mannschaft);
 
-        $this->addDescriptionToTlHead('Alles zur Mannschaft '.$mannschaModel->name);
+        $this->addDescriptionToTlHead('Alles zur Mannschaft '.$mannschaftModel->name);
 
         // Spielortinfo
         $contentModel = new ContentModel();
