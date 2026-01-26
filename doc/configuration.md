@@ -82,7 +82,7 @@ Datei `contao/config/config.php`
 <?php
 // Aufsteller gibt es beim Steeldart nicht. Menüpunkt entfernen:
 
-unset($GLOBALS['BE_MOD']['liga']['liga.aufsteller']);
+unset($GLOBALS['BE_MOD']['liga']['liga_aufsteller']);
 ```
 
 Datei `contao/dca/tl_spielort.php`

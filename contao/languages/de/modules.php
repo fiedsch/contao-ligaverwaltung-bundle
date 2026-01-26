@@ -16,46 +16,46 @@ $GLOBALS['TL_LANG']['MOD']['liga'] = 'Ligaverwaltung';
 
 /* Backendmodule */
 
-$GLOBALS['TL_LANG']['MOD']['liga.spielort'] = [
+$GLOBALS['TL_LANG']['MOD']['liga_spielort'] = [
     'Spielorte',
     'Verwaltung von Spielorten',
 ];
 
-$GLOBALS['TL_LANG']['MOD']['liga.aufsteller'] = [
+$GLOBALS['TL_LANG']['MOD']['liga_aufsteller'] = [
     'Aufsteller',
     'Verwaltung von Aufstellern',
 ];
 
-$GLOBALS['TL_LANG']['MOD']['liga.saison'] = [
+$GLOBALS['TL_LANG']['MOD']['liga_saison'] = [
     'Saisons',
     'Verwaltung von Saisons',
 ];
 
-$GLOBALS['TL_LANG']['MOD']['liga.verband'] = [
+$GLOBALS['TL_LANG']['MOD']['liga_verband'] = [
     'Verbände/Ligen',
     'Verwaltung von Ligen in Verbänden',
 ];
 
-$GLOBALS['TL_LANG']['MOD']['liga.mannschaft'] = [
+$GLOBALS['TL_LANG']['MOD']['liga_mannschaft'] = [
     'Mannschaften',
     'Verwaltung von Mannschaften',
 ];
-$GLOBALS['TL_LANG']['MOD']['liga.begegnung'] = [
+$GLOBALS['TL_LANG']['MOD']['liga_begegnung'] = [
     'Begegnungen',
     'Verwaltung von Begegnungen zwischen Mannschaften',
 ];
 
-$GLOBALS['TL_LANG']['MOD']['liga.begegnungserfassung'] = [
+$GLOBALS['TL_LANG']['MOD']['liga_begegnungserfassung'] = [
     'Ergebniseingabe',
     'Eingabe von mehreren Spielen einer Begegnung auf ein Mal.',
 ];
 
-$GLOBALS['TL_LANG']['MOD']['liga.highlight'] = [
+$GLOBALS['TL_LANG']['MOD']['liga_highlight'] = [
     'Highlights',
     'Eingabe Highlights.',
 ];
 
-$GLOBALS['TL_LANG']['MOD']['liga.spieler_history'] = [
+$GLOBALS['TL_LANG']['MOD']['liga_spieler_history'] = [
     'Spielerhistorie',
     'Wo hat ein Mitglied wann gespielt?',
 ];

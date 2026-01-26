@@ -45,22 +45,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
     'liga' => [
-        'liga.spielort' => [
+        'liga_spielort' => [
             'tables' => ['tl_spielort'],
         ],
-        'liga.aufsteller' => [
+        'liga_aufsteller' => [
             'tables' => ['tl_aufsteller'],
         ],
-        'liga.saison' => [
+        'liga_saison' => [
             'tables' => ['tl_saison'],
         ],
-        'liga.verband' => [
+        'liga_verband' => [
             'tables' => ['tl_verband', 'tl_liga', 'tl_begegnung', 'tl_spiel'],
         ],
-        'liga.mannschaft' => [
+        'liga_mannschaft' => [
             'tables' => ['tl_mannschaft', 'tl_spieler'],
         ],
-        'liga.begegnung' => [
+        'liga_begegnung' => [
             'tables' => ['tl_begegnung', 'tl_spiel'],
         ],
     ],
