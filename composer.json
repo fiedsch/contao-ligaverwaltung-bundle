@@ -13,7 +13,7 @@
   "require": {
     "php": "^8.3",
     "ext-json": "*",
-    "contao/core-bundle": "^5.6",
+    "contao/core-bundle": "^5.7",
     "eluceo/ical": "^2.11",
     "fiedsch/contao-jsonwidget": "^0.8",
     "symfony/string": "^5.4 || ^6.0 || ^7.0"
