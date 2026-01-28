@@ -45,9 +45,6 @@ class LigenlisteController extends AbstractContentElementController
 
     public function getResponse(Template $template, ContentModel $model, Request $request): Response
     {
-        if ($this->isBackend()) {
-            return new Response(sprintf('%s für Saison(en) mit den IDs %s', __CLASS__, \join(', ', StringUtil::deserialize($model->saison))));
-        }
 
         $this->setData($template, $model);
 
@@ -72,10 +69,9 @@ class LigenlisteController extends AbstractContentElementController
             return;
         }
 
-        $listitems = [];
-
+        $listdata = [];
         foreach ($ligen as $liga) {
-            $listitems[] = sprintf('%s %s',
+            $listitems['liga'] = sprintf('%s %s',
                 $liga->name,
                 $liga->getRelated('saison')->name
             );
@@ -95,9 +91,10 @@ class LigenlisteController extends AbstractContentElementController
                     $temp[] = $mannschaft->name;
                 }
             }
-            $listitems[] = $temp;
+            $listitems['mannschaften'] = $temp;
+            $listdata[] = $listitems;
         }
 
-        $template->listitems = $listitems;
+        $template->listitems = $listdata;
     }
 }
