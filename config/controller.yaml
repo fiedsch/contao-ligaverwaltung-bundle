@@ -10,3 +10,5 @@ services:
         arguments:
             - '@fiedsch_ligaverwaltung.rankinghelper'
 
+    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\LigenlisteController: ~
+
