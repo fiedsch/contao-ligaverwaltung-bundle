@@ -24,16 +24,21 @@ class TemplateHelper
      */
     public static function renderArrayAsList(array $data): string
     {
-        if (!is_array($data)) {
-            return sprintf('<li>%s</li>', $data);
-        }
         $result = '<ul>';
 
         foreach ($data as $item) {
-            $result .= self::renderArrayAsList($item);
+            $result .= self::renderArrayItemAsList($item);
         }
         $result .= '</ul>';
 
         return $result;
+    }
+
+    protected static function renderArrayItemAsList(string|array $data): string
+    {
+        if (!is_array($data)) {
+            return sprintf('<li>%s</li>', $data);
+        }
+        return self::renderArrayAsList($data);
     }
 }
