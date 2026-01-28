@@ -5,9 +5,11 @@
   {% if as_editor_view %}
 
      {% block editor_view %}
-         <pre>
-             RANKING {{ suffix }} {{ subject }}
-         </pre>
+         <div class="tl_gray">
+             <span class="upper">Ranking</span>
+             <br>
+              {{ subject }}
+         </div>
      {% endblock %}
 
   {% else %}
