@@ -12,3 +12,5 @@ services:
 
     Fiedsch\LigaverwaltungBundle\Controller\ContentElement\LigenlisteController: ~
 
+    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\MannschaftslisteController: ~
+
