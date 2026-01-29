@@ -22,10 +22,10 @@ namespace Fiedsch\LigaverwaltungBundle\Module;
 
 use Contao\BackendTemplate;
 use Contao\ContentModel;
+use Contao\Controller;
 use Contao\Input;
 use Contao\Module;
 use Contao\PageModel;
-use Fiedsch\LigaverwaltungBundle\Element\ContentSpielbericht;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Exception;
 use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
@@ -104,7 +104,10 @@ class ModuleSpielberichtReader extends Module
         $contentModel->tstamp = time();
         $contentModel->type = 'spielbericht';
         $contentModel->begegnung = $begegnung->id;
-        $contentElement = new ContentSpielbericht($contentModel);
-        $this->Template->spielbericht = $contentElement->generate();
+        // OLD:
+        // $contentElement = new ContentSpielbericht($contentModel);
+        // $this->Template->spielbericht = $contentElement->generate();
+        // NEW (is this the proper way?)
+        $this->Template->spielbericht = Controller::getContentElement($contentModel);
     }
 }
