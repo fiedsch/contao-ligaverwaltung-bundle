@@ -7,7 +7,7 @@ namespace Fiedsch\LigaverwaltungBundle\Controller\ContentElement;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
-use Contao\Template;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ use function Symfony\Component\String\u;
 class MannschaftslisteController extends AbstractContentElementController
 {
 
-public function getResponse(Template $template, ContentModel $model, Request $request): Response
+    public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
         $this->setData($template, $model);
@@ -32,7 +32,7 @@ public function getResponse(Template $template, ContentModel $model, Request $re
         return $template->getResponse();
     }
 
-    private function setData(Template $template, ContentModel $model): void
+    private function setData(FragmentTemplate $template, ContentModel $model): void
     {
 
         $liga = LigaModel::findById($model->liga);

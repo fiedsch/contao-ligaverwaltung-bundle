@@ -18,7 +18,7 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\Database;
 use Contao\MemberModel;
-use Contao\Template;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Config;
 use Exception;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
@@ -71,7 +71,7 @@ class RankingController extends AbstractContentElementController
      *
      * @throws Exception
      */
-    public function getResponse(Template $template, ContentModel $model, Request $request): Response
+    public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         $this->setData($template, $model);
 
@@ -81,7 +81,7 @@ class RankingController extends AbstractContentElementController
     /**
      * @throws Exception
      */
-    private function setData(Template $template, ContentModel $model): void
+    private function setData(FragmentTemplate $template, ContentModel $model): void
     {
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['ranking'][0])->upper().' ###';
         $liga = LigaModel::findById($model->liga);
@@ -134,7 +134,7 @@ class RankingController extends AbstractContentElementController
      *
      * @throws Exception
      */
-    protected function compileMannschaftenranking(Template $template, ContentModel $model): void
+    protected function compileMannschaftenranking(FragmentTemplate $template, ContentModel $model): void
     {
         $liga = LigaModel::findById($model->liga);
 
@@ -284,7 +284,7 @@ class RankingController extends AbstractContentElementController
      *
      * @throws Exception
      */
-    protected function compileSpielerranking(Template $template, ContentModel $model): void
+    protected function compileSpielerranking(FragmentTemplate $template, ContentModel $model): void
     {
         $sql = "SELECT
                           s.score_home AS legs_home,

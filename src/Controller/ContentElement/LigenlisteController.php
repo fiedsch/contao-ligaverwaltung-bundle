@@ -19,10 +19,10 @@ use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Model\Collection;
 use Contao\PageModel;
 use Contao\StringUtil;
-use Contao\Template;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
@@ -44,7 +44,7 @@ class LigenlisteController extends AbstractContentElementController
     // use TlModeTrait;
 
 
-    public function getResponse(Template $template, ContentModel $model, Request $request): Response
+    public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
         $this->setData($template, $model);
@@ -52,7 +52,7 @@ class LigenlisteController extends AbstractContentElementController
         return $template->getResponse();
     }
 
-    private function setData(Template $template, ContentModel $model): void
+    private function setData(FragmentTemplate $template, ContentModel $model): void
     {
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['ligenliste'][0])->upper().' ###';
 
