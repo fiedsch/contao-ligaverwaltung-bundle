@@ -28,12 +28,12 @@ $GLOBALS['TL_LANG']['CTE']['mannschaftsliste'] = [
 
 $GLOBALS['TL_LANG']['CTE']['ranking'] = [
     'Ranking',
-    'Ranking (Tabelle) der Mannaschaften einer Liga oder der Spieler einer Mannschaft',
+    'Ranking (Tabelle) der Mannschaften einer Liga oder der Spieler einer Mannschaft',
 ];
 
 $GLOBALS['TL_LANG']['CTE']['highlightranking'] = [
     'Ranking von Highlights',
-    'Highlight-Ranking (Tabelle) der Mannaschaften einer Liga oder der Spieler einer Mannschaft',
+    'Highlight-Ranking (Tabelle) der Mannschaften einer Liga oder der Spieler einer Mannschaft',
 ];
 
 $GLOBALS['TL_LANG']['CTE']['spielerliste'] = [
@@ -53,7 +53,7 @@ $GLOBALS['TL_LANG']['CTE']['spielplan'] = [
 
 $GLOBALS['TL_LANG']['CTE']['spielbericht'] = [
     'Spielbericht',
-    'Spielbericht aus den Daten, die im Backend in der Ligaverwaltung erfasst werden',
+    'Spielbericht aus den Daten, die im Backend in der Ligaverwaltung erfasst werden. Wird typischerweise in einem Modul SpielberichtReader und nicht direkt eingesetzt!',
 ];
 
 $GLOBALS['TL_LANG']['CTE']['mannschaftsseite'] = [
