@@ -62,7 +62,7 @@ class RankingController extends AbstractContentElementController
     {
     }
 
-    use TlModeTrait;
+    // use TlModeTrait;
 
     /**
      * changed scope from protected (as in AbstractContentElementController) to public

@@ -40,7 +40,7 @@ class LigenlisteController extends AbstractContentElementController
     // {
     // }
 
-    use TlModeTrait;
+    // use TlModeTrait;
 
 
     public function getResponse(Template $template, ContentModel $model, Request $request): Response
