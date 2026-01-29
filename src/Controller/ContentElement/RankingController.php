@@ -88,14 +88,12 @@ class RankingController extends AbstractContentElementController
 
         // Daten für die Backend-Ansicht
         if (!$liga) {
-            $template->suffix = '';
             $template->subject = sprintf('Liga mit der ID=%d existiert nicht mehr', $model->liga);
             return;
         }
         $template->rankingtype = $model->rankingtype;
         switch ($model->rankingtype) {
             case 1:
-                $template->suffix = 'Mannschaften';
                 $template->subject = sprintf('%s %s %s',
                     $liga->getRelated('pid')->name,
                     $liga->name,
@@ -104,7 +102,6 @@ class RankingController extends AbstractContentElementController
                 $this->compileMannschaftenranking($template, $model);
                 break;
             case 2:
-                $template->suffix = 'Spieler';
                 $mannschaft = MannschaftModel::findById($model->mannschaft);
                 $template->subject = sprintf('%s %s %s',
                     '(Mannschaft: ' . ($mannschaft?->name ?: 'alle') . ')',
@@ -114,7 +111,6 @@ class RankingController extends AbstractContentElementController
                 $this->compileSpielerranking($template, $model);
                 break;
             default:
-                $template->suffix = '';
                 $template->subject = '';
         }
 

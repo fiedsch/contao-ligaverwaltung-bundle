@@ -25,7 +25,6 @@ use Contao\PageModel;
 use Contao\StringUtil;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
@@ -37,13 +36,6 @@ use function Symfony\Component\String\u;
 )]
 class LigenlisteController extends AbstractContentElementController
 {
-    // public function __construct()
-    // {
-    // }
-
-    // use TlModeTrait;
-
-
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
