@@ -1,0 +1,68 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <div class="tl_gray">
+             <span class="upper">{{ wildcard }}</span>
+             <br>
+             {{ subject }}
+         </div>
+      {% endblock %}
+
+  {% else %}
+
+      {% set placeholderImage = 'files/assets/site/images/Darts_Logo.svg' %}
+      {% set avatarWidth = '100px' %}
+
+      {% if listitems %}
+          <div class="table-responsive">
+              <table class="table table-hover table-condensed">
+                  <tbody>
+                  <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Spieler&shy;pass</th>
+                      {% if showdetails %}
+                          <th>Kontakt</th>
+                          <th><!-- Bild --></th>
+                      {% endif %}
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {%  for listitem in listitems %}
+                      <tr>
+                          <td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.firstname }} {{ listitem.member.lastname }}{% endif %}</td>
+                          <td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.passnummer }}{% endif %}</td>
+                          <td>{{ listitem.meta|raw }}</td>
+                          <td>
+                              {% if listitem.avatar and not listitem.member.anonymize %}
+                                  <figure class="image_container float_above" style="margin-right:1em;" itemscope="" itemtype="https://schema.org/ImageObject" itemprop="associatedMedia">
+                                      <a href="{{ listitem.avatar }}" data-lightbox="lb1" itemprop="contentUrl" class="cboxElement">
+                                          <img src="{{ listitem.avatar }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="" itemprop="image">
+                                      </a>
+                                  </figure>
+                              {% else %}
+                                  {# kein Bild vorhanden odder anonymisieren! #}
+                                  <img src="{{ placeholderImage }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="... Name ... TODO" itemprop="image">
+                              {% endif %}
+                          </td>
+                      </tr>
+                  {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      {% endif %}
+
+      <style>
+          .my-anywidth {
+              /* unset max-width of Bootstrap's .thumbnail */
+              max-width: initial !important;
+          }
+      </style>
+
+  {% endif %}
+
+{% endblock %}

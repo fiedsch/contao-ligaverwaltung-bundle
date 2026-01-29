@@ -16,3 +16,5 @@ services:
 
     Fiedsch\LigaverwaltungBundle\Controller\ContentElement\SpielberichtController: ~
 
+    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\SpielerlisteController: ~
+
