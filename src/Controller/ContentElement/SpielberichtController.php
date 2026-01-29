@@ -5,92 +5,67 @@ declare(strict_types=1);
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2025 Andreas Fieger
+ * (c) 2016-2026 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
  */
 
-/**
- * Content element "Spielbericht".
- *
- * @author Andreas Fieger <https://github.com/fiedsch>
- */
 
-namespace Fiedsch\LigaverwaltungBundle\Element;
+namespace Fiedsch\LigaverwaltungBundle\Controller\ContentElement;
 
-use Contao\BackendTemplate;
-use Contao\ContentElement;
+use Contao\ContentModel;
+use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\MemberModel;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
 use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
 use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
-use Exception;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
 
-/**
- * @property int $begegnung
- */
-class ContentSpielbericht extends ContentElement
+#[AsContentElement(
+    type: 'spielbericht',
+    category: 'ligaverwaltung',
+    template: 'content_element/spielbericht'
+)]
+class SpielberichtController extends AbstractContentElementController
 {
-    use TlModeTrait;
-    /**
-     * Template.
-     *
-     * @var string
-     */
-    protected $strTemplate = 'ce_spielbericht';
-
-    /**
-     * @throws Exception
-     *
-     * @return string
-     */
-    public function generate(): string
+    public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        if ($this->isBackend()) {
-            $objTemplate = new BackendTemplate('be_wildcard');
-            $objTemplate->title = $this->headline;
-            $begegnunglabel = BegegnungModel::findById($this->begegnung) ? BegegnungModel::findById($this->begegnung)->getLabel('full') : 'Begegnung nicht gefunden!';
-            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielbericht'][0])->upper()." $begegnunglabel ###";
-            // $objTemplate->id = $this->id;
-            // $objTemplate->link = 'the text that will be linked with href';
-            // $objTemplate->href = 'contao/main.php?do=article&amp;table=tl_content&amp;act=edit&amp;id=' . $this->id;
+        $this->setData($template, $model);
 
-            return $objTemplate->parse();
-        }
-
-        return parent::generate();
+        return $template->getResponse();
     }
 
-    /**
-     * Generate the content element.
-     *
-     * @throws Exception
-     */
-    public function compile(): void
+    private function setData(FragmentTemplate $template, ContentModel $model): void
     {
-        $begegnung = BegegnungModel::findById($this->begegnung);
+        $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielbericht'][0])->upper().' ###';
 
+        $begegnung = BegegnungModel::findById($model->begegnung);
         if (!$begegnung) {
+            $template->subject = sprintf('Begegnung mit der ID %d existiert nicht mehr', $model->begegnung);
             return;
+        } else {
+            $template->subject = $begegnung->getLabel();
         }
 
-        $this->Template->begegnunglabel = $begegnung->getLabel('full');
+        $template->begegnunglabel = $begegnung->getLabel();
+        $template->home = $begegnung->getRelated('home')->name;
+        $template->away = $begegnung->getRelated('away')->name;
 
-        $this->Template->home = $begegnung->getRelated('home')->name;
-        $this->Template->away = $begegnung->getRelated('away')->name;
+        $template->spielergebnisse = $this->compileSpielergebnsisse($begegnung);
 
-        $this->Template->spielergebnisse = $this->compileSpielergebnsisse($begegnung);
+        $template->highlights = $this->compileHighlights($begegnung);
 
-        $this->Template->highlights = $this->compileHighlights($begegnung);
     }
 
-    /**
+        /**
      * @throws Exception
      */
     protected function compileSpielergebnsisse(BegegnungModel $begegnung): array
@@ -165,9 +140,6 @@ class ContentSpielbericht extends ContentElement
         return $spielergebnisse;
     }
 
-    /**
-     * @throws Exception
-     */
     protected function compileHighlights(BegegnungModel $begegnung): array
     {
         if (!$begegnung->published) {
@@ -208,4 +180,5 @@ class ContentSpielbericht extends ContentElement
 
         return $result;
     }
+
 }
