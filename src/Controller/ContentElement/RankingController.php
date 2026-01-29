@@ -31,6 +31,7 @@ use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function Symfony\Component\String\u;
 
 /**
  * Content element "Liste aller Spieler einer Mannschaft".
@@ -82,12 +83,13 @@ class RankingController extends AbstractContentElementController
      */
     private function setData(Template $template, ContentModel $model): void
     {
+        $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['ranking'][0])->upper().' ###';
         $liga = LigaModel::findById($model->liga);
 
         // Daten für die Backend-Ansicht
         if (!$liga) {
             $template->suffix = '';
-            $template->subject = sprintf('Liga mit der ID=%d (ex. nicht mehr', $model->liga);
+            $template->subject = sprintf('Liga mit der ID=%d existiert nicht mehr', $model->liga);
             return;
         }
         $template->rankingtype = $model->rankingtype;

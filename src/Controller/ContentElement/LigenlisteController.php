@@ -28,6 +28,7 @@ use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
 use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function Symfony\Component\String\u;
 
 #[AsContentElement(
     type: 'ligenliste',
@@ -53,6 +54,8 @@ class LigenlisteController extends AbstractContentElementController
 
     private function setData(Template $template, ContentModel $model): void
     {
+        $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['ligenliste'][0])->upper().' ###';
+
         if (!$model->verband) {
             return;
         }
