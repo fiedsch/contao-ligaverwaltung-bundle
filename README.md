@@ -6,8 +6,7 @@
   Spieler gegeneinander antreten und die Summe der Einzelspielergebnisse das Gesamtergebnis
   ergibt. Anwendungsfall und Motivation für die Entwicklung: Verwaltung einer Dartliga
   (siehe Beispiele).
-* Contao 4 Version der nicht mehr weitererentwickelten Contao 3 Erweiterung
-https://github.com/fiedsch/contao-ligaverwaltung
+* **Contao 5 Version** der Ligaverwaltung. Die Version für Contao 4.x befindet sich im [Branch `4.0`](https://github.com/fiedsch/contao-ligaverwaltung-bundle/tree/4.0)!
 
 ## Dokumentation
 
