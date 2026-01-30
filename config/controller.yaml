@@ -6,6 +6,10 @@ services:
     #         calls:
     #             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
 
+    Fiedsch\LigaverwaltungBundle\Controller\Backend\PlayerHistoryController:
+        arguments:
+            - '@twig'
+
     Fiedsch\LigaverwaltungBundle\Controller\ContentElement\RankingController:
         arguments:
             - '@fiedsch_ligaverwaltung.rankinghelper'

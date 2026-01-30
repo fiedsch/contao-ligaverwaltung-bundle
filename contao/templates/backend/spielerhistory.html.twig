@@ -1,0 +1,30 @@
+<div class="spielerhistory">
+
+  <table class="tl_listing history">
+    <thead>
+        <tr>
+          <th>Saison</th>
+          <th>Mannschaft</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for record in history %}
+      <tr>
+        <td>{{ record['saison'] }}</td>
+        <td>{{ record['mannschaft'] }}</td>
+      </tr>
+    {% endfor %}
+    <tbody>
+  </table>
+
+</div>
+
+<style>
+table.history th,
+table.history td
+{
+  padding:.5em;
+  text-align: left;
+  border-bottom: 1px solid #666;
+}
+</style>
