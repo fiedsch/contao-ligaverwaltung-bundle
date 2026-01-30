@@ -24,8 +24,8 @@ use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
 use Contao\System;
+use Contao\Controller;
 use Exception;
-//use Fiedsch\LigaverwaltungBundle\Controller\ContentElement\ContentRanking;
 use Fiedsch\LigaverwaltungBundle\Controller\ContentElement\RankingController;
 use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
 use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
@@ -102,8 +102,7 @@ class ContentMannschaftsseite extends ContentElement
             'value' => 'Spielerliste '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $contentElement = new ContentSpielerliste($contentModel);
-        $this->Template->spielerliste = $contentElement->generate();
+        $this->Template->spielbericht = Controller::getContentElement($contentModel);
 
         // Spielplan
         $contentModel = new ContentModel();
@@ -129,9 +128,7 @@ class ContentMannschaftsseite extends ContentElement
             'value' => 'Einzelspieler Ranking '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $contentElement = new RankingController(System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper'));
-
-        $this->Template->ranking = $contentElement->getResponse($this->Template, $contentModel, $this->requestStack->getCurrentRequest())->getContent();
+        $this->Template->ranking = Controller::getContentElement($contentModel);
 
         // Highlights
         $contentModel = new ContentModel();
