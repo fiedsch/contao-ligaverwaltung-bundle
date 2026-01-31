@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Element;
+namespace Fiedsch\Ligaverwaltung\Element;
 
 use Contao\BackendTemplate;
 use Contao\Config;
@@ -21,11 +21,11 @@ use Contao\Database;
 use Contao\Date;
 use Contao\System;
 use Exception;
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
-use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
+use Fiedsch\Ligaverwaltung\Model\HighlightModel;
+use Fiedsch\Ligaverwaltung\Model\LigaModel;
+use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use function Symfony\Component\String\u;

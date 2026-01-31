@@ -18,10 +18,10 @@ declare(strict_types=1);
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Element;
+namespace Fiedsch\Ligaverwaltung\Element;
 
 use Contao\ContentElement;
-use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 
 /**
  * @property int $spielort

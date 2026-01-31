@@ -17,8 +17,8 @@ use Contao\Config;
 use Contao\Input;
 use Contao\System;
 use Contao\DataContainer;
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
-use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
+use Fiedsch\Ligaverwaltung\Model\SpielModel;
 
 System::loadLanguageFile('default');
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fiedsch\LigaverwaltungBundle\EventListener\DataContainer;
+namespace Fiedsch\Ligaverwaltung\EventListener\DataContainer;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;

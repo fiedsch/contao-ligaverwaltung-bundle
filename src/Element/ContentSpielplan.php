@@ -18,7 +18,7 @@ declare(strict_types=1);
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Element;
+namespace Fiedsch\Ligaverwaltung\Element;
 
 use Contao\BackendTemplate;
 use Contao\Config;
@@ -27,12 +27,12 @@ use Contao\Controller;
 use Contao\Date;
 use Contao\PageModel;
 use Contao\System;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
+use Fiedsch\Ligaverwaltung\Model\LigaModel;
+use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Exception;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 class ContentSpielplan extends ContentElement

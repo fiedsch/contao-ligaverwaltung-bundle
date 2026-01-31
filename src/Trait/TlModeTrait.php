@@ -1,6 +1,6 @@
 <?php
 
-namespace Fiedsch\LigaverwaltungBundle\Trait;
+namespace Fiedsch\Ligaverwaltung\Trait;
 
 use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\System;

@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle;
+namespace Fiedsch\Ligaverwaltung;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use function dirname;

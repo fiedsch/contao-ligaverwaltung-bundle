@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Controller\ContentElement;
+namespace Fiedsch\Ligaverwaltung\Controller\ContentElement;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
@@ -22,13 +22,13 @@ use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Config;
 use Exception;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
-use Fiedsch\LigaverwaltungBundle\Entity\Begegnung;
-use Fiedsch\LigaverwaltungBundle\Entity\Spiel;
-use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
+use Fiedsch\Ligaverwaltung\Entity\Begegnung;
+use Fiedsch\Ligaverwaltung\Entity\Spiel;
+use Fiedsch\Ligaverwaltung\Helper\RankingHelperInterface;
+use Fiedsch\Ligaverwaltung\Model\LigaModel;
+use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Model\SpielerModel;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;

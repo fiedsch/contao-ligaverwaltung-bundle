@@ -12,11 +12,11 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Entity;
+namespace Fiedsch\Ligaverwaltung\Entity;
 
 use Contao\Config;
 use Contao\System;
-use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
+use Fiedsch\Ligaverwaltung\Helper\RankingHelperInterface;
 
 /**
  * Spiel zweier Spieler gegeneinander (Teil einer Begegnung zweier Mannschaften).

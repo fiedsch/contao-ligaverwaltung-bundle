@@ -12,15 +12,15 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Controller;
+namespace Fiedsch\Ligaverwaltung\Controller;
 
 use Contao\Controller;
 use Contao\CoreBundle\Framework\ContaoFramework;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
+use Fiedsch\Ligaverwaltung\Model\LigaModel;
+use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Model\SaisonModel;
+use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 

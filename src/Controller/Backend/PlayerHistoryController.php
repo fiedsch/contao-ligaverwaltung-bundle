@@ -12,24 +12,21 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Controller\Backend;
+namespace Fiedsch\Ligaverwaltung\Controller\Backend;
 
 use Exception;
-use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\Ligaverwaltung\Model\SpielerModel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
+#[AsController]
 #[Route('%contao.backend.route_prefix%/ligaverwaltung/player/history/{memberid}', name: 'player_history', requirements: [ "memberid" => "[0-9]+"], defaults: ['_scope' => 'backend','token_check' => true])]
-//#[AsController]
 class PlayerHistoryController
 {
-    //private Environment $twig;
     public function __construct(private Environment $twig)
     {
-        // $this->twig = \Contao\System::getContainer()->get('twig');
     }
 
     /**

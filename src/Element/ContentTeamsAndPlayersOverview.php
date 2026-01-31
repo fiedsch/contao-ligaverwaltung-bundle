@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Element;
+namespace Fiedsch\Ligaverwaltung\Element;
 
 use Contao\BackendTemplate;
 use Contao\ContentElement;
@@ -20,7 +20,7 @@ use Contao\StringUtil;
 use Contao\System;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 class ContentTeamsAndPlayersOverview extends ContentElement

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fiedsch\LigaverwaltungBundle\Migration;
+namespace Fiedsch\Ligaverwaltung\Migration;
 
 use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;

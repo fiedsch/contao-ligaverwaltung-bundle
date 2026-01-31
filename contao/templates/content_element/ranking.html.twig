@@ -14,7 +14,7 @@
 
   {% else %}
 
-      {% if rankingtype == constant('Fiedsch\\LigaverwaltungBundle\\Controller\\ContentElement\\RankingController::RANKING_TYPE_S_MANNSCHAFTEN') %}
+      {% if rankingtype == constant('Fiedsch\\Ligaverwaltung\\Controller\\ContentElement\\RankingController::RANKING_TYPE_S_MANNSCHAFTEN') %}
 
           {% if (listitems)  %}
               <div class="table-responsive">
@@ -24,7 +24,7 @@
                           <th class="rank">Platz</th>
                           <th class="team">Mannschaft</th>
                           <th class="team-matches">Spiele</th>
-                          {% if ranking_model == constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                          {% if ranking_model == constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
                               <th class="points">Punkte</th>
                           {% endif %}
                           <th class="won">g</th>
@@ -32,7 +32,7 @@
                           <th class="lost">v</th>
                           <th class="legs">Legs</th>
                           <th class="player-matches">Spiele</th>
-                          {%  if ranking_model != constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                          {%  if ranking_model != constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
                               <th class="points">Punkte</th>
                           {% endif %}
                       </tr>
@@ -43,7 +43,7 @@
                               <td class="rank">{{ listitem['rang'] }}</td>
                               <td class="team">{{ listitem['name'] | raw }}</td>
                               <td class="team-matches">{{ listitem['begegnungen'] }}</td>
-                              {%  if ranking_model == constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                              {%  if ranking_model == constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
                                   <td class="points">{{ listitem['punkte_self'] }}</td>
                               {% endif %}
                               <td class="won">{{ listitem['gewonnen'] }}</td>
@@ -51,7 +51,7 @@
                               <td class="lost">{{ listitem['verloren'] }}</td>
                               <td class="legs">{{ listitem['legs_self']  }}:{{ listitem['legs_other']  }}</td>
                               <td class="player-matches">{{ listitem['spiele_self']  }}:{{ listitem['spiele_other']  }}</td>
-                              {% if ranking_model != constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                              {% if ranking_model != constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
                                   <td class="points">{{ listitem['punkte_self']  }}:{{ listitem['punkte_other']  }}</td>
                               {% endif %}
                           </tr>
@@ -64,7 +64,7 @@
           {%  endif %}
       {%  endif %}
 
-      {% if rankingtype == constant('Fiedsch\\LigaverwaltungBundle\\Controller\\ContentElement\\RankingController::RANKING_TYPE_S_SPIELER') %}
+      {% if rankingtype == constant('Fiedsch\\Ligaverwaltung\\Controller\\ContentElement\\RankingController::RANKING_TYPE_S_SPIELER') %}
 
           {% if listitems %}
               <div class="table-responsive">
@@ -78,7 +78,7 @@
                           {% endif %}
                           <th>Legs</th>
                           <th>Spiele</th>
-                          {% if ranking_model != constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                          {% if ranking_model != constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
                               <th>Punkte</th>
                           {% endif %}
                       </tr>
@@ -93,7 +93,7 @@
                               {% endif %}
                               <td>{{ listitem['legs_self']  }} : {{ listitem['legs_other']  }}</td>
                               <td>{{ listitem['spiele_self']  }} : {{ listitem['spiele_other']  }}</td>
-                              {% if ranking_model != constant('Fiedsch\\LigaverwaltungBundle\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY')  %}
+                              {% if ranking_model != constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY')  %}
                                   <td>{{ listitem['punkte_self']  }}</td>
                               {% endif %}
                           </tr>

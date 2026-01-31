@@ -18,17 +18,17 @@ declare(strict_types=1);
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Module;
+namespace Fiedsch\Ligaverwaltung\Module;
 
 use Contao\BackendTemplate;
 use Contao\ContentModel;
 use Contao\Input;
 use Contao\Module;
 use Contao\PageModel;
-use Fiedsch\LigaverwaltungBundle\Element\ContentMannschaftsseite;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Element\ContentMannschaftsseite;
+use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Exception;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 class ModuleMannschaftsseitenReader extends Module

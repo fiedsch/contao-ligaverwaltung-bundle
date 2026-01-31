@@ -12,15 +12,15 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Helper;
+namespace Fiedsch\Ligaverwaltung\Helper;
 
 use Contao\Database;
 use Exception;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
+use Fiedsch\Ligaverwaltung\Model\HighlightModel;
+use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Model\SpielerModel;
+use Fiedsch\Ligaverwaltung\Model\SpielModel;
 use RuntimeException;
 use function count;
 use function is_array;

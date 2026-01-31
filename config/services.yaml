@@ -1,61 +1,66 @@
 services:
     _defaults:
         autoconfigure: true
-        # autowire: true
+        autowire: true
+
+#    resource: ../src/Controller
+#    #exclude: ../src/{Config,ContaoManager,DependencyInjection,Exception,Model,FormField,ContaoEventRegistrationBundle.php,NotificationTypes.php}
+
 
     fiedsch_ligaverwaltung.helper.ranking:
-        class: Fiedsch\LigaverwaltungBundle\Helper\RankingHelper
+        class: Fiedsch\Ligaverwaltung\Helper\RankingHelper
         public: true
 
     fiedsch_ligaverwaltung.migration.haspaidmigration:
-        class: Fiedsch\LigaverwaltungBundle\Migration\HasPaidMigration
+        class: Fiedsch\Ligaverwaltung\Migration\HasPaidMigration
         arguments:
             - '@database_connection'
         tags:
             - { name: contao.migration, priority: 0 }
 
     fiedsch_ligaverwaltung.migration.patchsaisonmigration:
-        class: Fiedsch\LigaverwaltungBundle\Migration\PatchSaisonMigration
+        class: Fiedsch\Ligaverwaltung\Migration\PatchSaisonMigration
         arguments:
             - '@database_connection'
         tags:
             - { name: contao.migration, priority: 0 }
 
-    fiedsch_ligaverwaltung.controller.backend:
-        class: Fiedsch\LigaverwaltungBundle\Controller\LigaverwaltungBackendController
-        tags: ['controller.service_arguments']
-        calls:
-            - [ setContainer, [ '@service_container' ] ]
+#    fiedsch_ligaverwaltung.controller.backend:
+#        class: Fiedsch\Ligaverwaltung\Controller\LigaverwaltungBackendController
+#        tags: ['controller.service_arguments']
+#        calls:
+#            - [ setContainer, [ '@service_container' ] ]
 
     fiedsch_ligaverwaltung.controller.ical:
-        class: Fiedsch\LigaverwaltungBundle\Controller\IcalController
+        class: Fiedsch\Ligaverwaltung\Controller\IcalController
         arguments:
             - '@contao.framework'
         tags: ['controller.service_arguments']
 
     fiedsch_ligaverwaltung.controller.json:
-        class: Fiedsch\LigaverwaltungBundle\Controller\JsonController
+        public: true
+        class: Fiedsch\Ligaverwaltung\Controller\JsonController
         arguments:
             - '@contao.framework'
         tags: ['controller.service_arguments']
 
     fiedsch_ligaverwaltung.listener.buttons_callback:
-        class: Fiedsch\LigaverwaltungBundle\EventListener\DataContainer\EditButtonsCallbackListener
+        class: Fiedsch\Ligaverwaltung\EventListener\DataContainer\EditButtonsCallbackListener
         tags: ['controller.service_arguments']
 
     fiedsch_ligaverwaltung.controller.player_history:
-        class: Fiedsch\LigaverwaltungBundle\Controller\Backend\PlayerHistoryController
+        class: Fiedsch\Ligaverwaltung\Controller\Backend\PlayerHistoryController
         public: true
         arguments:
             - '@twig'
         tags: ['controller.service_arguments']
 
     fiedsch_ligaverwaltung.controller.content.ranking:
-        class: Fiedsch\LigaverwaltungBundle\Controller\ContentElement\RankingController
+        class: Fiedsch\Ligaverwaltung\Controller\ContentElement\RankingController
         arguments:
             - '@fiedsch_ligaverwaltung.helper.ranking'
 
-    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\LigenlisteController: ~
-    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\MannschaftslisteController: ~
-    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\SpielberichtController: ~
-    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\SpielerlisteController: ~
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\LigenlisteController: ~
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftslisteController: ~
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielberichtController: ~
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielerlisteController: ~

@@ -12,13 +12,13 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Model;
+namespace Fiedsch\Ligaverwaltung\Model;
 
 use Contao\MemberModel;
 use Contao\Model;
 use Contao\Model\Collection;
 use Contao\StringUtil;
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Exception;
 
 /**

@@ -14,23 +14,26 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\ContaoManager;
+namespace Fiedsch\Ligaverwaltung\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
-use Fiedsch\LigaverwaltungBundle\FiedschLigaverwaltungBundle;
+use Fiedsch\Ligaverwaltung\FiedschLigaverwaltungBundle;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Routing\RouteCollection;
 
 class Plugin implements BundlePluginInterface, RoutingPluginInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
-    public function getBundles(ParserInterface $parser): array
+    public function getBundles(ParserInterface $parser)
     {
         return [
             BundleConfig::create(FiedschLigaverwaltungBundle::class)
@@ -40,6 +43,8 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return RouteCollection
      */
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
     {

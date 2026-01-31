@@ -18,13 +18,13 @@ declare(strict_types=1);
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Element;
+namespace Fiedsch\Ligaverwaltung\Element;
 
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\StringUtil;
 use Contao\System;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use function Symfony\Component\String\u;
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Fiedsch\LigaverwaltungBundle\Widget\Backend;
+namespace Fiedsch\Ligaverwaltung\Widget\Backend;
 
 use Contao\System;
 use Contao\Widget;
 use Contao\StringUtil;
-use Fiedsch\LigaverwaltungBundle\Controller\LigaverwaltungBackendController;
-use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
-use Fiedsch\LigaverwaltungBundle\Callback\BegegnungDataEntryForm;
+use Fiedsch\Ligaverwaltung\Controller\LigaverwaltungBackendController;
+use Fiedsch\Ligaverwaltung\Helper\DataEntrySaver;
+use Fiedsch\Ligaverwaltung\Callback\BegegnungDataEntryForm;
 use Twig\Environment;
 
 class VueWidget extends Widget

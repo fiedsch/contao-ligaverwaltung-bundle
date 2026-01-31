@@ -12,8 +12,8 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
+use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Contao\DataContainer;
 use Contao\DC_Table;
 use Contao\System;

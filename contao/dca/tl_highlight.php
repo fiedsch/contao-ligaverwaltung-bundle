@@ -12,10 +12,10 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
+use Fiedsch\Ligaverwaltung\Model\HighlightModel;
+use Fiedsch\Ligaverwaltung\Model\SpielerModel;
 use Contao\DataContainer;
 use Contao\DC_Table;
 

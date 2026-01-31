@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Helper;
+namespace Fiedsch\Ligaverwaltung\Helper;
 
 use Contao\StringUtil;
 

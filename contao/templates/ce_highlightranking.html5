@@ -1,6 +1,6 @@
 <?php
 
-use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
+use Fiedsch\Ligaverwaltung\Model\HighlightModel;
 
 $this->extend('block_searchable'); ?>
 

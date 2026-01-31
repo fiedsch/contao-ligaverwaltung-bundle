@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\DependencyInjection;
+namespace Fiedsch\Ligaverwaltung\DependencyInjection;
 
 use Exception;
 use Symfony\Component\Config\FileLocator;

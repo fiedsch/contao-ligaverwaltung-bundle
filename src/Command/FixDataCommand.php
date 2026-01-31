@@ -12,14 +12,14 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Command;
+namespace Fiedsch\Ligaverwaltung\Command;
 
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
-use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
-use Fiedsch\LigaverwaltungBundle\Model\SaisonModel;
+use Fiedsch\Ligaverwaltung\Helper\DataEntrySaver;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
+use Fiedsch\Ligaverwaltung\Model\LigaModel;
+use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

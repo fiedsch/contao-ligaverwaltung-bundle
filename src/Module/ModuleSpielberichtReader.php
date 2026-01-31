@@ -18,7 +18,7 @@ declare(strict_types=1);
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Module;
+namespace Fiedsch\Ligaverwaltung\Module;
 
 use Contao\BackendTemplate;
 use Contao\ContentModel;
@@ -26,9 +26,9 @@ use Contao\Controller;
 use Contao\Input;
 use Contao\Module;
 use Contao\PageModel;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Exception;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 class ModuleSpielberichtReader extends Module

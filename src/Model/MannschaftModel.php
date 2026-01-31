@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Model;
+namespace Fiedsch\Ligaverwaltung\Model;
 
 use Contao\Config;
 use Contao\Controller;

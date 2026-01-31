@@ -18,16 +18,16 @@ declare(strict_types=1);
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Module;
+namespace Fiedsch\Ligaverwaltung\Module;
 
 use Contao\BackendTemplate;
 use Contao\ContentModel;
 use Contao\Input;
 use Contao\Module;
 use Contao\PageModel;
-use Fiedsch\LigaverwaltungBundle\Element\ContentSpielortseite;
-use Fiedsch\LigaverwaltungBundle\Model\SpielortModel;
-use Fiedsch\LigaverwaltungBundle\Trait\TlModeTrait;
+use Fiedsch\Ligaverwaltung\Element\ContentSpielortseite;
+use Fiedsch\Ligaverwaltung\Model\SpielortModel;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
 
 class ModuleSpielortseitenReader extends Module

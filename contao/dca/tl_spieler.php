@@ -16,7 +16,7 @@ use Contao\DataContainer;
 use Contao\FilesModel;
 use Contao\MemberModel;
 use Contao\DC_Table;
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Contao\System;
 
 System::loadLanguageFile('default');

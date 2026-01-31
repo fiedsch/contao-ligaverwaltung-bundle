@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 
 
-namespace Fiedsch\LigaverwaltungBundle\Controller\ContentElement;
+namespace Fiedsch\Ligaverwaltung\Controller\ContentElement;
 
 use Contao\ContentModel;
 use Contao\Controller;
@@ -23,8 +23,8 @@ use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Model\Collection;
 use Contao\PageModel;
 use Contao\StringUtil;
-use Fiedsch\LigaverwaltungBundle\Model\LigaModel;
-use Fiedsch\LigaverwaltungBundle\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Model\LigaModel;
+use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;

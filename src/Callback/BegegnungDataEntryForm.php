@@ -1,13 +1,13 @@
 <?php
 
-namespace Fiedsch\LigaverwaltungBundle\Callback;
+namespace Fiedsch\Ligaverwaltung\Callback;
 
 use Contao\CoreBundle\Exception\RedirectResponseException;
 use Contao\Input;
 use Contao\System;
-use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
-use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\Ligaverwaltung\Helper\DataEntrySaver;
+use Fiedsch\Ligaverwaltung\Helper\Spielplan;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Symfony\Component\Yaml\Yaml;
 use Twig\Environment;
 

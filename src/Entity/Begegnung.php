@@ -12,10 +12,10 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Entity;
+namespace Fiedsch\Ligaverwaltung\Entity;
 
 use Contao\System;
-use Fiedsch\LigaverwaltungBundle\Helper\RankingHelperInterface;
+use Fiedsch\Ligaverwaltung\Helper\RankingHelperInterface;
 use function count;
 
 /**

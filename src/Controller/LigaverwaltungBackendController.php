@@ -12,15 +12,15 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\LigaverwaltungBundle\Controller;
+namespace Fiedsch\Ligaverwaltung\Controller;
 
 use Contao\CoreBundle\Controller\AbstractBackendController;
 use Contao\CoreBundle\Exception\RedirectResponseException;
 use Contao\System;
 use Exception;
-use Fiedsch\LigaverwaltungBundle\Helper\DataEntrySaver;
-use Fiedsch\LigaverwaltungBundle\Helper\Spielplan;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
+use Fiedsch\Ligaverwaltung\Helper\DataEntrySaver;
+use Fiedsch\Ligaverwaltung\Helper\Spielplan;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

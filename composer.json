@@ -20,13 +20,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Fiedsch\\LigaverwaltungBundle\\": "src/"
+      "Fiedsch\\Ligaverwaltung\\": "src/"
     }
   },
   "extra": {
-    "contao-manager-plugin": "Fiedsch\\LigaverwaltungBundle\\ContaoManager\\Plugin",
+    "contao-manager-plugin": "Fiedsch\\Ligaverwaltung\\ContaoManager\\Plugin",
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "require-dev": {

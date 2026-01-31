@@ -13,18 +13,18 @@ declare(strict_types=1);
  */
 
 
-namespace Fiedsch\LigaverwaltungBundle\Controller\ContentElement;
+namespace Fiedsch\Ligaverwaltung\Controller\ContentElement;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\MemberModel;
 use Contao\CoreBundle\Twig\FragmentTemplate;
-use Fiedsch\LigaverwaltungBundle\Helper\DCAHelper;
-use Fiedsch\LigaverwaltungBundle\Model\BegegnungModel;
-use Fiedsch\LigaverwaltungBundle\Model\HighlightModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
-use Fiedsch\LigaverwaltungBundle\Model\SpielModel;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
+use Fiedsch\Ligaverwaltung\Model\HighlightModel;
+use Fiedsch\Ligaverwaltung\Model\SpielerModel;
+use Fiedsch\Ligaverwaltung\Model\SpielModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
