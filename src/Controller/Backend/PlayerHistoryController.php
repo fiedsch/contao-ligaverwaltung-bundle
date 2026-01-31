@@ -22,18 +22,24 @@ use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
 
 #[AsController]
-#[Route('%contao.backend.route_prefix%/ligaverwaltung/player/history/{memberid}', name: 'player_history', requirements: [ "memberid" => "[0-9]+"], defaults: ['_scope' => 'backend','token_check' => true])]
 class PlayerHistoryController
 {
     public function __construct(private Environment $twig)
     {
     }
+    // The following however works: (with no other changes)
+    // private Environment $twig;
+    // public function __construct()
+    // {
+    //     $this->twig = \Contao\System::getContainer()->get('twig');
+    // }
 
     /**
      * @throws Exception
      *
      * @return Response
      */
+    #[Route('%contao.backend.route_prefix%/ligaverwaltung/player/history/{memberid}', name: 'player_history', requirements: [ "memberid" => "[0-9]+"], defaults: ['_scope' => 'backend','token_check' => true])]
     public function __invoke(int $memberid): Response
     {
 

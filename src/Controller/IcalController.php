@@ -28,15 +28,15 @@ use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
 use Exception;
-//use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[AsController]
 #[Route('/ligaverwaltung/spielplan/ical/{ligaid}/{mannschaftid}', name: 'spielplan_ical', requirements: [ "ligaid" => "\d+", "mannschaftid"=> "\d+"], defaults: ['mannschaftid' => '0'])]
 // #[AsController]
 class IcalController

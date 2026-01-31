@@ -3,10 +3,6 @@ services:
         autoconfigure: true
         autowire: true
 
-#    resource: ../src/Controller
-#    #exclude: ../src/{Config,ContaoManager,DependencyInjection,Exception,Model,FormField,ContaoEventRegistrationBundle.php,NotificationTypes.php}
-
-
     fiedsch_ligaverwaltung.helper.ranking:
         class: Fiedsch\Ligaverwaltung\Helper\RankingHelper
         public: true
@@ -50,7 +46,7 @@ services:
 
     fiedsch_ligaverwaltung.controller.player_history:
         class: Fiedsch\Ligaverwaltung\Controller\Backend\PlayerHistoryController
-        public: true
+        #public: true
         arguments:
             - '@twig'
         tags: ['controller.service_arguments']

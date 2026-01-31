@@ -23,7 +23,9 @@ use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 
+#[AsController]
 class JsonController
 {
     public function __construct(private readonly ContaoFramework $framework)
