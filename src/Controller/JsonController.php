@@ -30,7 +30,6 @@ class JsonController
     {
         $this->framework->initialize();
         $this->initialize();
-        //Controller::loadDataContainer('tl_begegnung'); // see generateIcalEvent()
     }
 
     /**
