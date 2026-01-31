@@ -21,38 +21,31 @@ services:
         tags:
             - { name: contao.migration, priority: 0 }
 
-#    fiedsch_ligaverwaltung.controller.backend:
-#        class: Fiedsch\Ligaverwaltung\Controller\LigaverwaltungBackendController
-#        tags: ['controller.service_arguments']
-#        calls:
-#            - [ setContainer, [ '@service_container' ] ]
-
-    fiedsch_ligaverwaltung.controller.ical:
-        class: Fiedsch\Ligaverwaltung\Controller\IcalController
-        arguments:
-            - '@contao.framework'
-        tags: ['controller.service_arguments']
-
-    fiedsch_ligaverwaltung.controller.json:
-        public: true
-        class: Fiedsch\Ligaverwaltung\Controller\JsonController
-        arguments:
-            - '@contao.framework'
-        tags: ['controller.service_arguments']
-
     fiedsch_ligaverwaltung.listener.buttons_callback:
         class: Fiedsch\Ligaverwaltung\EventListener\DataContainer\EditButtonsCallbackListener
         tags: ['controller.service_arguments']
 
-    fiedsch_ligaverwaltung.controller.player_history:
-        class: Fiedsch\Ligaverwaltung\Controller\Backend\PlayerHistoryController
-        #public: true
+    # For the rest: Do not use an alias (see https://docs.contao.org/5.x/dev/guides/coding-standards/)
+    # fiedsch_ligaverwaltung.controller.ical:
+    #    class: Fiedsch\Ligaverwaltung\Controller\Frontend\IcalController
+    Fiedsch\Ligaverwaltung\Controller\Frontend\IcalController:
         arguments:
-            - '@twig'
+            - '@contao.framework'
         tags: ['controller.service_arguments']
 
-    fiedsch_ligaverwaltung.controller.content.ranking:
-        class: Fiedsch\Ligaverwaltung\Controller\ContentElement\RankingController
+    Fiedsch\Ligaverwaltung\Controller\Frontend\JsonController:
+        public: true
+        arguments:
+            - '@contao.framework'
+        tags: ['controller.service_arguments']
+
+    Fiedsch\Ligaverwaltung\Controller\Backend\PlayerHistoryController:
+        tags: ['controller.service_arguments']
+        public: true
+        arguments:
+            - '@twig'
+
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\RankingController:
         arguments:
             - '@fiedsch_ligaverwaltung.helper.ranking'
 

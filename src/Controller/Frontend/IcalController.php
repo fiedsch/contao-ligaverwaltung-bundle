@@ -12,27 +12,27 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-namespace Fiedsch\Ligaverwaltung\Controller;
+namespace Fiedsch\Ligaverwaltung\Controller\Frontend;
 
 use Contao\Config;
-use Contao\PageModel;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\PageModel;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Domain\Entity\Event;
-use Eluceo\iCal\Domain\ValueObject\Location;
-use Eluceo\iCal\Presentation\Factory\CalendarFactory;
-use Eluceo\iCal\Domain\ValueObject\TimeSpan;
 use Eluceo\iCal\Domain\ValueObject\DateTime as IcalDateTime;
+use Eluceo\iCal\Domain\ValueObject\Location;
+use Eluceo\iCal\Domain\ValueObject\TimeSpan;
+use Eluceo\iCal\Presentation\Factory\CalendarFactory;
+use Exception;
 use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 use Symfony\Component\HttpFoundation\Response;
-use DateTime;
-use DateTimeZone;
-use DateInterval;
-use Exception;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 
