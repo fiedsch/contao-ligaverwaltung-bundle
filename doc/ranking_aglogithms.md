@@ -84,7 +84,7 @@ class ContaoManagerPlugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create(AppBundle\AppBundle::class)
+            BundleConfig::create(App\App::class)
                 ->setLoadAfter([FiedschLigaverwaltungBundle::class]),
         ];
     }
@@ -94,9 +94,9 @@ class ContaoManagerPlugin implements BundlePluginInterface
 
 ```php
 <?php
-# src/AppBundle/Helper/RankingHelper.php
+# src/App/Helper/RankingHelper.php
 
-namespace AppBundle\Helper;
+namespace App\Helper;
 
 use Fiedsch\LigaverwaltungBundle\Helper\RankingHelper as OriginalHelper;
 
@@ -128,15 +128,15 @@ class RankingHelper extends OriginalHelper
 
 ```php
 <?php
-# src/AppBundle/AppBundle.php
+# src/App/App.php
 
-namespace AppBundle;
+namespace App;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-class AppBundle extends Bundle
+class App extends Bundle
 {
 
   /**
@@ -145,9 +145,9 @@ class AppBundle extends Bundle
   public function build(ContainerBuilder $container)
   {
     parent::build($container);
-    $definition = new Definition(\AppBundle\Helper\RankingHelper::class);
+    $definition = new Definition(\App\Helper\RankingHelper::class);
     $definition->setPublic(true);
-    $container->setDefinition('fiedsch_ligaverwaltung.rankinghelper', $definition);
+    $container->setDefinition('fiedsch_ligaverwaltung.helper.ranking', $definition);
   }
 
 }
@@ -160,7 +160,7 @@ class AppBundle extends Bundle
 	        "app/ContaoManagerPlugin.php"
 	    ],
 	    "psr-4": {
-	        "AppBundle\\": "src/AppBundle/"
+	        "App\\": "src/App/"
 	    }
     }
 ```
