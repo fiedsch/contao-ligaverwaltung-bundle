@@ -107,7 +107,7 @@ class Spiel
         // 'options'   => [ 1 => 'nach Punkten', 2 => 'nach gewonnenen Spielen' ],
 
         /** @var $helper RankingHelperInterface */
-        $helper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
+        $helper = System::getContainer()->get('fiedsch_ligaverwaltung.helper.ranking');
 
         return $helper->getPunkte($score, $ranking_model);
     }

@@ -14,20 +14,22 @@ declare(strict_types=1);
 
 namespace Fiedsch\LigaverwaltungBundle\Controller\Backend;
 
-use Contao\BackendTemplate;
 use Exception;
 use Fiedsch\LigaverwaltungBundle\Model\SpielerModel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
-#[Route('/ligaverwaltung/player/history/{memberid}', name: 'player_history', requirements: [ "memberid" => "[0-9]+"], defaults: ['_scope' => 'backend','token_check' => true])]
-#[AsController]
+#[Route('%contao.backend.route_prefix%/ligaverwaltung/player/history/{memberid}', name: 'player_history', requirements: [ "memberid" => "[0-9]+"], defaults: ['_scope' => 'backend','token_check' => true])]
+//#[AsController]
 class PlayerHistoryController
 {
-    public function __construct(private final Environment $twig)
+    //private Environment $twig;
+    public function __construct(private Environment $twig)
     {
+        // $this->twig = \Contao\System::getContainer()->get('twig');
     }
 
     /**
@@ -40,8 +42,9 @@ class PlayerHistoryController
 
         $history = $this->getHistory($memberid);
 
-        return new Response($this->twig->render('@Contao/backend/spielerhistory.html.twig', ['history' => $history]));
+        return new Response($this->twig->render('@Contao_FiedschLigaverwaltungBundle/backend/spielerhistory.html.twig', ['history' => $history]));
     }
+
 
     /**
      * @throws Exception

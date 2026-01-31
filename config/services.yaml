@@ -1,9 +1,9 @@
 services:
     _defaults:
         autoconfigure: true
-        autowire: false
+        # autowire: true
 
-    fiedsch_ligaverwaltung.rankinghelper:
+    fiedsch_ligaverwaltung.helper.ranking:
         class: Fiedsch\LigaverwaltungBundle\Helper\RankingHelper
         public: true
 
@@ -20,25 +20,42 @@ services:
             - '@database_connection'
         tags:
             - { name: contao.migration, priority: 0 }
-    fiedsch_ligaverwaltung.controller.backend_controller:
+
+    fiedsch_ligaverwaltung.controller.backend:
         class: Fiedsch\LigaverwaltungBundle\Controller\LigaverwaltungBackendController
         tags: ['controller.service_arguments']
         calls:
             - [ setContainer, [ '@service_container' ] ]
 
-    #fiedsch_ligaverwaltung.controller.ical_controller:
-    #    class: Fiedsch\LigaverwaltungBundle\Controller\IcalController
-    Fiedsch\LigaverwaltungBundle\Controller\IcalController:
+    fiedsch_ligaverwaltung.controller.ical:
+        class: Fiedsch\LigaverwaltungBundle\Controller\IcalController
         arguments:
             - '@contao.framework'
         tags: ['controller.service_arguments']
 
-    #fiedsch_ligaverwaltung.controller.json_controller:
-    #    class: Fiedsch\LigaverwaltungBundle\Controller\JsonController
-    Fiedsch\LigaverwaltungBundle\Controller\JsonController:
+    fiedsch_ligaverwaltung.controller.json:
+        class: Fiedsch\LigaverwaltungBundle\Controller\JsonController
         arguments:
             - '@contao.framework'
         tags: ['controller.service_arguments']
 
-    Fiedsch\LigaverwaltungBundle\EventListener\DataContainer\EditButtonsCallbackListener:
+    fiedsch_ligaverwaltung.listener.buttons_callback:
+        class: Fiedsch\LigaverwaltungBundle\EventListener\DataContainer\EditButtonsCallbackListener
         tags: ['controller.service_arguments']
+
+    fiedsch_ligaverwaltung.controller.player_history:
+        class: Fiedsch\LigaverwaltungBundle\Controller\Backend\PlayerHistoryController
+        public: true
+        arguments:
+            - '@twig'
+        tags: ['controller.service_arguments']
+
+    fiedsch_ligaverwaltung.controller.content.ranking:
+        class: Fiedsch\LigaverwaltungBundle\Controller\ContentElement\RankingController
+        arguments:
+            - '@fiedsch_ligaverwaltung.helper.ranking'
+
+    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\LigenlisteController: ~
+    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\MannschaftslisteController: ~
+    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\SpielberichtController: ~
+    Fiedsch\LigaverwaltungBundle\Controller\ContentElement\SpielerlisteController: ~

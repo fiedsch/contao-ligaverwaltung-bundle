@@ -28,7 +28,7 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
 
         return sprintf(
-            '<a href="ligaverwaltung/player/history/%s?popup=1&amp;rt=%s"'
+            '<a href="/contao/ligaverwaltung/player/history/%s?popup=1&amp;rt=%s"'
             .' title="" style="padding-left:3px"'
             .' onclick="Backend.openModalIframe({\'width\':768,\'title\':\'Spielerhistorie von %s\',\'url\':this.href});return false"'
             .'>'

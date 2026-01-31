@@ -35,7 +35,7 @@ class Begegnung
     public function __construct()
     {
         /** @noinspection PhpFieldAssignmentTypeMismatchInspection */
-        $this->rankingHelper = System::getContainer()->get('fiedsch_ligaverwaltung.rankinghelper');
+        $this->rankingHelper = System::getContainer()->get('fiedsch_ligaverwaltung.helper.ranking');
     }
 
     public function addSpiel(Spiel $spiel): void
