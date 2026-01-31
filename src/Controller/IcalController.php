@@ -145,7 +145,7 @@ class IcalController
         $dtStart = new DateTime(date('Y-m-d H:i:s', (int)$begegnung->spiel_am), new DateTimeZone(Config::get('timeZone')));
 
         // Did they change the default configuration (date + time) to date only in
-        // the site's contfiguration? Then add a default time here:
+        // the site's configuration? Then add a default time here:
         if ('datim' !== $GLOBALS['TL_DCA']['tl_begegnung']['fields']['spiel_am']['eval']['rgxp']) {
             // TODO: "Prime-Time" nicht hart kodiert
             // Z.B. in app/config/parameters.yml als ligaverwaltung.default_time
