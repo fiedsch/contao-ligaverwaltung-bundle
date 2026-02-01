@@ -19,6 +19,7 @@ use Contao\Config;
 use Contao\Database;
 use Contao\Database\Result;
 use Contao\DataContainer;
+use Contao\Date;
 use Contao\System;
 use Contao\Image;
 use Contao\MemberModel;
@@ -193,7 +194,7 @@ class DCAHelper
 
         $final_score = $punkte_home + $punkte_away > 0 ? sprintf('%d:%d', $punkte_home, $punkte_away) : '';
 
-        return sprintf("<span class='tl_gray'>%s %s %s %d. Spieltag:</span>
+        return sprintf("<span class='tl_gray'>%s %s %s %d. Spieltag (%s):</span>
                         <span class='tl_blue'>%s %s %s</span>
                         <span class='tl_green'>%s</span>
                         <span class='tl_gray'>%s</span>",
@@ -201,6 +202,7 @@ class DCAHelper
             $liga->name,
             $liga->getRelated('saison')->alias,
             $row['spiel_tag'],
+            Date::parse(Config::get('datimFormat') ?? 'd.m.Y H:i', $row['spiel_am']),
             $home?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
             $away ? 'vs' : 'hat',
             $away ? $away->name : 'Spielfrei',
