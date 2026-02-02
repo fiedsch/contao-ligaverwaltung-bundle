@@ -739,7 +739,8 @@ class DCAHelper
         // Liga bräuchten, damit "alle Mannschaften" Sinn ergibt
         // Dito für die Mannschaftsseite.
         if (!in_array($dc->activeRecord->type, ['spielerliste', 'mannschaftsseite'], true)) {
-            $result[0] = 'alle Mannschaften'; // z.B. für "Spielerranking" einer gesamten Liga
+            // TODO: put "alle Mannschaften" to the start of the List (without reindexing!)
+            $result[MannschaftModel::ALLE_MANNSCHAFTEN] = 'alle Mannschaften'; // z.B. für "Spielerranking" einer gesamten Liga
         }
 
         return $result;
