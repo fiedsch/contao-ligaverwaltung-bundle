@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 use Contao\ArrayUtil;
 use Contao\System;
-use Fiedsch\Ligaverwaltung\Element\ContentBegegnungsauswahl;
 use Fiedsch\Ligaverwaltung\Element\ContentHighlightRanking;
 //use Fiedsch\Ligaverwaltung\Element\ContentLigenliste;
 use Fiedsch\Ligaverwaltung\Element\ContentMannschaftenuebersicht;
@@ -78,7 +77,6 @@ $GLOBALS['TL_CTE']['ligaverwaltung']['highlightranking'] = ContentHighlightRanki
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsseite'] = ContentMannschaftsseite::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['spielortseite'] = ContentSpielortseite::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftenuebersicht'] = ContentMannschaftenuebersicht::class;
-$GLOBALS['TL_CTE']['ligaverwaltung']['begegnungsauswahl'] = ContentBegegnungsauswahl::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['teamsandplayersoverview'] = ContentTeamsAndPlayersOverview::class;
 
 /*
