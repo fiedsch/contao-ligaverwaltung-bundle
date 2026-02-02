@@ -142,8 +142,7 @@ class ContentMannschaftsseite extends ContentElement
             'value' => 'Highlights '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $contentElement = new ContentHighlightRanking($contentModel);
-        $this->Template->highlightranking = $contentElement->generate();
+        $this->Template->highlightranking = Controller::getContentElement($contentModel);
 
         $this->Template->mannschaft_name = $mannschaftModel->name;
         $liga = LigaModel::findById($mannschaftModel->liga);

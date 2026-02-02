@@ -49,7 +49,12 @@ services:
         arguments:
             - '@fiedsch_ligaverwaltung.helper.ranking'
 
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\HighlightRankingController:
+        arguments:
+            - '@database_connection'
+
     Fiedsch\Ligaverwaltung\Controller\ContentElement\LigenlisteController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftslisteController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielberichtController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielerlisteController: ~
+

@@ -1,0 +1,141 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <div class="tl_gray">
+             <span class="upper">{{ wildcard }}</span>
+             <br>
+             {{ subject }}
+         </div>
+      {% endblock %}
+
+  {% else %}
+
+    {% if not listitems %}
+
+        <code>Es liegen noch keine Ergebnise vor.</code>
+
+    {%  else %}
+        {% if rankingtype == 'mannschaften' %}
+
+    {#
+  <div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Mannschaft</th>
+        <?php if ($this->rankingfield == HighlightModel::TYPE_ALL
+        || $this->rankingfield == HighlightModel::TYPE_171
+        || $this->rankingfield == HighlightModel::TYPE_180): ?>
+        <th>171</th>
+        <th>180</th>
+        <?php endif; ?>
+        <?php if ($this->rankingfield == HighlightModel::TYPE_ALL
+        || $this->rankingfield == HighlightModel::TYPE_HIGHFINISH): ?>
+        <th>Highfinish</th>
+        <?php endif; ?>
+        <?php if ($this->rankingfield == HighlightModel::TYPE_ALL
+                || $this->rankingfield == HighlightModel::TYPE_SHORTLEG): ?>
+        <th>Shortleg</th>
+        <?php endif; ?>
+      </tr>
+    </thead>
+    <tbody>
+   <?php foreach ($this->listitems as $listitem): ?>
+      <tr>
+          <td><?= $listitem['mannschaft'] ?></td>
+          <?php if ($this->rankingfield == HighlightModel::TYPE_ALL
+          || $this->rankingfield == HighlightModel::TYPE_171
+          || $this->rankingfield == HighlightModel::TYPE_180): ?>
+          <td><?= $listitem['hl_171'] ?></td>
+          <td><?= $listitem['hl_180'] ?></td>
+          <?php endif; ?>
+          <?php if ($this->rankingfield == HighlightModel::TYPE_ALL
+          || $this->rankingfield == HighlightModel::TYPE_HIGHFINISH): ?>
+          <td><?= $listitem['hl_highfinish'] ?></td>
+          <?php endif; ?>
+          <?php if ($this->rankingfield == HighlightModel::TYPE_ALL
+          || $this->rankingfield == HighlightModel::TYPE_SHORTLEG): ?>
+          <td><?= $listitem['hl_shortleg'] ?></td>
+          <?php endif; ?>
+      </tr>
+    <?php endforeach; ?>
+    </tbody>
+  </table>
+  </div>
+   #}
+        {%  endif %}
+
+        {% if rankingtype == 'spieler' %}
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        {% if rankingfield != constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL') %}
+                            <th>&nbsp;</th><!-- Rangplatz -->
+                        {% endif %}
+                        <th>Name</th>
+                        {% if not auf_mannschaftsseite %}
+                            <th>Mannschaft</th>
+                        {% endif %}
+                        {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
+                            or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_171')
+                            or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_180')
+                        %}
+                            <th>171</th>
+                            <th>180</th>
+                        {% endif %}
+                        {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
+                            or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_HIGHFINISH')
+                        %}
+                            <th>Highfinish</th>
+                        {% endif %}
+                        {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
+                            or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_SHORTLEG')
+                        %}
+                            <th>Shortleg</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for listitem in listitems %}
+                    <tr class="{{ listitem.CSS }}">
+                        {% if rankingfield != constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL') %}
+                            <td>{{ listitem.hl_rang }}</td>
+                        {% endif %}
+                        <td>{{ listitem.name }}</td>
+                        {% if not auf_mannschaftsseite %}<td>{{ listitem.mannschaft|raw }}</td>{% endif %}
+                        {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
+                            or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_171')
+                            or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_180')
+                        %}
+                            <td>{{ listitem.hl_171|default|raw }}</td>
+                            <td>{{ listitem.hl_180|default|raw }}</td>
+                        {% endif %}
+                        {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
+                            or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_HIGHFINISH')
+                        %}
+                        <td>{{ listitem.hl_highfinish }}</td>
+                        {% endif %}
+                        {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
+                            or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_SHORTLEG')
+                        %}
+                        <td>{{ listitem.hl_shortleg|raw }}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+      </tbody>
+  </table>
+  </div>
+
+        {% endif %}
+
+    {% endif %}
+
+  {% endif %}
+
+{% endblock %}

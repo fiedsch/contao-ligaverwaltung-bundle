@@ -35,7 +35,9 @@ use Exception;
 class MannschaftModel extends Model
 {
 
-    const MANNSCHAFT_DOES_NOT_EXIST = '[ex. nicht mehr]';
+    const string MANNSCHAFT_DOES_NOT_EXIST = '[ex. nicht mehr]';
+
+    const int ALLE_MANNSCHAFTEN = 0;
     /**
      * Table name.
      *
