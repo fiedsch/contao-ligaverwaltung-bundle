@@ -35,7 +35,6 @@ class MannschaftslisteController extends AbstractContentElementController
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftsliste'][0])->upper().' ###';
 
         $liga = LigaModel::findById($model->liga);
-
         if ($liga) {
             $template->subject = sprintf('%s %s %s',
                 $liga->getRelated('pid')->name,
@@ -44,16 +43,17 @@ class MannschaftslisteController extends AbstractContentElementController
             );
         } else {
             $template->subject = sprintf('Liga mit der ID=%d existiert nicht mehr', $model->liga);
-            return;
-        }
-
-        $mannschaften = MannschaftModel::findByLiga($model->liga, ['order' => 'name ASC']);
-
-        if (!$mannschaften) {
-            return;
+            //return;
         }
 
         $listitems = [];
+
+        $mannschaften = MannschaftModel::findByLiga($model->liga, ['order' => 'name ASC']);
+        if (!$mannschaften) {
+            $template->listitems = $listitems;
+            return;
+        }
+
 
         foreach ($mannschaften as $mannschaft) {
             if ('1' === $mannschaft->active) {
