@@ -53,4 +53,4 @@ services:
     Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftslisteController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielberichtController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielerlisteController: ~
-
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftenuebersichtController: ~

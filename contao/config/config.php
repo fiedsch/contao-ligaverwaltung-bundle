@@ -16,7 +16,7 @@ use Contao\ArrayUtil;
 use Contao\System;
 use Fiedsch\Ligaverwaltung\Element\ContentHighlightRanking;
 //use Fiedsch\Ligaverwaltung\Element\ContentLigenliste;
-use Fiedsch\Ligaverwaltung\Element\ContentMannschaftenuebersicht;
+//use Fiedsch\Ligaverwaltung\Element\ContentMannschaftenuebersicht;
 //use Fiedsch\Ligaverwaltung\Element\ContentMannschaftsliste;
 use Fiedsch\Ligaverwaltung\Element\ContentMannschaftsseite;
 //use Fiedsch\Ligaverwaltung\Element\ContentSpielbericht;
@@ -76,7 +76,7 @@ $GLOBALS['TL_CTE']['ligaverwaltung']['spielortinfo'] = ContentSpielortinfo::clas
 // $GLOBALS['TL_CTE']['ligaverwaltung']['highlightranking'] = ContentHighlightRanking::class; // now a service registered using attributes (see HighlightRankingController)
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsseite'] = ContentMannschaftsseite::class;
 $GLOBALS['TL_CTE']['ligaverwaltung']['spielortseite'] = ContentSpielortseite::class;
-$GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftenuebersicht'] = ContentMannschaftenuebersicht::class;
+// $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftenuebersicht'] = ContentMannschaftenuebersicht::class; // now a service registered using attributes (see HighlightRankingController)
 $GLOBALS['TL_CTE']['ligaverwaltung']['teamsandplayersoverview'] = ContentTeamsAndPlayersOverview::class;
 
 /*

@@ -1,0 +1,38 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <div class="tl_gray">
+             <span class="upper">{{ wildcard }}</span>
+             <br>
+             (IDs: {{ details }})
+         </div>
+      {% endblock %}
+
+  {% else %}
+
+      <ul>
+      {% for id,liga in ligen %}
+          <li>{{ liga }}</li>
+          <ul>
+          {%  for mannschaft in ligendetails[id] %}
+              <li>{{ mannschaft.mannschaft|raw }}<br>
+                  {% if mannschaft.tc is not empty %}{{ mannschaft.tc[0].name }} {{ mannschaft.tc[0].email|raw }} {{ mannschaft.tc[0].mobile|raw }}<br>{% endif %}
+                  Spielort: {{ mannschaft.spielort.name }},
+                  {{ mannschaft.spielort.address.postal }} {{ mannschaft.spielort.address.city }} {{ mannschaft.spielort.address.street }},
+                  {{ mannschaft.spielort.phone }}
+                  {% if mannschaft.spielort.website %}
+                      <a href="{{ mannschaft.spielort.website }}">{{ mannschaft.spielort.website }}</a>
+                  {% endif %}
+              </li>
+          {% endfor %}
+          </ul>
+      {% endfor %}
+      </ul>
+
+  {% endif %}
+
+{% endblock %}
