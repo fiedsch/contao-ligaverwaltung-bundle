@@ -138,7 +138,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['rankingfield'] = [
 ];
 
 /* Mannschaftenübersicht: Mannschaft und deren Teamcaptains */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftenuebersicht'] = '{type_legend},type,headline;{saison_legend},saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{template_legend},customTpl;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftenuebersicht'] = '{type_legend},type,headline;{saison_legend},saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['ligen'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['ligen'],
