@@ -102,7 +102,7 @@ class ContentMannschaftsseite extends ContentElement
             'value' => 'Spielerliste '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $this->Template->spielbericht = Controller::getContentElement($contentModel);
+        $this->Template->spielerliste = Controller::getContentElement($contentModel);
 
         // Spielplan
         $contentModel = new ContentModel();
