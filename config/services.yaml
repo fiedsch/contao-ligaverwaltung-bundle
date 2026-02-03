@@ -23,7 +23,6 @@ services:
 
     fiedsch_ligaverwaltung.listener.buttons_callback:
         class: Fiedsch\Ligaverwaltung\EventListener\DataContainer\EditButtonsCallbackListener
-        tags: ['controller.service_arguments']
 
     # For the rest: Do not use an alias (see https://docs.contao.org/5.x/dev/guides/coding-standards/)
     # fiedsch_ligaverwaltung.controller.ical:
@@ -31,16 +30,13 @@ services:
     Fiedsch\Ligaverwaltung\Controller\Frontend\IcalController:
         arguments:
             - '@contao.framework'
-        tags: ['controller.service_arguments']
 
     Fiedsch\Ligaverwaltung\Controller\Frontend\JsonController:
         public: true
         arguments:
             - '@contao.framework'
-        tags: ['controller.service_arguments']
 
     Fiedsch\Ligaverwaltung\Controller\Backend\PlayerHistoryController:
-        tags: ['controller.service_arguments']
         public: true
         arguments:
             - '@twig'
