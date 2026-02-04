@@ -55,28 +55,31 @@ class MannschaftenuebersichtController extends AbstractContentElementController
 
         $template->details = join(', ', $saisonIds);
 
-        $saisonFilter = sprintf('saison IN (%s)', implode(',', $saisonIds));
-        $ligen = LigaModel::findAll([
-            'column' => [$saisonFilter, 'aktiv=?', $saisonFilter],
-            'value' => ['1'],
-            'order' => 'spielstaerke ASC',
-        ]);
-
-        if (!$ligen) {
+        $alleLigen = [];
+        foreach ($saisonIds as $saisonId) {
+            $ligen = LigaModel::findAll([
+                'column' => ['aktiv=?', 'saison=?'],
+                'value' => ['1', $saisonId],
+                'order' => 'spielstaerke ASC',
+            ]);
+            array_push($alleLigen, ...$ligen->fetchAll());
+        }
+        if (!$alleLigen) {
             return;
         }
 
         $ligenInfo = [];
         $ligenDetails = [];
 
-        foreach ($ligen as $liga) {
-            $mannschaften = MannschaftModel::findBy(['liga=?', 'active=?'], [$liga->id, '1'], ['order' => 'name ASC']);
+        foreach ($alleLigen as $liga) {
+            //dd($liga);
+            $mannschaften = MannschaftModel::findBy(['liga=?', 'active=?'], [$liga['id'], '1'], ['order' => 'name ASC']);
             if (null === $mannschaften) {
                 continue;
             }
-            $saison = SaisonModel::findById(LigaModel::findById($liga->id)?->saison)?->name;
-            $ligenInfo[$liga->id] = $liga->name . ' ' . $saison;
-            $ligenDetails[$liga->id] = [];
+            $saison = SaisonModel::findById(LigaModel::findById($liga['id'])?->saison)?->name;
+            $ligenInfo[$liga['id']] = $liga['name'] . ' ' . $saison;
+            $ligenDetails[$liga['id']] = [];
 
             foreach ($mannschaften as $mannschaft) {
                 $tcs = [];
@@ -92,7 +95,7 @@ class MannschaftenuebersichtController extends AbstractContentElementController
                     }
                 }
                 $spielort = $mannschaft->getRelated('spielort');
-                $ligenDetails[$liga->id][] = [
+                $ligenDetails[$liga['id']][] = [
                     'mannschaft' => $mannschaft->getLinkedName(),
                     'tc' => $tcs,
                     'spielort' => [
