@@ -200,7 +200,7 @@ class DCAHelper
                         <span class='tl_gray'>%s</span>",
             $verband->name,
             $liga->name,
-            $liga->getRelated('saison')->alias,
+            $liga->getRelated('saison')->name,
             $row['spiel_tag'],
             Date::parse(Config::get('datimFormat') ?? 'd.m.Y H:i', $row['spiel_am']),
             $home?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
