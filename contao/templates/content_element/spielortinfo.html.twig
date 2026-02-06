@@ -1,0 +1,38 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <div class="tl_gray">
+             <span class="upper">{{ wildcard }}</span>
+             <br>
+             {{ details }}
+         </div>
+      {% endblock %}
+
+  {% else %}
+
+      <h3>{{ spielort.name }}</h3>
+
+      <div class="address">
+          {% set address = spielort.street ~ ',' ~ spielort.postal ~ ' ' ~ spielort.city %}
+          <a target="_blank" class="link-spielortinfo" href="https://www.google.de/maps/place/{{ address|url_encode }}">
+              {{ spielort.street }}<br>
+              {{ spielort.postal }} {{ spielort.city }}
+          </a><i class="fas fa-external-link-square-alt"></i>
+      </div>
+
+      <div class="contact">
+          {% if spielort.phone %}
+              Telefon: {{ spielort.phone }}
+          {% endif %}
+          {% if spielort.website %}
+              <br><a target="_blank" href="{{ spielort.website }}">{{ spielort.website }}</a>
+          {% endif %}
+      </div>
+
+  {% endif %}
+
+{% endblock %}

@@ -89,8 +89,7 @@ class ContentMannschaftsseite extends ContentElement
             'value' => 'Spielort '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $contentElement = new ContentSpielortinfo($contentModel);
-        $this->Template->spielortinfo = $contentElement->generate();
+        $this->Template->spielortinfo = Controller::getContentElement($contentModel);
 
         // Spielerliste
         $contentModel = new ContentModel();
