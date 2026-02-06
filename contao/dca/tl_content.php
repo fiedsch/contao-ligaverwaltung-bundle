@@ -12,6 +12,13 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
+/**
+ * TODO: neues Feld 'title' in die Paletten aufnehmen (analog type,headline etc.)
+ * Siehe
+ * - https://github.com/contao/contao/blob/e3aba824aacae372167228e36a5d2a0f594d3327/core-bundle/contao/dca/tl_content.php#L160
+ * - https://github.com/contao/contao/pull/9232
+ */
+
 use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Fiedsch\Ligaverwaltung\Model\HighlightModel;
 
