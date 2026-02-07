@@ -15,13 +15,12 @@ declare(strict_types=1);
 namespace Fiedsch\Ligaverwaltung\Model;
 
 use Contao\Config;
-use Contao\Controller;
 use Contao\Date;
 use Contao\Model;
 use Contao\PageModel;
 use Exception;
 use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
-use http\QueryString;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use function count;
 
 /**
@@ -144,7 +143,7 @@ class BegegnungModel extends Model
         switch ($mode) {
             case 'full':
                 return sprintf('%s:%s (%s %s%s%s)',
-                    $this->getRelated('home')?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
+                    $this->getRelated('home')?->name ?? DCAHelper::DOES_NOT_EXIST,
                     $this->getRelated('away')?->name,
                     $this->getRelated('pid')->name,
                     $this->getRelated('pid')->getRelated('saison')->name,
@@ -155,7 +154,7 @@ class BegegnungModel extends Model
 
             case 'medium':
                 return sprintf('%s:%s (%s %s)',
-                    $this->getRelated('home')?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
+                    $this->getRelated('home')?->name ?? DCAHelper::DOES_NOT_EXIST,
                     $this->getRelated('away')?->name,
                     $this->getRelated('pid')->name,
                     $this->getRelated('pid')->getRelated('saison')->name
@@ -165,7 +164,7 @@ class BegegnungModel extends Model
             case 'short':
             default:
                 return sprintf('%s:%s',
-                    $this->getRelated('home')?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
+                    $this->getRelated('home')?->name ?? DCAHelper::DOES_NOT_EXIST,
                     $this->getRelated('away')?->name
                 );
             //break;

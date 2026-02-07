@@ -25,6 +25,7 @@ use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Fiedsch\Ligaverwaltung\Model\HighlightModel;
 use Fiedsch\Ligaverwaltung\Model\SpielerModel;
 use Fiedsch\Ligaverwaltung\Model\SpielModel;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
@@ -36,6 +37,8 @@ use function Symfony\Component\String\u;
 )]
 class SpielberichtController extends AbstractContentElementController
 {
+    use TlModeTrait;
+
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         $this->setData($template, $model);
@@ -53,6 +56,9 @@ class SpielberichtController extends AbstractContentElementController
             return;
         } else {
             $template->subject = $begegnung->getLabel();
+        }
+        if ($this->isBackend()) {
+            return;
         }
 
         $template->begegnunglabel = $begegnung->getLabel();

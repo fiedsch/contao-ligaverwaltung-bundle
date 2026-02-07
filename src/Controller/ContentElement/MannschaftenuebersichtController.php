@@ -28,6 +28,7 @@ use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Model\SpielerModel;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
@@ -39,6 +40,8 @@ use function Symfony\Component\String\u;
 )]
 class MannschaftenuebersichtController extends AbstractContentElementController
 {
+    use TlModeTrait;
+
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
@@ -52,6 +55,13 @@ class MannschaftenuebersichtController extends AbstractContentElementController
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'][0])->upper().' ###';
 
         $saisonIds = StringUtil::deserialize($model->saison);
+
+        if ($this->isBackend()) {
+            $template->subject = sprintf('IDs: %s',
+                join(',',$saisonIds)
+            );
+            return;
+        }
 
         $template->details = join(', ', $saisonIds);
 

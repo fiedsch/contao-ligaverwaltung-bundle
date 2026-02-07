@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Fiedsch\Ligaverwaltung\Model;
 
 use Contao\Config;
-use Contao\Controller;
 use Contao\Database;
 use Contao\Model;
 use Contao\Model\Collection;
@@ -34,8 +33,6 @@ use Exception;
  */
 class MannschaftModel extends Model
 {
-
-    const string MANNSCHAFT_DOES_NOT_EXIST = '[ex. nicht mehr]';
 
     const int ALLE_MANNSCHAFTEN = 0;
     /**

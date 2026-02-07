@@ -158,12 +158,12 @@ class HighlightRankingController extends AbstractContentElementController
             if ($mannschaft) {
                 $mannschaftsuffix = sprintf('Mannschaft %s', $mannschaft->name);
             } else {
-                $mannschaftsuffix = sprintf('Mannschaft mit der ID %d %s', $model->mannschaft, MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST);
+                $mannschaftsuffix = sprintf('Mannschaft mit der ID %d %s', $model->mannschaft, DCAHelper::DOES_NOT_EXIST);
             }
         } else {
             $mannschaftsuffix = 'alle Mannschaften';
         }
-        if ($this->isBackend()) { // TODO: analoges in allen anderen Content Element Controllern implementieren
+        if ($this->isBackend()) {
             $template->subject = sprintf('Highlight-Ranking Spieler %s %s %s (%s)',
                 $liga->getRelated('pid')->name,
                 $liga->name,

@@ -19,8 +19,8 @@ use function Symfony\Component\String\u;
 )]
 class SpielortinfoController extends AbstractContentElementController
 {
-
     use TlModeTrait;
+
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 

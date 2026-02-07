@@ -8,8 +8,10 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
@@ -22,6 +24,7 @@ use function Symfony\Component\String\u;
 
 class MannschaftslisteController extends AbstractContentElementController
 {
+    use TlModeTrait;
 
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
@@ -42,8 +45,11 @@ class MannschaftslisteController extends AbstractContentElementController
                 $liga->getRelated('saison')->name
             );
         } else {
-            $template->subject = sprintf('Liga mit der ID=%d existiert nicht mehr', $model->liga);
-            //return;
+            $template->subject = sprintf('Liga mit der ID=%d %s', $model->liga, DCAHelper::DOES_NOT_EXIST);
+        }
+
+        if ($this->isBackend()) {
+            return;
         }
 
         $listitems = [];

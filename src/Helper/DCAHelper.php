@@ -44,6 +44,8 @@ use function array_keys;
 
 class DCAHelper
 {
+    const string DOES_NOT_EXIST = '[ex. nicht mehr]';
+
     /**
      * Callback für das Label eines Verbands
      * tl_verband.fields.label.label_callback
@@ -203,7 +205,7 @@ class DCAHelper
             $liga->getRelated('saison')->name,
             $row['spiel_tag'],
             Date::parse(Config::get('datimFormat') ?? 'd.m.Y H:i', $row['spiel_am']),
-            $home?->name ?? MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST,
+            $home?->name ?? self::DOES_NOT_EXIST,
             $away ? 'vs' : 'hat',
             $away ? $away->name : 'Spielfrei',
             $final_score,

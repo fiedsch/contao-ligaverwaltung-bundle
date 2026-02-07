@@ -104,7 +104,7 @@ class SpielerModel extends Model
                 }
             }
         } else {
-            $mannschaftsname = MannschaftModel::MANNSCHAFT_DOES_NOT_EXIST;
+            $mannschaftsname = DCAHelper::DOES_NOT_EXIST;
         }
 
         return $membername.', '.$mannschaftsname;

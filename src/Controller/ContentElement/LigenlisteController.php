@@ -25,6 +25,7 @@ use Contao\PageModel;
 use Contao\StringUtil;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
@@ -36,6 +37,8 @@ use function Symfony\Component\String\u;
 )]
 class LigenlisteController extends AbstractContentElementController
 {
+    use TlModeTrait;
+
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
@@ -52,6 +55,13 @@ class LigenlisteController extends AbstractContentElementController
             return;
         }
         $saisonIds = StringUtil::deserialize($model->saison);
+
+        if ($this->isBackend()) {
+            $template->subject = sprintf('IDs: %s',
+                join(',',$saisonIds)
+            );
+            return;
+        }
 
         $saisonFilter = sprintf('saison IN (%s)', implode(',', $saisonIds));
         $ligen = LigaModel::findAll([

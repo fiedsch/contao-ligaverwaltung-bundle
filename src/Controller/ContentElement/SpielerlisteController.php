@@ -19,10 +19,12 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SpielerModel;
 use Contao\FilesModel;
 use Contao\StringUtil;
+use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
@@ -34,6 +36,8 @@ use function Symfony\Component\String\u;
 )]
 class SpielerlisteController extends AbstractContentElementController
 {
+    use TlModeTrait;
+
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
@@ -48,9 +52,12 @@ class SpielerlisteController extends AbstractContentElementController
 
         $mannschaft = MannschaftModel::findById($model->mannschaft);
         if (!$mannschaft) {
-            $subject = $template->subject = sprintf('Mannschaft mit der ID %d existiert nicht mehr', $model->mannschaft);;
+            $subject = $template->subject = sprintf('Mannschaft mit der ID %d %s', $model->mannschaft, DCAHelper::DOES_NOT_EXIST);
         } else {
             $subject = $template->subject = $mannschaft->getFullName();
+        }
+        if ($this->isBackend()) {
+            return;
         }
 
         $allespieler = SpielerModel::findAll([

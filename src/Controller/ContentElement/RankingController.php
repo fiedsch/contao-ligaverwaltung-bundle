@@ -24,6 +24,7 @@ use Exception;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Fiedsch\Ligaverwaltung\Entity\Begegnung;
 use Fiedsch\Ligaverwaltung\Entity\Spiel;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Fiedsch\Ligaverwaltung\Helper\RankingHelperInterface;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
@@ -59,11 +60,11 @@ class RankingController extends AbstractContentElementController
     /** @noinspection PhpUnused */
     const string RANKING_TYPE_S_SPIELER = 'spieler';
 
+    use TlModeTrait;
+
     public function __construct(private readonly RankingHelperInterface $rankingHelper)
     {
     }
-
-    // use TlModeTrait;
 
     /**
      * changed scope from protected (as in AbstractContentElementController) to public
@@ -88,9 +89,10 @@ class RankingController extends AbstractContentElementController
 
         // Daten für die Backend-Ansicht
         if (!$liga) {
-            $template->subject = sprintf('Liga mit der ID=%d existiert nicht mehr', $model->liga);
+            $template->subject = sprintf('Liga mit der ID=%d %s', $model->liga, DCAHelper::DOES_NOT_EXIST);
             return;
         }
+
         $template->rankingtype = $model->rankingtype;
         switch ($model->rankingtype) {
             case 1:
@@ -114,10 +116,6 @@ class RankingController extends AbstractContentElementController
                 $template->subject = '';
         }
 
-        // TODO (jeweils Variablen für Twig Template vs PHP Template) und $this->... wird $model->...
-        // $appendCssClass = 'rankingtype_'.(1 === $this->rankingtype ? 'mannschaft' : 'spieler');
-        // $this->cssID = [$this->cssID[0] ?? '', ($this->cssID[1] ?? '') .' '.$appendCssClass];
-
         $template->ranking_model = Config::get('ligaverwaltung_ranking_model');
 
     }
@@ -139,6 +137,9 @@ class RankingController extends AbstractContentElementController
             $liga->name,
             $liga->getRelated('saison')->name
         );
+        if ($this->isBackend()) {
+            return;
+        }
 
         $spiele = Database::getInstance()
             ->prepare("SELECT
@@ -318,6 +319,9 @@ class RankingController extends AbstractContentElementController
             $template->subject = 'Ranking aller Spieler';
             $spiele = Database::getInstance()
                 ->prepare($sql)->execute($model->liga);
+        }
+        if ($this->isBackend()) {
+            return;
         }
 
         $results = [];
