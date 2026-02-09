@@ -79,6 +79,19 @@ class MannschaftModel extends Model
         return $result;
     }
 
+    public function getShortName(): string
+    {
+        $result = $this->name;
+        $liga = $this->getRelated('liga');
+
+        if (!$this->active) {
+            // Strikethrough and gray to indicate that the team is no longer active
+            $result = sprintf('<span class="tl_gray"><s>%s</s></span>', $result);
+        }
+
+        return $result;
+    }
+
     /**
      * Zur "Mansnchaftsseite" verlinkter Name der Mannschaft.
      *
@@ -87,6 +100,11 @@ class MannschaftModel extends Model
     public function getLinkedName(): string
     {
         $teampageId = Config::get('teampage');
+
+        $mannschaftsName = $this->name;
+        if (!$this->active) {
+            $mannschaftsName = sprintf('<s>%s</s> (nicht mehr aktiv)', $mannschaftsName);
+        }
 
         if ($teampageId && $this->active) {
             $teampage = PageModel::findById($teampageId);
@@ -98,10 +116,10 @@ class MannschaftModel extends Model
             }
             $result = sprintf("<a href='%s'>%s</a>",
                 $url,
-                $this->name
+                $mannschaftsName
             );
         } else {
-            $result = $this->name.($this->active ? '' : ' (nicht mehr aktiv)');
+            $result = $mannschaftsName;
         }
 
         return $result;

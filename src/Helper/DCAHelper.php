@@ -196,7 +196,16 @@ class DCAHelper
 
         $final_score = $punkte_home + $punkte_away > 0 ? sprintf('%d:%d', $punkte_home, $punkte_away) : '';
 
-        return sprintf("<span class='tl_gray'>%s %s %s %d. Spieltag (%s):</span>
+        $spielDate = Date::parse(Config::get('datimFormat') ?? 'd.m.Y H:i', $row['spiel_am']);
+        if (!$row['away']) {
+            $spielDate = 'spielfrei';
+        }
+        if ($row['postponed']) {
+            $spielDate = 'verschoben';
+        }
+        $spielDate = '('.$spielDate.')';
+
+        return sprintf("<span class='tl_gray'>%s %s %s %d. Spieltag %s:</span>
                         <span class='tl_blue'>%s %s %s</span>
                         <span class='tl_green'>%s</span>
                         <span class='tl_gray'>%s</span>",
@@ -204,8 +213,8 @@ class DCAHelper
             $liga->name,
             $liga->getRelated('saison')->name,
             $row['spiel_tag'],
-            Date::parse(Config::get('datimFormat') ?? 'd.m.Y H:i', $row['spiel_am']),
-            $home?->name ?? self::DOES_NOT_EXIST,
+            $spielDate,
+            $home?->getShortName() ?? self::DOES_NOT_EXIST,
             $away ? 'vs' : 'hat',
             $away ? $away->name : 'Spielfrei',
             $final_score,
