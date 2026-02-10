@@ -113,8 +113,7 @@ class ContentMannschaftsseite extends ContentElement
             'value' => 'Spielplan '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $contentElement = new ContentSpielplan($contentModel);
-        $this->Template->spielplan = $contentElement->generate();
+        $this->Template->spielplan= Controller::getContentElement($contentModel);
 
         // Einzelspielerrangliste
         $contentModel = new ContentModel();

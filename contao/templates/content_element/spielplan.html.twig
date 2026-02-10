@@ -1,0 +1,113 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+      {% block editor_view %}
+          <div class="tl_gray">
+              <span class="upper">{{ wildcard }}</span>
+              <br>
+              {{ details }}
+          </div>
+      {% endblock %}
+
+  {% else %}
+
+      {% if spiele is empty %}
+          <code>Es sind noch keine Spiele hinterlegt.</code>
+      {% else %}
+
+          {% set iCalHref = ical_link %}
+          {% set icalName = calendarBaseName ~ "-liga-" ~ ligaId %}
+          {% if mannschaftId > 0 %}
+              {% set icalName = icalName ~ "-mannschaft-" ~ mannschaftId  %}
+          {% endif %}
+          {% set icalName =icalName ~ '.ics' %}
+          <div class="icaldownload">
+              <i class="fas fa-calendar"></i>
+              <a href="{{ iCalHref }}" download="{{ icalName }}">Kalender-Import (Download als iCal)</a>
+          </div>
+
+          {% if mannschaftId > 0 %} {# nur ein langer Block #}
+              <div class="table-responsive">
+              <table class="spielplan table table-hover">
+              <tbody>
+          {% endif %}
+
+          {%  for spieltag,spieltagspiele in spiele %}
+              {% if mannschaftId > 0 %}
+                  {# keine Zwischenüberschriften bei "Spielplan einer Mannschaft"  #}
+              {% else %}
+                  {#  TODO sublevel wie im "alten CE" #}<h{{ subheadlineUnit|default(3) }}>{{ spieltag }}. Spieltag</h{{ subheadlineUnit|default(3) }}>
+                  <div class="table-responsive">
+                  <table class="spielplan table table-hover"> {# ein Block je Spieltag  #}
+                  <tbody>
+              {% endif %}
+              {% for spiel in spieltagspiele %}
+                  <tr class="spiel{% if spiel.postponed %}postponed{% endif %}">
+                      {% if mannschaftId > 0 %}
+                          <td class='spiel am w-25'>
+                              {% if spiel.postponed %}Verschoben{% else %}{{ spiel.am }} {{ spiel.um|default }} {% endif %}({{ spiel.spiel_tag }}. Spieltag)
+                          </td>
+                          <td class='spiel where'>
+                              {% if spiel.heimspiel %}
+                                  <i class="fas fa-home" aria-hidden="true" title="zuhause"></i><span class="sr-only">zuhause</span>
+                              {% else %}
+                                  <i class="fas fa-car" aria-hidden="true" title="auswärts"></i><span class="sr-only">auswärts</span>
+                              {% endif %}
+                          </td>
+                          <td class='spiel home w-25'>{{ spiel.home|raw}}</td>
+                          <td class='spiel away w-25'>{{ spiel.away|raw }}</td>
+                          <td class='spiel ort w-25'>{{ spiel.im }}</td>
+                          <td class='spiel score'>{{ spiel.score }}</td>
+                          <td class='spiel {{ spiel.spielLegsClass }}'>{{ spiel.legs }}</td>
+                      {% else %}
+                          <td class='spiel am'>
+                              {% if spiel.postponed %}Verschoben{% else %}{{ spiel.am }} {{ spiel.um|default }} {% endif %}
+                          </td>
+                          <td class='spiel home'>{{ spiel.home|raw }}</td>
+                          <td class='spiel away'>{{ spiel.away|raw }}</td>
+                          <td class='spiel ort'>{{ spiel.im }}</td>
+                          <td class='spiel score'>{{ spiel.score|default|raw }}</td>
+                          <td class='spiel {{ spiel.spielLegsClass }}'>{{ spiel.legs }}</td>
+                      {% endif %}
+                  </tr>
+              {% endfor %}
+              {% if mannschaftId > 0 %}
+              {% else %}
+                  </tbody>
+                  </table>
+                  </div>
+              {% endif %}
+          {% endfor %}
+
+          {% if mannschaftId > 0 %}
+              </tbody>
+              </table>
+              </div>
+          {% endif %}
+
+      {% endif %}
+  {% endif %}
+
+  <style>
+      .spiel.legs {
+          color: #999;
+      }
+      .spiel.legs::before {
+          content: '(';
+      }
+      .spiel.legs::after {
+          content: ' Legs)';
+      }
+.spiel.legs.empty::before,
+.spiel.legs.empty::after,
+.spiel.legs.noshow::before,
+.spiel.legs.noshow::after  {
+  content: '';
+}
+</style>
+
+
+{% endblock %}

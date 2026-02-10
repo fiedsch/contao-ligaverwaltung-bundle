@@ -70,8 +70,8 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
 // $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsliste'] = ContentMannschaftsliste::class; // now a service registered using attributes (see MannschaftslisteController)
 // $GLOBALS['TL_CTE']['ligaverwaltung']['spielbericht'] = ContentSpielbericht::class; // now a service registered using attributes (see SpielberichtController)
 // $GLOBALS['TL_CTE']['ligaverwaltung']['spielerliste'] = ContentSpielerliste::class; // now a service registered using attributes (see SpielerlisteController)
-$GLOBALS['TL_CTE']['ligaverwaltung']['spielplan'] = ContentSpielplan::class;
-//$GLOBALS['TL_CTE']['ligaverwaltung']['spielortinfo'] = ContentSpielortinfo::class; // now a service registered using attributes (see SpielortinfoController)
+// $GLOBALS['TL_CTE']['ligaverwaltung']['spielplan'] = ContentSpielplan::class; // now a service registered using attributes (see SpieleplanController)
+// $GLOBALS['TL_CTE']['ligaverwaltung']['spielortinfo'] = ContentSpielortinfo::class; // now a service registered using attributes (see SpielortinfoController)
 // $GLOBALS['TL_CTE']['ligaverwaltung']['ranking'] = ContentRanking::class; // now a service registered using attributes (see RankingController)
 // $GLOBALS['TL_CTE']['ligaverwaltung']['highlightranking'] = ContentHighlightRanking::class; // now a service registered using attributes (see HighlightRankingController)
 $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsseite'] = ContentMannschaftsseite::class;
