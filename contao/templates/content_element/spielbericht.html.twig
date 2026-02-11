@@ -28,8 +28,8 @@
                   </tr>
                   </thead>
                   <tbody>
-                  {% for spielergebnis in spielergebnisse %}
-                  <tr>
+                  {% for i,spielergebnis in spielergebnisse %}
+                  <tr class="{{ 'row-'~(i+1) }}">
                       <td>{{ spielergebnis.home|raw }}</td>
                       <td>{{ spielergebnis.away|raw }}</td>
                       <td>{{ spielergebnis.score|raw }}</td>
@@ -71,7 +71,18 @@
 </div>
     {% endif %}
 
+<style>
+{# Zeilen, die jeweils Beginn eines neuen 4er Blocks oder der Doppel darstellen #}
+tr.row-1  td,
+tr.row-5  td,
+tr.row-9  td,
+tr.row-13 td,
+tr.row-17 td
+{
+    padding-top: 3rem !important; {# TODO: using padding is just a hack; do better! #}
+}
 
+</style>
 
   {% endif %}
 

@@ -79,6 +79,16 @@ class SpielberichtController extends AbstractContentElementController
         if (!$begegnung->published) {
             return [];
         }
+
+        // Für die "Metainformationen wie "Aufstellung" ("wer hat an welcher Position gespielt" + "Einwechslungen" etc.)
+        $begegnung_data = \Symfony\Component\Yaml\Yaml::parse($begegnung->begegnung_data)['app_data'] ?? [];
+        //dd($begegnung_data);
+        $playerMap = [
+            'home' => $this->mapAufstellungData($begegnung_data['home']['available'], $begegnung_data['home']['lineup'], 'H'),
+            'away' => $this->mapAufstellungData($begegnung_data['away']['available'], $begegnung_data['away']['lineup'], 'G'),
+        ];
+        // dd($playerMap);
+
         $spiele = SpielModel::findByPid($begegnung->id, ['order' => 'slot ASC']);
 
         if (!$spiele) {
@@ -87,12 +97,13 @@ class SpielberichtController extends AbstractContentElementController
         $spielergebnisse = [];
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
+            // dd($playerMap['home'][$spiel->home]);
             // Einzel (und erster Spieler Doppel)
             /** @var SpielerModel $home */
             if ($home = $spiel->getRelated('home')) {
                 /** @var MemberModel $member */
                 $member = $home->getRelated('member_id');
-                $homeplayer = DCAHelper::makeSpielerName($member);
+                $homeplayer = sprintf('(%s) %s', $playerMap['home'][$spiel->home]['position'] ?? '-', DCAHelper::makeSpielerName($member));
             } else {
                 $homeplayer = '-';
             }
@@ -100,7 +111,7 @@ class SpielberichtController extends AbstractContentElementController
             if ($away = $spiel->getRelated('away')) {
                 /** @var \MemberModel $member */
                 $member = $away->getRelated('member_id');
-                $awayplayer = DCAHelper::makeSpielerName($member);
+                $awayplayer = sprintf('(%s) %s', $playerMap['away'][$spiel->away]['position'] ?? '-', DCAHelper::makeSpielerName($member));
             } else {
                 $awayplayer = '-';
             }
@@ -111,7 +122,7 @@ class SpielberichtController extends AbstractContentElementController
                 if ($home = $spiel->getRelated('home2')) {
                     /** @var \MemberModel $member */
                     $member = $home->getRelated('member_id');
-                    $homeplayer .= '/'.DCAHelper::makeSpielerName($member);
+                    $homeplayer .= '/'.sprintf('(%s) %s',  $playerMap['home'][$spiel->home2]['position'] ?? '-', DCAHelper::makeSpielerName($member));
                 } else {
                     $homeplayer .= '/-';
                 }
@@ -119,7 +130,7 @@ class SpielberichtController extends AbstractContentElementController
                 if ($away = $spiel->getRelated('away2')) {
                     /** @var \MemberModel $member */
                     $member = $away->getRelated('member_id');
-                    $awayplayer .= '/'.DCAHelper::makeSpielerName($member);
+                    $awayplayer .= '/'.sprintf('(%s) %s', $playerMap['away'][$spiel->away2]['position'] ?? '-', DCAHelper::makeSpielerName($member));
                 } else {
                     $awayplayer .= '/-';
                 }
@@ -183,6 +194,23 @@ class SpielberichtController extends AbstractContentElementController
                 return $a['name'] <=> $b['name'];
             }
         );
+
+        return $result;
+    }
+
+    private function mapAufstellungData(array $originalDataAvailable, array $originalDataLineup, string $prefix): array
+    {
+        //dd($originalDataAvailable, $originalDataLineup);
+        $result = [];
+        foreach ($originalDataLineup as $position => $spieler_id) {
+            $spielerdata = array_first(array_filter($originalDataAvailable, fn ($el) => $el['id'] === $spieler_id));
+            $result[$spieler_id] = [
+                'name' => $spielerdata['name'],
+                'pass' => $spielerdata['pass'],
+                'id' => $spielerdata['id'],
+                'position' => sprintf('%s%d', $prefix, $position+1),
+            ];
+        }
 
         return $result;
     }
