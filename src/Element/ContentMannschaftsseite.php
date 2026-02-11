@@ -23,6 +23,7 @@ namespace Fiedsch\Ligaverwaltung\Element;
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
+use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
 use Contao\System;
 use Contao\Controller;
 use Exception;
@@ -78,7 +79,7 @@ class ContentMannschaftsseite extends ContentElement
     {
         $mannschaftModel = MannschaftModel::findById($this->mannschaft);
 
-        $this->addDescriptionToTlHead('Alles zur Mannschaft '.$mannschaftModel->name);
+        $this->addInfoToHead($mannschaftModel->getFullName());
 
         // Spielortinfo
         $contentModel = new ContentModel();
@@ -157,15 +158,11 @@ class ContentMannschaftsseite extends ContentElement
      * <?php endif; ?>
      * ```.
      */
-    protected function addDescriptionToTlHead(string $content): void
+    protected function addInfoToHead(string $mannschaftName): void
     {
-        if ($GLOBALS['TL_HEAD'] ?? false) {
-            foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {
-                if (str_contains($entry, 'description')) {
-                    unset($GLOBALS['TL_HEAD'][$i]);
-                }
-            }
-        }
-        $GLOBALS['TL_HEAD'][] = sprintf('<meta name="description" content="%s">', $content);
+        $responseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();
+        $htmlHeadBag = $responseContext->get(HtmlHeadBag::class);
+        $htmlHeadBag->setMetaDescription('Alles zur Mannschaft '.$mannschaftName);
+        $htmlHeadBag->setTitle($mannschaftName);
     }
 }
