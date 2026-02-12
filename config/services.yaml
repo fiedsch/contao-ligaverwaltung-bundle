@@ -56,3 +56,9 @@ services:
     Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftenuebersichtController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielortinfoController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielplanController: ~
+
+
+    Fiedsch\Ligaverwaltung\Callback\BegegnungDataEntryForm:
+        public: true
+        arguments:
+            - '@twig'
