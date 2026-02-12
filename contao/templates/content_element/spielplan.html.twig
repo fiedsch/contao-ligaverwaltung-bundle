@@ -60,7 +60,7 @@
                           <td class='spiel home w-25'>{{ spiel.home|raw}}</td>
                           <td class='spiel away w-25'>{{ spiel.away|raw }}</td>
                           <td class='spiel ort w-25'>{{ spiel.im }}</td>
-                          <td class='spiel score'>{{ spiel.score }}</td>
+                          <td class='spiel score'>{{ spiel.score|raw }}</td>
                           <td class='spiel {{ spiel.spielLegsClass }}'>{{ spiel.legs }}</td>
                       {% else %}
                           <td class='spiel am'>
