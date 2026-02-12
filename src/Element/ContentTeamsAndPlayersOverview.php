@@ -71,14 +71,11 @@ WHERE l.pid=? AND s.id IN(?)
 ORDER BY sname ASC, lspielstaerke ASC, lname ASC, mname ASC
 EOF;
 
-        $dbResult = $connection->executeQuery($query,
-            [$verband, $saison],
-            [ParameterType::INTEGER, Connection::PARAM_INT_ARRAY]
-        );
-
+        $statement = $connection->prepare($query);
+        $statement->bindValue(1, $verband, ParameterType::INTEGER);
+        $statement->bindValue(2, $saison, ParameterType::INTEGER);
+        $dbResult = $statement->executeQuery();
         $result = $dbResult->fetchAllAssociative();
-
-        // dd($result);
 
         $aggregated = [];
 
@@ -93,7 +90,8 @@ EOF;
                 ];
             }
             ++$aggregated[$ligaKey]['mannschaften'];
-            $dbResult = $statement->executeQuery([$record['mid']]);
+            $statement->bindValue(1, $record['mid'], ParameterType::INTEGER);
+            $dbResult = $statement->executeQuery();
             $aggregated[$ligaKey]['spieler'] += $dbResult->fetchOne();
         }
 
