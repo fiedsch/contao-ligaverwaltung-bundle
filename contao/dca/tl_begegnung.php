@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'filter' => true,
             'exclude' => true,
             'toggle' => true,
-            'eval' => ['tl_class' => 'w50,clr'],
+            'eval' => ['tl_class' => 'w50,clr','submitOnChange' => true],
             'sql' => "char(1) NOT NULL default ''",
         ],
         'home' => [
