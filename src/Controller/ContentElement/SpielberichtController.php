@@ -80,8 +80,14 @@ class SpielberichtController extends AbstractContentElementController
             return [];
         }
 
+        $spiele = SpielModel::findByPid($begegnung->id, ['order' => 'slot ASC']);
+
+        if (!$spiele) {
+            return [];
+        }
         // Für die "Metainformationen wie "Aufstellung" ("wer hat an welcher Position gespielt" + "Einwechslungen" etc.)
         $begegnung_data = \Symfony\Component\Yaml\Yaml::parse($begegnung->begegnung_data)['app_data'] ?? [];
+
         //dd($begegnung_data);
         $playerMap = [
             'home' => $this->mapAufstellungData($begegnung_data['home']['available'], $begegnung_data['home']['lineup'], 'H'),
@@ -89,11 +95,6 @@ class SpielberichtController extends AbstractContentElementController
         ];
         // dd($playerMap);
 
-        $spiele = SpielModel::findByPid($begegnung->id, ['order' => 'slot ASC']);
-
-        if (!$spiele) {
-            return [];
-        }
         $spielergebnisse = [];
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
@@ -139,22 +140,27 @@ class SpielberichtController extends AbstractContentElementController
             $homeCssClass = 'draw';
             $awayCssClass = 'draw';
             $score = '-';
+            //$legs = '-';
 
             if ($spiel->score_home > 0 || $spiel->score_away > 0) {
                 $homeCssClass = $spiel->score_home > $spiel->score_away ? 'winner' : 'loser';
                 $awayCssClass = $spiel->score_home > $spiel->score_away ? 'loser' : 'winner';
-                $score = sprintf('%d:%d', $spiel->score_home, $spiel->score_away);
             }
 
             $spielergebnisse[] = [
-                'home' => sprintf('<span class="%s">%s</span>', $homeCssClass, $homeplayer),
-                'away' => sprintf('<span class="%s">%s</span>', $awayCssClass, $awayplayer),
+                'player_home' => $homeplayer,
+                'css_home' => $homeCssClass,
+                'player_away' => $awayplayer,
+                'css_away' => $awayCssClass,
                 'type' => SpielModel::TYPE_EINZEL === (string)$spiel->spieltype ? 'einzel' : 'doppel',
-                'score' => $score,
+                'score_home' => $spiel->score_home,
+                'score_away' => $spiel->score_away,
+                //'legs_home' => /* ...*/ // legs are not saved in the tl_spiel record
+                //'legs_away' => /* ...*/ // legs are not saved in the tl_spiel record
             ];
         }
 
-        return $spielergebnisse;
+        return ['ergebnisse' => $spielergebnisse,'raw_data' => $begegnung_data, 'player_map' => $playerMap];
     }
 
     protected function compileHighlights(BegegnungModel $begegnung): array

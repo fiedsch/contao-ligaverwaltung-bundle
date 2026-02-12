@@ -17,6 +17,30 @@
       <h1>{{ begegnunglabel }}</h1>
 
       {% if spielergebnisse %}
+          <div class="row">
+              <h2>Aufstellung</h2>
+              <div  class="col-12 col-md-4">
+                  <h3>{{ home }}</h3>
+                  <ul>
+                      {%  for playerId in spielergebnisse.raw_data.home.lineup %}
+                          {% if playerId > 0 %}
+                              <li>({{ spielergebnisse.player_map.home[playerId].position }}) {{ spielergebnisse.player_map.home[playerId].name }}</li>
+                          {% endif %}
+                      {% endfor %}
+                  </ul>
+              </div>
+              <div  class="col-12 col-md-4">
+                  <h3>{{ away }}</h3>
+                  <ul>
+                      {%  for playerId in spielergebnisse.raw_data.away.lineup %}
+                          {% if playerId > 0 %}
+                              <li>({{ spielergebnisse.player_map.away[playerId].position }}) {{ spielergebnisse.player_map.away[playerId].name }}</li>
+                          {% endif %}
+                      {% endfor %}
+                  </ul>
+              </div>
+          </div>
+
           <h2>Spiele</h2>
           <div class="table-responsive">
               <table class="table table-hover">
@@ -28,11 +52,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                  {% for i,spielergebnis in spielergebnisse %}
-                  <tr class="{{ 'row-'~(i+1) }}">
-                      <td>{{ spielergebnis.home|raw }}</td>
-                      <td>{{ spielergebnis.away|raw }}</td>
-                      <td>{{ spielergebnis.score|raw }}</td>
+                  {% for i,spielergebnis in spielergebnisse.ergebnisse %}
+                  <tr class="{{ 'spiel-'~(i+1) }} {{ spielergebnis.type }}">
+                      <td class="{{ spielergebnis.css_home }}">{{ spielergebnis.player_home }}</td>
+                      <td class="{{ spielergebnis.css_away }}">{{ spielergebnis.player_away }}</td>
+                      <td class="score">{{ spielergebnis.score_home }}:{{ spielergebnis.score_away }}</td>
                   </tr>
                   {% endfor %}
                   </tbody>
@@ -71,19 +95,25 @@
 </div>
     {% endif %}
 
+  {% endif %}
+
+    {% block css %}
 <style>
 {# Zeilen, die jeweils Beginn eines neuen 4er Blocks oder der Doppel darstellen #}
-tr.row-1  td,
-tr.row-5  td,
-tr.row-9  td,
-tr.row-13 td,
-tr.row-17 td
+tr.spiel-1  td,
+tr.spiel-5  td,
+tr.spiel-9  td,
+tr.spiel-13 td,
+tr.spiel-17 td
 {
     padding-top: 3rem !important; {# TODO: using padding is just a hack; do better! #}
 }
 
+td.loser { }
+td.winner {
+    font-weight: 600;
+}
 </style>
-
-  {% endif %}
+    {% endblock %}
 
 {% endblock %}
