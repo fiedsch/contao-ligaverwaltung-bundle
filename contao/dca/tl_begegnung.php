@@ -180,7 +180,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             //'explanation' => 'begegnung_data_explanation',
         ],
         'vue_app' => [
-            'inputType' => 'vue_widget',
+            'inputType' => 'begegnungdataentry_widget',
             'eval'      => ['tl_class' => 'clr long', 'doNotSaveEmpty' => true],
             'sql' => null,
         ],

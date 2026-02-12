@@ -14,11 +14,8 @@ use Twig\Environment;
 class BegegnungDataEntryForm
 {
 
-    // private Environment $twig;
     public function __construct(private Environment $twig)
     {
-        $container = System::getContainer();
-        // $this->twig = $container->get('twig');
     }
 
     public function generate(int $id = null): string
@@ -42,8 +39,9 @@ class BegegnungDataEntryForm
         $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);
         $appData['disabled'] = $begegnungModel->published === "1";
         $appData = DataEntrySaver::augment($appData);
+        $appData = DataEntrySaver::fixInputEncoding($appData);
 
-        $template = '@Contao_FiedschLigaverwaltungBundle/begegnung_dataentry_vue.html.twig';
+        $template = '@Contao_FiedschLigaverwaltungBundle/backend/begegnung_dataentry_vue.html.twig';
         return $this->twig->render($template, ['app_data' => $appData]);
     }
 }

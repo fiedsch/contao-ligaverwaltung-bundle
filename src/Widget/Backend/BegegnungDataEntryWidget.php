@@ -8,9 +8,9 @@ use Contao\StringUtil;
 use Fiedsch\Ligaverwaltung\Controller\LigaverwaltungBackendController;
 use Fiedsch\Ligaverwaltung\Helper\DataEntrySaver;
 use Fiedsch\Ligaverwaltung\Callback\BegegnungDataEntryForm;
-use Twig\Environment;
+use Exception;
 
-class VueWidget extends Widget
+class BegegnungDataEntryWidget extends Widget
 {
     protected $blnSubmitInput = true;
     protected $blnForAttribute = true;
@@ -18,7 +18,7 @@ class VueWidget extends Widget
 
     public function generate(): string
     {
-        $form = new BegegnungDataEntryForm(System::getContainer()->get('twig'));
+        $form = System::getContainer()->get(BegegnungDataEntryForm::class);
         return $form->generate($this->activeRecord->id);
     }
 
@@ -31,17 +31,13 @@ class VueWidget extends Widget
     public function validator($varInput)
     {
         // Save the data to other fields (tl_begegnung.app_data and individual tl_spiel records)
-        try {
-            $this->saveData(json_decode(StringUtil::decodeEntities($varInput), true));
-        } catch (\Exception) {
-            // TODO $this->addError(...); nach Bedarf
-            $this->addError('TEst-Error');
-        }
+        $this->saveData(json_decode(StringUtil::decodeEntities($varInput), true));
 
         // The value is not supposed to be saved as there is no database field ($GLOBALS['TL_DCA']['tl_begegnung']['fields']['vue_app']['sql'] is set to null).
         // To achieve this, $GLOBALS['TL_DCA']['tl_begegnung']['fields']['vue_app']['eval']['doNotSaveEmpty'] is set to true, so returning an empty string prevents saving.
         return '';
     }
+
 
     protected function saveData(array $inputData): void
     {
@@ -56,7 +52,11 @@ class VueWidget extends Widget
         /* @see LigaverwaltungBackendController::begegnungDataSaveAction() */
         // "mit erledigt"
 
-        DataEntrySaver::handleDataEntryData($this->activeRecord->id /* == $inputData['begegnungId']*/, $inputData);
+        try {
+            DataEntrySaver::handleDataEntryData($this->activeRecord->id /* == $inputData['begegnungId']*/, $inputData);
+        } catch (Exception $e) {
+            $this->addError($e->getMessage());
+        }
     }
 
 }

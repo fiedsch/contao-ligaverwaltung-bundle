@@ -39,7 +39,7 @@ use Fiedsch\Ligaverwaltung\Model\VerbandModel;
 use Fiedsch\Ligaverwaltung\Module\ModuleMannschaftsseitenReader;
 use Fiedsch\Ligaverwaltung\Module\ModuleSpielberichtReader;
 use Fiedsch\Ligaverwaltung\Module\ModuleSpielortseitenReader;
-use Fiedsch\Ligaverwaltung\Widget\Backend\VueWidget;
+use Fiedsch\Ligaverwaltung\Widget\Backend\BegegnungDataEntryWidget;
 use Symfony\Component\HttpFoundation\Request;
 
 ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
@@ -124,4 +124,4 @@ $GLOBALS['TL_MODELS']['tl_verband'] = VerbandModel::class;
 /*
  * Widgets
  */
-$GLOBALS['BE_FFL']['vue_widget'] = VueWidget::class;
+$GLOBALS['BE_FFL']['begegnungdataentry_widget'] = BegegnungDataEntryWidget::class;
