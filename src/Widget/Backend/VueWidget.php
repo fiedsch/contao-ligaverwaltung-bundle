@@ -56,7 +56,7 @@ class VueWidget extends Widget
         /* @see LigaverwaltungBackendController::begegnungDataSaveAction() */
         // "mit erledigt"
 
-        $result = DataEntrySaver::handleDataEntryData($this->activeRecord->id /* == $inputData['begegnungId']*/, $inputData);
+        DataEntrySaver::handleDataEntryData($this->activeRecord->id /* == $inputData['begegnungId']*/, $inputData);
     }
 
 }
