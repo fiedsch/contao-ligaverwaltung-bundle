@@ -13,7 +13,7 @@ use Exception;
 class BegegnungDataEntryWidget extends Widget
 {
     protected $blnSubmitInput = true;
-    protected $blnForAttribute = true;
+    protected $blnForAttribute = false;
     protected $strTemplate = 'backend/be_widget';
 
     public function generate(): string
