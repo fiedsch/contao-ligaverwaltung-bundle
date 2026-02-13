@@ -15,40 +15,53 @@ declare(strict_types=1);
 namespace Fiedsch\Ligaverwaltung\Helper;
 
 use Contao\Database;
-use Exception;
+use Contao\StringUtil;
 use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Fiedsch\Ligaverwaltung\Model\HighlightModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SpielerModel;
 use Fiedsch\Ligaverwaltung\Model\SpielModel;
 use RuntimeException;
+use Exception;
 use function count;
 use function is_array;
 
 class DataEntrySaver
 {
     // app_data ist der "root key" der Daten, die n tl_begegnung.begegnung_data gespeichert werden!
-    const KEY_APP_DATA = 'app_data';
+    const string KEY_APP_DATA = 'app_data';
 
     /**
      * Die Daten aus der Begegnunserfassung verarbeiten:
      * == tl_spiel und tl_begegnung Records anlegen bzw. aktualisieren.
      *
+     * @param int $begegnung ID der Begegnung
      * @param array $data die Daten, die die Vue-App "Begegnungserfassung" übermittelt hat
+     *
+     * @throws Exception
      */
-    public static function handleDataEntryData(int $begegnung, array $data): string
+    public static function handleDataEntryData(int $begegnung, array $data): void
     {
         $begegnungModel = BegegnungModel::findById($begegnung);
 
         if (!$begegnungModel) {
-            return 'Begegnung nicht gefunden';
+            throw new Exception('Begegnung nicht gefunden');
         }
 
-        if ($begegnungModel->published) {
-            return 'Begegnung ist bereits erfasst und veröffentlicht. Für Änderungen muss die Veröffentlichung vorübergehend zurückgesetzt werden.';
-        }
         // nicht benötigte Daten entfernen
         unset($data['REQUEST_TOKEN'], $data['FORM_SUBMIT']);
+        if ($begegnungModel->published) {
+            // throw new Exception('Begegnung ist bereits erfasst und veröffentlicht. Für Änderungen muss die Veröffentlichung vorübergehend zurückgesetzt werden.');
+            // silently "don't handle" the begegnung and highlights data
+            return;
+            // Note: checking "published" with changes (and still unsaved) results or highlights data
+            // will:
+            // * save the data ('submitOnClick' => true in dca/tl_begegegnung.php)
+            // * have a $begegnungModel->published === '' at this point here
+            // * i.e. we will not return above!
+            // * Can we rely on that order? ´The answer should be "yes" as we call saveData() which eventually calls handleDataEntryData()
+            //   in the widgets validator() which means "before anything gets saved" (as other widgets might return "sorry, not valid".
+        }
 
         foreach ($data['highlights'] as $k => $v) {
             if ('' === $v) {
@@ -62,12 +75,10 @@ class DataEntrySaver
         $spieleGespeichert = 0;
 
         foreach ($data['spielplan'] as $i => $spiel) {
-            $spieleGespeichert += self::handleSpiel($i, $spiel, $data);
+            self::handleSpiel($i, $spiel, $data);
         }
 
-        $highlightsGespeichert = self::handleHighlights($begegnung, $data);
-
-        return sprintf('%d Spiele und %s Highlights gespeichert', $spieleGespeichert, $highlightsGespeichert);
+        self::handleHighlights($begegnung, $data);
     }
 
     /**
@@ -98,9 +109,9 @@ class DataEntrySaver
     }
 
     /**
-     * @return int Anzahl gespeicherte SpielModel
+     * @throws Exception
      */
-    protected static function handleSpiel(int $i, array $spiel, array $data): int
+    protected static function handleSpiel(int $i, array $spiel, array $data): void
     {
         $begegnungId = $data['begegnungId'];
         $slot = $i + 1;
@@ -114,7 +125,7 @@ class DataEntrySaver
         if (null === $playerHomeId || null === $playerAwayId) {
             $spielModel?->delete();
 
-            return 0;
+            return;
         }
 
         $playerHome2Id = 0;
@@ -132,7 +143,7 @@ class DataEntrySaver
         if (null === $scoreHome || null === $scoreAway) {
             $spielModel?->delete();
 
-            return 0;
+            return;
         }
         $spieltype = $isDouble ? SpielModel::TYPE_DOPPEL : SpielModel::TYPE_EINZEL;
 
@@ -150,27 +161,19 @@ class DataEntrySaver
         $spielModel->score_away = $scoreAway;
         $spielModel->tstamp = time();
 
-        try {
-            $spielModel->save();
-        } catch (RuntimeException $e) {
-            return 0;
-        }
-
-        return 1;
+        $spielModel->save();
     }
 
     /**
-     * @return int Anzahl gespeicherte HighlightlModel
+     * @throws Exception
      */
-    public static function handleHighlights(int $begegnung, array $data): int
+    public static function handleHighlights(int $begegnung, array $data): void
     {
-        $existingHighlightsIds = Database::getInstance()
+        $existingHighlightsIds = Database::getInstance() // TODO: use @database_connection from container (via DI)
             ->prepare('SELECT id FROM tl_highlight WHERE begegnung_id=?')
             ->execute($begegnung)
             ->fetchEach('id')
         ;
-
-        $savedModels = 0;
 
         foreach ($data['highlights'] as $k => $v) {
             if ('' === $v) {
@@ -178,25 +181,13 @@ class DataEntrySaver
             }
             [$strType, $spieler] = explode('_', $k);
 
-            switch ($strType) {
-                case 'one80':
-                    $highlightType = HighlightModel::TYPE_180;
-                    break;
-
-                case 'one71':
-                    $highlightType = HighlightModel::TYPE_171;
-                    break;
-
-                case 'shortleg':
-                    $highlightType = HighlightModel::TYPE_SHORTLEG;
-                    break;
-
-                case 'highfinish':
-                    $highlightType = HighlightModel::TYPE_HIGHFINISH;
-                    break;
-                default:
-                    $highlightType = '';
-            }
+            $highlightType = match ($strType) {
+                'one80' => HighlightModel::TYPE_180,
+                'one71' => HighlightModel::TYPE_171,
+                'shortleg' => HighlightModel::TYPE_SHORTLEG,
+                'highfinish' => HighlightModel::TYPE_HIGHFINISH,
+                default => '',
+            };
 
             $highlightModel = HighlightModel::findBy(
                 ['begegnung_id=?', 'spieler_id=?', 'type=?'],
@@ -207,26 +198,23 @@ class DataEntrySaver
                 $highlightModel = new HighlightModel();
                 $highlightModel->begegnung_id = $begegnung;
                 $highlightModel->spieler_id = $spieler;
-                //$highlightModel->type = $highlightType;
             }
             $highlightModel->tstamp = time();
             $highlightModel->type = (int)$highlightType;
             $highlightModel->value = $v;
             $highlightModel->save();
-            // Bookkeeping
-            ++$savedModels;
 
             if (($key = array_search($highlightModel->id, $existingHighlightsIds, true)) !== false) {
                 unset($existingHighlightsIds[$key]);
             }
         }
 
+        // After changes in the data entry and a call to save and the above removing of the really existing IDs from
+        // $existingHighlightsIds, the array  contains the formerly existing IDs that now must be deleted
         if (count($existingHighlightsIds)) {
             $query = sprintf('DELETE FROM tl_highlight WHERE id IN (%s)', implode(',', $existingHighlightsIds));
             Database::getInstance()->execute($query);
         }
-
-        return $savedModels;
     }
 
     /**
@@ -242,11 +230,11 @@ class DataEntrySaver
         if ($spielerModel) {
             /** @var SpielerModel $spieler */
             foreach ($spielerModel as $spieler) {
-                $players[] = [
-                    'name' => html_entity_decode($spieler->getName()),
-                    'id' => $spieler->id,
-                    'pass' => $spieler->getRelated('member_id')->passnummer,
-                ];
+                    $players[] = [
+                        'name' => html_entity_decode($spieler->getName()),
+                        'id' => $spieler->id,
+                        'pass' => $spieler->getRelated('member_id')->passnummer,
+                    ];
             }
         }
 
@@ -269,5 +257,19 @@ class DataEntrySaver
             'lineup' => [],
             'played' => [],
         ];
+    }
+
+    public static function fixInputEncoding(array $appData): array
+    {
+        $appData['home']['name'] = StringUtil::decodeEntities($appData['home']['name']);
+        $appData['away']['name'] = StringUtil::decodeEntities($appData['away']['name']);
+
+        foreach ($appData['home']['available'] as &$player) {
+            $player['name'] = StringUtil::decodeEntities($player['name']);
+        }
+        foreach ($appData['away']['available'] as &$player) {
+            $player['name'] = StringUtil::decodeEntities($player['name']);
+        }
+        return $appData;
     }
 }
