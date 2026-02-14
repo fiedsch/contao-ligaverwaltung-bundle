@@ -26,6 +26,7 @@ use function Symfony\Component\String\u;
 class ContentTeamsAndPlayersOverview extends ContentElement
 {
     use TlModeTrait;
+
     /**
      * Template.
      *
@@ -41,7 +42,7 @@ class ContentTeamsAndPlayersOverview extends ContentElement
 
             $headline = $this->headline;
 
-            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['teamsandplayersoverview'][0])->upper().' ###';
+            $objTemplate->wildcard = '### ' . u($GLOBALS['TL_LANG']['CTE']['teamsandplayersoverview'][0])->upper() . ' ###';
             $objTemplate->id = $this->id;
 
             return $objTemplate->parse();
@@ -52,56 +53,55 @@ class ContentTeamsAndPlayersOverview extends ContentElement
 
     public function compile(): void
     {
-        $verband = $this->verband;
-        $saison = StringUtil::deserialize($this->saison);
-
         $templateResult = [];
 
         /** @var Connection $connection */
         $connection = System::getContainer()->get('database_connection');
 
-        $query = <<<EOF
+        $saisons = StringUtil::deserialize($this->saison);
+        $aggregated = [];
+
+        foreach ($saisons as $saison) {
+            $query = <<<EOF
 SELECT
     m.name mname, m.id mid, l.name lname, l.spielstaerke lspielstaerke, s.name sname
 FROM
     tl_mannschaft m
 LEFT JOIN tl_liga l ON (m.liga=l.id)
 LEFT JOIN tl_saison s ON (l.saison=s.id)
-WHERE l.pid=? AND s.id IN(?)
-ORDER BY sname ASC, lspielstaerke ASC, lname ASC, mname ASC
+WHERE s.id=?
+ORDER BY lspielstaerke ASC, lname ASC, mname ASC
 EOF;
+            $dbResult = $connection->executeQuery($query,
+                [$saison],
+                [ParameterType::INTEGER]
+            );
 
-        $statement = $connection->prepare($query);
-        $statement->bindValue(1, $verband, ParameterType::INTEGER);
-        $statement->bindValue(2, $saison, ParameterType::INTEGER);
-        $dbResult = $statement->executeQuery();
-        $result = $dbResult->fetchAllAssociative();
+            $teams = $dbResult->fetchAllAssociative();
 
-        $aggregated = [];
+            $statement = $connection->prepare('SELECT COUNT(*) n FROM tl_spieler s LEFT JOIN tl_mannschaft m on s.pid = m.id WHERE m.id=?');
 
-        $statement = $connection->prepare('SELECT COUNT(*) n FROM tl_spieler s LEFT JOIN tl_mannschaft m on s.pid = m.id WHERE m.id=?');
-
-        foreach ($result as $record) {
-            $ligaKey = sprintf('%s %s', $record['lname'], $record['sname']);
-            if (!isset($aggregated[$ligaKey])) {
-                $aggregated[$ligaKey] = [
-                    'mannschaften' => 0,
-                    'spieler' => 0
-                ];
+            foreach ($teams as $team) {
+                $ligaKey = sprintf('%s %s', $team['lname'], $team['sname']);
+                if (!isset($aggregated[$ligaKey])) {
+                    $aggregated[$ligaKey] = [
+                        'mannschaften' => 0,
+                        'spieler' => 0
+                    ];
+                }
+                ++$aggregated[$ligaKey]['mannschaften'];
+                $statement->bindValue(1, $team['mid'], ParameterType::INTEGER);
+                $dbResult = $statement->executeQuery();
+                $aggregated[$ligaKey]['spieler'] += $dbResult->fetchOne();
             }
-            ++$aggregated[$ligaKey]['mannschaften'];
-            $statement->bindValue(1, $record['mid'], ParameterType::INTEGER);
-            $dbResult = $statement->executeQuery();
-            $aggregated[$ligaKey]['spieler'] += $dbResult->fetchOne();
         }
 
-        $this->Template->verbandId = $verband;
         $this->Template->result = $aggregated;
-        $this->Template->gesamt = array_reduce($aggregated, function($carry, $item) {
+        $this->Template->gesamt = array_reduce($aggregated, function ($carry, $item) {
             return [
                 'mannschaften' => $carry['mannschaften'] + $item['mannschaften'],
                 'spieler' => $carry['spieler'] + $item['spieler']
             ];
-            }, ['mannschaften' => 0, 'spieler' =>0 ]);
+        }, ['mannschaften' => 0, 'spieler' => 0]);
     }
 }
