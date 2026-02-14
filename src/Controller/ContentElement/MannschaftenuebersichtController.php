@@ -70,7 +70,7 @@ class MannschaftenuebersichtController extends AbstractContentElementController
             $ligen = LigaModel::findAll([
                 'column' => ['aktiv=?', 'saison=?'],
                 'value' => ['1', $saisonId],
-                'order' => 'spielstaerke ASC',
+                'order' => 'spielstaerke ASC, name ASC', // name ASC as fallback if spielstaerke (which is kind of an order field) is left emtpy
             ]);
             array_push($alleLigen, ...$ligen->fetchAll());
         }

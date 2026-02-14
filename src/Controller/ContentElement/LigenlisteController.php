@@ -67,7 +67,7 @@ class LigenlisteController extends AbstractContentElementController
         $ligen = LigaModel::findAll([
             'column' => ['pid=?', 'aktiv=?', $saisonFilter],
             'value' => [$model->verband, '1'],
-            'order' => 'spielstaerke ASC',
+            'order' => 'spielstaerke ASC, name ASC', // name ASC as fallback if spielstaerke (which is kind of an order field) is left emtpy
         ]);
 
         if (null === $ligen) {
