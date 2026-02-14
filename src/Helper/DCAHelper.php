@@ -712,6 +712,31 @@ class DCAHelper
     }
 
     /**
+     * Liste aller definierte Saisons
+     * tl_content.fields.saison.options_callback
+     *
+     * @throws Exception
+     */
+    public static function getAlleSaisonsForSelect(DataContainer $dc): array
+    {
+        $result = [];
+        $saisons = SaisonModel::findAll(['order' => 'name ASC']);
+
+        if (null === $saisons) {
+            return ['0' => 'keine Saisons gefunden!'];
+        }
+
+        foreach ($saisons as $saison) {
+            dump($saison);
+            $result[$saison->id] = sprintf('%s',
+                $saison->name
+            );
+        }
+
+        return $result;
+    }
+
+    /**
      * Einträge für ein Mannschaftsauswahl Dropdown. Da hier alle Ligen aller Saisons in
      * Betracht kommen und eine Mannschaft gleichen Namens daher mehrfach auftaucht,
      * hängen wir Liga und Saison an, um die Auswahl eindeutig zu machen.
