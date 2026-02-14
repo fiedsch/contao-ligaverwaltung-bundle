@@ -14,11 +14,7 @@ declare(strict_types=1);
 
 $GLOBALS['TL_LANG']['tl_content']['config_legend'] = 'Konfiguration';
 $GLOBALS['TL_LANG']['tl_content']['auswahl_legend'] = 'Auswahl';
-$GLOBALS['TL_LANG']['tl_content']['liga_legend'] = 'Liga';
-$GLOBALS['TL_LANG']['tl_content']['filter_legend'] = 'Filter';
-$GLOBALS['TL_LANG']['tl_content']['saison_legend'] = 'Saison';
 
-$GLOBALS['TL_LANG']['tl_content']['mannschaft_legend'] = 'Mannschaft';
 
 $GLOBALS['TL_LANG']['tl_content']['verband'] = [
     'Verband',

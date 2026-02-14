@@ -48,7 +48,7 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
 $GLOBALS['TL_DCA']['tl_member']['fields']['email']['eval']['mandatory'] = false;
 
 $GLOBALS['TL_DCA']['tl_member']['palettes']['default']
-    = preg_replace('/;{address_legend/', ';{liga_legend},passnummer,avatar,anonymize;{address_legend', $GLOBALS['TL_DCA']['tl_member']['palettes']['default']);
+    = preg_replace('/;{address_legend/', ';{ligaverwaltung_legend},passnummer,avatar,anonymize;{address_legend', $GLOBALS['TL_DCA']['tl_member']['palettes']['default']);
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_member']['passnummer'],

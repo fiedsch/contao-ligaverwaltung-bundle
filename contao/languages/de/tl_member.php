@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license https://opensource.org/licenses/MIT
  */
 
-$GLOBALS['TL_LANG']['tl_member']['liga_legend'] = 'Ligaverwaltung';
+$GLOBALS['TL_LANG']['tl_member']['ligaverwaltung_legend'] = 'Ligaverwaltung';
 
 $GLOBALS['TL_LANG']['tl_member']['passnummer'] = [
     'Spielerpass-Nummer',
