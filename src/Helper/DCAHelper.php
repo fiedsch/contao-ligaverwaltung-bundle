@@ -727,7 +727,6 @@ class DCAHelper
         }
 
         foreach ($saisons as $saison) {
-            dump($saison);
             $result[$saison->id] = sprintf('%s',
                 $saison->name
             );
