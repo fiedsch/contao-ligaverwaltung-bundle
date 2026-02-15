@@ -31,7 +31,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['spielerliste']            = '{type
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spielplan']               = '{type_legend},type,headline,title;{auswahl_legend},liga,mannschaft;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spielortinfo']            = '{type_legend},type,headline,title;{auswahl_legend},spielort;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spielbericht']            = '{type_legend},type,headline,title;{auswahl_legend},begegnung;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['spielortseite']           = '{type_legend},type,headline,title;{auswahl_legend},spielort,ligen';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['spielortseite']           = '{type_legend},type,headline,title;{auswahl_legend},spielort,saison';
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftsseite']        = '{type_legend},type,headline,title;{auswahl_legend},mannschaft';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftenuebersicht']  = '{type_legend},type,headline,title;{auswahl_legend},saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
