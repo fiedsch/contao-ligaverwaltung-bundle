@@ -86,10 +86,7 @@ class ContentMannschaftsseite extends ContentElement
         $contentModel->tstamp = time();
         $contentModel->type = 'spielortinfo';
         $contentModel->spielort = $mannschaftModel->spielort;
-        $contentModel->headline = [
-            'value' => 'Spielort '.$mannschaftModel->name,
-            'unit' => 'h2',
-        ];
+        $contentModel->headline = null; // keine zusaätzliche Überschrift
         $this->Template->spielortinfo = Controller::getContentElement($contentModel);
 
         // Spielerliste
@@ -150,14 +147,6 @@ class ContentMannschaftsseite extends ContentElement
 
     }
 
-    /**
-     * Add the following to fe_page.html5 or (if using Bootsrap for Contao) to fe_bootstrap_xx.html5:
-     * ```
-     * <?php if (!strpos($head, "description") === false): ?>
-     * <meta name="description" content="<?php echo $this->description; ?>">
-     * <?php endif; ?>
-     * ```.
-     */
     protected function addInfoToHead(string $mannschaftName): void
     {
         $responseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();
