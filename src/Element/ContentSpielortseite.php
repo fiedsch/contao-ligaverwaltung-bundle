@@ -23,14 +23,16 @@ namespace Fiedsch\Ligaverwaltung\Element;
 use Contao\BackendTemplate;
 use Contao\ContentElement;
 use Contao\ContentModel;
+use Contao\Controller;
+use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
 use Contao\StringUtil;
+use Contao\System;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
+use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use function Symfony\Component\String\u;
-use function array_filter;
-use function in_array;
 
 class ContentSpielortseite extends ContentElement
 {
@@ -61,6 +63,7 @@ class ContentSpielortseite extends ContentElement
             $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielortseite'][0])->upper().' ###';
             $objTemplate->id = $this->id;
             $objTemplate->link = $headline;
+            $objTemplate->href = 'TODO'; // or not when switching to CE contoller
 
             return $objTemplate->parse();
         }
@@ -72,78 +75,52 @@ class ContentSpielortseite extends ContentElement
     {
         $spielortModel = SpielortModel::findById($this->spielort);
 
-        $this->addDescriptionToTlHead('Alles zum Spielort '.$spielortModel->name);
+        $this->addInfoToHead($spielortModel->name);
 
-        // Spielortinfo
         $contentModel = new ContentModel();
         $contentModel->tstamp = time();
         $contentModel->type = 'spielortinfo';
         $contentModel->spielort = $spielortModel->id;
         $contentModel->headline = [
-            // Keine Überschrift!
-            // 'value' => 'Spielor ', . $spielortModel->name,
-            // 'unit'  => 'h1',
+            'value' => 'Spielort',
+            'unit'  => 'h1',
         ];
-        $contentElement = new ContentSpielortinfo($contentModel);
-        $this->Template->spielortinfo = $contentElement->generate();
+        $this->Template->spielortinfo = Controller::getContentElement($contentModel);
 
-        $this->Template->spielort_name = $spielortModel->name;
+        $saisons = StringUtil::deserialize($this->saison);
+        $saison_lookup = [];
+        $result = [];
 
-        $mannschaften = MannschaftModel::findBy(['spielort=?'], [$spielortModel->id]);
+        foreach ($saisons as $saison) {
+            $saisonModel = SaisonModel::findById($saison);
+            $saison_lookup[$saisonModel->id] = $saisonModel->name;
 
-        // Alle Mannschaften ermitteln, die "hier spielen",
-        // nach Ligen gemäß Auswahl in der CE-Konfiguration filtern,
-        // nach Ligen gruppiert Mannschaften (verlinkt)  ausgeben
+            $mannschaften = MannschaftModel::findBy(
+                ['spielort=?', 'saison=?', 'active=?'],
+                [$spielortModel->id, $saison, '1'],
+                ['order' => 'name ASC']
+            );
+            foreach ($mannschaften ?? [] as $mannschaft) {
+                $liga = LigaModel::findById($mannschaft->liga);
+                $ligen_lookup[$liga?->id ?? 0] = $liga;
 
-        $mannschaften_in_ligen_liste = [];
-        $gefundene_ligen = [];
-        $ligen_lookup = [];
-
-        if ($mannschaften) {
-            foreach ($mannschaften as $mannschaft) {
-                if (in_array($mannschaft->liga, StringUtil::deserialize($this->ligen), true)) {
-                    $mannschaften_in_ligen_liste[$mannschaft->liga][] = $mannschaft->getLinkedName();
-                    ++$gefundene_ligen[$mannschaft->liga];
-                }
+                $result[$saison][] = [
+                    'link' => $mannschaft->getLinkedName(),
+                    'liga' => $ligen_lookup[$mannschaft->liga]?->name,
+                    'saison' => $saison_lookup[$liga->saison] ?? '',
+                ];
             }
-            $gefundene_ligen = array_keys($gefundene_ligen);
         }
 
-        // nach in der Konfiguration ausgewählten Saisons filtern
-
-        $show_ligen = array_filter(StringUtil::deserialize($this->ligen, true), static function ($el) use ($gefundene_ligen) {
-            return in_array($el, $gefundene_ligen, true);
-        });
-
-        foreach ($show_ligen as $ligaId) {
-            $ligen_lookup[$ligaId] = LigaModel::findById($ligaId);
-        }
-
-        // $this->Template->mannschaften_liste = $mannschaften_liste; // nur debug
-        // $this->Template->gefundene_ligen = $gefundene_ligen;  // nur debug
-        // $this->Template->ligen_config = StringUtil::deserialize($this->ligen, true);  // nur debug
-        $this->Template->show_ligen = $show_ligen;
-        $this->Template->ligen_lookup = $ligen_lookup;
-        $this->Template->mannschaften_in_ligen_liste = $mannschaften_in_ligen_liste;
+        $this->Template->mannschaften = $result;
     }
 
-    /**
-     * Add the following to fe_page.html5 or (if using Bootsrap for Contao) to fe_bootstrap_xx.html5:
-     * ```
-     * <?php if (!strpos($head, "description") === false): ?>
-     * <meta name="description" content="<?php echo $this->description; ?>">
-     * <?php endif; ?>
-     * ```.
-     */
-    protected function addDescriptionToTlHead(string $content): void
+
+    protected function addInfoToHead(string $spielortName): void
     {
-        if ($GLOBALS['TL_HEAD']) {
-            foreach ($GLOBALS['TL_HEAD'] as $i => $entry) {
-                if (str_contains($entry, 'description')) {
-                    unset($GLOBALS['TL_HEAD'][$i]);
-                }
-            }
-        }
-        $GLOBALS['TL_HEAD'][] = sprintf('<meta name="description" content="%s">', $content);
+        $responseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();
+        $htmlHeadBag = $responseContext->get(HtmlHeadBag::class);
+        $htmlHeadBag->setMetaDescription('Alles zum Spielort '.$spielortName);
+        $htmlHeadBag->setTitle($spielortName);
     }
 }
