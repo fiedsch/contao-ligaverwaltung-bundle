@@ -2,29 +2,14 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of fiedsch/ligaverwaltung-bundle.
- *
- * (c) 2016-2025 Andreas Fieger
- *
- * @package Ligaverwaltung
- * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
- * @license https://opensource.org/licenses/MIT
- */
+namespace Fiedsch\Ligaverwaltung\Controller\ContentElement;
 
-/**
- * Content Element "Mannschaftsseite".
- *
- * @author Andreas Fieger <https://github.com/fiedsch>
- */
-
-namespace Fiedsch\Ligaverwaltung\Element;
-
-use Contao\BackendTemplate;
-use Contao\ContentElement;
 use Contao\ContentModel;
 use Contao\Controller;
+use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\StringUtil;
 use Contao\System;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
@@ -32,48 +17,36 @@ use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
 
-class ContentSpielortseite extends ContentElement
+#[AsContentElement(
+    type: 'spielortseite',
+    category: 'ligaverwaltung',
+    template: 'content_element/spielortseite'
+)]
+class SpielortseiteController extends AbstractContentElementController
 {
     use TlModeTrait;
 
-    /**
-     * Template.
-     *
-     * @var string
-     */
-    protected $strTemplate = 'ce_spielortseite';
-
-    /**
-     * @return string
-     */
-    public function generate(): string
+    public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        if ($this->isBackend()) {
-            $objTemplate = new BackendTemplate('be_wildcard');
+        $this->setData($template, $model);
 
-            $headline = $this->headline;
-
-            if (!$headline) {
-                $spielortModel = SpielortModel::findById($this->spielort);
-                $headline = $spielortModel->name;
-            }
-
-            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielortseite'][0])->upper().' ###';
-            $objTemplate->id = $this->id;
-            $objTemplate->link = $headline;
-            $objTemplate->href = 'TODO'; // or not when switching to CE contoller
-
-            return $objTemplate->parse();
-        }
-
-        return parent::generate();
+        return $template->getResponse();
     }
 
-    public function compile(): void
+    private function setData(FragmentTemplate $template, ContentModel $model): void
     {
-        $spielortModel = SpielortModel::findById($this->spielort);
+        $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielortseite'][0])->upper().' ###';
+
+        $spielortModel = SpielortModel::findById($model->spielort);
+
+        $template->subject = $spielortModel->name;
+        if ($this->isBackend()) {
+            return;
+        }
 
         $this->addInfoToHead($spielortModel->name);
 
@@ -85,9 +58,9 @@ class ContentSpielortseite extends ContentElement
             'value' => 'Spielort',
             'unit'  => 'h1',
         ];
-        $this->Template->spielortinfo = Controller::getContentElement($contentModel);
+        $template->spielortinfo = Controller::getContentElement($contentModel);
 
-        $saisons = StringUtil::deserialize($this->saison);
+        $saisons = StringUtil::deserialize($model->saison);
         $saison_lookup = [];
         $result = [];
 
@@ -112,15 +85,16 @@ class ContentSpielortseite extends ContentElement
             }
         }
 
-        $this->Template->mannschaften = $result;
-    }
+        $template->mannschaften = $result;
 
+    }
 
     protected function addInfoToHead(string $spielortName): void
     {
         $responseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();
         $htmlHeadBag = $responseContext->get(HtmlHeadBag::class);
-        $htmlHeadBag->setMetaDescription('Alles zum Spielort '.$spielortName);
+        $htmlHeadBag->setMetaDescription('Spielort '.$spielortName);
         $htmlHeadBag->setTitle($spielortName);
     }
+
 }

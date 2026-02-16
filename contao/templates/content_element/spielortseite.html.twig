@@ -1,0 +1,40 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <div class="tl_gray">
+             <span class="upper">{{ wildcard }}</span>
+             <br>
+              {{ subject }}
+         </div>
+     {% endblock %}
+
+  {% else %}
+
+      <div class="row mt-3">
+          <div class="spielortinfo col-sm-12">
+              {{ spielortinfo|raw }}
+          </div>
+      </div>
+
+      <div class="row  mt-3">
+          <div class="mannschaften col-sm-12">
+              {%  for ligaId,elememnt in mannschaften %}
+                  <h2>{{ mannschaften[ligaId][0].liga  }} {{ mannschaften[ligaId][0].saison  }}</h2>
+                  <ul>
+                      {% for mannschaft in mannschaften[ligaId] %}
+                          <li>
+                              {{ mannschaft.link|raw }}
+                          </li>
+                      {% endfor %}
+                  </ul>
+              {% endfor %}
+          </div>
+      </div>
+
+  {% endif %}
+
+{% endblock %}
