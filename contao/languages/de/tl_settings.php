@@ -33,8 +33,3 @@ $GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model'] = [
     'Sortierung Spieler-Ranking ("Punktevergabe")',
     'Regelt die Punktevergabe und damit die Sortierlogik in den Spieler-Rankings.',
 ];
-
-$GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_dataentry_compatibility_mode'] = [
-    'Erfassung Spielberichtsbögen (Begegnungen)',
-    'Bei der Erfassung der Spielberichtsbögen Symbole anzeigen, um Begenungen sowohl im "alten" (Spiele einzeln) als auch im "neuen" Modus (nur noch Eingabemaske) zu erfassen.',
-];
