@@ -31,14 +31,12 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['spielerliste']            = '{type
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spielplan']               = '{type_legend},type,headline,title;{auswahl_legend},liga,mannschaft;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spielortinfo']            = '{type_legend},type,headline,title;{auswahl_legend},spielort;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spielbericht']            = '{type_legend},type,headline,title;{auswahl_legend},begegnung;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['spielortseite']           = '{type_legend},type,headline,title;{auswahl_legend},spielort,saison';
-
-$GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftsseite']        = '{type_legend},type,headline,title;{auswahl_legend},mannschaft';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftenuebersicht']  = '{type_legend},type,headline,title;{auswahl_legend},saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['ranking']                 = '{type_legend},type,headline,title;{auswahl_legend},liga,rankingtype;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['highlightranking']        = '{type_legend},type,headline,title;{auswahl_legend},liga,rankingtype,rankingfield;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['teamsandplayersoverview'] = '{type_legend},type,headline;{auswahl_legend},saison;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop';
-
+$GLOBALS['TL_DCA']['tl_content']['palettes']['spielortseite']           = '{type_legend},type,headline,title;{auswahl_legend},spielort,saison'; // ohne customTpl und protected etc. da hier (wird typischerweise in einem Reader dargestellt eher sinnfrei)
+$GLOBALS['TL_DCA']['tl_content']['palettes']['mannschaftsseite']        = '{type_legend},type,headline,title;{auswahl_legend},mannschaft';      // wie oben
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'rankingtype';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['rankingtype_2'] = 'mannschaft';
