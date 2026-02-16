@@ -1,0 +1,52 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <div class="tl_gray">
+             <span class="upper">{{ wildcard }}</span>
+             <br>
+             {{ subject }}
+         </div>
+      {% endblock %}
+
+  {% else %}
+
+      <div class="row">
+          <div class="col-sm-12">
+              <h1>Mannschaftsseite {{ mannschaft_name  }} {{ liga }} {{ saison }}</h1>
+          </div>
+      </div>
+
+      <div class="row mt-3">
+          <div class="spielortinfo col-md-6 col-sm-12">
+              {{ spielortinfo|raw }}
+          </div>
+      </div>
+
+      <div class="row mt-3">
+          <div class="spielerliste col-sm-12">
+              {{ spielerliste|raw }}
+          </div>
+      </div>
+
+      <div class="row mt-3">
+          <div class="spielplan col-sm-12">
+              {{ spielplan|raw }}
+          </div>
+      </div>
+
+      <div class="row mt-3">
+          <div class="ranking col-md-6 col-sm-12">
+              {{ ranking|raw }}
+          </div>
+          <div class="ranking col-md-6 col-sm-12">
+              {{ highlightranking|raw }}
+          </div>
+      </div>
+
+  {% endif %}
+
+{% endblock %}

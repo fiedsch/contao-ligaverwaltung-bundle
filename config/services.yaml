@@ -57,6 +57,7 @@ services:
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielortinfoController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielplanController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielortseiteController: ~
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftsseiteController: ~
 
 
     Fiedsch\Ligaverwaltung\Callback\BegegnungDataEntryForm:

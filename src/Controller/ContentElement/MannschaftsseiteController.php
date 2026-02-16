@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2025 Andreas Fieger
+ * (c) 2016-2026 Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -13,71 +13,63 @@ declare(strict_types=1);
  */
 
 /**
- * Content Element "Mannschaftsseite".
- *
- * @author Andreas Fieger <https://github.com/fiedsch>
+ * TODO:
+ * - mannschafts**seite** is not a proper name for a content element. It should rather be something like mannschaftsinfo
+ * - Adding the name of the team to the head (see addInfoToHead()) should be done in the "mannschaftsseitenreader" module
+ * - Same for the other CE that (typically) are displayed in a reader module
  */
 
-namespace Fiedsch\Ligaverwaltung\Element;
 
-use Contao\BackendTemplate;
-use Contao\ContentElement;
+namespace Fiedsch\Ligaverwaltung\Controller\ContentElement;
+
 use Contao\ContentModel;
-use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
-use Contao\System;
 use Contao\Controller;
-use Exception;
-use Fiedsch\Ligaverwaltung\Controller\ContentElement\RankingController;
+use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
+use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
+use Contao\CoreBundle\Twig\FragmentTemplate;
+use Contao\System;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\String\u;
 
-class ContentMannschaftsseite extends ContentElement
+#[AsContentElement(
+    type: 'mannschaftsseite',
+    category: 'ligaverwaltung',
+    template: 'content_element/mannschaftsseite'
+)]
+class MannschaftsseiteController extends AbstractContentElementController
 {
     use TlModeTrait;
 
-    /**
-     * Template.
-     *
-     * @var string
-     */
-    protected $strTemplate = 'ce_mannschaftsseite';
-
-    /**
-     * @throws Exception
-     *
-     * @return string
-     */
-    public function generate(): string
+    public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        if ($this->isBackend()) {
-            $objTemplate = new BackendTemplate('be_wildcard');
 
-            $headline = $this->headline;
+        $this->setData($template, $model);
 
-            if (!$headline) {
-                $mannschaftModel = MannschaftModel::findById($this->mannschaft);
-                $headline = $mannschaftModel->getFullName();
-            }
-
-            $objTemplate->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftsseite'][0])->upper().' ###';
-            $objTemplate->id = $this->id;
-            $objTemplate->link = $headline;
-
-            return $objTemplate->parse();
-        }
-
-        return parent::generate();
+        return $template->getResponse();
     }
 
-    /**
-     * @throws Exception
-     */
-    public function compile(): void
+    private function setData(FragmentTemplate $template, ContentModel $model): void
     {
-        $mannschaftModel = MannschaftModel::findById($this->mannschaft);
+        $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftsseite'][0])->upper().' ###';
+
+        $mannschaftModel = MannschaftModel::findById($model->mannschaft);
+
+        $template->subject = $mannschaftModel ? $mannschaftModel?->getFullName() : 'Mannschaft '.DCAHelper::DOES_NOT_EXIST;
+
+        if ($this->isBackend()) {
+            return;
+        }
+
+        if (!$mannschaftModel) {
+            return;
+        }
 
         $this->addInfoToHead($mannschaftModel->getFullName());
 
@@ -87,19 +79,19 @@ class ContentMannschaftsseite extends ContentElement
         $contentModel->type = 'spielortinfo';
         $contentModel->spielort = $mannschaftModel->spielort;
         $contentModel->headline = null; // keine zusaätzliche Überschrift
-        $this->Template->spielortinfo = Controller::getContentElement($contentModel);
+        $template->spielortinfo = Controller::getContentElement($contentModel);
 
         // Spielerliste
         $contentModel = new ContentModel();
         $contentModel->tstamp = time();
         $contentModel->type = 'spielerliste';
-        $contentModel->mannschaft = $this->mannschaft;
+        $contentModel->mannschaft = $model->mannschaft;
         $contentModel->showdetails = '1';
         $contentModel->headline = [
             'value' => 'Spielerliste '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $this->Template->spielerliste = Controller::getContentElement($contentModel);
+        $template->spielerliste = Controller::getContentElement($contentModel);
 
         // Spielplan
         $contentModel = new ContentModel();
@@ -111,7 +103,7 @@ class ContentMannschaftsseite extends ContentElement
             'value' => 'Spielplan '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $this->Template->spielplan= Controller::getContentElement($contentModel);
+        $template->spielplan= Controller::getContentElement($contentModel);
 
         // Einzelspielerrangliste
         $contentModel = new ContentModel();
@@ -124,7 +116,7 @@ class ContentMannschaftsseite extends ContentElement
             'value' => 'Einzelspieler Ranking '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $this->Template->ranking = Controller::getContentElement($contentModel);
+        $template->ranking = Controller::getContentElement($contentModel);
 
         // Highlights
         $contentModel = new ContentModel();
@@ -138,12 +130,12 @@ class ContentMannschaftsseite extends ContentElement
             'value' => 'Highlights '.$mannschaftModel->name,
             'unit' => 'h2',
         ];
-        $this->Template->highlightranking = Controller::getContentElement($contentModel);
+        $template->highlightranking = Controller::getContentElement($contentModel);
 
-        $this->Template->mannschaft_name = $mannschaftModel->name;
+        $template->mannschaft_name = $mannschaftModel->name;
         $liga = LigaModel::findById($mannschaftModel->liga);
-        $this->Template->liga = $liga?->name;
-        $this->Template->saison = SaisonModel::findById($liga?->saison)?->name;
+        $template->liga = $liga?->name;
+        $template->saison = SaisonModel::findById($liga?->saison)?->name;
 
     }
 
