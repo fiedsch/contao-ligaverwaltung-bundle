@@ -224,7 +224,7 @@ class DataEntrySaver
     {
         $teamId = 'home' === $homeaway ? $begegnungModel->home : $begegnungModel->away;
         $mannschaftModel = MannschaftModel::findById($teamId);
-        $spielerModel = SpielerModel::findBy(['pid=?'], [$teamId]);
+        $spielerModel = SpielerModel::findBy(['pid=?', 'active=?'], [$teamId, '1']);
         $players = [];
 
         if ($spielerModel) {
