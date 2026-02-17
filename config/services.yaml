@@ -49,6 +49,10 @@ services:
         arguments:
             - '@database_connection'
 
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\TeamsAndPlayersOverviewController:
+        arguments:
+            - '@database_connection'
+
     Fiedsch\Ligaverwaltung\Controller\ContentElement\LigenlisteController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftslisteController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielberichtController: ~

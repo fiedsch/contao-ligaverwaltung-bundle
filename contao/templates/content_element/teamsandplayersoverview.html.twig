@@ -1,0 +1,37 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <div class="tl_gray">
+             <span class="upper">{{ wildcard }}</span>
+             <br>
+             {{ subject }}
+         </div>
+      {% endblock %}
+
+  {% else %}
+
+ <h3>Gesamt</h3>
+    <ul>
+        <li>{{ gesamt.mannschaften }} Mannschaften</li>
+        <li>{{ gesamt.spieler }} Spieler</li>
+    </ul>
+
+    <h3>Ligen</h3>
+    <ul>
+        {% for name,liga in result %}
+            <li>{{ name }}
+                <ul>
+                    <li>{{ liga.mannschaften }} Mannschaften</li>
+                    <li>{{ liga.spieler }} Spieler</li>
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+  {% endif %}
+
+{% endblock %}
