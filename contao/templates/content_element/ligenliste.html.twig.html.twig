@@ -1,0 +1,32 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <div class="tl_gray">
+             <span class="upper">{{ wildcard }}</span>
+             <br>
+             {{ subject }}
+         </div>
+      {% endblock %}
+
+  {% else %}
+
+      {% if listitems %}
+          <ul>
+          {% for item in listitems %}
+              <li>{{ item['liga'] }}</li>
+              <ul>
+              {% for subitem in item.mannschaften %}
+                  <li>{{ subitem }}</li>
+              {% endfor %}
+              </ul>
+          {% endfor %}
+          </ul>
+      {% endif %}
+
+  {% endif %}
+
+{% endblock %}
