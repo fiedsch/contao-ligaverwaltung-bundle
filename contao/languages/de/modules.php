@@ -79,6 +79,6 @@ $GLOBALS['TL_LANG']['FMD']['spielberichtreader'] = [
 /* Überschrift auf der Info-Seite (Popup im Backend) */
 
 $GLOBALS['TL_LANG']['FMD']['ligaverwaltung'] = [
-    'XYZ Ligaverwaltung',
+    'Ligaverwaltung',
     'Ligaverwaltung',
 ];
