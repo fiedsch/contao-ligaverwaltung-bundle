@@ -119,7 +119,7 @@
                         {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_HIGHFINISH')
                         %}
-                        <td>{{ listitem.hl_highfinish }}</td>
+                        <td>{{ listitem.hl_highfinish|raw }}</td>
                         {% endif %}
                         {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_SHORTLEG')
