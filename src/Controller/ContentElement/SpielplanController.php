@@ -168,7 +168,7 @@ class SpielplanController extends AbstractContentElementController
             }
 
             $legs = $inactive ? '' : ($already_played ? $begegnung->getLegs() : '');
-            $spielLegsClass = empty($legs) ? 'empty' : (preg_match("/\d+:\d+/", $legs) ? '' : 'noshow');
+            $spielLegsAndScoreCssClass = empty($legs) ? 'empty' : (preg_match("/\d+:\d+/", $legs) ? 'available' : 'noshow');
 
             $spiel = [
                 'home' => $homelabel,
@@ -185,7 +185,9 @@ class SpielplanController extends AbstractContentElementController
                 'spiel_tag' => $begegnung->spiel_tag,
                 // 'kommentar' => $begegnung->kommentar,
                 'postponed' => $begegnung->postponed,
-                'spielLegsClass' => $spielLegsClass,
+                'spielfrei' => $spielfrei,
+                'played' => !empty($legs),
+                'spielLegsAndScoreCssClass' => $spielLegsAndScoreCssClass,
             ];
 
             if ($model->mannschaft) {
