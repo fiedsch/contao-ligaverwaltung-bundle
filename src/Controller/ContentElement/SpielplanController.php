@@ -96,6 +96,7 @@ class SpielplanController extends AbstractContentElementController
         );
 
         if (null === $begegnungen) {
+            $template->spiele = [];
             return;
         }
 
