@@ -18,6 +18,7 @@ class BegegnungDataEntryWidget extends Widget
 
     public function generate(): string
     {
+        /** @var BegegnungDataEntryForm $form */
         $form = System::getContainer()->get(BegegnungDataEntryForm::class);
         return $form->generate($this->activeRecord->id);
     }

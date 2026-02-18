@@ -18,7 +18,7 @@ class BegegnungDataEntryForm
     {
     }
 
-    public function generate(int $id = null): string
+    public function generate(?int $id): string
     {
         $id = $id ?? Input::get('id');
         $begegnungModel = BegegnungModel::findById($id);

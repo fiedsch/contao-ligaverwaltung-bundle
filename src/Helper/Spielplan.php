@@ -145,9 +145,9 @@ class Spielplan
     public static function getSpielplanCss(int $spielplanCode): string
     {
         $allCss = 'input.spieler-score { width: 2rem; }';
-        $baseTwoSkip = '.results-table tr.single:nth-child(2n+1 of .single) {border-top: 20px solid white !important;}';
-        $baseFourSkip = '.results-table tr.single:nth-child(4n+1 of .single) {border-top: 20px solid white !important;}';
-        $doublesSkip = '.results-table tr.double {border-top: 20px solid white !important;}';
+        $baseTwoSkip = '.results-table tr.single:nth-child(2n+1 of .single) {border-top: 20px solid transparent !important;}';
+        $baseFourSkip = '.results-table tr.single:nth-child(4n+1 of .single) {border-top: 20px solid transparent !important;}';
+        $doublesSkip = '.results-table tr.double {border-top: 20px solid transparent !important;}';
 
         switch ($spielplanCode) {
             case LigaModel::SPIELPLAN_16E:
