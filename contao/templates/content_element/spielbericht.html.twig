@@ -17,6 +17,10 @@
       <h1>{{ begegnunglabel }}</h1>
 
       {% if spielergebnisse %}
+          {% set legs_home = 0 %}
+          {% set legs_away = 0 %}
+          {% set points_home = 0 %}
+          {% set points_away = 0 %}
           <div class="row">
               <h2>Aufstellung</h2>
               <div  class="col-12 col-md-4">
@@ -53,6 +57,11 @@
                   </thead>
                   <tbody>
                   {% for i,spielergebnis in spielergebnisse.ergebnisse %}
+                      {% set legs_home = legs_home + spielergebnis.score_home %}
+                      {% set legs_away = legs_away + spielergebnis.score_away %}
+                      {% set points_home = points_home + (spielergebnis.score_home > spielergebnis.score_away ? 1 : 0) %}
+                      {% set points_away = points_away + (spielergebnis.score_home < spielergebnis.score_away ? 1 : 0) %}
+
                   <tr class="{{ 'spiel-'~(i+1) }} {{ spielergebnis.type }}">
                       <td class="{{ spielergebnis.css_home }}">{{ spielergebnis.player_home }}</td>
                       <td class="{{ spielergebnis.css_away }}">{{ spielergebnis.player_away }}</td>
@@ -60,6 +69,12 @@
                   </tr>
                   {% endfor %}
                   </tbody>
+                  <tfoot>
+                  <tr class="final-result table-active">
+                      <td>Gesamtergebnis</td>
+                      <td colspan="2" class="score gesamt">{{ points_home }}:{{ points_away }} Spiele ({{ legs_home }}:{{ legs_away }} Legs)</td>
+                  </tr>
+                  </tfoot>
               </table>
           </div>
       {% endif %}
@@ -112,6 +127,10 @@ tr.spiel-17 td
 td.loser { }
 td.winner {
     font-weight: 600;
+}
+td.score.gesamt {
+    text-align: end;
+    padding-right: 2rem; {# biovisuell ermittelt #}
 }
 </style>
     {% endblock %}
