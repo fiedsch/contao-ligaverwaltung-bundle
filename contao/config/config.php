@@ -36,7 +36,7 @@ use Fiedsch\Ligaverwaltung\Model\SpielerModel;
 use Fiedsch\Ligaverwaltung\Model\SpielModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 use Fiedsch\Ligaverwaltung\Model\VerbandModel;
-use Fiedsch\Ligaverwaltung\Module\ModuleMannschaftsseitenReader;
+//use Fiedsch\Ligaverwaltung\Module\ModuleMannschaftsseitenReader;
 use Fiedsch\Ligaverwaltung\Module\ModuleSpielberichtReader;
 use Fiedsch\Ligaverwaltung\Module\ModuleSpielortseitenReader;
 use Fiedsch\Ligaverwaltung\Widget\Backend\BegegnungDataEntryWidget;
@@ -83,7 +83,7 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
  * Module
  */
 
-$GLOBALS['FE_MOD']['ligaverwaltung']['mannschaftsseitenreader'] = ModuleMannschaftsseitenReader::class;
+//$GLOBALS['FE_MOD']['ligaverwaltung']['mannschaftsseitenreader'] = ModuleMannschaftsseitenReader::class; // no a service registered using attributes (see MannschaftsseitenreaderController)
 $GLOBALS['FE_MOD']['ligaverwaltung']['spielortseitenreader'] = ModuleSpielortseitenReader::class;
 $GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = ModuleSpielberichtReader::class;
 
