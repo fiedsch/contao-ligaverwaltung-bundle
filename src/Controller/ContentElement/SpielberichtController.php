@@ -28,6 +28,7 @@ use Fiedsch\Ligaverwaltung\Model\SpielModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Yaml\Yaml;
 use function Symfony\Component\String\u;
 
 #[AsContentElement(
@@ -86,7 +87,7 @@ class SpielberichtController extends AbstractContentElementController
             return [];
         }
         // Für die "Metainformationen wie "Aufstellung" ("wer hat an welcher Position gespielt" + "Einwechslungen" etc.)
-        $begegnung_data = \Symfony\Component\Yaml\Yaml::parse($begegnung->begegnung_data)['app_data'] ?? [];
+        $begegnung_data = Yaml::parse($begegnung->begegnung_data)['app_data'] ?? [];
 
         //dd($begegnung_data);
         $playerMap = [
@@ -110,7 +111,7 @@ class SpielberichtController extends AbstractContentElementController
             }
             /** @var SpielerModel $away */
             if ($away = $spiel->getRelated('away')) {
-                /** @var \MemberModel $member */
+                /** @var MemberModel $member */
                 $member = $away->getRelated('member_id');
                 $awayplayer = sprintf('(%s) %s', $playerMap['away'][$spiel->away]['position'] ?? '-', DCAHelper::makeSpielerName($member));
             } else {
@@ -121,7 +122,7 @@ class SpielberichtController extends AbstractContentElementController
                 // Doppel (zweiter Spieler)
                 /** @var SpielerModel $home */
                 if ($home = $spiel->getRelated('home2')) {
-                    /** @var \MemberModel $member */
+                    /** @var MemberModel $member */
                     $member = $home->getRelated('member_id');
                     $homeplayer .= '/'.sprintf('(%s) %s',  $playerMap['home'][$spiel->home2]['position'] ?? '-', DCAHelper::makeSpielerName($member));
                 } else {
@@ -129,7 +130,7 @@ class SpielberichtController extends AbstractContentElementController
                 }
                 /** @var SpielerModel $away */
                 if ($away = $spiel->getRelated('away2')) {
-                    /** @var \MemberModel $member */
+                    /** @var MemberModel $member */
                     $member = $away->getRelated('member_id');
                     $awayplayer .= '/'.sprintf('(%s) %s', $playerMap['away'][$spiel->away2]['position'] ?? '-', DCAHelper::makeSpielerName($member));
                 } else {
