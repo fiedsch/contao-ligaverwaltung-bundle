@@ -357,10 +357,10 @@ class DCAHelper
     public static function listMemberCallback($arrRow): string
     {
         $member = MemberModel::findById($arrRow['member_id']);
-
+        $printedMobile = !empty($member->mobile) ? $member->mobile : 'Mobilfunknummer nicht hinterlegt';
         $printedEMail = !empty($member->email) ? $member->email : 'E-Mail-Adresse nicht hinterlegt';
 
-        $teamcaptain_label = $arrRow['teamcaptain'] ? (', <span>Teamcaptain</span> ('.$printedEMail.')') : '';
+        $teamcaptain_label = $arrRow['teamcaptain'] ? (', <span>Teamcaptain</span> ('.$printedMobile.', '. $printedEMail .')') : '';
         $co_teamcaptain_label = $arrRow['co_teamcaptain'] ? ('(Co-Teamcaptain: '.$printedEMail.')') : '';
         $ersatzspieler_label = '' === $arrRow['ersatzspieler'] ? '' : ', <span class="tl_red">Ersatzspieler</span>';
 
