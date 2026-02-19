@@ -34,6 +34,7 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
             //'flag'        => DataContainer::SORT_ASC,
             'fields' => ['name'],
             'panelLayout' => 'sort,filter;search,limit',
+            'defaultSearchField' => 'name'
         ],
         'label' => [
             'fields' => ['alias', 'name'],

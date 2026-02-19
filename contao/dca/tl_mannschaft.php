@@ -38,6 +38,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             'mode' => DataContainer::MODE_SORTABLE,
             'fields' => ['name', 'liga'],
             'panelLayout' => 'sort,filter;search,limit',
+            'defaultSearchField' => 'name'
         ],
         'label' => [
             'fields' => ['name', 'liga'],

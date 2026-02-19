@@ -44,6 +44,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'child_record_callback' => [DCAHelper::class, 'ligaListCallback'],
             'child_record_class' => 'no_padding',
             'disableGrouping' => true,
+            'defaultSearchField' => 'name'
         ],
         'label' => [
             'fields' => ['name'],

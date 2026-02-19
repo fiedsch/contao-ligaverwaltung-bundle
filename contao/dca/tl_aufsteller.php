@@ -39,6 +39,7 @@ $GLOBALS['TL_DCA']['tl_aufsteller'] = [
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'fields' => ['name'],
             'panelLayout' => 'sort,filter;search,limit',
+            'defaultSearchField' => 'name'
         ],
         'label' => [
             'fields' => ['name'],

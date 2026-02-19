@@ -38,6 +38,7 @@ $GLOBALS['TL_DCA']['tl_verband'] = [
             'fields' => ['name'],
             'panelLayout' => 'sort,filter;search,limit',
             'headerFields' => ['home'],
+            'defaultSearchField' => 'name'
         ],
         'label' => [
             'fields' => ['name'],

@@ -38,6 +38,9 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
                 //'pid,home,away' => 'unique',
             ],
         ],
+        // 'onload_callback' => [
+        //     [], // TODO (?) analog array('tl_page', 'addBreadcrumb'),
+        // ]
     ],
 
     'list' => [
@@ -57,6 +60,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'headerFields' => ['name', 'saison'],
             'child_record_callback' => [DCAHelper::class, 'labelBegegnungCallback'],
             'disableGrouping' => true,
+            //'defaultSearchField' => '...' // TODO wir bräuchten hier etwas dynamisches
         ],
         'label' => [
             'fields' => ['home', 'away'],

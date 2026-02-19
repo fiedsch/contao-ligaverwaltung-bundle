@@ -46,6 +46,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'child_record_callback' => [DCAHelper::class, 'listMemberCallback'],
             'child_record_class' => 'no_padding',
             'disableGrouping' => true,
+            //'defaultSearchField' => '...' // TODO wir bräuchten hier etwas dynamisches
         ],
         'global_operations' => [
             'all' => [
