@@ -21,6 +21,9 @@ use Contao\PageModel;
 use Exception;
 use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
 use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Yaml;
+use RuntimeException;
 use function count;
 
 /**
@@ -32,8 +35,10 @@ use function count;
  * @property string $spiel_am
  * @property int    $tstamp
  * @property int    $spiel_tag
- * @property string   $published
- * @property string   $postponed
+ * @property string $published
+ * @property string $postponed
+ * @property string $kommentar
+ * @property string $begegnung_data
  *
  * @method static BegegnungModel|null findById($id, array $opt=array())
  */
@@ -66,22 +71,14 @@ class BegegnungModel extends Model
         if (!$spiele) {
             return '';
         }
-        //$eingesetzte_spieler = ['home'=>[], 'away'=>[]];
         $result = [0, 0];
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
             [$home, $away] = $spiel->getScore();
             $result[0] += $home;
             $result[1] += $away;
-            //$eingesetzte_spieler['home'][$spiel->home]++;
-            //$eingesetzte_spieler['away'][$spiel->away]++;
         }
 
-        // nicht angetreten?
-        //$is_noshow_home = count(array_keys($eingesetzte_spieler['home'])) === 1 && array_keys($eingesetzte_spieler['home'])[0] === 0;
-        //$is_noshow_away = count(array_keys($eingesetzte_spieler['away'])) === 1 && array_keys($eingesetzte_spieler['away'])[0] === 0;
-        //if ($is_noshow_home) { return "Heim nicht angetreten"; } // siehe auch ce_spielplan.html5!
-        //if ($is_noshow_away) { return "Gast nicht angetreten"; } //
         return sprintf('%d:%d', $result[0], $result[1]);
     }
 
@@ -117,12 +114,12 @@ class BegegnungModel extends Model
         $is_noshow_away = 1 === count(array_keys($eingesetzte_spieler['away'])) && 0 === array_keys($eingesetzte_spieler['away'])[0];
 
         if ($is_noshow_home && $is_noshow_away) {
-            return 'Nicht angetreten';
+            return 'Heim und Gast nicht angetreten';
         }
 
         if ($is_noshow_home) {
             return 'Heim nicht angetreten';
-        } // siehe auch ce_spielplan.html5!
+        }
 
         if ($is_noshow_away) {
             return 'Gast nicht angetreten';
@@ -186,6 +183,7 @@ class BegegnungModel extends Model
         if ('' === $score) {
             return '';
         }
+
         $spielberichtpageId = Config::get('spielberichtpage');
 
         if ($spielberichtpageId) {
@@ -205,4 +203,60 @@ class BegegnungModel extends Model
 
         return $score;
     }
+
+    public function isSpielfrei(): bool
+    {
+        return !$this->away || !$this->home;
+    }
+
+    public function isAlreadyPlayed(): bool
+    {
+        return !empty($this->begegnung_data) && $this->published;
+    }
+
+    /**
+     * Note: kann erst ermittelt werden, nachdem die Begegnung erfallst wurde.
+     */
+    public function isNoShowHome(): bool
+    {
+        return $this->isNoShow('home');
+    }
+
+    public function isNoShowAway(): bool
+    {
+        return $this->isNoShow('away');
+    }
+
+    /**
+     * @throws RuntimeException
+     */
+    protected function isNoShow(string $team): bool
+    {
+        if ($this->isSpielfrei()) {
+            return false;
+        }
+        if (!$this->published) {
+            return false;
+        }
+        if (!in_array($team, ['home', 'away'])) {
+            throw new RuntimeException(sprintf("Invalid parameter '%s'. Expected 'home' or 'away'", $team));
+        }
+
+        if ($this->begegnung_data) {
+            try {
+                $app_data = Yaml::parse($this->begegnung_data)['app_data'] ?? [];
+            } catch (ParseException $e) {
+                throw new RuntimeException($e->getMessage());
+            }
+        } else {
+            $app_data = [];
+        }
+        if (empty ($app_data)) {
+            return false;
+        }
+
+        // In der Aufstellung sind beim angegebenen Team keine Spieler hinterlegt == Team ist nicht angetreten
+        return empty(array_filter($app_data[$team]['lineup'], fn($e) => $e>0));
+    }
+
 }

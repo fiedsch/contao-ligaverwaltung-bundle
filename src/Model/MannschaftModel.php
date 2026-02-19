@@ -82,7 +82,7 @@ class MannschaftModel extends Model
     public function getShortName(): string
     {
         $result = $this->name;
-        $liga = $this->getRelated('liga');
+        // $liga = $this->getRelated('liga');
 
         if (!$this->active) {
             // Strikethrough and gray to indicate that the team is no longer active
@@ -123,5 +123,10 @@ class MannschaftModel extends Model
         }
 
         return $result;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active === '1';
     }
 }
