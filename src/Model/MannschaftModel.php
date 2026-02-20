@@ -93,7 +93,9 @@ class MannschaftModel extends Model
     }
 
     /**
-     * Zur "Mansnchaftsseite" verlinkter Name der Mannschaft.
+     * Zur "Mannschaftsseite" verlinkter Name der Mannschaft.
+     *
+     * @deprecated do not generate HTML which forces us to use |raw in templates. Use self::getTeamPageLink()
      *
      * @return string
      */
@@ -123,6 +125,20 @@ class MannschaftModel extends Model
         }
 
         return $result;
+    }
+
+    public function getTeamPageLink(): string
+    {
+        $teampageId = Config::get('teampage');
+        $teampage = PageModel::findById($teampageId);
+
+        if (Config::get('folderUrl')) {
+            $url = $teampage->getFrontendUrl('/id/'.$this->id);
+        } else {
+            $url = $teampage->getFrontendUrl('?id='.$this->id);
+        }
+
+        return $url;
     }
 
     public function isActive(): bool

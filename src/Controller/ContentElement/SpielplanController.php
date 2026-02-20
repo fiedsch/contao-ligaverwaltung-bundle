@@ -105,18 +105,10 @@ class SpielplanController extends AbstractContentElementController
         foreach ($begegnungen as $begegnung) {
 
             if (!$begegnung->home) {
-                $liga = LigaModel::findById($begegnung->pid);
-                $message = sprintf('Begegnung %d, %s ist nicht vollständig. Bitte bearbeiten oder löschen',
-                    $begegnung->id,
-                    $liga->name
-                );
-//                System::log($message, __METHOD__, TL_ERROR); // TODO inject and use contao logger
                 continue;
             }
 
-            // Ergebnis und daraus abgeleitet: hat die Begegnung bereits statt gefunden
-            $linked_score = $begegnung->getLinkedScore();
-            $already_played = '' !== $linked_score;
+            $already_played = $begegnung->isAlreadyPlayed();
 
             /** @var MannschaftModel $home */
             $home = $begegnung->getRelated('home');
@@ -134,12 +126,12 @@ class SpielplanController extends AbstractContentElementController
 
             // "(geplant) spielfrei" oder "Gegner nicht mehr aktiv":
             //
-            // Reguläres spielfrei oder Gegner nicht mehr aktiv und
-            // Spiel noch nicht gespielt gewesen
+            // Achtung: wir könnten $begegnung->isSpielfrei() verwenden, aber es gibt zusätzlich
+            // auch noch die folgenden zu beachtenden Situationen:
+            // Heim oder Gegner nicht mehr aktiv und Spiel noch nicht gespielt
             $spielfrei_home = !$away || (!$away->active && !$already_played);
             $spielfrei_away = !$home || (!$home->active && !$already_played);
             $spielfrei = $spielfrei_home || $spielfrei_away;
-
             // Nicht mehr aktive Heimmanschaft, die an diesem Spieltag
             // spielfrei gehabt hätte (wäre dann spielfrei gegen Spielfrei)
             if (!$home->active && !$away) {
@@ -150,11 +142,6 @@ class SpielplanController extends AbstractContentElementController
 
             // Ist die Heim- oder die Gastmannschaft nicht mehr aktiv?
             $inactive = (!$home?->active) || (!$away?->active);
-
-            $homelabel = !$home?->active && !$already_played
-                ? 'Spielfrei' : $home?->getLinkedName();
-            $awaylabel = !$away?->active && !$already_played
-                ? 'Spielfrei' : $away?->getLinkedName();
 
             $spielortlabel = $spielort->name;
 
@@ -167,12 +154,24 @@ class SpielplanController extends AbstractContentElementController
                 );
             }
 
-            $legs = $inactive ? '' : ($already_played ? $begegnung->getLegs() : '');
-            $spielLegsAndScoreCssClass = empty($legs) ? 'empty' : (preg_match("/\d+:\d+/", $legs) ? 'available' : 'noshow');
-
             $spiel = [
-                'home' => $homelabel,
-                'away' => $awaylabel,
+                'home' => [
+                    'name' => $home?->name,
+                    'link' => $home?->getTeamPageLink(),
+                    'score' => $begegnung->getScoreHome(),
+                    'legs' => $begegnung->getLegsHome(),
+                    'noshow' => $begegnung->isNoShowHome(),
+                    'active' => $home?->active ?? true,
+                ],
+                'away' => [
+                    'name' => $away?->name,
+                    'link' => $away?->getTeamPageLink(),
+                    'score' => $begegnung->getScoreAway(),
+                    'legs' => $begegnung->getLegsAway(),
+                    'noshow' => $begegnung->isNoShowAway(),
+                    'active' => $away?->active ?? true, // wenn nicht gesetzt, dann spielfrei (und dies ist "active")
+                ],
+
                 // es interessiert nicht, wann und wo "Spielfei" stattfindet:
                 'am' => $spielfrei||$begegnung->postponed ? '' : sprintf('%s. %s',
                     Date::parse('D', $begegnung->spiel_am),
@@ -180,14 +179,13 @@ class SpielplanController extends AbstractContentElementController
                 ),
                 'um' => $spielfrei ? '' : Date::parse(Config::get('timeFormat'), $begegnung->spiel_am),
                 'im' => $spielfrei ? '' : $spielortlabel,
-                'score' => $inactive && $already_played ? 'nicht gewertet' : $linked_score,
-                'legs' => $legs,
+                'score_link' => $begegnung->getScoreLinkTarget(),
                 'spiel_tag' => $begegnung->spiel_tag,
                 // 'kommentar' => $begegnung->kommentar,
                 'postponed' => $begegnung->postponed,
                 'spielfrei' => $spielfrei,
-                'played' => !empty($legs),
-                'spielLegsAndScoreCssClass' => $spielLegsAndScoreCssClass,
+                'played' => $begegnung->isAlreadyPlayed(),
+                'counted' => $begegnung->isAlreadyPlayed() && $home?->isActive() && $away?->isActive(),
             ];
 
             if ($model->mannschaft) {
@@ -196,7 +194,7 @@ class SpielplanController extends AbstractContentElementController
 
             $spiele[$begegnung->spiel_tag][] = $spiel;
         }
-
+dump($spiele);
         $template->spiele = $spiele;
 
         $template->ical_link = System::getContainer()

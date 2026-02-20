@@ -82,6 +82,46 @@ class BegegnungModel extends Model
         return sprintf('%d:%d', $result[0], $result[1]);
     }
 
+    public function getScoreHome(): string
+    {
+        if (!$this->published) {
+            return '';
+        }
+        $spiele = SpielModel::findByPid($this->id);
+
+        if (!$spiele) {
+            return '';
+        }
+        $result = 0;
+        /** @var SpielModel $spiel */
+        foreach ($spiele as $spiel) {
+            [$home, $away] = $spiel->getScore();
+            $result += $home;
+        }
+
+        return (string)$result;
+    }
+
+    public function getScoreAway(): string
+    {
+        if (!$this->published) {
+            return '';
+        }
+        $spiele = SpielModel::findByPid($this->id);
+
+        if (!$spiele) {
+            return '';
+        }
+        $result = 0;
+        /** @var SpielModel $spiel */
+        foreach ($spiele as $spiel) {
+            [$home, $away] = $spiel->getScore();
+            $result += $away;
+        }
+
+        return (string)$result;
+    }
+
     /**
      * @return string Ergebnis der Begegnung in Legs
      */
@@ -128,6 +168,69 @@ class BegegnungModel extends Model
         return sprintf('%d:%d', $result[0], $result[1]);
     }
 
+
+    public function getLegsHome(): string
+    {
+        if (!$this->published) {
+            return '';
+        }
+        $spiele = SpielModel::findByPid($this->id);
+
+        if (!$spiele) {
+            return '';
+        }
+        $result = 0;
+        $eingesetzte_spieler =[];
+        /** @var SpielModel $spiel */
+        foreach ($spiele as $spiel) {
+            [$home, $away] = $spiel->getLegs();
+            $result += $home;
+            // Initialisierung
+            $eingesetzte_spieler[$spiel->home] = $eingesetzte_spieler[$spiel->home] ?? 0;
+
+            ++$eingesetzte_spieler[$spiel->home];
+        }
+        // nicht angetreten?
+        $is_noshow = 1 === count(array_keys($eingesetzte_spieler)) && 0 === array_keys($eingesetzte_spieler)[0];
+
+        if ($is_noshow) {
+            return 'Heim nicht angetreten';
+        }
+
+        return (string)$result;
+    }
+
+    public function getLegsAway(): string
+    {
+        if (!$this->published) {
+            return '';
+        }
+        $spiele = SpielModel::findByPid($this->id);
+
+        if (!$spiele) {
+            return '';
+        }
+        $result = 0;
+        $eingesetzte_spieler =[];
+        /** @var SpielModel $spiel */
+        foreach ($spiele as $spiel) {
+            [$home, $away] = $spiel->getLegs();
+            $result += $away;
+            // Initialisierung
+            $eingesetzte_spieler[$spiel->away] = $eingesetzte_spieler[$spiel->away] ?? 0;
+
+            ++$eingesetzte_spieler[$spiel->away];
+        }
+        // nicht angetreten?
+        $is_noshow = 1 === count(array_keys($eingesetzte_spieler)) && 0 === array_keys($eingesetzte_spieler)[0];
+
+        if ($is_noshow) {
+            return 'Gast nicht angetreten';
+        }
+
+        return (string)$result;
+    }
+
     /**
      * @param string $mode Art (Ausführlichkeit) des Labels ['full'|'medium'|'short']
      *
@@ -171,6 +274,8 @@ class BegegnungModel extends Model
     /**
      * Zur "Mansnchaftsseite" verlinkter Name der Mannschaft.
      *
+     * @deprecated do not generate HTML which forces us to use |raw in templates. Use self::getScoreLinkTarget()
+     *
      * @return string
      */
     public function getLinkedScore(): string
@@ -202,6 +307,30 @@ class BegegnungModel extends Model
         }
 
         return $score;
+    }
+
+    public function getScoreLinkTarget(): string
+    {
+        if (!$this->published) {
+            return '';
+        }
+        $score = $this->getScore();
+
+        if ('' === $score) {
+            return '';
+        }
+
+        $spielberichtpageId = Config::get('spielberichtpage');
+
+        if ($spielberichtpageId) {
+            $spielberichtpage = PageModel::findById($spielberichtpageId);
+
+            if (Config::get('folderUrl')) {
+                return $spielberichtpage->getFrontendUrl('/id/' . $this->id);
+            } else {
+                return $spielberichtpage->getFrontendUrl('?id=' . $this->id);
+            }
+        }
     }
 
     public function isSpielfrei(): bool

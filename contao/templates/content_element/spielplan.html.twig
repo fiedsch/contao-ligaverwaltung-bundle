@@ -15,8 +15,11 @@
   {% else %}
 
       {% if spiele is empty %}
-          <code>Es sind noch keine Spiele hinterlegt.</code>
+          {% block no_games_yet %}
+              <code>Es sind noch keine Spiele hinterlegt.</code>
+          {% endblock %}
       {% else %}
+
 
           {% set iCalHref = ical_link %}
           {% set icalName = calendarBaseName ~ "-liga-" ~ ligaId %}
@@ -24,10 +27,13 @@
               {% set icalName = icalName ~ "-mannschaft-" ~ mannschaftId  %}
           {% endif %}
           {% set icalName =icalName ~ '.ics' %}
-          <div class="icaldownload">
-              <i class="fas fa-calendar"></i>
-              <a href="{{ iCalHref }}" download="{{ icalName }}">Kalender-Import (Download als iCal)</a>
-          </div>
+
+          {% block ical_link %}
+              <div class="icaldownload">
+                  <i class="fas fa-calendar"></i>
+                  <a href="{{ iCalHref }}" download="{{ icalName }}">{% block ical_link_text %}Kalender-Import (Download als iCal){% endblock %}</a>
+              </div>
+          {% endblock %}
 
           {% if mannschaftId > 0 %} {# nur ein langer Block #}
               <div class="table-responsive">
@@ -39,40 +45,98 @@
               {% if mannschaftId > 0 %}
                   {# keine Zwischenüberschriften bei "Spielplan einer Mannschaft"  #}
               {% else %}
+                  {# Ausgabe auf einer Liga-Seite #}
                   {#  TODO sublevel wie im "alten CE" #}<h{{ subheadlineUnit|default(3) }}>{{ spieltag }}. Spieltag</h{{ subheadlineUnit|default(3) }}>
                   <div class="table-responsive">
-                  <table class="spielplan table table-hover"> {# ein Block je Spieltag  #}
+                  <table class="spielplan table table-hover"> {# ein Inhalts-Block (eine Taballe) je Spieltag  #}
                   <tbody>
               {% endif %}
               {% for spiel in spieltagspiele %}
-                  <tr class="spiel{% if spiel.postponed %}postponed{% endif %}">
-                      {% if mannschaftId > 0 %}
-                          <td class='spiel am w-25'>
-                              {% if spiel.postponed %}Verschoben{% else %}{{ spiel.am }} {{ spiel.um|default }} {% endif %}({{ spiel.spiel_tag }}. Spieltag)
-                          </td>
-                          <td class='spiel where'>
-                              {% if spiel.heimspiel %}
-                                  <i class="fas fa-home" aria-hidden="true" title="zuhause"></i><span class="sr-only">zuhause</span>
+                  {% block spiel %}
+                      <tr>
+                          {% block datum %}
+                              <td class='spiel am w-25'>
+                                  {% if mannschaftId > 0 %}
+                                      {{ spiel.spiel_tag }}. Spieltag:
+                                  {% endif %}
+                                  {% if spiel.spielfrei %}
+                                      Spielfrei
+                                  {% else %}
+                                      {% if spiel.postponed %}
+                                          Verschoben
+                                      {% else %}
+                                          {{ spiel.am }} {{ spiel.um|default }}
+                                  {% endif %}
+                                  {% endif %}
+                              </td>
+                          {% endblock %}
+                          {% if mannschaftId > 0 %}
+                              {% block played_home_away_icon %}
+                                  <td class="spiel where">
+                                      {% if spiel.heimspiel %}
+                                          {%  block home_icon %}
+                                              H{#  Home #}
+                                          {%  endblock %}
+                                      {% else %}
+                                          {%  block away_icon %}
+                                              A{# Away #}
+                                          {% endblock %}
+                                      {% endif %}
+                                  </td>
+                              {% endblock %}
+                          {% endif %}
+                          {% block team_home %}
+                              <td class='spiel home w-25'>
+                                  {% if spiel.home.active %}
+                                      {% if spiel.home.link %}
+                                          <a href="{{ spiel.home.link }}">{{ spiel.home.name }}</a>
+                                      {% else %}
+                                          {{ spiel.home.name }}
+                                      {% endif %}
+                                  {% else %}
+                                      <s>{{ spiel.home.name }}</s> (nicht mehr aktiv)
+                                  {% endif %}
+                              </td>
+                          {% endblock %}
+                          {% block team_away %}
+                              <td class='spiel away w-25'>
+                                  {% if spiel.away.active %}
+                                      {% if spiel.away.link %}
+                                          <a href="{{ spiel.away.link }}">{{ spiel.away.name }}</a>
+                                      {% else %}
+                                          {{ spiel.away.name }}
+                                      {% endif %}
+                                  {% else %}
+                                      <s>{{ spiel.away.name }}</s> (nicht mehr aktiv)
+                                  {% endif %}
+                              </td>
+                          {% endblock %}
+                          {% block played_venue %}
+                              <td class='spiel ort w-25'>
+                                  {{ spiel.im }}
+                              </td>
+                          {% endblock %}
+                          {% block score %}
+                              {% if spiel.played and spiel.counted %}
+                                  <td class='spiel score'>
+                                      <a href="{{ spiel.score_link }}">{{ spiel.home.score }}:{{ spiel.away.score }}</a>
+                                  </td>
+                                  <td class='spiel legs'>
+                                      {{ spiel.home.legs }}:{{ spiel.away.legs }}
+                                  </td>
                               {% else %}
-                                  <i class="fas fa-car" aria-hidden="true" title="auswärts"></i><span class="sr-only">auswärts</span>
+                                  <td colspan="2" class="empty-score">
+                                      {% if spiel.played and not spiel.counted %}
+                                          nicht gewertet
+                                      {% endif %}
+                                      {% if not spiel.played and (not spiel.home.active or not spiel.away.active) %}
+                                          entfällt
+                                      {% endif %}
+                                  </td>
                               {% endif %}
-                          </td>
-                          <td class='spiel home w-25'>{{ spiel.home|raw}}</td>
-                          <td class='spiel away w-25'>{{ spiel.away|raw }}</td>
-                          <td class='spiel ort w-25'>{{ spiel.im }}</td>
-                          <td class='spiel score'>{{ spiel.score|raw }}</td>
-                          <td class='spiel {{ spiel.spielLegsClass }}'>{{ spiel.legs }}</td>
-                      {% else %}
-                          <td class='spiel am'>
-                              {% if spiel.postponed %}Verschoben{% else %}{{ spiel.am }} {{ spiel.um|default }} {% endif %}
-                          </td>
-                          <td class='spiel home'>{{ spiel.home|raw }}</td>
-                          <td class='spiel away'>{{ spiel.away|raw }}</td>
-                          <td class='spiel ort'>{{ spiel.im }}</td>
-                          <td class='spiel score'>{{ spiel.score|default|raw }}</td>
-                          <td class='spiel {{ spiel.spielLegsClass }}'>{{ spiel.legs }}</td>
-                      {% endif %}
-                  </tr>
+                          {% endblock %}
+                      </tr>
+                  {% endblock %}
               {% endfor %}
               {% if mannschaftId > 0 %}
               {% else %}
@@ -91,23 +155,12 @@
       {% endif %}
   {% endif %}
 
-  <style>
-      .spiel.legs {
-          color: #999;
-      }
-      .spiel.legs::before {
-          content: '(';
-      }
-      .spiel.legs::after {
-          content: ' Legs)';
-      }
-.spiel.legs.empty::before,
-.spiel.legs.empty::after,
-.spiel.legs.noshow::before,
-.spiel.legs.noshow::after  {
-  content: '';
-}
+{% block style %}
+<style>
+    .spiel.legs {
+        color: #999;
+    }
 </style>
-
+{% endblock %}
 
 {% endblock %}
