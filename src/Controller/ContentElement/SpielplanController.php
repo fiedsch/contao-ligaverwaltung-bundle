@@ -184,7 +184,7 @@ class SpielplanController extends AbstractContentElementController
                 // 'kommentar' => $begegnung->kommentar,
                 'postponed' => $begegnung->postponed,
                 'spielfrei' => $spielfrei,
-                'played' => $begegnung->isAlreadyPlayed(),
+                'played' => $begegnung->isAlreadyPlayed() && !$begegnung->isNoShowHome() && !$begegnung->isNoShowAway(),
                 'counted' => $begegnung->isAlreadyPlayed() && $home?->isActive() && $away?->isActive(),
             ];
 

@@ -117,12 +117,18 @@
                               </td>
                           {% endblock %}
                           {% block score %}
-                              {% if spiel.played and spiel.counted %}
+                              {% if spiel.counted %}
                                   <td class='spiel score'>
                                       <a href="{{ spiel.score_link }}">{{ spiel.home.score }}:{{ spiel.away.score }}</a>
                                   </td>
                                   <td class='spiel legs'>
-                                      {{ spiel.home.legs }}:{{ spiel.away.legs }}
+                                      {% if spiel.home.noshow %}
+                                          Heim nicht angetreten
+                                      {% elseif spiel.away.noshow %}
+                                          Gast nicht angetreten
+                                      {% else %}
+                                        {{ spiel.home.legs }}:{{ spiel.away.legs }}
+                                      {% endif %}
                                   </td>
                               {% else %}
                                   <td colspan="2" class="empty-score">
@@ -136,6 +142,7 @@
                               {% endif %}
                           {% endblock %}
                       </tr>
+                      {# <tr><td colspan="8">{{ spiel|json_encode }}</td></tr> #}
                   {% endblock %}
               {% endfor %}
               {% if mannschaftId > 0 %}

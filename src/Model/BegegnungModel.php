@@ -194,7 +194,7 @@ class BegegnungModel extends Model
         $is_noshow = 1 === count(array_keys($eingesetzte_spieler)) && 0 === array_keys($eingesetzte_spieler)[0];
 
         if ($is_noshow) {
-            return 'Heim nicht angetreten';
+            return ''; // 'Heim nicht angetreten';
         }
 
         return (string)$result;
@@ -225,7 +225,7 @@ class BegegnungModel extends Model
         $is_noshow = 1 === count(array_keys($eingesetzte_spieler)) && 0 === array_keys($eingesetzte_spieler)[0];
 
         if ($is_noshow) {
-            return 'Gast nicht angetreten';
+            return ''; // 'Gast nicht angetreten';
         }
 
         return (string)$result;
