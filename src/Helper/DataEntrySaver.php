@@ -21,7 +21,6 @@ use Fiedsch\Ligaverwaltung\Model\HighlightModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SpielerModel;
 use Fiedsch\Ligaverwaltung\Model\SpielModel;
-use RuntimeException;
 use Exception;
 use function count;
 use function is_array;
@@ -32,7 +31,7 @@ class DataEntrySaver
     const string KEY_APP_DATA = 'app_data';
 
     /**
-     * Die Daten aus der Begegnunserfassung verarbeiten:
+     * Die Daten aus der Begegnungserfassung verarbeiten:
      * == tl_spiel und tl_begegnung Records anlegen bzw. aktualisieren.
      *
      * @param int $begegnung ID der Begegnung
@@ -59,8 +58,8 @@ class DataEntrySaver
             // * save the data ('submitOnClick' => true in dca/tl_begegegnung.php)
             // * have a $begegnungModel->published === '' at this point here
             // * i.e. we will not return above!
-            // * Can we rely on that order? ´The answer should be "yes" as we call saveData() which eventually calls handleDataEntryData()
-            //   in the widgets validator() which means "before anything gets saved" (as other widgets might return "sorry, not valid".
+            // * Can we rely on that order? The answer should be "yes" as we call saveData() which eventually calls handleDataEntryData()
+            //   in the widgets validator() which means "before anything gets saved" (as other widgets might return "sorry, not valid").
         }
 
         foreach ($data['highlights'] as $k => $v) {
@@ -71,8 +70,6 @@ class DataEntrySaver
 
         $begegnungModel->{self::KEY_APP_DATA} = $data;
         $begegnungModel->save();
-
-        $spieleGespeichert = 0;
 
         foreach ($data['spielplan'] as $i => $spiel) {
             self::handleSpiel($i, $spiel, $data);
