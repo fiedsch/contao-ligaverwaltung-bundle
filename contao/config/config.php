@@ -42,7 +42,9 @@ use Fiedsch\Ligaverwaltung\Module\ModuleSpielortseitenReader;
 use Fiedsch\Ligaverwaltung\Widget\Backend\BegegnungDataEntryWidget;
 use Symfony\Component\HttpFoundation\Request;
 
-ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 2, [
+$accounts_index = array_search('accounts', array_keys($GLOBALS['BE_MOD']), true);
+
+ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], $accounts_index +  1, [
     'liga' => [
         'liga_spielort' => [
             'tables' => ['tl_spielort'],
