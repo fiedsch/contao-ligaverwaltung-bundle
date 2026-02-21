@@ -201,7 +201,7 @@ class DataEntrySaver
             }
             $highlightModel->tstamp = time();
             $highlightModel->type = (int)$highlightType;
-            $highlightModel->value = $v;
+            $highlightModel->value = preg_replace('/[^\d,]/', '', $v); // entries are a comma separated list of numbers
             $highlightModel->save();
 
             if (($key = array_search($highlightModel->id, $existingHighlightsIds, true)) !== false) {
