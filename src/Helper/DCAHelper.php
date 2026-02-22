@@ -118,10 +118,12 @@ class DCAHelper
             $anzahlSpieler = sprintf('%d Spieler', $spieler->n);
         }
 
-        return sprintf('<div class="tl_content_left %s">%s, %s %s %s (%s, %s)</div>',
+        $show_verband = Config::get('show_verband_in_select');
+
+        return sprintf('<div class="tl_content_left %s">%s, %s <span class="tl_green">%s %s</span> <span class="tl_gray">(%s, %s)</span></div>',
             $row['active'] ? '' : 'tl_gray',
             $row['name'],
-            $liga->getRelated('pid')->name,
+            $show_verband ? $liga->getRelated('pid')->name : '',
             $liga->name,
             $liga->getRelated('saison')->name,
             $spielort->name,
@@ -144,9 +146,11 @@ class DCAHelper
             return ['0' => 'keine Ligen gefunden. Bitte erst anlegen!'];
         }
 
+        $show_verband = Config::get('show_verband_in_select');
+
         foreach ($ligen as $liga) {
             $result[$liga->id] = sprintf('%s %s %s',
-                $liga->getRelated('pid')?->name,
+                $show_verband ? $liga->getRelated('pid')?->name : '', // optionally do not add liga name as most installations have only one liga
                 $liga->name,
                 $liga->getRelated('saison')?->name
             );
@@ -165,8 +169,10 @@ class DCAHelper
      */
     public static function labelBegegnungCallback(array $row, string $label = ''): string
     {
+        $show_verband = Config::get('show_verband_in_select');
+
         $liga = LigaModel::findById($row['pid']);
-        $verband = VerbandModel::findById($liga->pid);
+        $verband = $show_verband ? VerbandModel::findById($liga->pid) : null;
         $home = MannschaftModel::findById($row['home']);
 
         if ($row['away']) {
@@ -209,7 +215,7 @@ class DCAHelper
                         <span class='tl_blue'>%s %s %s</span>
                         <span class='tl_green'>%s</span>
                         <span class='tl_gray'>%s</span>",
-            $verband->name,
+            $verband?->name,
             $liga->name,
             $liga->getRelated('saison')->name,
             $row['spiel_tag'],

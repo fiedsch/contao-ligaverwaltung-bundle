@@ -33,3 +33,8 @@ $GLOBALS['TL_LANG']['tl_settings']['ligaverwaltung_ranking_model'] = [
     'Sortierung Spieler-Ranking ("Punktevergabe")',
     'Regelt die Punktevergabe und damit die Sortierlogik in den Spieler-Rankings.',
 ];
+
+$GLOBALS['TL_LANG']['tl_settings']['show_verband_in_select'] = [
+    'Verband',
+    'Den Namen des Verbands in Auswahllisten anzeigen (kann entfallen, wenn ohnehin nur ein Verband existiert!).',
+];
