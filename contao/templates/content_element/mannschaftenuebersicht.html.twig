@@ -14,24 +14,38 @@
 
   {% else %}
 
-      <ul>
       {% for id,liga in ligen %}
-          <li>{{ liga }}</li>
-          <ul>
-          {%  for mannschaft in ligendetails[id] %}
-              <li>{{ mannschaft.mannschaft|raw }}<br>
-                  {% if mannschaft.tc is not empty %}{{ mannschaft.tc[0].name }} {{ mannschaft.tc[0].email|raw }} {{ mannschaft.tc[0].mobile|raw }}<br>{% endif %}
-                  Spielort: {{ mannschaft.spielort.name }},
-                  {{ mannschaft.spielort.address.postal }} {{ mannschaft.spielort.address.city }} {{ mannschaft.spielort.address.street }},
-                  {{ mannschaft.spielort.phone }}
-                  {% if mannschaft.spielort.website %}
-                      <a href="{{ mannschaft.spielort.website }}">{{ mannschaft.spielort.website }}</a>
-                  {% endif %}
-              </li>
-          {% endfor %}
-          </ul>
+          <div class="table-responsive">
+              <h3>{{ liga }}</h3>
+              <table class="table table-hover">
+                  <thead>
+                  <tr>
+                      <th>Mannschaft</th>
+                      <th>Teamcaptain</th>
+                      <th>Spielort</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {%  for mannschaft in ligendetails[id] %}
+                      <tr>
+                          <td>{{ mannschaft.mannschaft|raw }}</td>
+                          <td>{{ mannschaft.tc[0].name|default}} {{ mannschaft.tc[0].email|default|raw }} {{ mannschaft.tc[0].mobile|default|raw }}</td>
+                          <td>{{ mannschaft.spielort.name }}
+                              {% if mannschaft.spielort.website %}
+                                  {% if mannschaft.spielort.phone %}
+                                      <br><a href="tel:{{ mannschaft.spielort.phone }}">{{ mannschaft.spielort.phone }}</a>
+                                  {% endif %}
+                                  {% if mannschaft.spielort.website %}
+                                      <br><a href="{{ mannschaft.spielort.website }}">{{ mannschaft.spielort.website }}</a>
+                                  {% endif %}
+                              {% endif %}
+                          </td>
+                      </tr>
+                  {% endfor %}
+                  </tbody>
+              </table>
+          </div>
       {% endfor %}
-      </ul>
 
   {% endif %}
 
