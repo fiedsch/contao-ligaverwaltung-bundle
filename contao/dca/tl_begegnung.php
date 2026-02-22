@@ -56,7 +56,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'mode' => DataContainer::MODE_PARENT,
             'flag' => DataContainer::SORT_ASC,
             'fields' => ['pid', 'home', 'away'],
-            'panelLayout' => 'sort,filter;search,limit',
+            'panelLayout' => 'filter;limit',
             'headerFields' => ['name', 'saison'],
             'child_record_callback' => [DCAHelper::class, 'labelBegegnungCallback'],
             'disableGrouping' => true,
@@ -103,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         ],
         'pid' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['pid'],
-            'filter' => true,
+            'filter' => false,
             'exclude' => true,
             'sorting' => true,
             //'flag'             => DataContainer::SORT_ASC,
