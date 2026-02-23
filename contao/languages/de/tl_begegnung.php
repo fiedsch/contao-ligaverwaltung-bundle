@@ -105,6 +105,10 @@ $GLOBALS['TL_LANG']['tl_begegnung']['postponed'] = [
     'Diese Begegnung wurde bis auf weiteres verschoben. Ein neuer Termin steht noch nicht fest.',
 ];
 
+$GLOBALS['TL_LANG']['tl_begegnung']['erfasst'] = [
+    'Erfasst',
+    'Diese Begegnung wurde bereits erfasst (Dateneingabe der Ergebnisse ist erfolgt).',
+];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['vue_app'] = [
     'Dateneingabemaske',

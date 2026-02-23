@@ -196,6 +196,11 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'eval' => ['tl_class' => 'w50'],
             'sql' => "char(1) NOT NULL default ''",
         ],
+        'erfasst' => [
+            'inputType' => 'checkbox',
+            'filter' => true,
+            'sql' => "char(1) NOT NULL default ''",
+        ]
     ],
 ];
 

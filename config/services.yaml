@@ -21,6 +21,13 @@ services:
         tags:
             - { name: contao.migration, priority: 0 }
 
+    fiedsch_ligaverwaltung.migration.begegnungmigration:
+        class: Fiedsch\Ligaverwaltung\Migration\BegegnungMigration
+        arguments:
+            - '@database_connection'
+        tags:
+            - { name: contao.migration, priority: 0 }
+
     fiedsch_ligaverwaltung.listener.buttons_callback:
         class: Fiedsch\Ligaverwaltung\EventListener\DataContainer\EditButtonsCallbackListener
 

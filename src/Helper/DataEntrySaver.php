@@ -69,6 +69,9 @@ class DataEntrySaver
         }
 
         $begegnungModel->{self::KEY_APP_DATA} = $data;
+
+        // Wurde die Begegnung (zumindest teilweise) erfasst?
+        $begegnungModel->erfasst = !empty($data);
         $begegnungModel->save();
 
         foreach ($data['spielplan'] as $i => $spiel) {
@@ -221,7 +224,7 @@ class DataEntrySaver
     {
         $teamId = 'home' === $homeaway ? $begegnungModel->home : $begegnungModel->away;
         $mannschaftModel = MannschaftModel::findById($teamId);
-        $spielerModel = SpielerModel::findBy(['pid=?', 'active=?'], [$teamId, '1']);
+        $spielerModel = SpielerModel::findBy(['pid=?', 'tl_spieler.active=?'], [$teamId, '1']);
         $players = [];
 
         if ($spielerModel) {
