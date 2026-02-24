@@ -77,3 +77,4 @@ services:
             - '@twig'
 
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\MannschaftsseitenreaderController: ~
+    Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielberichtreaderController: ~

@@ -85,9 +85,9 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], $accounts_index +  1, [
  * Module
  */
 
-//$GLOBALS['FE_MOD']['ligaverwaltung']['mannschaftsseitenreader'] = ModuleMannschaftsseitenReader::class; // no a service registered using attributes (see MannschaftsseitenreaderController)
+//$GLOBALS['FE_MOD']['ligaverwaltung']['mannschaftsseitenreader'] = ModuleMannschaftsseitenReader::class; // now a service registered using attributes (see MannschaftsseitenreaderController)
 $GLOBALS['FE_MOD']['ligaverwaltung']['spielortseitenreader'] = ModuleSpielortseitenReader::class;
-$GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = ModuleSpielberichtReader::class;
+// $GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = ModuleSpielberichtReader::class; // now a service registered using attributes (see SpielberichtreaderController)
 
 /*
  * Hooks
