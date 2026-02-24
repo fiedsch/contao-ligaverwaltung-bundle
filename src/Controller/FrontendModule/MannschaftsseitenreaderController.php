@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 #[AsFrontendModule(category: 'ligaverwaltung', priority: 1)]
 class MannschaftsseitenreaderController extends AbstractFrontendModuleController
 {
-    public function __construct() {}
-
     protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         $this->setData($template, $model, $request);
