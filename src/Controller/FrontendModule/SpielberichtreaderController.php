@@ -24,7 +24,7 @@ class SpielberichtreaderController extends AbstractFrontendModuleController
         return $template->getResponse();
     }
 
-        /**
+    /**
      * @throws PageNotFoundException
      */
     private function setData(FragmentTemplate $template, ModuleModel $model, Request $request): void
@@ -37,18 +37,13 @@ class SpielberichtreaderController extends AbstractFrontendModuleController
         }
 
         if (empty($id)) {
-            $template->begegnung = null;
-            $template->spielbericht = null;
-            return;
+            throw new PageNotFoundException('Erforderlicher Parameter id fehlt');
         }
         $begegnung = BegegnungModel::findById($id);
 
         if (!$begegnung) {
-            $template->begegnung = null;
-            $template->spielbericht = null;
-            return;
+            throw new PageNotFoundException('Begegnung mit ID '.$id.' existiert nicht (mehr)');
         }
-
         $template->begegnung = $begegnung;
 
         $contentModel = new ContentModel();
