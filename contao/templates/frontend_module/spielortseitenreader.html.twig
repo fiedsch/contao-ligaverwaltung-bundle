@@ -1,0 +1,8 @@
+{% extends "@Contao/frontend_module/_base.html.twig" %}
+
+{% block content %}
+    {%  if spielort %}
+    <h1>Spielortinfo</h1>
+    {{ spielortseite|raw }}
+    {% endif %}
+{% endblock %}
