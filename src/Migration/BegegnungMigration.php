@@ -34,7 +34,7 @@ class BegegnungMigration extends AbstractMigration
 
     public function run(): MigrationResult
     {
-        $dbResult = $this->connection->executeQuery("UPDATE `tl_begegnung` SET erfasst=1 WHERE LENGTH(begegnung_data) > 0");
+        $dbResult = $this->connection->executeQuery("UPDATE `tl_begegnung` SET erfasst='1' WHERE LENGTH(begegnung_data) > 0");
 
         $rowCount = $dbResult->rowCount();
         return $this->createResult(
