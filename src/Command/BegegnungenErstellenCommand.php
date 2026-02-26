@@ -44,7 +44,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
     protected function configure(): void
     {
         $this
-            ->setName('fiedsch:begegnungenerstellen')
+            ->setName('fiedsch:ligaverwaltung:begegnungenerstellen')
             ->setDescription('Begegnungen für eine Liga erstellen.')
             ->addArgument('liga', InputArgument::REQUIRED, 'Liga-ID')
              ;
@@ -56,7 +56,7 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Contao "booten"
-        $this->getFramework()->initialize();
+        $this->framework->initialize();
 
         $ligaParameter = $input->getArgument('liga');
         $liga = LigaModel::findBy('id', $ligaParameter);

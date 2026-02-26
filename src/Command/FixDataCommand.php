@@ -32,6 +32,8 @@ use Symfony\Component\Yaml\Yaml;
  * Fixen von Daten (in der aktuellen Implementierung: neu Abspeichern der tl_highlightErstellen einer Liste aller Spieler (inkl. Name etc. aus zugehörigem tl_member)
  * für dir Spieler (tl_spieler) aller Mannschaften (tl_mannschaft) einer Saison (tl_saison).
  *
+ * TODO: Sollte das nicht eher eine Migarion sein/werden? Oder ist es mittlerweile obsolete?
+ *
  * @author Andreas Fieger <https://github.com/fiedsch>
  */
 class FixDataCommand extends Command implements FrameworkAwareInterface
@@ -44,7 +46,7 @@ class FixDataCommand extends Command implements FrameworkAwareInterface
     protected function configure(): void
     {
         $this
-            ->setName('fiedsch:fixdata')
+            ->setName('fiedsch:ligaverwaltung:fixdata')
             ->setDescription('Datenbereinigung: tl_highlight records für alle Begegnungen neu erstellen.')
             ->addArgument('saison', InputArgument::REQUIRED, 'Saison')
              ;
@@ -58,7 +60,7 @@ class FixDataCommand extends Command implements FrameworkAwareInterface
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Contao "booten"
-        $this->getFramework()->initialize();
+        $this->framework->initialize();
 
         $saisonParameter = $input->getArgument('saison');
         $saison = SaisonModel::findBy('name', $saisonParameter);

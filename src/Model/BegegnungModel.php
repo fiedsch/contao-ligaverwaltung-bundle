@@ -331,6 +331,7 @@ class BegegnungModel extends Model
                 return $spielberichtpage->getFrontendUrl('?id=' . $this->id);
             }
         }
+        return $score;
     }
 
     public function isSpielfrei(): bool

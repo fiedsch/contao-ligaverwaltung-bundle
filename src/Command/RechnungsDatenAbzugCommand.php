@@ -23,11 +23,15 @@ use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 use RuntimeException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Abzug und "Aufbereitung" von Daten, die für die Erstellung von
@@ -40,7 +44,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 {
     use FrameworkAwareTrait;
 
-    const KEIN_AUFSTELLER = -1;
+    const int KEIN_AUFSTELLER = -1;
 
     protected Environment $twig;
 
@@ -57,7 +61,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
     protected function configure(): void
     {
         $this
-            ->setName('fiedsch:rechnungsdaten')
+            ->setName('fiedsch:ligaverwaltung:rechnungsdaten')
             ->setDescription('Datenabzug für die Rechnungsstellung.')
             ->addArgument('saison', InputArgument::REQUIRED, 'Saison')
             ->addArgument('format', InputArgument::OPTIONAL, 'Ausgabeformat (html, md oder csv', 'html')
@@ -72,8 +76,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Contao "booten"
-        /** @noinspection PhpDeprecationInspection */
-        $this->getFramework()->initialize();
+        $this->framework->initialize();
 
         $saisonParameter = $input->getArgument('saison');
         $saison = SaisonModel::findOneBy('name', $saisonParameter);
@@ -104,6 +107,9 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         return 0;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getData(SaisonModel $saison, OutputInterface $output): array
     {
         // Ligen dieser Saison
@@ -260,6 +266,11 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         }
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     protected function render(array $data, string $format, OutputInterface $output): void
     {
         $output->writeln($this->twig->render(

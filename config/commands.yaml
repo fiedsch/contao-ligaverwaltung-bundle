@@ -1,24 +1,24 @@
 services:
     _defaults:
         autoconfigure: true
+        autowire: true
 
     _instanceof:
         Contao\CoreBundle\Framework\FrameworkAwareInterface:
             calls:
                 - [setFramework, ['@contao.framework']]
 
-    fiedsch.command.rechnungsdaten:
-        class: Fiedsch\LigaverwaltungBundle\Command\RechnungsDatenAbzugCommand
+    fiedsch.ligaverwaltung.command.rechnungsdaten:
+        class: Fiedsch\Ligaverwaltung\Command\RechnungsDatenAbzugCommand
         arguments:
             - '@twig'
 
-    fiedsch.command.spielerliste:
-        class: Fiedsch\LigaverwaltungBundle\Command\SpielerAbzugCommand
+    fiedsch.ligaverwaltung.command.spielerliste:
+        class: Fiedsch\Ligaverwaltung\Command\SpielerAbzugCommand
 
-    fiedsch.command.begegnungenerstellen:
-        class: Fiedsch\LigaverwaltungBundle\Command\BegegnungenErstellenCommand
+    fiedsch.ligaverwaltung.command.begegnungenerstellen:
+        class: Fiedsch\Ligaverwaltung\Command\BegegnungenErstellenCommand
 
-    fiedsch.command.fixdata:
-            class: Fiedsch\LigaverwaltungBundle\Command\FixDataCommand
-
+    fiedsch.ligaverwaltung.command.fixdata:
+            class: Fiedsch\Ligaverwaltung\Command\FixDataCommand
 

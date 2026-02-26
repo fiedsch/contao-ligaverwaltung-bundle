@@ -45,7 +45,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
     protected function configure(): void
     {
         $this
-            ->setName('fiedsch:spielerliste')
+            ->setName('fiedsch:ligaverwaltung:spielerliste')
             ->setDescription('Datenabzug Spielerliste einer Saison.')
             ->addArgument('saison', InputArgument::REQUIRED, 'Saison')
              ;
@@ -59,7 +59,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Contao "booten"
-        $this->getFramework()->initialize();
+        $this->framework->initialize();
 
         $saisonParameter = $input->getArgument('saison');
         $saison = SaisonModel::findBy('name', $saisonParameter);
