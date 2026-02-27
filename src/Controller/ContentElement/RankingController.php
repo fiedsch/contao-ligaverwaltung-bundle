@@ -334,7 +334,6 @@ DBQ;
             $results[$spiele->player_home]['mannschaft_id'] = $spiele->team_home;
             $results[$spiele->player_away]['mannschaft_id'] = $spiele->team_away;
 
-            //++$results[$spiele->player_home]['spiele'];
             $results[$spiele->player_home]['spiele'] = ($results[$spiele->player_home]['spiele'] ?? 0)+1;
             $results[$spiele->player_home]['spiele_self'] = ($results[$spiele->player_home]['spiele_self'] ?? 0) + $spiel->getScoreHome();
             $results[$spiele->player_home]['spiele_other'] = ($results[$spiele->player_home]['spiele_other'] ?? 0)+ $spiel->getScoreAway();
