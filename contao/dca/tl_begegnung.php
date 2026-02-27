@@ -56,7 +56,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'mode' => DataContainer::MODE_PARENT,
             'flag' => DataContainer::SORT_ASC,
             'fields' => ['pid', 'home', 'away'],
-            'panelLayout' => 'filter;limit',
+            'panelLayout' => 'filter;sort,limit',
             'headerFields' => ['name', 'saison'],
             'child_record_callback' => [DCAHelper::class, 'labelBegegnungCallback'],
             'disableGrouping' => true,
@@ -87,8 +87,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
     ],
 
     'palettes' => [
-        // Note: never show {internal_legend},begegnung_data as this will break our data saving as we (a) save the vue_app's data in its callback to begegnung_data ant (b) save (the old value) of begegnung_data itself.
-        // If we don't show it (b) won't happen!
         'default' => '{title_legend},pid,home,away;{details_legend},spiel_tag,spiel_am,published,postponed,kommentar;{vueapp_legend},vue_app',
     ],
 
@@ -105,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['pid'],
             'filter' => false,
             'exclude' => true,
-            'sorting' => true,
+            'sorting' => false,
             //'flag'             => DataContainer::SORT_ASC,
             'inputType' => 'select',
             'foreignKey' => 'tl_liga.name',
@@ -175,13 +173,11 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => 'mediumtext NULL',
         ],
         'begegnung_data' => [
-            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'],
-            'inputType' => 'yamlWidget',
+            // Data not shown in back end
+            // 'inputType' => 'yamlWidget',
             'exclude' => true,
-            'eval' => ['rte' => 'ace|yaml' /*, 'helpwizard' => true*/],
             'default' => '',
             'sql' => 'blob NOT NULL',
-            //'explanation' => 'begegnung_data_explanation',
         ],
         'vue_app' => [
             'inputType' => 'begegnungdataentry_widget',
@@ -199,25 +195,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         'erfasst' => [
             'inputType' => 'checkbox',
             'filter' => true,
-            'sql' => "char(1) NOT NULL default ''",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ]
     ],
 ];
-
-/* Bei Aufruf "nicht als child record von liga.verband */
-if ('liga.begegnung' === Input::get('do')) {
-    $GLOBALS['TL_DCA']['tl_begegnung']['list']['sorting'] = [
-        'mode' => DataContainer::MODE_SORTABLE,
-        'flag' => DataContainer::SORT_ASC,
-        'fields' => ['pid'],
-        'panelLayout' => 'sort,filter;search,limit',
-        'disableGrouping' => false,
-        'filter' => [
-            ['pid IN (SELECT id FROM tl_liga WHERE aktiv=?)', '1'],
-        ],
-    ];
-}
-
-if (!Config::get('ligaverwaltung_dataentry_compatibility_mode')) {
-    unset($GLOBALS['TL_DCA']['tl_begegnung']['list']['operations']['edit']);
-}
