@@ -141,27 +141,27 @@ class RankingController extends AbstractContentElementController
             return;
         }
 
+        $query = <<<DBQ
+SELECT
+    s.score_home AS legs_home,
+    s.score_away AS legs_away,
+    b.home AS team_home,
+    b.away AS team_away,
+    b.spiel_tag AS spieltag
+FROM tl_spiel s
+LEFT JOIN tl_begegnung b   ON (s.pid=b.id)
+LEFT JOIN tl_liga l        ON (b.pid=l.id)
+LEFT JOIN tl_mannschaft m1 ON (b.home=m1.id)
+LEFT JOIN tl_mannschaft m2 ON (b.away=m2.id)
+WHERE
+    l.id=?
+    AND m1.active='1'
+    AND m2.active='1'
+    AND b.published='1'
+DBQ;
+
         $spiele = Database::getInstance()
-            ->prepare("SELECT
-                          s.score_home AS legs_home,
-                          s.score_away AS legs_away,
-                          b.home AS team_home,
-                          b.away AS team_away,
-                          b.spiel_tag AS spieltag
-                          FROM tl_spiel s
-                          LEFT JOIN tl_begegnung b
-                          ON (s.pid=b.id)
-                          LEFT JOIN tl_liga l
-                          ON (b.pid=l.id)
-                          LEFT JOIN tl_mannschaft m1
-                          ON (b.home=m1.id)
-                          LEFT JOIN tl_mannschaft m2
-                          ON (b.away=m2.id)
-                          WHERE l.id=?
-                          AND m1.active='1'
-                          AND m2.active='1'
-                          AND b.published='1'
-                          ")
+            ->prepare($query)
             ->execute($model->liga)
         ;
 
@@ -283,29 +283,28 @@ class RankingController extends AbstractContentElementController
      */
     protected function compileSpielerranking(FragmentTemplate $template, ContentModel $model): void
     {
-        $sql = "SELECT
-                          s.score_home AS legs_home,
-                          s.score_away AS legs_away,
-                          s.home AS player_home,
-                          s.away AS player_away,
-                          b.home AS team_home,
-                          b.away AS team_away,
-                          b.id AS begegnung_id
-                          FROM tl_spiel s
-                          LEFT JOIN tl_begegnung b
-                          ON (s.pid=b.id)
-                          LEFT JOIN tl_liga l
-                          ON (b.pid=l.id)
-                          LEFT JOIN tl_mannschaft m1
-                          ON (b.home=m1.id)
-                          LEFT JOIN tl_mannschaft m2
-                          ON (b.away=m2.id)
-                          WHERE s.spieltype=1
-                          AND l.id=?
-                          AND m1.active='1'
-                          AND m2.active='1'
-                          AND b.published='1'
-                          ";
+        $query = <<<DBQ
+SELECT
+    s.score_home AS legs_home,
+    s.score_away AS legs_away,
+    s.home AS player_home,
+    s.away AS player_away,
+    b.home AS team_home,
+    b.away AS team_away,
+    b.id AS begegnung_id
+FROM tl_spiel s
+LEFT JOIN tl_begegnung b   ON (s.pid=b.id)
+LEFT JOIN tl_liga l        ON (b.pid=l.id)
+LEFT JOIN tl_mannschaft m1 ON (b.home=m1.id)
+LEFT JOIN tl_mannschaft m2 ON (b.away=m2.id)
+
+WHERE
+    s.spieltype=1
+    AND l.id=?
+    AND m1.active='1'
+    AND m2.active='1'
+    AND b.published='1'
+DBQ;
 
         if ($model->mannschaft > 0) {
             // eine bestimmte Mannschaft
@@ -313,7 +312,7 @@ class RankingController extends AbstractContentElementController
             $template->subject = 'Ranking aller Spieler der Mannschaft '.$mannschaft->name;
             $sql .= ' AND (b.home=? OR b.away=?)';
             $spiele = Database::getInstance()
-                ->prepare($sql)->execute($model->liga, $model->mannschaft, $model->mannschaft);
+                ->prepare($query)->execute($model->liga, $model->mannschaft, $model->mannschaft);
         } else {
             // alle Mannschaften
             $template->subject = 'Ranking aller Spieler';
