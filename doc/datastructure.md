@@ -7,7 +7,7 @@ tl_aufsteller (Marker; wird einem Spielort zugeordnet)
 
 tl_saison (Marker; wird einer Liga zugeordnet) Hat einen `alias` der die Saison identifiziert und ein Label,
 das bei der Ausgabe im Frontend verwednet wird. Damit ist es möglich, verschiedene Saisons mit dem gleichen Label
-anzulegen. Damit ist es möglich, einen Spieler im gleichen Jahr (Label der Saison) verschiedenen Mannschaften
+anzulegen. Damit ist es desweiteren möglich, einen Spieler im gleichen Jahr (Label der Saison) verschiedenen Mannschaften
 zuzuordnen, sofern diese in unterschiedlichen Saisons (alias) aktiv sind.
 
 Use Case: es soll 4er und 6er Teams geben. Ein Spieler soll in einem 4er und in einem 6er Team spielen können.

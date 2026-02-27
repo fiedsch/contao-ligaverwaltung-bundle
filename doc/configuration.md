@@ -12,7 +12,7 @@
 * Spielstärke: Die Spielstärke ist eine beliebige Zahl. Sie dient lediglich dazu,
   Ligen sortieren zu können. Ligen mit kleinerer Spielstärke werden weiter oben
   einsortiert (1. Liga, 2. Liga usw.). Verwendung findet die Spielstärke im
-  Content-Element `ContentMannschaftenuebersicht`.
+  Content-Element `Mannschaftenuebersicht`.
 
 
 ## Systemeinstellungen
@@ -67,8 +67,8 @@ Die Begriffe "TC" (Teamcaptain) und "Co-TC" (Co-Teamcaptain oder zweiter TC) kö
 $GLOBALS['TL_LANG']['MSC']['tc1'] = '1. TC';
 $GLOBALS['TL_LANG']['MSC']['tc2'] = '2. TC';
 ```
-Diese Textbausteine werden im Template `ce_spielerliste.html5` und im `SpielerModel`
-(und damit letztlich in `ContentMannschaftenuebersicht`) verwendet.
+Diese Textbausteine werden im `SpielerModel` und im `SpielerlisteController` verwendet.
+
 
 ### Nicht benötigte Bausteine
 
@@ -93,7 +93,7 @@ Datei `contao/dca/tl_spielort.php`
 // (1) aus der Palette austragen
 $GLOBALS['TL_DCA']['tl_spielort']['palettes'] = str_replace(',aufsteller', '', $GLOBALS['TL_DCA']['tl_spielort']['palettes']);
 
-// (2) (optional) das Feld (im Installtool) auch in der Datenbank löschen
+// (2) (optional) das Feld auch in der Datenbank löschen
 // unset($GLOBALS['TL_DCA']['tl_spielort']['fields']['aufsteller']);
 ```
 
