@@ -129,7 +129,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             'filter' => false,
             'sorting' => true,
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
-            'eval' => ['mandatory' => true, 'maxlength' => 255, 'mandatory' => true],
+            'eval' => ['maxlength' => 255, 'mandatory' => true],
             'sql' => "varchar(255) default NULL",
         ],
         'spielort' => [
