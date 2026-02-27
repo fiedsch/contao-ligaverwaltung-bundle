@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use Contao\ArrayUtil;
 use Contao\System;
-use Fiedsch\Ligaverwaltung\Element\ContentHighlightRanking;
+//use Fiedsch\Ligaverwaltung\Element\ContentHighlightRanking;
 //use Fiedsch\Ligaverwaltung\Element\ContentLigenliste;
 //use Fiedsch\Ligaverwaltung\Element\ContentMannschaftenuebersicht;
 //use Fiedsch\Ligaverwaltung\Element\ContentMannschaftsliste;
@@ -37,8 +37,8 @@ use Fiedsch\Ligaverwaltung\Model\SpielModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 use Fiedsch\Ligaverwaltung\Model\VerbandModel;
 //use Fiedsch\Ligaverwaltung\Module\ModuleMannschaftsseitenReader;
-use Fiedsch\Ligaverwaltung\Module\ModuleSpielberichtReader;
-use Fiedsch\Ligaverwaltung\Module\ModuleSpielortseitenReader;
+//use Fiedsch\Ligaverwaltung\Module\ModuleSpielberichtReader;
+//use Fiedsch\Ligaverwaltung\Module\ModuleSpielortseitenReader;
 use Fiedsch\Ligaverwaltung\Widget\Backend\BegegnungDataEntryWidget;
 use Symfony\Component\HttpFoundation\Request;
 
