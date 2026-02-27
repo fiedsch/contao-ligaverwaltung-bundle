@@ -71,7 +71,7 @@ class DataEntrySaver
         $begegnungModel->{self::KEY_APP_DATA} = $data;
 
         // Wurde die Begegnung (zumindest teilweise) erfasst?
-        $begegnungModel->erfasst = !empty($data);
+        $begegnungModel->erfasst = !empty($data) ? 1 : 0;
         $begegnungModel->save();
 
         foreach ($data['spielplan'] as $i => $spiel) {
