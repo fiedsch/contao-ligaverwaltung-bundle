@@ -67,7 +67,7 @@ $GLOBALS['TL_LANG']['tl_begegnung']['pid'] = [
 
 $GLOBALS['TL_LANG']['tl_begegnung']['published'] = [
     'Veröffentlicht',
-    'Diese Begegnung ist fertig erfasst und vom Spielleiter veröffentlicht. Eine Bearbeitung im Frontend ist nicht mehr möglich.',
+    'Diese Begegnung ist fertig erfasst und vom Spielleiter veröffentlicht. Eine Bearbeitung ist nicht mehr möglich.',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['home'] = [
@@ -97,7 +97,7 @@ $GLOBALS['TL_LANG']['tl_begegnung']['kommentar'] = [
 
 $GLOBALS['TL_LANG']['tl_begegnung']['begegnung_data'] = [
     'Daten der Begegnungserfassung',
-    'Interne Daten (nur "visual Debug"!).',
+    'Interne Daten (werden im Backend nicht angezeigt).',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['postponed'] = [
