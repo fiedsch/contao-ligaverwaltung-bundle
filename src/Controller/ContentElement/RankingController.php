@@ -310,17 +310,20 @@ DBQ;
             // eine bestimmte Mannschaft
             $mannschaft = MannschaftModel::findById($model->mannschaft);
             $template->subject = 'Ranking aller Spieler der Mannschaft '.$mannschaft->name;
-            $sql .= ' AND (b.home=? OR b.away=?)';
+            if ($this->isBackend()) {
+                return;
+            }
+            $query .= ' AND (b.home=? OR b.away=?)';
             $spiele = Database::getInstance()
                 ->prepare($query)->execute($model->liga, $model->mannschaft, $model->mannschaft);
         } else {
             // alle Mannschaften
             $template->subject = 'Ranking aller Spieler';
+            if ($this->isBackend()) {
+                return;
+            }
             $spiele = Database::getInstance()
-                ->prepare($sql)->execute($model->liga);
-        }
-        if ($this->isBackend()) {
-            return;
+                ->prepare($query)->execute($model->liga);
         }
 
         $results = [];
