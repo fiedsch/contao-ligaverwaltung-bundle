@@ -92,10 +92,14 @@ class HighlightRankingController extends AbstractContentElementController
 
     }
 
+    /**
+     * @throws \LogicException (Methode ist noch nicht vollständig implementiert!))
+     * @throws \Doctrine\DBAL\Exception
+     */
     private function setDataMannschaftenranking(FragmentTemplate $template, ContentModel $model): void
     {
         $liga = LigaModel::findById($model->liga);
-        if ($this->isBackend()) { // TODO: analoges in allen anderen Content Element Controllern implementieren
+        if ($this->isBackend()) {
             $template->subject = sprintf('Highlight-Ranking aller Mannschaften der %s %s %s',
                 $liga->getRelated('pid')->name,
                 $liga->name,
