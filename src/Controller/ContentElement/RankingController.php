@@ -390,6 +390,11 @@ DBQ;
 
         foreach (array_keys($results) as $id) {
             $spieler = SpielerModel::findById($id);
+            // TODO: Mapping auf die ID des zugrundeliegenden Members, das unique ist um Ergebnisse des Spielers nicht zu "verlieren"m,
+            //       wenn ein Spieler währen der Saison die Mannschaft wechselt (technisch: neuer tl_spieler-Record!)
+            //       Technisch: wir benötigen irgendeine Art von Caching, um die Anzahl der Datenbankabfragen "im Rahmen" zu halten.
+            //       $spieler = SpielerModel::findById($id, ['eager'=>true]);
+
             $mannschaft = MannschaftModel::findById($results[$id]['mannschaft_id']);
 
             if (!$spieler?->active || !$mannschaft?->active) {
