@@ -45,14 +45,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
 
     'list' => [
         'sorting' => [
-            // note: these settings will be used if we are not called as a child record
-            // see if () {} at the end of this file
-            /*
-            'mode'        => DataContainer::MODE_SORTABLE,
-            'flag'        => DataContainer::SORT_ASC,
-            'fields'      => ['pid','home','away'],
-            'panelLayout' => 'sort,filter;search,limit',
-            */
             'mode' => DataContainer::MODE_SORTABLE,
             'flag' => DataContainer::SORT_ASC,
             'fields' => ['pid', 'home', 'away'],
