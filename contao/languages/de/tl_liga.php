@@ -51,6 +51,11 @@ $GLOBALS['TL_LANG']['tl_liga']['show'] = [
     'die Liga anzeigen',
 ];
 
+$GLOBALS['TL_LANG']['tl_liga']['pid'] = [
+    'Verband',
+    'Verband, in dem die Liga gespielt wird',
+];
+
 $GLOBALS['TL_LANG']['tl_liga']['name'] = [
     'Name',
     'Name der Liga',

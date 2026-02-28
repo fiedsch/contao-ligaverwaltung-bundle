@@ -49,8 +49,8 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'flag' => DataContainer::SORT_ASC,
             'fields' => ['pid', 'home', 'away'],
             'panelLayout' => 'filter;sort,limit',
-            'headerFields' => ['name', 'saison'],
             'child_record_callback' => [DCAHelper::class, 'labelBegegnungCallback'],
+            'headerFields' => ['pid', 'name', 'saison'],
             'disableGrouping' => true,
             //'defaultSearchField' => '...' // TODO wir bräuchten hier etwas dynamisches
         ],
