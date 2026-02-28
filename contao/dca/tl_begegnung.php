@@ -53,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'fields'      => ['pid','home','away'],
             'panelLayout' => 'sort,filter;search,limit',
             */
-            'mode' => DataContainer::MODE_PARENT,
+            'mode' => DataContainer::MODE_SORTABLE,
             'flag' => DataContainer::SORT_ASC,
             'fields' => ['pid', 'home', 'away'],
             'panelLayout' => 'filter;sort,limit',
