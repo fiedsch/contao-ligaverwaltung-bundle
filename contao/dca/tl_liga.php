@@ -32,6 +32,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
                 'pid,name,saison' => 'unique',
             ],
         ],
+        'doNotCopyRecords' => true,
     ],
 
     'list' => [
@@ -127,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'inputType' => 'text',
             'search' => true,
             'exclude' => true,
-            'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
+            'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true, 'unique' => true],
             'sql' => "varchar(128) default NULL",
         ],
         'saison' => [
