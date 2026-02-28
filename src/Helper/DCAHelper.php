@@ -160,7 +160,7 @@ class DCAHelper
     }
 
     /**
-     * Label für eine Begegnung (Spiel zweier Mansnchaften gegeneinander)
+     * Label für eine Begegnung (Spiel zweier Mannsnchaften gegeneinander)
      * tl_begegnung.sorting.child_record_callback
      * und
      * tl_begegnung.fields.label.label_callback
