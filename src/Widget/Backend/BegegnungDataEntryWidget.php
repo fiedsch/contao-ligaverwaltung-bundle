@@ -42,12 +42,6 @@ class BegegnungDataEntryWidget extends Widget
 
     protected function saveData(array $inputData): void
     {
-        // unset data we don't need here
-        unset($inputData['REQUEST_TOKEN']);
-        unset($inputData['FORM_SUBMIT']);
-        // dd($inputData);
-
-
         // Das folgende wird in
         /* @see DataEntrySaver::handleDataEntryData(...) */
         /* @see LigaverwaltungBackendController::begegnungDataSaveAction() */

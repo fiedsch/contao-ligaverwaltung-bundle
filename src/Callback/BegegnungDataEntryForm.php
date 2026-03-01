@@ -32,8 +32,6 @@ class BegegnungDataEntryForm
         if (!is_array($appData)) {
             $appData = [];
         }
-        $appData['webserviceUrl'] = '/ligaverwaltung/begegnung';
-        $appData['requestToken'] = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
         $appData['begegnungId'] = $id;
         $appData['numSlots'] = 8;
         $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);

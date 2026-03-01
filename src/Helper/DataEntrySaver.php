@@ -47,8 +47,6 @@ class DataEntrySaver
             throw new Exception('Begegnung nicht gefunden');
         }
 
-        // nicht benötigte Daten entfernen
-        unset($data['REQUEST_TOKEN'], $data['FORM_SUBMIT']);
         if ($begegnungModel->published) {
             // throw new Exception('Begegnung ist bereits erfasst und veröffentlicht. Für Änderungen muss die Veröffentlichung vorübergehend zurückgesetzt werden.');
             // silently "don't handle" the begegnung and highlights data
