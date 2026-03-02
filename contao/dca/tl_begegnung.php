@@ -10,15 +10,14 @@ declare(strict_types=1);
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
+ *
+ * TODO: disable turbo for the complete data entry form so that toggling [] published forces a reload of the vue app with toggled "disabled" data field
  */
 
 use Contao\DC_Table;
-use Contao\Config;
-use Contao\Input;
 use Contao\System;
 use Contao\DataContainer;
 use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
-use Fiedsch\Ligaverwaltung\Model\SpielModel;
 
 System::loadLanguageFile('default');
 
@@ -45,19 +44,18 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => DataContainer::MODE_SORTABLE,
+            'mode' => DataContainer::MODE_PARENT,
             'flag' => DataContainer::SORT_ASC,
-            'fields' => ['pid', 'home', 'away'],
             'panelLayout' => 'filter;sort,limit',
-            'child_record_callback' => [DCAHelper::class, 'labelBegegnungCallback'],
             'headerFields' => ['pid', 'name', 'saison'],
+            'child_record_callback' => [DCAHelper::class, 'labelBegegnungCallbackChildView'],
             'disableGrouping' => true,
             //'defaultSearchField' => '...' // TODO wir bräuchten hier etwas dynamisches
         ],
         'label' => [
-            'fields' => ['home', 'away'],
-            'format' => '%s : %s',
-            'label_callback' => [DCAHelper::class, 'labelBegegnungCallback'],
+            'fields' => ['pid', 'spiel_tag', 'spiel_am', 'home', 'away'],
+            'format' => '%s, %s, %s, %s : %s, %s',
+            'showColumns' => true,
         ],
         'global_operations' => [
             'all' => [
@@ -68,7 +66,12 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             ],
         ],
         'operations' => [
-            'edit',
+            'edit' => [
+                'href' => 'act=edit',
+                'primary' => true,
+                'icon' => '/system/themes/flexible/icons/edit.svg',
+                'prefetch' => false,
+            ],
             // 'children', // entfällt zugunsten des Vue-Widgets, mit dem die tl_spiel-Records automatisch generiert bzw. bearbeitet werden
             // 'copy', // ergibt hier keinen Sinn
             // 'cut', // ergibt hier keinen Sinn
@@ -110,7 +113,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'filter' => true,
             'exclude' => true,
             'toggle' => true,
-            'eval' => ['tl_class' => 'w50,clr','submitOnChange' => true],
+            'eval' => ['tl_class' => 'w50,clr'/*,'submitOnChange' => true*/],
             'sql' => "char(1) NOT NULL default ''",
         ],
         'home' => [
