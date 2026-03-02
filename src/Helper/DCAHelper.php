@@ -159,16 +159,37 @@ class DCAHelper
         return $result;
     }
 
-    /**
-     * Label für eine Begegnung (Spiel zweier Mannsnchaften gegeneinander)
-     * tl_begegnung.sorting.child_record_callback
-     * und
-     * tl_begegnung.fields.label.label_callback
-     *
-     * @throws Exception
-     */
-    public static function labelBegegnungCallback(array $row, string $label = ''): string
-    {
+//     /**
+//      * Label für eine Begegnung (Spiel zweier Mannsnchaften gegeneinander)
+//      * tl_begegnung.sorting.child_record_callback
+//      * und
+//      * tl_begegnung.fields.label.label_callback
+//      *
+//      * @throws Exception
+//      */
+//     public static function labelBegegnungCallbackTableView(array $row, string $label, DataContainer $dc, array $labels): array
+//     { //dd(func_get_args());
+//         $show_verband = Config::get('show_verband_in_select');
+//         $liga = LigaModel::findById($row['pid']);
+//         $verband = $show_verband ? VerbandModel::findById($liga->pid) : null;
+//         $labels[0] = sprintf('%s %s %s', $verband?->name, $liga->name, $liga->getRelated('saison')->name);
+//
+//         /** @var ValueFormatter $valueFormatter */
+//         $valueFormatter = System::getContainer()->get('contao.data_container.value_formatter');
+//         $GLOBALS['TL_DCA']['tl_begegnung']['fields']['spiel_am']['eval']['rgxp'] = 'date'; // Formatierung ohne Uhrzeit
+//         $labels[2] = $valueFormatter->format('tl_begegnung', 'spiel_am', $row['spiel_am'], /*$dc*/null);
+//
+//         $spielfrei = $labels['4'] === '0';
+//
+//         $labels[4] = $spielfrei ? 'spielfrei' : $labels['4'];
+//
+//         $begegnung = BegegnungModel::findById($row['id']);
+//         $labels[5] = $spielfrei ? ' ' : $begegnung->getScore();
+//
+//         return $labels;
+//     }
+    public static function labelBegegnungCallbackChildView(array $row, string $label = ''): string
+    { //dd($dc);
         $show_verband = Config::get('show_verband_in_select');
 
         $liga = LigaModel::findById($row['pid']);
