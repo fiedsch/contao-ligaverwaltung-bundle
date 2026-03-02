@@ -16,6 +16,7 @@ namespace Fiedsch\Ligaverwaltung\Helper;
 
 
 use Contao\Config;
+use Contao\CoreBundle\DataContainer\ValueFormatter;
 use Contao\Database;
 use Contao\Database\Result;
 use Contao\DataContainer;
@@ -223,22 +224,23 @@ class DCAHelper
 
         $final_score = $punkte_home + $punkte_away > 0 ? sprintf('%d:%d', $punkte_home, $punkte_away) : '';
 
-        $spielDate = Date::parse(Config::get('datimFormat') ?? 'd.m.Y H:i', $row['spiel_am']);
+        //$spielDate = Date::parse(Config::get('datimFormat') ?? 'd.m.Y H:i', $row['spiel_am']);
+        $spielDate = ', ' . Date::parse(Config::get('datime') ?? 'd.m.Y', $row['spiel_am']);
         if (!$row['away']) {
-            $spielDate = 'spielfrei';
+            $spielDate = '';
         }
         if ($row['postponed']) {
-            $spielDate = 'verschoben';
+            $spielDate = ' verschoben';
         }
-        $spielDate = '('.$spielDate.')';
 
-        return sprintf("<span class='tl_gray'>%s %s %s %d. Spieltag %s:</span>
+
+        return sprintf("<span class='tl_gray'>%s %s %s %d. Spieltag%s:</span>
                         <span class='tl_blue'>%s %s %s</span>
                         <span class='tl_green'>%s</span>
                         <span class='tl_gray'>%s</span>",
-            $verband?->name,
-            $liga->name,
-            $liga->getRelated('saison')->name,
+            '', // $verband?->name,           // die ersten drei Felder sind bei Darstellung als Child Record bei 'mode' === DataContainer::MODE_PARENT
+            '', // $liga->name,                       // sinnfrei, da es keine zusätzliche Information bereitstellt,
+            '', // $liga->getRelated('saison')->name, // die nicht bereits in den 'headerFields' steht
             $row['spiel_tag'],
             $spielDate,
             $home?->getShortName() ?? self::DOES_NOT_EXIST,
