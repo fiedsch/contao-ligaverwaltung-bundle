@@ -69,7 +69,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'edit' => [
                 'href' => 'act=edit',
                 'primary' => true,
-                'icon' => '/system/themes/flexible/icons/edit.svg',
+                'icon' => 'edit.svg',
                 'prefetch' => false,
             ],
             // 'children', // entfällt zugunsten des Vue-Widgets, mit dem die tl_spiel-Records automatisch generiert bzw. bearbeitet werden
