@@ -54,36 +54,6 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             ],
         ],
         'operations' => [
-            // 'edit' => [
-            //     'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['edit'],
-            //     'href' => 'table=tl_spieler',
-            //     'icon' => 'edit.svg',
-            // ],
-            // 'editheader' => [
-            //     'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['editheader'],
-            //     'href' => 'act=edit',
-            //     'icon' => 'header.svg',
-            // ],
-            // 'copy' => [
-            //     'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['copy'],
-            //     'href' => 'act=copy',
-            //     'icon' => 'copy.svg',
-            // ],
-            // 'cut' => [
-            //     'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['cut'],
-            //     'href' => 'act=paste&amp;mode=cut',
-            //     'icon' => 'cut.svg',
-            // ],
-            // 'delete' => [
-            //     'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['delete'],
-            //     'href' => 'act=delete',
-            //     'icon' => 'delete.svg',
-            //     'attributes' => 'onclick="if(!confirm(\''.$GLOBALS['TL_LANG']['MSC']['deleteConfirm'].'\'))return false;Backend.getScrollOffset()"',
-            // ],
-            // 'show' => [
-            //     'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['show'],
-            //     'href' => 'act=show',
-            //     'icon' => 'show.svg',
             'edit',
             'children',
             // 'copy',
