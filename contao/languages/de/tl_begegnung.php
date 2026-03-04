@@ -50,9 +50,13 @@ $GLOBALS['TL_LANG']['tl_begegnung']['show'] = [
     'die Begegnung anzeigen',
 ];
 
+// Analog core-bundle/contao/languages/de/article.xlf
 $GLOBALS['TL_LANG']['tl_begegnung']['toggle'] = [
-    'Veröffentlicht-Status umschalten',
-    'veröffentlichen oder Veröffentlichung aufheben',
+    'Begegnung veröffentlichen/unveröffentlichen',
+    'Veröffentlichung der Begegnung %s deaktivieren',
+    'Begegnung %s veröffentlichen',
+    'unveröffentlichen',
+    'veröffentlichen',
 ];
 
 $GLOBALS['TL_LANG']['tl_begegnung']['id'] = [
