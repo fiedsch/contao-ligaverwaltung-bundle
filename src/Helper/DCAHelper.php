@@ -284,7 +284,7 @@ class DCAHelper
         $result = [];
 
         if ($dc->activeRecord?->pid) {
-            // Callback beim bearbeiten einer Begegnung
+            // Callback beim Bearbeiten einer Begegnung
             $mannschaften = MannschaftModel::findByLiga($dc->activeRecord->pid);
         } else {
             // Callback im Listview (Filter:)
