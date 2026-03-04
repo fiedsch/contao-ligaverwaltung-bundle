@@ -23,7 +23,7 @@ class BegegnungMigration extends AbstractMigration
         }
 
         $availableColumns = $schemaManager->introspectTableColumnsByUnquotedName('tl_begegnung');
-        $availableColumns = array_map(fn($el) => str_replace('"', '', $el), array_map(fn(Column $col) => $col->getObjectName()->toString(), $availableColumns));
+        $availableColumns = array_map(fn(Column $col): string => $col->getObjectName()->getIdentifier()->getValue(), $availableColumns);
         if (!in_array('erfasst', $availableColumns)) {
             return false;
         }
