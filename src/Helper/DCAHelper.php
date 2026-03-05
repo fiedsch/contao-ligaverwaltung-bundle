@@ -284,11 +284,11 @@ class DCAHelper
         $result = [];
 
         if ($dc->activeRecord?->pid) {
-            // Callback beim Bearbeiten einer Begegnung
+            // Callback beim Bearbeiten einer Begegnung (auch inaktive berücksichtigen, damit wir alte Begegnungen noch editieren können)
             $mannschaften = MannschaftModel::findByLiga($dc->activeRecord->pid);
         } else {
-            // Callback im Listview (Filter:)
-            $mannschaften = MannschaftModel::findAllActive();
+            // Callback im Listview (Filter:) wir werden hier aufgerufen (TODO: weil ...), müssen aber kein Ergebnis liefern, da die Dropdowns von Contao standardmäßig gefüllt werden
+            return [];
         }
 
         if (null === $mannschaften) {
