@@ -86,7 +86,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['anonymize'] = [
     'inputType' => 'checkbox',
     'filter' => true,
     'eval' => ['tl_class' => 'w50 m12'],
-    'sql' => "char(1) NOT NULL default ''",
+    'sql' => ['type' => 'boolean', 'default' => false]
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = [

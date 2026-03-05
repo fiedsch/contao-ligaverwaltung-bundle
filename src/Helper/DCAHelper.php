@@ -260,7 +260,7 @@ class DCAHelper
     public static function getAktiveLigenForSelect(DataContainer $dc): array
     {
         $result = [];
-        $ligen = LigaModel::findBy(['aktiv=?'], ['1']);
+        $ligen = LigaModel::findBy(['aktiv=?'], [1]);
 
         if (null === $ligen) {
             return ['0' => 'keine Ligen gefunden!'];
@@ -336,12 +336,12 @@ class DCAHelper
                 .' LEFT JOIN tl_mannschaft m ON (s.pid=m.id)'
                 .' LEFT JOIN tl_liga l ON (m.liga=l.id)'
                 .' WHERE l.saison=?'
-                .' AND m.active=\'1\''
-                .' AND s.active=\'1\''
-                .' AND s.ersatzspieler<>\'1\''
+                .' AND m.active=1'
+                .' AND s.active=1'
+                .' AND s.ersatzspieler=0'
                 .' AND s.member_id IS NOT NULL'
                 .')'
-                .' AND tl_member.disable=\'\''
+                .' AND tl_member.disable=0'
                 //. ' ORDER BY tl_member.lastname';
                 .' ORDER BY tl_member.firstname, tl_member.lastname';
             $member = Database::getInstance()->prepare($query)->execute($saison);
@@ -358,12 +358,12 @@ class DCAHelper
                 .' SELECT s.member_id FROM tl_spieler s'
                 .' LEFT JOIN tl_mannschaft m ON (s.pid=m.id)'
                 .' WHERE m.liga=?'
-                .' AND m.active=\'1\''
-                .' AND s.active=\'1\''
-                .' AND s.ersatzspieler<>\'1\''
+                .' AND m.active=1'
+                .' AND s.active=1'
+                .' AND s.ersatzspieler=0'
                 .' AND s.member_id IS NOT NULL'
                 .')'
-                .' AND tl_member.disable=\'\''
+                .' AND tl_member.disable=0'
                 .' ORDER BY tl_member.lastname';
             $member = Database::getInstance()->prepare($query)->execute($liga);
         }
@@ -391,7 +391,7 @@ class DCAHelper
 
         $teamcaptain_label = $arrRow['teamcaptain'] ? (', <span>Teamcaptain</span> ('.$printedMobile.', '. $printedEMail .')') : '';
         $co_teamcaptain_label = $arrRow['co_teamcaptain'] ? ('(Co-Teamcaptain: '.$printedEMail.')') : '';
-        $ersatzspieler_label = '' === $arrRow['ersatzspieler'] ? '' : ', <span class="tl_red">Ersatzspieler</span>';
+        $ersatzspieler_label = 0 === $arrRow['ersatzspieler'] ? '' : ', <span class="tl_red">Ersatzspieler</span>';
 
         $member_no_longer_exists = (!$member && $arrRow['member_id'] > 0);
 
@@ -498,8 +498,8 @@ class DCAHelper
                 $query = ' SELECT s.pid FROM tl_spieler s'
                         .' LEFT JOIN tl_member me ON (s.member_id=me.id)'
                         ." WHERE s.pid IN ($filterlist)"
-                        ." AND s.active='1'"
-                        ." AND s.ersatzspieler<>'1'"
+                        ." AND s.active=1"
+                        ." AND s.ersatzspieler=0"
                         .' AND me.id=?'
                         ;
                 $queryResult = Database::getInstance()->prepare($query)->execute($dc->activeRecord->member_id);
@@ -843,7 +843,7 @@ class DCAHelper
         if ($dc && $dc->activeRecord) {
             $begegnung = BegegnungModel::findById($dc->activeRecord->begegnung_id);
             $spieler = SpielerModel::findBy(
-                ['(tl_spieler.pid=? OR tl_spieler.pid=?) AND (tl_spieler.active=\'1\')'],
+                ['(tl_spieler.pid=? OR tl_spieler.pid=?) AND (tl_spieler.active=1)'],
                 [$begegnung->home, $begegnung->away]
             );
         }

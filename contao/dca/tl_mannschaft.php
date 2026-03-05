@@ -123,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             'filter' => true,
             'sorting' => false,
             //'eval'       => ['tl_style'=>'w50'],
-            'sql' => "char(1) NOT NULL default '1'",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ],
     ],
 ];

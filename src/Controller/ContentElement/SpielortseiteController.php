@@ -70,7 +70,7 @@ class SpielortseiteController extends AbstractContentElementController
 
             $mannschaften = MannschaftModel::findBy(
                 ['spielort=?', 'saison=?', 'active=?'],
-                [$spielortModel->id, $saison, '1'],
+                [$spielortModel->id, $saison, 1],
                 ['order' => 'name ASC']
             );
             foreach ($mannschaften ?? [] as $mannschaft) {

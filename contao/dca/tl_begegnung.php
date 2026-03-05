@@ -114,7 +114,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'exclude' => true,
             'toggle' => true,
             'eval' => ['tl_class' => 'w50,clr'/*,'submitOnChange' => true*/],
-            'sql' => "char(1) NOT NULL default ''",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'home' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['home'],
@@ -185,7 +185,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'filter' => true,
             'exclude' => true,
             'eval' => ['tl_class' => 'w50'],
-            'sql' => "char(1) NOT NULL default ''",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'erfasst' => [
             'inputType' => 'checkbox',

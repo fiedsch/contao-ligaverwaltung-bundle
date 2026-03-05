@@ -62,7 +62,7 @@ class MannschaftslisteController extends AbstractContentElementController
 
 
         foreach ($mannschaften as $mannschaft) {
-            if ('1' === $mannschaft->active) {
+            if ($mannschaft->active) {
                 $listitem = $mannschaft->getLinkedName();
                 $listitems[] = $listitem;
             }

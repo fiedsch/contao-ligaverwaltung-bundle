@@ -35,7 +35,7 @@ class BegegnungDataEntryForm
         $appData['begegnungId'] = $id;
         $appData['numSlots'] = 8;
         $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);
-        $appData['disabled'] = $begegnungModel->published === "1";
+        $appData['disabled'] = $begegnungModel->published;
         $appData = DataEntrySaver::augment($appData);
         $appData = DataEntrySaver::fixInputEncoding($appData);
 

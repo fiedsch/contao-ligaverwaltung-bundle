@@ -93,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['showdetails'] = [
     'exclude' => true,
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'w50'],
-    'sql' => "char(1) NOT NULL default ''",
+    'sql' => ['type' => 'boolean', 'default' => false]
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['spielort'] = [

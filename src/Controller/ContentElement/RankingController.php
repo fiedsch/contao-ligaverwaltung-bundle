@@ -155,9 +155,9 @@ LEFT JOIN tl_mannschaft m1 ON (b.home=m1.id)
 LEFT JOIN tl_mannschaft m2 ON (b.away=m2.id)
 WHERE
     l.id=?
-    AND m1.active='1'
-    AND m2.active='1'
-    AND b.published='1'
+    AND m1.active=1
+    AND m2.active=1
+    AND b.published=1
 DBQ;
 
         $spiele = Database::getInstance()
@@ -301,9 +301,9 @@ LEFT JOIN tl_mannschaft m2 ON (b.away=m2.id)
 WHERE
     s.spieltype=1
     AND l.id=?
-    AND m1.active='1'
-    AND m2.active='1'
-    AND b.published='1'
+    AND m1.active=1
+    AND m2.active=1
+    AND b.published=1
 DBQ;
 
         if ($model->mannschaft > 0) {

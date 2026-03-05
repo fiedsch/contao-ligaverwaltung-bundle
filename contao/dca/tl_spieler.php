@@ -101,12 +101,12 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
         'teamcaptain' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['teamcaptain'],
             'inputType' => 'checkbox',
-            'sql' => "char(1) NOT NULL default ''",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'co_teamcaptain' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['co_teamcaptain'],
             'inputType' => 'checkbox',
-            'sql' => "char(1) NOT NULL default ''",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'active' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['active'],
@@ -118,7 +118,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'sorting' => false,
             'toggle' => true,
             //'eval'       => ['tl_style'=>'w50'],
-            'sql' => "char(1) NOT NULL default '1'",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'ersatzspieler' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['ersatzspieler'],
@@ -128,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'filter' => true,
             'sorting' => false,
             //'eval'       => ['tl_style'=>'w50'],
-            'sql' => "char(1) NOT NULL default ''",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'jugendlich' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['jugendlich'],
@@ -138,14 +138,14 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'filter' => true,
             'sorting' => false,
             //'eval'       => ['tl_style'=>'w50'],
-            'sql' => "char(1) NOT NULL default ''",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'haspaid' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['haspaid'],
             'inputType' => 'checkbox',
             'filter' => true,
             'eval' => ['tl_class' => 'w50  m12'],
-            'sql' => "char(1) NOT NULL default ''",
+            'sql' => ['type' => 'boolean', 'default' => false]
         ],
 
     ],

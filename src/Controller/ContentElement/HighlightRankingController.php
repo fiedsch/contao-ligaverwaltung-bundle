@@ -120,9 +120,9 @@ class HighlightRankingController extends AbstractContentElementController
                           LEFT JOIN tl_mannschaft ma
                           ON (s.pid=ma.id)
                           WHERE b.pid=?
-                          AND b.published='1'
-                          AND ma.active='1'
-                          AND s.active='1'
+                          AND b.published=1
+                          AND ma.active=1
+                          AND s.active=1
                           AND me.id IS NOT NULL"; // keine gelöschten Spieler
 
         $sql .= ' AND '.$this->getRankingTypeFilter($model,'h');
@@ -193,9 +193,9 @@ class HighlightRankingController extends AbstractContentElementController
                           LEFT JOIN tl_mannschaft ma
                           ON (s.pid=ma.id)
                           WHERE b.pid=?
-                          AND b.published='1'
-                          -- AND s.active='1'   -- keine Filter, damit 'meine' Leistungen nicht verloren gehen
-                          -- AND ma.active='1'  -- auch, wenn 'ich' sie in einer anderen Mannschaft erbracht habe
+                          AND b.published=1
+                          -- AND s.active=1   -- keine Filter, damit 'meine' Leistungen nicht verloren gehen
+                          -- AND ma.active=1  -- auch, wenn 'ich' sie in einer anderen Mannschaft erbracht habe
                           AND me.id IS NOT NULL"; // keine gelöschten Spieler
 
         $statement = $this->connection->prepare($sql);
@@ -208,7 +208,7 @@ class HighlightRankingController extends AbstractContentElementController
 
             $sql .= ' AND s.pid=?';
             $sql .= ' AND '.$this->getRankingTypeFilter($model, 'h');
-            $sql .= " AND s.active='1'"; // nur aktive Spieler dieser Mannschaft
+            $sql .= " AND s.active=1"; // nur aktive Spieler dieser Mannschaft
             $sql .= ' ORDER BY spiel_am DESC';
             $statement = $this->connection->prepare($sql);
             $statement->bindValue(1, $model->liga);

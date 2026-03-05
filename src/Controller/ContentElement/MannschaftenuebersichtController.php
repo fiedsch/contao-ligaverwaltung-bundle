@@ -69,7 +69,7 @@ class MannschaftenuebersichtController extends AbstractContentElementController
         foreach ($saisonIds as $saisonId) {
             $ligen = LigaModel::findAll([
                 'column' => ['aktiv=?', 'saison=?'],
-                'value' => ['1', $saisonId],
+                'value' => [1, $saisonId],
                 'order' => 'spielstaerke ASC, name ASC', // name ASC as fallback if spielstaerke (which is kind of an order field) is left emtpy
             ]);
             array_push($alleLigen, ...$ligen->fetchAll());
@@ -82,8 +82,7 @@ class MannschaftenuebersichtController extends AbstractContentElementController
         $ligenDetails = [];
 
         foreach ($alleLigen as $liga) {
-            //dd($liga);
-            $mannschaften = MannschaftModel::findBy(['liga=?', 'active=?'], [$liga['id'], '1'], ['order' => 'name ASC']);
+            $mannschaften = MannschaftModel::findBy(['liga=?', 'active=1'], [$liga['id']], ['order' => 'name ASC']);
             if (null === $mannschaften) {
                 continue;
             }

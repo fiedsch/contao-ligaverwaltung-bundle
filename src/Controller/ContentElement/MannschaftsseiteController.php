@@ -86,7 +86,7 @@ class MannschaftsseiteController extends AbstractContentElementController
         $contentModel->tstamp = time();
         $contentModel->type = 'spielerliste';
         $contentModel->mannschaft = $model->mannschaft;
-        $contentModel->showdetails = '1';
+        $contentModel->showdetails = 1;
         $contentModel->headline = [
             'value' => 'Spielerliste '.$mannschaftModel->name,
             'unit' => 'h2',

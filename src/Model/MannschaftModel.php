@@ -143,6 +143,6 @@ class MannschaftModel extends Model
 
     public function isActive(): bool
     {
-        return $this->active === '1';
+        return $this->active;
     }
 }
