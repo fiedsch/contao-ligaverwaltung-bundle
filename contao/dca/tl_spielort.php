@@ -64,10 +64,10 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
 
     'fields' => [
         'id' => [
-            'sql' => 'int(10) unsigned NOT NULL auto_increment',
+            'sql' => ['type' => 'integer', 'unsigned' => true, 'autoincrement' => true],
         ],
         'tstamp' => [
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
         ],
         'name' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spielort']['name'],

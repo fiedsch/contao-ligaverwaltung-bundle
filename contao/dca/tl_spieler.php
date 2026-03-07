@@ -72,15 +72,15 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
 
     'fields' => [
         'id' => [
-            'sql' => 'int(10) unsigned NOT NULL auto_increment',
+            'sql' => ['type' => 'integer', 'unsigned' => true, 'autoincrement' => true],
+        ],
+        'tstamp' => [
+            'sql' => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
         ],
         'pid' => [
             'foreignKey' => 'tl_mannschaft.name',
             'sql' => "int(10) unsigned NOT NULL default '0'",
             'relation' => ['type' => 'belongsTo', 'load' => 'eager'],
-        ],
-        'tstamp' => [
-            'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
         'member_id' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['member_id'],
