@@ -69,7 +69,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
         if ($dc->activeRecord->tstamp > 0) {
             return $value;
         }
-        // Do we have non numerical passummmer values? Then MAX() + 1 will not be appropriate!
+        // Do we have non numerical passnummmer values? Then MAX() + 1 will not be appropriate!
         $res = Database::getInstance()->prepare("SELECT SUM(passnummer NOT REGEXP '^[0-9]+$') as n FROM tl_member WHERE passnummer <>''")->execute();
 
         if ($res->n > 0) {
