@@ -16,7 +16,6 @@ namespace Fiedsch\Ligaverwaltung\Helper;
 
 
 use Contao\Config;
-use Contao\CoreBundle\DataContainer\ValueFormatter;
 use Contao\Database;
 use Contao\Database\Result;
 use Contao\DataContainer;
@@ -113,7 +112,6 @@ class DCAHelper
             ->execute($row['id'])
         ;
         $anzahlSpieler = '<span class="tl_red">keine Spieler eingetragen</span>';
-        $inaktiv = '';
 
         if ($spieler->n > 0) {
             $anzahlSpieler = sprintf('%d Spieler', $spieler->n);
