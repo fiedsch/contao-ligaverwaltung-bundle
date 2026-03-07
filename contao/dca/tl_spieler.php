@@ -13,8 +13,6 @@ declare(strict_types=1);
  */
 
 use Contao\DataContainer;
-use Contao\FilesModel;
-use Contao\MemberModel;
 use Contao\DC_Table;
 use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Contao\System;
