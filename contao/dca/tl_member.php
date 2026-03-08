@@ -54,7 +54,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
     'inputType' => 'text',
     'search' => true,
     'sorting' => true,
-    'eval' => ['rgxp' => 'alnum', 'tl_class' => 'w50', 'maxlength' => 32, 'unique' => true],
+    'eval' => ['rgxp' => 'alnum', 'tl_class' => 'w25', 'maxlength' => 32, 'unique' => true],
     'sql' => "varchar(32) NOT NULL default ''",
     'load_callback' => [static function ($value, DataContainer $dc) {
         // "auto increment" passnummer for new records and consider special cases.
@@ -85,7 +85,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['anonymize'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_member']['anonymize'],
     'inputType' => 'checkbox',
     'filter' => true,
-    'eval' => ['tl_class' => 'w50 m12'],
+    'eval' => ['tl_class' => 'w25 m12'],
     'sql' => ['type' => 'boolean', 'default' => false]
 ];
 
@@ -95,7 +95,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = [
     'search' => false,
     'filter' => false,
     'inputType' => 'fileTree',
-    'eval' => ['tl_class' => 'clr w50', 'fieldType' => 'radio', 'filesOnly' => true, 'extensions' => 'jpg,png', 'icon' => 'pickfile.svg'],
+    'eval' => ['tl_class' => 'w25', 'fieldType' => 'radio', 'filesOnly' => true, 'extensions' => 'jpg,png', 'icon' => 'pickfile.svg'],
     'sql' => 'blob NULL',
 ];
 
@@ -134,7 +134,7 @@ $paletteManipulator = PaletteManipulator::create();
 // }
 // add our fields
 $paletteManipulator->addLegend('ligaverwaltung_legend', 'address_legend', PaletteManipulator::POSITION_BEFORE);
-foreach (['passnummer', 'avatar', 'anonymize'] as $field) {
+foreach (['passnummer', 'anonymize', 'avatar'] as $field) {
     $paletteManipulator->addField($field, 'ligaverwaltung_legend', PaletteManipulator::POSITION_APPEND);
 }
 
