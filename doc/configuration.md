@@ -111,3 +111,26 @@ Datei `contao/dca/tl_mannschaft.php` (Verzeichnisse und Dateien ggf. anlegen):
 <?php
 $GLOBALS['TL_DCA']['tl_mannschaft']['list']['sorting']['filter'][] = ['liga IN (SELECT id FROM tl_liga WHERE aktiv=?)', '1'];
 ```
+
+
+### Anpassungen Mitglieder
+
+Sollen bei Mitgliedern Felder entfernt werden, die nie benötigt werden, so kann dafür eine Datei
+`contao/dca/tl_member` angelegt werden, in der bestimmte Felder entfernt werden (siehe dazu auch die Contao
+Dokumentation zum [`PaletteManipulator`](https://docs.contao.org/5.x/dev/framework/dca/palettemanipulator)).
+
+Beispiel:
+```
+<?php
+
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
+
+$paletteManipulator = PaletteManipulator::create();
+
+// Felder entfernen, die wir nicht benötigen
+foreach (['company', 'country', 'state', 'fax', 'website', 'language'] as $field) {
+    $paletteManipulator->removeField($field);
+}
+
+$paletteManipulator->applyToPalette('default', 'tl_member');
+```
