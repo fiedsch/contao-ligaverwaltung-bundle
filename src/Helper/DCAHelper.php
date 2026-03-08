@@ -135,6 +135,7 @@ class DCAHelper
      * tl_mannschaft.fields.liga.options_callback
      *
      * @throws Exception
+     * @noinspection PhpUnusedParameterInspection
      */
     public static function getLigaForSelect(DataContainer $dc): array
     {
@@ -280,10 +281,11 @@ class DCAHelper
     public static function getMannschaftenForSelect(DataContainer $dc): array
     {
         $result = [];
+        $activeRecord = $dc->getActiveRecord();
 
-        if ($dc->activeRecord?->pid) {
+        if ($activeRecord && $activeRecord['pid'] ?? null) {
             // Callback beim Bearbeiten einer Begegnung (auch inaktive berücksichtigen, damit wir alte Begegnungen noch editieren können)
-            $mannschaften = MannschaftModel::findByLiga($dc->activeRecord->pid);
+            $mannschaften = MannschaftModel::findByLiga($activeRecord['pid']);
         } else {
             // Callback im Listview (Filter:) wir werden hier aufgerufen (TODO: weil ...), müssen aber kein Ergebnis liefern, da die Dropdowns von Contao standardmäßig gefüllt werden
             return [];
@@ -311,11 +313,14 @@ class DCAHelper
     public static function getSpielerForSelect(DataContainer $dc): array
     {
         $result = [];
+
+        $activeRecord = $dc->getActiveRecord();
+
         // Wird ein bestehender Record editiert, dann das zugehörige Member in
         // das $result aufnehmen, da der folgende $query es ja nicht finden würde
         // weil es bereits in der Datenbank eingetragen und somit "im Einsatz" ist.
-        if ($dc->activeRecord->member_id) {
-            $member = MemberModel::findById($dc->activeRecord->member_id);
+        if ($activeRecord && $activeRecord['member_id']) {
+            $member = MemberModel::findById($activeRecord['member_id']);
             $result[$member->id] = self::makeSpielerName($member);
         }
 
@@ -325,8 +330,9 @@ class DCAHelper
             // Liga spielen, die "in der gleichen Saison ist" (unabhängig von der Liga)
             // wie die aktuell betrachtete.
             // Annahme: ein Spieler darf in einer Saison nur in einer Mannschaft spielen!
+            $activeRecord = $dc->getActiveRecord();
 
-            $saison = MannschaftModel::findById($dc->activeRecord->pid)->getRelated('liga')->saison;
+            $saison = MannschaftModel::findById($activeRecord['pid'])->getRelated('liga')->saison;
 
             $query =
                 'SELECT * FROM tl_member WHERE id NOT IN ('
@@ -349,7 +355,7 @@ class DCAHelper
             // Liga spielen.
             // Annahme: ein Spieler darf in einer Liga nur in einer Mannschaft spielen!
 
-            $liga = MannschaftModel::findById($dc->activeRecord->pid)->getRelated('liga')->id;
+            $liga = MannschaftModel::findById($activeRecord['pid'])->getRelated('liga')->id;
 
             $query =
                 'SELECT * FROM tl_member WHERE id NOT IN ('
@@ -436,9 +442,10 @@ class DCAHelper
      */
     public function spielerSaveCallback(string $value, DataContainer $dc): string
     {
+        $activeRecord = $dc->getActiveRecord();
         if ('1' === $value) {
             // (1) Mannschaft inaktiv?
-            $mannschaft = MannschaftModel::findById($dc->activeRecord->pid);
+            $mannschaft = MannschaftModel::findById($activeRecord['pid']);
 
             if ($mannschaft && !$mannschaft->active) {
                 throw new RuntimeException('Spieler kann in einer inaktiven Mannschaft nicht auf aktiv gesetzt werden');
@@ -500,7 +507,7 @@ class DCAHelper
                         ." AND s.ersatzspieler=0"
                         .' AND me.id=?'
                         ;
-                $queryResult = Database::getInstance()->prepare($query)->execute($dc->activeRecord->member_id);
+                $queryResult = Database::getInstance()->prepare($query)->execute($activeRecord['member_id']);
 
                 if ($queryResult->count() > 0) {
                     $mannschaftsnamen = [];
@@ -525,10 +532,12 @@ class DCAHelper
     {
         $initial = [0 => 'Kein Spieler (ID 0)'];
 
-        if (!$dc->activeRecord->pid) {
+        $activeRecord = $dc->getActiveRecord();
+
+        if (!$activeRecord || !$activeRecord['pid']) {
             return $initial;
         }
-        $begegnung = BegegnungModel::findById($dc->activeRecord->pid);
+        $begegnung = BegegnungModel::findById($activeRecord['pid']);
 
         if (!$begegnung) {
             return $initial;
@@ -561,11 +570,12 @@ class DCAHelper
     public static function getAwaySpielerForSelect(DataContainer $dc): array
     {
         $initial = [0 => 'Kein Spieler (ID 0)'];
+        $activeRecord = $dc->getActiveRecord();
 
-        if (!$dc->activeRecord->pid) {
+        if (!$activeRecord || !$activeRecord['pid']) {
             return $initial;
         }
-        $begegnung = BegegnungModel::findById($dc->activeRecord->pid);
+        $begegnung = BegegnungModel::findById($activeRecord['pid']);
 
         if (!$begegnung) {
             return $initial;
@@ -773,9 +783,9 @@ class DCAHelper
     public static function getAlleMannschaftenForSelect(DataContainer $dc): array
     {
         $result = [];
-
-        if ($dc && $dc->activeRecord->liga) {
-            $mannschaften = MannschaftModel::findByLiga($dc->activeRecord->liga, ['order' => 'name ASC']);
+        $activeRecord = $dc->getActiveRecord();
+        if ($activeRecord && $activeRecord['liga']) {
+            $mannschaften = MannschaftModel::findByLiga($activeRecord['liga'], ['order' => 'name ASC']);
         } else {
             $mannschaften = MannschaftModel::findAll(['order' => 'name ASC']);
         }
@@ -800,7 +810,7 @@ class DCAHelper
         // nicht bei der Spielerliste, da wir dort zusätzlich eine Auswahl der
         // Liga bräuchten, damit "alle Mannschaften" Sinn ergibt
         // Dito für die Mannschaftsseite.
-        if (!in_array($dc->activeRecord->type, ['spielerliste', 'mannschaftsseite'], true)) {
+        if (!in_array($activeRecord['type'], ['spielerliste', 'mannschaftsseite'], true)) {
             // TODO: put "alle Mannschaften" to the start of the List (without reindexing!)
             $result[MannschaftModel::ALLE_MANNSCHAFTEN] = 'alle Mannschaften'; // z.B. für "Spielerranking" einer gesamten Liga
         }
@@ -837,9 +847,10 @@ class DCAHelper
     {
         $result = [];
         $spieler = null;
+        $activeRecord = $dc?->getActiveRecord();
 
-        if ($dc && $dc->activeRecord) {
-            $begegnung = BegegnungModel::findById($dc->activeRecord->begegnung_id);
+        if ($activeRecord) {
+            $begegnung = BegegnungModel::findById($activeRecord['begegnung_id']);
             $spieler = SpielerModel::findBy(
                 ['(tl_spieler.pid=? OR tl_spieler.pid=?) AND (tl_spieler.active=1)'],
                 [$begegnung->home, $begegnung->away]
@@ -916,7 +927,9 @@ class DCAHelper
         );
         sort($entries);
 
-        switch ($dc->activeRecord->type) {
+        $activeRecord = $dc->getActiveRecord();
+
+        switch ($activeRecord['type']) {
             case HighlightModel::TYPE_180:
             case HighlightModel::TYPE_171:
                 if (count($entries) > 1) {

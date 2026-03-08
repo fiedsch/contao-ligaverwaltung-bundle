@@ -65,8 +65,9 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
         if ($value) {
             return $value;
         }
+        $activeRecord = $dc->getActiveRecord();
         // An existing record with empty passnummer? Then leave as is!
-        if ($dc->activeRecord->tstamp > 0) {
+        if ($activeRecord['tstamp'] > 0) {
             return $value;
         }
         // Do we have non numerical passnummmer values? Then MAX() + 1 will not be appropriate!
