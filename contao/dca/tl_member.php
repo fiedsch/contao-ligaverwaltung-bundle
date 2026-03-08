@@ -17,6 +17,7 @@ use Contao\DataContainer;
 use Contao\Image;
 use Contao\MemberModel;
 use Contao\System;
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
@@ -47,8 +48,6 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['email']['eval']['mandatory'] = false;
 
-$GLOBALS['TL_DCA']['tl_member']['palettes']['default']
-    = preg_replace('/;{address_legend/', ';{ligaverwaltung_legend},passnummer,avatar,anonymize;{address_legend', $GLOBALS['TL_DCA']['tl_member']['palettes']['default']);
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_member']['passnummer'],
@@ -100,12 +99,6 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = [
     'sql' => 'blob NULL',
 ];
 
-// remove fields we don't need/want
-
-foreach (['company', 'country', 'state', 'fax', 'website', 'lang'] as $field) {
-    $GLOBALS['TL_DCA']['tl_member']['palettes']['default']
-      = preg_replace("/$field,*;*/", '', $GLOBALS['TL_DCA']['tl_member']['palettes']['default']);
-}
 
 // change tl_style so fields align nicely again
 $GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['tl_class'] .= ' clr';
@@ -133,3 +126,17 @@ foreach (['company', 'country', 'state'] as $field) {
 
 // Make gender a filter field
 $GLOBALS['TL_DCA']['tl_member']['fields']['gender']['filter'] = true;
+
+// remove fields we don't need/want (this should be done in an app extension)
+$paletteManipulator = PaletteManipulator::create();
+// foreach (['company', 'country', 'state', 'fax', 'website', 'language'] as $field) {
+//     $paletteManipulator->removeField($field);
+// }
+// add our fields
+$paletteManipulator->addLegend('ligaverwaltung_legend', 'address_legend', PaletteManipulator::POSITION_BEFORE);
+foreach (['passnummer', 'avatar', 'anonymize'] as $field) {
+    $paletteManipulator->addField($field, 'ligaverwaltung_legend', PaletteManipulator::POSITION_APPEND);
+}
+
+$paletteManipulator->applyToPalette('default', 'tl_member');
+
