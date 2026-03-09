@@ -194,7 +194,7 @@ class SpielplanController extends AbstractContentElementController
 
             $spiele[$begegnung->spiel_tag][] = $spiel;
         }
-dump($spiele);
+
         $template->spiele = $spiele;
 
         $template->ical_link = System::getContainer()
