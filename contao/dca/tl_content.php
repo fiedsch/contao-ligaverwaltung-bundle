@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Fiedsch\Ligaverwaltung\Model\HighlightModel;
+use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
 
 
 /* Palettes */
@@ -63,7 +64,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['saison'] = [
     'inputType' => 'checkboxWizard',
     'eval' => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'w50 clr'],
     'options_callback' => [DCAHelper::class, 'getAlleSaisonsForSelect'],
-    'sql' => 'blob NULL',
+    'sql' => ['type' => 'blob', 'length' => AbstractMySQLPlatform::LENGTH_LIMIT_BLOB, 'notnull' => false ],
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['liga'] = [
@@ -149,6 +150,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['ligen'] = [
     'foreignKey' => 'tl_liga.name',
     'eval' => ['multiple' => true, 'tl_class' => 'w50 clr'],
     'options_callback' => [DCAHelper::class, 'getLigaForSelect'],
-    'sql' => 'blob NULL',
+    'sql' => ['type' => 'blob', 'length' => AbstractMySQLPlatform::LENGTH_LIMIT_BLOB, 'notnull' => false ],
 ];
 

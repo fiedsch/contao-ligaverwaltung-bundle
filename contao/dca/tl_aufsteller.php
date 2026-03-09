@@ -80,7 +80,7 @@ $GLOBALS['TL_DCA']['tl_aufsteller'] = [
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'doNotCopy' => true],
-            'sql' => "varchar(128) default NULL",
+            'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'street' => [
             'label' => &$GLOBALS['TL_LANG']['tl_aufsteller']['street'],
@@ -89,7 +89,7 @@ $GLOBALS['TL_DCA']['tl_aufsteller'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'long'],
-            'sql' => "varchar(128) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'postal' => [
             'label' => &$GLOBALS['TL_LANG']['tl_aufsteller']['postal'],
@@ -98,7 +98,7 @@ $GLOBALS['TL_DCA']['tl_aufsteller'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 32, 'tl_class' => 'w50'],
-            'sql' => "varchar(32) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 32, 'default' => ''],
         ],
         'city' => [
             'label' => &$GLOBALS['TL_LANG']['tl_aufsteller']['city'],
@@ -107,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_aufsteller'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
-            'sql' => "varchar(255) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 255, 'default' => ''],
         ],
         'phone' => [
             'label' => &$GLOBALS['TL_LANG']['tl_aufsteller']['phone'],
@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_aufsteller'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 64, 'tl_class' => 'w50', 'rgxp' => 'phone'],
-            'sql' => "varchar(64) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
         ],
         'website' => [
             'label' => &$GLOBALS['TL_LANG']['tl_aufsteller']['website'],
@@ -124,7 +124,7 @@ $GLOBALS['TL_DCA']['tl_aufsteller'] = [
             'search' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'url', 'maxlength' => 255, 'feEditable' => true, 'feViewable' => true, 'feGroup' => 'contact', 'tl_class' => 'w50'],
-            'sql' => "varchar(255) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 255, 'default' => ''],
         ],
     ],
 ];

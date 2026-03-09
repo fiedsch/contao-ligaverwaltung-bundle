@@ -18,6 +18,7 @@ use Contao\Image;
 use Contao\MemberModel;
 use Contao\System;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
@@ -55,7 +56,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
     'search' => true,
     'sorting' => true,
     'eval' => ['rgxp' => 'alnum', 'tl_class' => 'w25', 'maxlength' => 32, 'unique' => true],
-    'sql' => "varchar(32) NOT NULL default ''",
+    'sql' => ['type' => 'string', 'length' => 32, 'default' => ''],
     'load_callback' => [static function ($value, DataContainer $dc) {
         // "auto increment" passnummer for new records and consider special cases.
         // NOTE: if the member with the highest passnumber gets deleted their passnumber
@@ -96,7 +97,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = [
     'filter' => false,
     'inputType' => 'fileTree',
     'eval' => ['tl_class' => 'w25', 'fieldType' => 'radio', 'filesOnly' => true, 'extensions' => 'jpg,png', 'icon' => 'pickfile.svg'],
-    'sql' => 'blob NULL',
+    'sql' => ['type' => 'blob', 'length' => AbstractMySQLPlatform::LENGTH_LIMIT_BLOB, 'notnull' => false ],
 ];
 
 
@@ -107,7 +108,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['tl_class'] .= ' clr
 // original definition
 // $GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] = 'varchar(64) COLLATE utf8_bin NULL';
 // redefinition
-$GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] = 'varchar(64) COLLATE utf8mb4_general_ci NULL';
+$GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] =['type' => 'string', 'length' => 64, 'notnull' => false, 'platformOptions' => ['collation' => 'utf8mb4_general_ci']];
 
 // do not use 'filter' for these
 foreach (['country', 'language', 'disable', 'login', 'city'] as $field) {

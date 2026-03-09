@@ -93,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'foreignKey' => 'tl_begegnung.id',
             'options_callback' => [DCAHelper::class, 'getBegegnungenForHighlight'],
             'eval' => ['submitOnChange' => true, 'chosen' => true, 'includeBlankOption' => true, 'mandatory' => false, 'tl_class' => 'w50'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'spieler_id' => [
             'label' => &$GLOBALS['TL_LANG']['tl_highlight']['spieler_id'],
@@ -102,7 +102,7 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'foreignKey' => 'tl_spieler.id',
             'options_callback' => [DCAHelper::class, 'getSpielerForHighlight'],
             'eval' => ['chosen' => true, 'includeBlankOption' => true, 'mandatory' => false, 'tl_class' => 'w50'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'type' => [
             'label' => &$GLOBALS['TL_LANG']['tl_highlight']['typ'],
@@ -111,14 +111,14 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'filter' => true,
             'options' => HighlightModel::getOptionsArray(),
             'eval' => ['mandatory' => true, 'includeBlankOption' => true, 'tl_class' => 'w50 clr'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'value' => [
             'label' => &$GLOBALS['TL_LANG']['tl_highlight']['value'],
             'inputType' => 'text',
             'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'rgxp' => 'csvdigit'],
             'save_callback' => [[DCAHelper::class, 'cleanCsvDigitList']],
-            'sql' => "varchar(64) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
         ],
     ],
 ];

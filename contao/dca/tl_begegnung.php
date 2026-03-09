@@ -18,6 +18,7 @@ use Contao\DC_Table;
 use Contao\System;
 use Contao\DataContainer;
 use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
+use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
 
 System::loadLanguageFile('default');
 
@@ -165,14 +166,14 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'search' => true,
             'inputType' => 'textarea',
             'eval' => ['tl_class' => 'clr long', 'maxlength' => 255],
-            'sql' => 'mediumtext NULL',
+            'sql' => ['type' => 'text', 'length' => AbstractMySQLPlatform::LENGTH_LIMIT_MEDIUMTEXT, 'notnull' => false]
         ],
         'begegnung_data' => [
             // Data not shown in back end
             // 'inputType' => 'yamlWidget',
             'exclude' => true,
             'default' => '',
-            'sql' => 'blob NOT NULL',
+            'sql' => ['type' => 'blob', 'length' => AbstractMySQLPlatform::LENGTH_LIMIT_BLOB ],
         ],
         'vue_app' => [
             'inputType' => 'begegnungdataentry_widget',

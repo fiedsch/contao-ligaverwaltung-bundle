@@ -74,7 +74,7 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
-            'sql' => "varchar(128) default NULL",
+            'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'alias' => [
             'label' => &$GLOBALS['TL_LANG']['tl_saison']['alias'],
@@ -83,7 +83,7 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
-            'sql' => "varchar(128) default NULL",
+            'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
     ],
 ];

@@ -80,7 +80,7 @@ $GLOBALS['TL_DCA']['tl_verband'] = [
             'inputType' => 'text',
             'exclude' => true,
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],
-            'sql' => "varchar(128) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
     ],
 ];

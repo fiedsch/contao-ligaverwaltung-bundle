@@ -88,7 +88,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             'foreignKey' => 'tl_liga.name',
             'eval' => ['chosen' => true, 'includeBlankOption' => true, 'tl_class' => 'w50', 'mandatory' => true],
             'options_callback' => [DCAHelper::class, 'getLigaForSelect'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
 
         'name' => [
@@ -100,7 +100,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             'sorting' => true,
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'eval' => ['maxlength' => 255, 'mandatory' => true],
-            'sql' => "varchar(255) default NULL",
+            'sql' => ['type' => 'string', 'length' => 255, 'default' => ''],
         ],
         'spielort' => [
             'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['spielort'],
@@ -112,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             'eval' => ['mandatory' => true, 'chosen' => true, 'includeBlankOption' => true],
             'foreignKey' => 'tl_spielort.name',
             'relation' => ['type' => 'hasOne', 'load' => 'eager'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'active' => [
             'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['active'],

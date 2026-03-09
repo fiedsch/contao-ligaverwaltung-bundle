@@ -15,6 +15,7 @@ declare(strict_types=1);
 use Contao\DataContainer;
 use Contao\DC_Table;
 use Contao\System;
+use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
 
 System::loadLanguageFile('default');
 
@@ -77,7 +78,7 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'doNotCopy' => true],
-            'sql' => "varchar(128) default NULL",
+            'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'street' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spielort']['street'],
@@ -86,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'clr long'],
-            'sql' => "varchar(128) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'postal' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spielort']['postal'],
@@ -95,7 +96,7 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 32, 'tl_class' => 'w50'],
-            'sql' => "varchar(32) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 32, 'default' => ''],
         ],
         'city' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spielort']['city'],
@@ -104,7 +105,7 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
-            'sql' => "varchar(255) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 255, 'default' => ''],
         ],
         'phone' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spielort']['phone'],
@@ -113,7 +114,7 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 64, 'tl_class' => 'w50', 'rgxp' => 'phone'],
-            'sql' => "varchar(64) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
         ],
         'website' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spielort']['website'],
@@ -121,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'search' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'url', 'maxlength' => 255, 'tl_class' => 'w50'],
-            'sql' => "varchar(255) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 255, 'default' => ''],
         ],
         'aufsteller' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spielort']['aufsteller'],
@@ -131,7 +132,7 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'foreignKey' => 'tl_aufsteller.name',
             'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'load' => 'lazy'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'spielortpage' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spielort']['spielortpage'],
@@ -141,7 +142,7 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'filter' => false,
             'sorting' => false,
             'eval' => ['mandatory' => false, 'multiple' => false, 'fieldType' => 'radio', 'tl_class' => 'w50'],
-            'sql' => 'blob NULL',
+            'sql' => ['type' => 'blob', 'length' => AbstractMySQLPlatform::LENGTH_LIMIT_BLOB, 'notnull' => false ],
         ],
     ],
 ];

@@ -84,8 +84,8 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
         ],
         'pid' => [
             'foreignKey' => 'tl_verband.name',
-            'sql' => "int(10) unsigned NOT NULL default '0'",
             'relation' => ['type' => 'belongsTo', 'load' => 'eager'],
+            'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'name' => [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['name'],
@@ -95,7 +95,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'search' => true,
             'exclude' => true,
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true, 'unique' => true],
-            'sql' => "varchar(128) default NULL",
+            'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'saison' => [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['saison'],
@@ -105,7 +105,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'foreignKey' => 'tl_saison.alias',
             'eval' => ['chosen' => true, 'includeBlankOption' => true, 'tl_class' => 'w50', 'mandatory' => true],
             'relation' => ['type' => 'belongsTo', 'load' => 'eager'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'aktiv' => [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['aktiv'],
@@ -122,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'filter' => true,
             'exclude' => true,
             'eval' => ['rgxp' => 'digit', 'tl_class' => 'w50 clr'],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'spielplan' => [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['spielplan'],
@@ -137,7 +137,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
                 LigaModel::SPIELPLAN_4E1D => '4E1D',
             ],
             'eval' => ['mandatory' => true, 'includeBlankOption' => true, 'tl_class' => 'w50'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'rechnungsbetrag_spielort' => [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_spielort'],
@@ -154,7 +154,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
 
                 return $value;
             }],
-            'sql' => "varchar(16) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 16, 'default' => ''],
         ],
         'rechnungsbetrag_aufsteller' => [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_aufsteller'],
@@ -171,7 +171,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
 
                 return $value;
             }],
-            'sql' => "varchar(16) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 16, 'default' => ''],
         ],
     ],
 ];
