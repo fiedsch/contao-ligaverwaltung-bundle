@@ -83,14 +83,14 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'sql' => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
         ],
         'pid' => [
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'slot' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['slot'],
             'inputType' => 'text',
             'sorting' => true,
             'eval' => ['rgxp' => 'digit', 'minval' => 1],
-            'sql' => "int(10) unsigned NOT NULL default '1'",
+            'sql' => ['type' => 'integer', 'default' => 1],
         ],
         'home' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['home'],
@@ -102,7 +102,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'eval' => ['tl_class' => 'w50 clr', 'chosen' => true, 'mandatory' => false, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
             'options_callback' => [DCAHelper::class, 'getHomeSpielerForSelect'],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'away' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['away'],
@@ -114,21 +114,21 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'eval' => ['tl_class' => 'w50', 'chosen' => true, 'mandatory' => false, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
             'options_callback' => [DCAHelper::class, 'getAwaySpielerForSelect'],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'score_home' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['score_home'],
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50 clr', 'mandatory' => true, 'rgxp' => 'digit'],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'score_away' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['score_away'],
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'rgxp' => 'digit'],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
 
         'spieltype' => [
@@ -137,7 +137,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'inputType' => 'select',
             'options' => [SpielModel::TYPE_EINZEL => 'Einzel', SpielModel::TYPE_DOPPEL => 'Doppel'],
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'home2' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['home2'],
@@ -149,7 +149,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'eval' => ['tl_class' => 'w50 clr', 'chosen' => true, 'mandatory' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
             'options_callback' => [DCAHelper::class, 'getHomeSpielerForSelect'],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'away2' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['away2'],
@@ -161,7 +161,7 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'eval' => ['tl_class' => 'w50', 'chosen' => true, 'mandatory' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'table' => 'tl_spieler', 'load' => 'lazy'],
             'options_callback' => [DCAHelper::class, 'getAwaySpielerForSelect'],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
     ],
 ];

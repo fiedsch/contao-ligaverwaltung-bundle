@@ -55,8 +55,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['verband'] = [
     //'inputType'        => 'checkboxWizard',
     //'eval'             => ['mandatory' => true, 'multiple'=>true, 'tl_class' => ''],
     'options_callback' => [DCAHelper::class, 'getAlleVerbaendeForSelect'],
-    'sql' => "int(10) unsigned NOT NULL default '0'",
-    //'sql'              => "blob NULL",
+    'sql' => ['type' => 'integer', 'default' => 0],
 ];
 $GLOBALS['TL_DCA']['tl_content']['fields']['saison'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['saison'],
@@ -77,7 +76,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['liga'] = [
     //'inputType'        => 'checkboxWizard',
     //'eval'             => ['mandatory' => true, 'multiple'=>true, 'tl_class' => ''],
     'options_callback' => [DCAHelper::class, 'getAlleLigenForSelect'],
-    'sql' => "int(10) unsigned NOT NULL default '0'",
+    'sql' => ['type' => 'integer', 'default' => 0],
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['mannschaft'] = [
@@ -87,7 +86,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['mannschaft'] = [
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     'options_callback' => [DCAHelper::class, 'getAlleMannschaftenForSelect'],
-    'sql' => "int(10) unsigned NOT NULL default '0'",
+    'sql' => ['type' => 'integer', 'default' => 0],
 ];
 $GLOBALS['TL_DCA']['tl_content']['fields']['showdetails'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['showdetails'],
@@ -103,7 +102,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spielort'] = [
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     'foreignKey' => 'tl_spielort.name',
-    'sql' => "int(10) unsigned NOT NULL default '0'",
+    'sql' => ['type' => 'integer', 'default' => 0],
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['begegnung'] = [
@@ -113,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['begegnung'] = [
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     'foreignKey' => 'tl_begegnung.id',
     'options_callback' => [DCAHelper::class, 'getAlleBegegnungen'],
-    'sql' => "int(10) unsigned NOT NULL default '0'",
+    'sql' => ['type' => 'integer', 'default' => 0],
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['rankingtype'] = [
@@ -122,7 +121,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['rankingtype'] = [
     'options' => [1 => 'Mannschaften', 2 => 'Spieler'],
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'submitOnChange' => true],
-    'sql' => "int(10) unsigned NOT NULL default '0'",
+    'sql' => ['type' => 'integer', 'default' => 0],
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['rankingfield'] = [
@@ -137,7 +136,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['rankingfield'] = [
     ],
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'includeBlankOption' => true],
-    'sql' => "int(10) unsigned NOT NULL default '0'",
+    'sql' => ['type' => 'integer', 'default' => 0],
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['ligen'] = [

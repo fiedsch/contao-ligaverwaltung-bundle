@@ -77,8 +77,8 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
         ],
         'pid' => [
             'foreignKey' => 'tl_mannschaft.name',
-            'sql' => "int(10) unsigned NOT NULL default '0'",
             'relation' => ['type' => 'belongsTo', 'load' => 'eager'],
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'member_id' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['member_id'],
@@ -94,7 +94,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             //'foreignKey'       => 'tl_member.CONCAT(lastname, ", ", firstname)',
             'foreignKey' => 'tl_member.CONCAT(firstname, " ", lastname)',
             'relation' => ['type' => 'hasOne', 'table' => 'tl_member', 'load' => 'eager'],
-            'sql' => "int(10) unsigned NULL",
+            'sql' => ['type' => 'integer', 'default' => null, 'notnull' => false],
         ],
         'teamcaptain' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spieler']['teamcaptain'],

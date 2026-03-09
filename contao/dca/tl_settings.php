@@ -29,7 +29,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['teampage'] = [
     'filter' => false,
     'sorting' => false,
     'eval' => ['mandatory' => false, 'multiple' => false, 'fieldType' => 'radio', 'tl_class' => 'clr long'],
-    //'sql'        => "blob NULL",
 ];
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['spielberichtpage'] = [
@@ -40,7 +39,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['spielberichtpage'] = [
     'filter' => false,
     'sorting' => false,
     'eval' => ['mandatory' => false, 'multiple' => false, 'fieldType' => 'radio', 'tl_class' => 'clr long'],
-    //'sql'        => "blob NULL",
 ];
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['ligaverwaltung_ranking_model'] = [

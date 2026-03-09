@@ -106,7 +106,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'eval' => ['submitOnChange' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true, 'mandatory' => true],
             'options_callback' => [DCAHelper::class, 'getAktiveLigenForSelect'],
             'relation' => ['type' => 'belongsTo'],
-            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'published' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['published'],
@@ -128,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'eval' => ['mandatory' => true, 'tl_class' => 'w50 clr', 'chosen' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'load' => 'eager'],
             'options_callback' => [DCAHelper::class, 'getMannschaftenForSelect'],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'away' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['away'],
@@ -142,7 +142,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'eval' => ['mandatory' => false, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
             'relation' => ['type' => 'hasOne', 'load' => 'eager'],
             'options_callback' => [DCAHelper::class, 'getMannschaftenForSelect'],
-            'sql' => "int(10) NOT NULL default '0'",
+            'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'spiel_tag' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_tag'],
@@ -151,14 +151,14 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'filter' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'digit', 'minval' => 1, 'mandatory' => true, 'tl_class' => 'w50'],
-            'sql' => "int(10) unsigned NOT NULL default '1'",
+            'sql' => ['type' => 'integer', 'default' => 1],
         ],
         'spiel_am' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'],
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
-            'sql' => "varchar(11) NOT NULL default ''",
+            'sql' => ['type' => 'string', 'length' => 11, 'default' => ''],
         ],
         'kommentar' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['kommentar'],
@@ -178,7 +178,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         'vue_app' => [
             'inputType' => 'begegnungdataentry_widget',
             'eval'      => ['tl_class' => 'clr long', 'doNotSaveEmpty' => true],
-            'sql' => null,
+            'sql' => null, // no data
         ],
         'postponed' => [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['postponed'],
