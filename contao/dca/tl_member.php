@@ -57,6 +57,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
     'sorting' => true,
     'eval' => ['rgxp' => 'alnum', 'tl_class' => 'w25', 'maxlength' => 32, 'unique' => true],
     'sql' => ['type' => 'string', 'length' => 32, 'default' => ''],
+    // TODO: replace by a proper Listener and use a Dcotrine connection there
     'load_callback' => [static function ($value, DataContainer $dc) {
         // "auto increment" passnummer for new records and consider special cases.
         // NOTE: if the member with the highest passnumber gets deleted their passnumber
