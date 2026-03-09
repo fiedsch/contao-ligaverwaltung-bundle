@@ -167,7 +167,7 @@ class DataEntrySaver
      */
     public static function handleHighlights(int $begegnung, array $data): void
     {
-        $existingHighlightsIds = Database::getInstance() // TODO: use @database_connection from container (via DI)
+        $existingHighlightsIds = Database::getInstance() // TODO: use @database_connection from container (via DI?)
             ->prepare('SELECT id FROM tl_highlight WHERE begegnung_id=?')
             ->execute($begegnung)
             ->fetchEach('id')
