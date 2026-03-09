@@ -31,6 +31,11 @@ services:
     fiedsch_ligaverwaltung.listener.buttons_callback:
         class: Fiedsch\Ligaverwaltung\EventListener\DataContainer\EditButtonsCallbackListener
 
+    fiedsch_ligaverwaltung.listener.datachecks:
+        class: Fiedsch\Ligaverwaltung\EventListener\DataChecksListener
+        arguments:
+            - '@database_connection'
+
     # For the rest: Do not use an alias (see https://docs.contao.org/5.x/dev/guides/coding-standards/)
     # fiedsch_ligaverwaltung.controller.ical:
     #    class: Fiedsch\Ligaverwaltung\Controller\Frontend\IcalController
