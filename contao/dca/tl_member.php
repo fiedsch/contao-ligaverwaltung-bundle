@@ -105,10 +105,15 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = [
 $GLOBALS['TL_DCA']['tl_member']['fields']['postal']['eval']['tl_class'] .= ' clr';
 
 // make username case insensitive
+// For Contao 5:
 // original definition
-// $GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] = 'varchar(64) COLLATE utf8_bin NULL';
-// redefinition
-$GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] =['type' => 'string', 'length' => 64, 'notnull' => false, 'platformOptions' => ['collation' => 'utf8mb4_general_ci']];
+// 'sql' => 'varchar(64) BINARY NULL'
+ $GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql'] = ['type' => 'string', 'length' => 64, 'notnull' => false, 'platformOptions' => ['collation' => 'utf8mb4_general_ci']];
+// For Contao 6:
+// original definition
+// 'sql' => ['type'=>'string', 'length'=>64, 'notnull'=>false, 'platformOptions'=>['collation'=>'utf8mb4_bin']]
+// so we only need the redefinition of collation
+// $GLOBALS['TL_DCA']['tl_member']['fields']['username']['sql']['platformOptions']['collation'] = 'utf8mb4_general_ci';
 
 // do not use 'filter' for these
 foreach (['country', 'language', 'disable', 'login', 'city'] as $field) {
