@@ -56,6 +56,7 @@ services:
     Fiedsch\Ligaverwaltung\Controller\ContentElement\RankingController:
         arguments:
             - '@fiedsch_ligaverwaltung.helper.ranking'
+            - '@database_connection'
 
     Fiedsch\Ligaverwaltung\Controller\ContentElement\HighlightRankingController:
         arguments:
