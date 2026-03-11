@@ -14,8 +14,8 @@
 
   {% else %}
 
-      {% set placeholderImage = 'files/assets/site/images/Darts_Logo.svg' %}
-      {% set avatarWidth = '100px' %}
+      {% set placeholderImage = placeholderImage|default('files/assets/site/images/Darts_Logo.svg') %}
+      {% set avatarWidth = avatarWidth|default('100px') %}
 
       {% if listitems %}
           <div class="table-responsive">
@@ -27,8 +27,8 @@
                       <th>Spieler&shy;pass</th>
                       {% if showdetails %}
                           <th>Kontakt</th>
-                          <th><!-- Bild --></th>
                       {% endif %}
+                      <th><!-- Bild --></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -36,18 +36,22 @@
                       <tr>
                           <td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.firstname }} {{ listitem.member.lastname }}{% endif %}</td>
                           <td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.passnummer }}{% endif %}</td>
-                          <td>{{ listitem.meta|raw }}</td>
+                          {% if showdetails %}
+                              <td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.meta|raw }}{% endif %}</td>
+                          {% endif %}
                           <td>
-                              {% if listitem.avatar and not listitem.member.anonymize %}
-                                  <figure class="image_container float_above" style="margin-right:1em;" itemscope="" itemtype="https://schema.org/ImageObject" itemprop="associatedMedia">
-                                      <a href="{{ listitem.avatar }}" data-lightbox="lb1" itemprop="contentUrl" class="cboxElement">
-                                          <img src="{{ listitem.avatar }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="" itemprop="image">
-                                      </a>
-                                  </figure>
-                              {% else %}
-                                  {# kein Bild vorhanden odder anonymisieren! #}
-                                  <img src="{{ placeholderImage }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="... Name ... TODO" itemprop="image">
-                              {% endif %}
+                              {%  block playeravatar %}
+                                  {% if listitem.avatar and not listitem.member.anonymize %}
+                                      <figure class="image_container float_above" style="margin-right:1em;" itemscope="" itemtype="https://schema.org/ImageObject" itemprop="associatedMedia">
+                                          <a href="{{ listitem.avatar }}" data-lightbox="lb1" itemprop="contentUrl" class="cboxElement">
+                                              <img src="{{ listitem.avatar }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="" itemprop="image">
+                                          </a>
+                                      </figure>
+                                  {% else %}
+                                      {# kein Bild vorhanden odder anonymisieren! #}
+                                      <img src="{{ placeholderImage }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="... Name ... TODO" itemprop="image">
+                                  {% endif %}
+                              {% endblock %}
                           </td>
                       </tr>
                   {% endfor %}
