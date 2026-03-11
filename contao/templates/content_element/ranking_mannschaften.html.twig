@@ -1,0 +1,58 @@
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        {% block resultsheader %}
+            <tr>
+                <th class="rank">Platz</th>
+                <th class="team">Mannschaft</th>
+                <th class="team-matches">Spiele</th>
+                {% if ranking_model == constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                    <th class="points">Punkte</th>
+                {% endif %}
+                <th class="won">g</th>
+                <th class="draw">u</th>
+                <th class="lost">v</th>
+                <th class="legs">Legs</th>
+                <th class="player-matches">Spiele</th>
+                {% if ranking_model != constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                    <th class="points">Punkte</th>
+                {% endif %}
+            </tr>
+        {% endblock %}
+        </thead>
+        <tbody>
+        {% for listitem in listitems %}
+            {% block resultsrow %}
+                <tr>
+                    {% block rang %}
+                        <td class="rank">{{ listitem['rang'] }}</td>{% endblock %}
+                    {% block team %}
+                        <td class="team">{{ listitem['linkedname'] | raw }}</td>{% endblock %}
+                    {% block begegnungen %}
+                        <td class="team-matches">{{ listitem['begegnungen'] }}</td>{% endblock %}
+                    {% if ranking_model == constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                        {% block punkte_total %}
+                            <td class="points">{{ listitem['punkte_self'] }}</td>{% endblock %}
+                    {% endif %}
+                    {% block gewonnen %}
+                        <td class="won">{{ listitem['gewonnen'] }}</td>{% endblock %}
+                    {% block unentschieden %}
+                        <td class="draw">{{ listitem['unentschieden'] }}</td>{% endblock %}
+                    {% block verloren %}
+                        <td class="lost">{{ listitem['verloren'] }}</td>{% endblock %}
+                    {% block legs %}
+                        <td class="legs">{{ listitem['legs_self'] }}:{{ listitem['legs_other'] }}</td>{% endblock %}
+                    {% block spiele %}
+                        <td class="player-matches">{{ listitem['spiele_self'] }}
+                        :{{ listitem['spiele_other'] }}</td>{% endblock %}
+                    {% if ranking_model != constant('Fiedsch\\Ligaverwaltung\\Helper\\RankingHelper::RANKING_MODEL_TOTAL_ONLY') %}
+                        {% block punkte_all %}
+                            <td class="points">{{ listitem['punkte_self'] }}
+                            :{{ listitem['punkte_other'] }}</td>{% endblock %}
+                    {% endif %}
+                </tr>
+            {% endblock %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

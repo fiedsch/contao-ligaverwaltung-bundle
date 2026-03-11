@@ -255,7 +255,8 @@ DBQ;
                 continue;
             }
 
-            $results[$id]['name'] = $mannschaft->getLinkedName();
+            $results[$id]['name'] = $mannschaft->getShortName();
+            $results[$id]['linkedname'] = $mannschaft->getLinkedName();
 
             if (self::isTie($results[$id], $lastresult)) {
                 ++$rang_skip;
@@ -403,7 +404,8 @@ DBQ;
             }
             $results[$id]['name'] = $spieler->getName();
 
-            $results[$id]['mannschaft'] = $mannschaft->getLinkedName();
+            $results[$id]['mannschaft'] = $mannschaft->getShortName();
+            $results[$id]['linkedmannschaft'] = $mannschaft->getLinkedName();
 
             // Informationen zum Spieler über CSS-Klassen hinzufügen
             /** @var MemberModel $member */
