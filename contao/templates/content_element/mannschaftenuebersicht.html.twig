@@ -29,7 +29,7 @@
                   {%  for mannschaft in ligendetails[id] %}
                       <tr>
                           <td>{{ mannschaft.mannschaft|raw }}</td>
-                          <td>{{ mannschaft.tc[0].name|default}} {{ mannschaft.tc[0].email|default|raw }} {{ mannschaft.tc[0].mobile|default|raw }}</td>
+                          <td>{{ mannschaft.tc[0].name|default }} {{ mannschaft.tc[0].email|default|raw }} {{ mannschaft.tc[0].mobile|default|raw }}</td>
                           <td>{{ mannschaft.spielort.name }}
                               {% if mannschaft.spielort.website %}
                                   {% if mannschaft.spielort.phone %}
