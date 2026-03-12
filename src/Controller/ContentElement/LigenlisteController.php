@@ -15,8 +15,8 @@ declare(strict_types=1);
 
 namespace Fiedsch\Ligaverwaltung\Controller\ContentElement;
 
+use Contao\Config;
 use Contao\ContentModel;
-use Contao\Controller;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
@@ -28,6 +28,10 @@ use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Exception\ExceptionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Contao\CoreBundle\Routing\ContentUrlGenerator;
+use Exception;
 use function Symfony\Component\String\u;
 
 #[AsContentElement(
@@ -39,6 +43,13 @@ class LigenlisteController extends AbstractContentElementController
 {
     use TlModeTrait;
 
+    public function __construct(private readonly ContentUrlGenerator $contentUrlGenerator)
+    {
+    }
+
+    /**
+     * @throws Exception|ExceptionInterface
+     */
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
@@ -47,11 +58,15 @@ class LigenlisteController extends AbstractContentElementController
         return $template->getResponse();
     }
 
+    /**
+     * @throws Exception
+     * @throws ExceptionInterface
+     */
     private function setData(FragmentTemplate $template, ContentModel $model): void
     {
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['ligenliste'][0])->upper().' ###';
 
-        if (!$model->verband) {
+        if (!$model->saison) {
             return;
         }
         $saisonIds = StringUtil::deserialize($model->saison);
@@ -65,8 +80,8 @@ class LigenlisteController extends AbstractContentElementController
 
         $saisonFilter = sprintf('saison IN (%s)', implode(',', $saisonIds));
         $ligen = LigaModel::findAll([
-            'column' => ['pid=?', 'aktiv=?', $saisonFilter],
-            'value' => [$model->verband, 1],
+            'column' => ['aktiv=?', $saisonFilter],
+            'value' => [1],
             'order' => 'spielstaerke ASC, name ASC', // name ASC as fallback if spielstaerke (which is kind of an order field) is left emtpy
         ]);
 
@@ -86,10 +101,10 @@ class LigenlisteController extends AbstractContentElementController
             $temp = [];
             /** @var Collection $mannschaften */
             foreach ($mannschaften ?? [] as $mannschaft) {
-                if ($mannschaft->teampage ?? false) {
-                    $teampage = PageModel::findById($mannschaft->teampage);
+                if ($teampageId = Config::get('teampage')) {
+                    $teampage = PageModel::findById($teampageId);
                     $temp[] = sprintf("<a href='%s'>%s</a>",
-                        Controller::generateFrontendUrl($teampage->row()),
+                        $this->contentUrlGenerator->generate($teampage, ['id' => $mannschaft->id], UrlGeneratorInterface::ABSOLUTE_URL),
                         $mannschaft->name
                     );
                 } else {

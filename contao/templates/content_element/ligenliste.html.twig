@@ -20,7 +20,7 @@
               <li>{{ item['liga'] }}</li>
               <ul>
               {% for subitem in item.mannschaften %}
-                  <li>{{ subitem }}</li>
+                  <li>{{ subitem|raw }}</li>
               {% endfor %}
               </ul>
           {% endfor %}
