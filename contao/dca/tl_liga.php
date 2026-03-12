@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2025 Andreas Fieger
+ * (c) 2016- Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'mode' => DataContainer::MODE_PARENT,
             'flag' => DataContainer::SORT_ASC,
             'fields' => ['name'],
-            'panelLayout' => 'filter;limit',
+            'panelLayout' => 'filter;search,limit',
             'headerFields' => ['name'],
             'child_record_callback' => [DCAHelper::class, 'ligaListCallback'],
             'child_record_class' => 'no_padding',
@@ -94,7 +94,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'inputType' => 'text',
             'search' => true,
             'exclude' => true,
-            'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true, 'unique' => true],
+            'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
             'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'saison' => [

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of fiedsch/ligaverwaltung-bundle.
  *
- * (c) 2016-2025 Andreas Fieger
+ * (c) 2016- Andreas Fieger
  *
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
@@ -35,8 +35,9 @@ use function count;
  * @property string $spiel_am
  * @property int    $tstamp
  * @property int    $spiel_tag
- * @property string $published
- * @property string $postponed
+ * @property bool   $published
+ * @property bool   $erfasst
+ * @property bool   $postponed
  * @property string $kommentar
  * @property string $begegnung_data
  *
