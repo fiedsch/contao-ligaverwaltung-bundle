@@ -17,6 +17,7 @@ namespace Fiedsch\Ligaverwaltung\Migration;
 use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 
 class PatchSaisonMigration extends AbstractMigration
 {
@@ -28,6 +29,9 @@ class PatchSaisonMigration extends AbstractMigration
         $this->connection = $connection;
     }
 
+    /**
+     * @throws Exception
+     */
     public function shouldRun(): bool
     {
         $schemaManager = $this->connection->createSchemaManager();
@@ -42,6 +46,9 @@ class PatchSaisonMigration extends AbstractMigration
 
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getNumberOfEmptyAliases(): int
     {
         $result = $this->connection->executeQuery("SELECT COUNT(1) n FROM tl_saison WHERE alias IS NULL");
@@ -50,6 +57,9 @@ class PatchSaisonMigration extends AbstractMigration
     }
 
 
+    /**
+     * @throws Exception
+     */
     public function run(): MigrationResult
     {
         $stmt = $this->connection->prepare("UPDATE tl_saison SET alias=name WHERE alias IS NULL");

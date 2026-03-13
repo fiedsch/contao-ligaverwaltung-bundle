@@ -17,6 +17,7 @@ namespace Fiedsch\Ligaverwaltung\Migration;
 use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception as DBALException;
 
 class HasPaidMigration extends AbstractMigration
 {
@@ -28,6 +29,9 @@ class HasPaidMigration extends AbstractMigration
         $this->connection = $connection;
     }
 
+    /**
+     * @throws DBALException
+     */
     public function shouldRun(): bool
     {
         $schemaManager = $this->connection->createSchemaManager();
@@ -42,6 +46,9 @@ class HasPaidMigration extends AbstractMigration
         return !isset($spielerColumns['haspaid']) && isset($memberColumns['haspaidcurrentseason']);
     }
 
+    /**
+     * @throws DBALException
+     */
     public function run(): MigrationResult
     {
         $this->connection->executeQuery("

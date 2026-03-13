@@ -19,7 +19,9 @@ use Contao\Database;
 use Contao\Model;
 use Contao\Model\Collection;
 use Contao\PageModel;
+use Contao\System;
 use Exception;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @property int    $id
@@ -116,6 +118,9 @@ class MannschaftModel extends Model
             } else {
                 $url = $teampage->getFrontendUrl('?id='.$this->id);
             }
+            // $urlGenerator = System::getContainer()->get('contao.routing.content_url_generator');
+            // $url = $urlGenerator->generate($teampage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_PATH);
+
             $result = sprintf("<a href='%s'>%s</a>",
                 $url,
                 $mannschaftsName

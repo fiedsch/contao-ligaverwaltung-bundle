@@ -16,14 +16,11 @@ namespace Fiedsch\Ligaverwaltung\Command;
 
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
-use Exception;
 use Fiedsch\Ligaverwaltung\Model\AufstellerModel;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
-use RuntimeException;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,6 +29,8 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use RuntimeException;
+use Exception;
 
 /**
  * Abzug und "Aufbereitung" von Daten, die für die Erstellung von
@@ -211,7 +210,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
 
         // Mannschaftslisten sortieren, damit sie auf den Rechnungsn in nachvollziehbarer Reihenfolge erscheinen
         foreach (array_keys($data['spielorte']) as $id) {
-            $this->sortMannschaften($data['spielorte'][$id]['mannschaften'], 'spielort');
+            $this->sortMannschaften($data['spielorte'][$id]['mannschaften']);
         }
 
         foreach (array_keys($data['aufsteller']) as $keyAufsteller) {
@@ -234,7 +233,7 @@ class RechnungsDatenAbzugCommand extends Command implements FrameworkAwareInterf
         return (float) str_replace(',', '.', $value);
     }
 
-    protected function sortMannschaften(array &$data, $type = 'spielort'): void
+    protected function sortMannschaften(array &$data, string $type = 'spielort'): void
     {
         switch ($type) {
             case 'spielort':

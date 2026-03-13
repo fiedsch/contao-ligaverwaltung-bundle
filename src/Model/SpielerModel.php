@@ -38,7 +38,7 @@ use Exception;
  */
 class SpielerModel extends Model
 {
-    const ANONYM_LABEL = '*****';
+    const string ANONYM_LABEL = '*****';
 
     /**
      * Table name.

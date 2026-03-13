@@ -24,8 +24,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Exception;
 use Symfony\Component\Yaml\Yaml;
+use Exception;
+use function json_encode;
 
 
 /**
@@ -91,7 +92,7 @@ class FixDataCommand extends Command implements FrameworkAwareInterface
                 printf("Begegnung %s\n\t%s\n\tspeichere '%s'\n",
                     $begegnung->id,
                     $begegnung->getLabel('short'),
-                    \json_encode($highlights)
+                    json_encode($highlights)
                 );
 
                 DataEntrySaver::handleHighlights($begegnung->id, ['highlights' => $highlights]);

@@ -15,15 +15,17 @@ declare(strict_types=1);
 namespace Fiedsch\Ligaverwaltung\Model;
 
 use Contao\Config;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Contao\Date;
 use Contao\Model;
 use Contao\PageModel;
-use Exception;
+use Contao\System;
 use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
 use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use RuntimeException;
+use Exception;
 use function count;
 
 /**
@@ -46,6 +48,11 @@ use function count;
 class BegegnungModel extends Model
 {
     use YamlGetterSetterTrait;
+
+    public function __construct($objResult = null)
+    {
+        parent::__construct($objResult);
+    }
 
     /**
      * Table name.
@@ -96,6 +103,7 @@ class BegegnungModel extends Model
         $result = 0;
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
             [$home, $away] = $spiel->getScore();
             $result += $home;
         }
@@ -116,6 +124,7 @@ class BegegnungModel extends Model
         $result = 0;
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
             [$home, $away] = $spiel->getScore();
             $result += $away;
         }
@@ -184,6 +193,7 @@ class BegegnungModel extends Model
         $eingesetzte_spieler =[];
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
             [$home, $away] = $spiel->getLegs();
             $result += $home;
             // Initialisierung
@@ -215,6 +225,7 @@ class BegegnungModel extends Model
         $eingesetzte_spieler =[];
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
             [$home, $away] = $spiel->getLegs();
             $result += $away;
             // Initialisierung
@@ -273,8 +284,6 @@ class BegegnungModel extends Model
     }
 
     /**
-     * Zur "Mansnchaftsseite" verlinkter Name der Mannschaft.
-     *
      * @deprecated do not generate HTML which forces us to use |raw in templates. Use self::getScoreLinkTarget()
      *
      * @return string
@@ -295,11 +304,10 @@ class BegegnungModel extends Model
         if ($spielberichtpageId) {
             $spielberichtpage = PageModel::findById($spielberichtpageId);
 
-            if (Config::get('folderUrl')) {
-                $url = $spielberichtpage->getFrontendUrl('/id/'.$this->id);
-            } else {
-                $url = $spielberichtpage->getFrontendUrl('?id='.$this->id);
-            }
+            $urlGenerator = System::getContainer()->get('contao.routing.content_url_generator');
+            // $urlGenerator = System::getContainer()->get('contao.routing.page_url_generator');
+
+            $url = $urlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_URL);
 
             return sprintf("<a href='%s'>%s</a>",
                 $url,
@@ -326,10 +334,12 @@ class BegegnungModel extends Model
         if ($spielberichtpageId) {
             $spielberichtpage = PageModel::findById($spielberichtpageId);
 
-            if (Config::get('folderUrl')) {
+            if (Config::get('folderUrl')) { // TODO (?) root-Page::useFolderUrl Einstellung verwenden
                 return $spielberichtpage->getFrontendUrl('/id/' . $this->id);
+                //return $this->urlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_URL);
             } else {
                 return $spielberichtpage->getFrontendUrl('?id=' . $this->id);
+                // return $this->urlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_URL);
             }
         }
         return $score;

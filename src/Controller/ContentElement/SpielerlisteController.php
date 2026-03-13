@@ -26,6 +26,7 @@ use Contao\StringUtil;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Exception;
 use function Symfony\Component\String\u;
 
 #[AsContentElement(
@@ -37,6 +38,9 @@ class SpielerlisteController extends AbstractContentElementController
 {
     use TlModeTrait;
 
+    /**
+     * @throws Exception
+     */
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
@@ -45,6 +49,9 @@ class SpielerlisteController extends AbstractContentElementController
         return $template->getResponse();
     }
 
+    /**
+     * @throws Exception
+     */
     private function setData(FragmentTemplate $template, ContentModel $model): void
     {
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielerliste'][0])->upper().' ###';
@@ -94,7 +101,7 @@ class SpielerlisteController extends AbstractContentElementController
                         $metaInformationOnPlayer[] = sprintf("<a href='%s'>%s</a>",
                             StringUtil::encodeEmail('mailto:'.$member->email),
                             StringUtil::encodeEmail($member->email)
-                );;
+                );
                     }
                 }
             }

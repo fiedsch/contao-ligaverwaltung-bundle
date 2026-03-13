@@ -33,9 +33,6 @@ class JsonController
         $this->initialize();
     }
 
-    /**
-     * @return JsonResponse
-     */
     #[Route("/ligaverwaltung/spielplan/json/{ligaid}/{mannschaftid}", name: "spielplan_json", requirements: ["ligaid" => "\d+", "mannschaftid" => "\d+"], defaults: ["mannschaftid" => "0"])]
     public function __invoke(int $ligaid, int $mannschaftid): JsonResponse
     {

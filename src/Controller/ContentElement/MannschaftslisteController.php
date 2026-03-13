@@ -24,6 +24,7 @@ use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Exception;
 use function Symfony\Component\String\u;
 
 #[AsContentElement(
@@ -36,6 +37,9 @@ class MannschaftslisteController extends AbstractContentElementController
 {
     use TlModeTrait;
 
+    /**
+     * @throws Exception
+     */
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         $this->setData($template, $model);
@@ -43,6 +47,9 @@ class MannschaftslisteController extends AbstractContentElementController
         return $template->getResponse();
     }
 
+    /**
+     * @throws Exception
+     */
     private function setData(FragmentTemplate $template, ContentModel $model): void
     {
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftsliste'][0])->upper().' ###';

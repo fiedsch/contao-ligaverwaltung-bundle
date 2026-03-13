@@ -28,6 +28,7 @@ use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
+use Exception;
 use function Symfony\Component\String\u;
 
 #[AsContentElement(
@@ -39,6 +40,9 @@ class SpielberichtController extends AbstractContentElementController
 {
     use TlModeTrait;
 
+    /**
+     * @throws Exception
+     */
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         $this->setData($template, $model);
@@ -46,6 +50,9 @@ class SpielberichtController extends AbstractContentElementController
         return $template->getResponse();
     }
 
+    /**
+     * @throws Exception
+     */
     private function setData(FragmentTemplate $template, ContentModel $model): void
     {
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['spielbericht'][0])->upper().' ###';
@@ -71,7 +78,7 @@ class SpielberichtController extends AbstractContentElementController
 
     }
 
-        /**
+    /**
      * @throws Exception
      */
     protected function compileSpielergebnsisse(BegegnungModel $begegnung): array
@@ -163,6 +170,9 @@ class SpielberichtController extends AbstractContentElementController
         return ['ergebnisse' => $spielergebnisse,'raw_data' => $begegnung_data, 'player_map' => $playerMap];
     }
 
+    /**
+     * @throws Exception
+     */
     protected function compileHighlights(BegegnungModel $begegnung): array
     {
         if (!$begegnung->published) {

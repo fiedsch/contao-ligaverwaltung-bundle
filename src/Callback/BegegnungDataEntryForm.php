@@ -16,20 +16,28 @@ namespace Fiedsch\Ligaverwaltung\Callback;
 
 use Contao\CoreBundle\Exception\RedirectResponseException;
 use Contao\Input;
-use Contao\System;
 use Fiedsch\Ligaverwaltung\Helper\DataEntrySaver;
 use Fiedsch\Ligaverwaltung\Helper\Spielplan;
 use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
-use Symfony\Component\Yaml\Yaml;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use Exception;
 
 class BegegnungDataEntryForm
 {
 
-    public function __construct(private Environment $twig)
+    public function __construct(private readonly Environment $twig)
     {
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     * @throws Exception
+     */
     public function generate(?int $id): string
     {
         $id = $id ?? Input::get('id');

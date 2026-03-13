@@ -128,9 +128,9 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                         }
                     }
                 }
-            } else {
+            } //else {
                 // $output->writeln("keine Mannschaften in der Liga '".$liga->name);
-            }
+            //}
         }
 
         return 0;

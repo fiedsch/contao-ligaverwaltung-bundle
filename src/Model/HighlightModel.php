@@ -28,13 +28,13 @@ use Contao\Model;
  */
 class HighlightModel extends Model
 {
-    const TYPE_180 = '1';
-    const TYPE_SHORTLEG = '2';
-    const TYPE_HIGHFINISH = '3';
-    const TYPE_171 = '4';
-    const TYPE_ALL = '99';
+    const string TYPE_180 = '1';
+    const string TYPE_SHORTLEG = '2';
+    const string TYPE_HIGHFINISH = '3';
+    const string TYPE_171 = '4';
+    const string TYPE_ALL = '99';
 
-    const ALL_TYPES = [self::TYPE_180, self::TYPE_SHORTLEG, self::TYPE_HIGHFINISH, self::TYPE_171];
+    const array ALL_TYPES = [self::TYPE_180, self::TYPE_SHORTLEG, self::TYPE_HIGHFINISH, self::TYPE_171];
 
     /**
      * Table name.

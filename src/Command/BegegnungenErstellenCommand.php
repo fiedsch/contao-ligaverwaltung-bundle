@@ -35,8 +35,8 @@ class BegegnungenErstellenCommand extends Command implements FrameworkAwareInter
 {
     use FrameworkAwareTrait;
 
-    const DUMMY_SPIELTAG = 999;
-    const SPIELFREI_MANNSCHAFT = 0;
+    const int DUMMY_SPIELTAG = 999;
+    const int SPIELFREI_MANNSCHAFT = 0;
 
     /**
      * {@inheritdoc}

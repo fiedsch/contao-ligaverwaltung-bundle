@@ -36,6 +36,7 @@ use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Exception;
 use function Symfony\Component\String\u;
 
 #[AsContentElement(
@@ -47,6 +48,9 @@ class MannschaftsseiteController extends AbstractContentElementController
 {
     use TlModeTrait;
 
+    /**
+     * @throws Exception
+     */
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
@@ -55,13 +59,16 @@ class MannschaftsseiteController extends AbstractContentElementController
         return $template->getResponse();
     }
 
+    /**
+     * @throws Exception
+     */
     private function setData(FragmentTemplate $template, ContentModel $model): void
     {
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftsseite'][0])->upper().' ###';
 
         $mannschaftModel = MannschaftModel::findById($model->mannschaft);
 
-        $template->subject = $mannschaftModel ? $mannschaftModel?->getFullName() : 'Mannschaft '.DCAHelper::DOES_NOT_EXIST;
+        $template->subject = $mannschaftModel ? $mannschaftModel->getFullName() : 'Mannschaft '.DCAHelper::DOES_NOT_EXIST;
 
         if ($this->isBackend()) {
             return;

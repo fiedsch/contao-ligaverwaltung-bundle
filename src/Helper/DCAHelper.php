@@ -189,11 +189,7 @@ class DCAHelper
 //         return $labels;
 //     }
     public static function labelBegegnungCallbackChildView(array $row, string $label = ''): string
-    { //dd($dc);
-        $show_verband = Config::get('show_verband_in_select');
-
-        $liga = LigaModel::findById($row['pid']);
-        $verband = $show_verband ? VerbandModel::findById($liga->pid) : null;
+    {
         $home = MannschaftModel::findById($row['home']);
 
         if ($row['away']) {
@@ -223,7 +219,6 @@ class DCAHelper
 
         $final_score = $punkte_home + $punkte_away > 0 ? sprintf('%d:%d', $punkte_home, $punkte_away) : '';
 
-        //$spielDate = Date::parse(Config::get('datimFormat') ?? 'd.m.Y H:i', $row['spiel_am']);
         $spielDate = ', ' . Date::parse(Config::get('datime') ?? 'd.m.Y', $row['spiel_am']);
         if (!$row['away']) {
             $spielDate = '';
@@ -233,13 +228,10 @@ class DCAHelper
         }
 
 
-        return sprintf("<span class='tl_gray'>%s %s %s %d. Spieltag%s:</span>
+        return sprintf("<span class='tl_gray'>%d. Spieltag%s:</span>
                         <span class='tl_blue'>%s %s %s</span>
                         <span class='tl_green'>%s</span>
                         <span class='tl_gray'>%s</span>",
-            '', // $verband?->name,           // die ersten drei Felder sind bei Darstellung als Child Record bei 'mode' === DataContainer::MODE_PARENT
-            '', // $liga->name,                       // sinnfrei, da es keine zusätzliche Information bereitstellt,
-            '', // $liga->getRelated('saison')->name, // die nicht bereits in den 'headerFields' steht
             $row['spiel_tag'],
             $spielDate,
             $home?->getShortName() ?? self::DOES_NOT_EXIST,
@@ -824,6 +816,7 @@ class DCAHelper
      *  tl_content.fields.begegnung.options_callback
      *
      * @return array
+     * @throws Exception
      */
     public function getAlleBegegnungen(): array
     {
@@ -832,7 +825,7 @@ class DCAHelper
 
         if ($begegnungen) {
             foreach ($begegnungen as $begegnung) {
-                $result[$begegnung->id] = $begegnung->getLabel('full');
+                $result[$begegnung->id] = $begegnung->getLabel();
             }
         }
 
@@ -957,10 +950,6 @@ class DCAHelper
      * Label für einen Spieler
      * Eine Funktion, die bestimmt, ob wir "Nachname, Vorname" oder "Vorname Nachname"
      * haben wollen.
-     *
-     * @param MemberModel|Result $member
-     *
-     * @return string
      */
     public static function makeSpielerName(MemberModel|Result $member = null): string
     {

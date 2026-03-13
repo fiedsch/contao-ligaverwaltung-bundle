@@ -16,13 +16,9 @@ declare(strict_types=1);
 namespace Fiedsch\Ligaverwaltung\Controller\ContentElement;
 
 use Contao\ContentModel;
-use Contao\Controller;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
-use Contao\MemberModel;
-use Contao\Model\Collection;
-use Contao\PageModel;
 use Contao\StringUtil;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
@@ -31,6 +27,7 @@ use Fiedsch\Ligaverwaltung\Model\SpielerModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Exception;
 use function Symfony\Component\String\u;
 
 #[AsContentElement(
@@ -42,6 +39,9 @@ class MannschaftenuebersichtController extends AbstractContentElementController
 {
     use TlModeTrait;
 
+    /**
+     * @throws Exception
+     */
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
 
@@ -50,6 +50,9 @@ class MannschaftenuebersichtController extends AbstractContentElementController
         return $template->getResponse();
     }
 
+    /**
+     * @throws Exception
+     */
     private function setData(FragmentTemplate $template, ContentModel $model): void
     {
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['mannschaftenuebersicht'][0])->upper().' ###';

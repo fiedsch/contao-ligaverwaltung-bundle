@@ -24,14 +24,12 @@ use Exception;
 #[AsController]
 class PlayerHistoryController
 {
-    public function __construct(private Environment $twig)
+    public function __construct(private readonly Environment $twig)
     {
     }
 
     /**
      * @throws Exception
-     *
-     * @return Response
      */
     #[Route('%contao.backend.route_prefix%/ligaverwaltung/player/history/{memberid}', name: 'player_history', requirements: [ "memberid" => "[0-9]+"], defaults: ['_scope' => 'backend','token_check' => true])]
     public function __invoke(int $memberid): Response
@@ -44,8 +42,6 @@ class PlayerHistoryController
 
     /**
      * @throws Exception
-     *
-     * @return array
      */
     private function getHistory(int $memberid): array
     {

@@ -30,6 +30,7 @@ use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Exception;
 use function Symfony\Component\String\u;
 
 #[AsContentElement(
@@ -42,6 +43,9 @@ class SpielplanController extends AbstractContentElementController
 
     use TlModeTrait;
 
+    /**
+     * @throws Exception
+     */
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         $this->setData($template, $model);
@@ -49,6 +53,9 @@ class SpielplanController extends AbstractContentElementController
         return $template->getResponse();
     }
 
+    /**
+     * @throws Exception
+     */
     private function setData(FragmentTemplate $template, ContentModel $model): void
     {
         $template->wildcard = '### ' . u($GLOBALS['TL_LANG']['CTE']['spielplan'][0])->upper() . ' ###';
@@ -143,10 +150,9 @@ class SpielplanController extends AbstractContentElementController
             $spielfrei = $spielfrei_home || $spielfrei_away;
             // Nicht mehr aktive Heimmanschaft, die an diesem Spieltag
             // spielfrei gehabt hätte (wäre dann spielfrei gegen Spielfrei)
-            if (!$home->active && !$away) {
+            if (!$home?->active && !$away) {
                 continue;
             }
-
             $spielort = $home->getRelated('spielort');
 
             // Ist die Heim- oder die Gastmannschaft nicht mehr aktiv?
@@ -157,7 +163,6 @@ class SpielplanController extends AbstractContentElementController
             if ($spielort->spielortpage) {
                 $spielortpage = PageModel::findById($spielort->spielortpage);
                 $spielortlabel = sprintf("<a href='%s'>%s</a>",
-                    //Controller::generateFrontendUrl($spielortpage->row()),
                     $spielortpage->getFrontendUrl(),
                     $spielort->name
                 );
@@ -214,7 +219,7 @@ class SpielplanController extends AbstractContentElementController
             ]);
 
         $headlineUnit = StringUtil::deserialize($model->headline)['unit'];
-        $subheadlineUnit = preg_match('/h(\d)/', $headlineUnit, $match) ? $match[1]+1 : 3;
+        $subheadlineUnit = preg_match('/h(\d)/', $headlineUnit, $match) ? (int)$match[1]+1 : 3;
         $template->subheadlineUnit = $subheadlineUnit;
     }
 }

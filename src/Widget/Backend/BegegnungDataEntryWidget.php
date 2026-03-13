@@ -17,10 +17,12 @@ namespace Fiedsch\Ligaverwaltung\Widget\Backend;
 use Contao\System;
 use Contao\Widget;
 use Contao\StringUtil;
-use Fiedsch\Ligaverwaltung\Controller\LigaverwaltungBackendController;
 use Fiedsch\Ligaverwaltung\Helper\DataEntrySaver;
 use Fiedsch\Ligaverwaltung\Callback\BegegnungDataEntryForm;
 use Exception;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class BegegnungDataEntryWidget extends Widget
 {
@@ -28,6 +30,11 @@ class BegegnungDataEntryWidget extends Widget
     protected $blnForAttribute = false;
     protected $strTemplate = 'backend/be_widget';
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function generate(): string
     {
         /** @var BegegnungDataEntryForm $form */
@@ -35,12 +42,14 @@ class BegegnungDataEntryWidget extends Widget
         return $form->generate($this->activeRecord->id);
     }
 
+    /** @noinspection PhpMissingReturnTypeInspection */
     public function generateLabel()
     {
         $this->strLabel = '';
         return parent::generateLabel();
     }
 
+    /** @noinspection PhpMissingReturnTypeInspection */
     public function validator($varInput)
     {
         // Save the data to other fields (tl_begegnung.app_data and individual tl_spiel records)

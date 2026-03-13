@@ -16,13 +16,18 @@ namespace Fiedsch\Ligaverwaltung\EventListener;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 
 #[AsHook('getSystemMessages')]
 class DataChecksListener
 {
-    public function __construct(private Connection $connection)
+    public function __construct(private readonly Connection $connection)
     {
     }
+
+    /**
+     * @throws Exception
+     */
     public function __invoke(): string|null
     {
         // Mannschaften ohne existierende zugeordnete Liga

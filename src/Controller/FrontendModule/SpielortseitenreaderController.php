@@ -26,6 +26,7 @@ use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Model\SpielortModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function serialize;
 
 #[AsFrontendModule(category: 'ligaverwaltung', priority: 1)]
 class SpielortseitenreaderController extends AbstractFrontendModuleController
@@ -64,7 +65,7 @@ class SpielortseitenreaderController extends AbstractFrontendModuleController
         $contentModel->tstamp = time();
         $contentModel->type = 'spielortseite';
         $contentModel->spielort = $spielort->id;
-        $contentModel->saison = \serialize([$saison->id]);
+        $contentModel->saison = serialize([$saison->id]);
         $template->spielortseite = Controller::getContentElement($contentModel);
     }
 

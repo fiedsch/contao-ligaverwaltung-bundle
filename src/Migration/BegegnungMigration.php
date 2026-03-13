@@ -17,15 +17,19 @@ namespace Fiedsch\Ligaverwaltung\Migration;
 use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Schema\Column;
 
 class BegegnungMigration extends AbstractMigration
 {
 
-    public function __construct(private Connection $connection)
+    public function __construct(private readonly Connection $connection)
     {
     }
 
+    /**
+     * @throws DBALException
+     */
     public function shouldRun(): bool
     {
         $schemaManager = $this->connection->createSchemaManager();
@@ -44,6 +48,9 @@ class BegegnungMigration extends AbstractMigration
         return $dbResult->fetchOne() > 0;
     }
 
+    /**
+     * @throws DBALException
+     */
     public function run(): MigrationResult
     {
         $dbResult = $this->connection->executeQuery("UPDATE `tl_begegnung` SET erfasst=0 WHERE LENGTH(begegnung_data) = 0");
