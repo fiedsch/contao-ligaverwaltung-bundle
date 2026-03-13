@@ -1,6 +1,7 @@
 <div class="tl_listing_container"{#  data-turbo="false" #}>
     <script>
-        let data = {{ app_data|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
+        {# let data = {{ app_data|json_encode(constant('JSON_PRETTY_PRINT'))|raw }} #}
+        let data = {{ app_data|json_encode()|raw }}
     </script>
 
     {# hier wird die App injiziert #}

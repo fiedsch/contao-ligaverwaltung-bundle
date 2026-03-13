@@ -39,6 +39,7 @@ class BegegnungDataEntryWidget extends Widget
     {
         /** @var BegegnungDataEntryForm $form */
         $form = System::getContainer()->get(BegegnungDataEntryForm::class);
+        //dd($form->generate($this->activeRecord->id));
         return $form->generate($this->activeRecord->id);
     }
 
