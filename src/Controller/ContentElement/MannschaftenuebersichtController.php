@@ -108,7 +108,8 @@ class MannschaftenuebersichtController extends AbstractContentElementController
                 }
                 $spielort = $mannschaft->getRelated('spielort');
                 $ligenDetails[$liga['id']][] = [
-                    'mannschaft' => $mannschaft->getLinkedName(),
+                    'mannschaft' => $mannschaft->getShortName(),
+                    'mannschaftlink' => $mannschaft->getTeamPageLink(),
                     'tc' => $tcs,
                     'spielort' => [
                         'name' => $spielort->name,

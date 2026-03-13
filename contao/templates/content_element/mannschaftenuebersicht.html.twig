@@ -28,7 +28,13 @@
                   <tbody>
                   {%  for mannschaft in ligendetails[id] %}
                       <tr>
-                          <td>{{ mannschaft.mannschaft|raw }}</td>
+                          <td>
+                              {% if mannschaft.mannschaftlink is not empty %}
+                               <a href="{{ mannschaft.mannschaftlink }}">{{ mannschaft.mannschaft }}</a>
+                              {% else %}
+                                  {{ mannschaft.mannschaft }}
+                              {% endif %}
+                          </td>
                           <td>{{ mannschaft.tc[0].name|default }} {{ mannschaft.tc[0].email|default|raw }} {{ mannschaft.tc[0].mobile|default|raw }}</td>
                           <td>{{ mannschaft.spielort.name }}
                               {% if mannschaft.spielort.phone %}
