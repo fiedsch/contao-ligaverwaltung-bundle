@@ -58,9 +58,9 @@ class SpielerlisteController extends AbstractContentElementController
 
         $mannschaft = MannschaftModel::findById($model->mannschaft);
         if (!$mannschaft) {
-            $subject = $template->subject = sprintf('Mannschaft mit der ID %d %s', $model->mannschaft, DCAHelper::DOES_NOT_EXIST);
+            $template->subject = sprintf('Mannschaft mit der ID %d %s', $model->mannschaft, DCAHelper::DOES_NOT_EXIST);
         } else {
-            $subject = $template->subject = $mannschaft->getFullName();
+            $template->subject = $mannschaft->getFullName();
         }
         if ($this->isBackend()) {
             return;

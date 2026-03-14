@@ -43,12 +43,16 @@ use function count;
  * @property string $kommentar
  * @property string $begegnung_data
  *
+ * @method LigaModel getRelated($strKey, array $arrOptions = array())
  * @method static BegegnungModel|null findById($id, array $opt=array())
  */
 class BegegnungModel extends Model
 {
     use YamlGetterSetterTrait;
 
+    /**
+     * @throws Exception
+     */
     public function __construct($objResult = null)
     {
         parent::__construct($objResult);

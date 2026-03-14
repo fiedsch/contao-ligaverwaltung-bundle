@@ -191,6 +191,9 @@ class DCAHelper
     public static function labelBegegnungCallbackChildView(array $row, string $label = ''): string
     {
         $home = MannschaftModel::findById($row['home']);
+        if (null === $home) {
+            return $label;
+        }
 
         if ($row['away']) {
             $away = MannschaftModel::findById($row['away']);
@@ -247,6 +250,7 @@ class DCAHelper
      * tl_begegnung.fields.pid.options_callback
      *
      * @throws Exception
+     * @noinspection PhpUnusedParameterInspection
      */
     public static function getAktiveLigenForSelect(DataContainer $dc): array
     {
@@ -697,6 +701,7 @@ class DCAHelper
     /**
      * Liste aller definierten Verbände
      * tl_content.fields.verband.options_callback
+     * @noinspection PhpUnusedParameterInspection
      */
     public static function getAlleVerbaendeForSelect(DataContainer $dc): array
     {
@@ -719,6 +724,7 @@ class DCAHelper
      * tl_content.fields.liga.options_callback
      *
      * @throws Exception
+     * @noinspection PhpUnusedParameterInspection
      */
     public static function getAlleLigenForSelect(DataContainer $dc): array
     {
@@ -745,6 +751,7 @@ class DCAHelper
      * tl_content.fields.saison.options_callback
      *
      * @throws Exception
+     * @noinspection PhpUnusedParameterInspection
      */
     public static function getAlleSaisonsForSelect(DataContainer $dc): array
     {
@@ -877,7 +884,7 @@ class DCAHelper
             // korrekt zum bereits erfassten Wert gesetzt ist (werden kann).
             // Workaround: 'filter' in tl_highlight setzen!
             if ($begegnung->getRelated('pid')->aktiv) {
-                $result[$begegnung->id] = $begegnung->getLabel($mode = 'full');
+                $result[$begegnung->id] = $begegnung->getLabel();
             }
         }
         asort($result);

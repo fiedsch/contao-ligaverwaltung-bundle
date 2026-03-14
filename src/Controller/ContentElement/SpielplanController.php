@@ -155,9 +155,6 @@ class SpielplanController extends AbstractContentElementController
             }
             $spielort = $home->getRelated('spielort');
 
-            // Ist die Heim- oder die Gastmannschaft nicht mehr aktiv?
-            $inactive = (!$home?->active) || (!$away?->active);
-
             $spielortlabel = $spielort->name;
 
             if ($spielort->spielortpage) {

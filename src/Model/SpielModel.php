@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Fiedsch\Ligaverwaltung\Model;
 
+use Contao\MemberModel;
 use Contao\Model;
 use Contao\Model\Collection;
 
@@ -30,6 +31,7 @@ use Contao\Model\Collection;
  * @property int    $score_home
  * @property int    $score_away
  *
+ * @method MemberModel getRelated($strKey, array $arrOptions = array())
  * @method static SpielModel|null findById($id, array $opt=array())
  * @method static Collection|SpielModel|null findByPid($id, array $opt=array())
  */

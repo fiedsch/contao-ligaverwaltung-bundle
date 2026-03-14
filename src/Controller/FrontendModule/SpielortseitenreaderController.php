@@ -40,6 +40,7 @@ class SpielortseitenreaderController extends AbstractFrontendModuleController
 
     /**
      * @throws PageNotFoundException
+     * @noinspection PhpUnusedParameterInspection
      */
     private function setData(FragmentTemplate $template, ModuleModel $model, Request $request): void
     {

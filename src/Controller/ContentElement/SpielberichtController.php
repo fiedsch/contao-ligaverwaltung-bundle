@@ -146,8 +146,6 @@ class SpielberichtController extends AbstractContentElementController
 
             $homeCssClass = 'draw';
             $awayCssClass = 'draw';
-            $score = '-';
-            //$legs = '-';
 
             if ($spiel->score_home > 0 || $spiel->score_away > 0) {
                 $homeCssClass = $spiel->score_home > $spiel->score_away ? 'winner' : 'loser';
@@ -162,8 +160,6 @@ class SpielberichtController extends AbstractContentElementController
                 'type' => SpielModel::TYPE_EINZEL === (string)$spiel->spieltype ? 'einzel' : 'doppel',
                 'score_home' => $spiel->score_home,
                 'score_away' => $spiel->score_away,
-                //'legs_home' => /* ...*/ // legs are not saved in the tl_spiel record
-                //'legs_away' => /* ...*/ // legs are not saved in the tl_spiel record
             ];
         }
 
@@ -198,7 +194,7 @@ class SpielberichtController extends AbstractContentElementController
             }
         }
         // make sure, all fields are set, so we can access them in the template without checking
-        foreach ($result as $spielerId => &$data) {
+        foreach ($result as &$data) {
             foreach (HighlightModel::ALL_TYPES as $highlight) {
                 $data['highlights'][$highlight] = $data['highlights'][$highlight] ?? '';
             }
