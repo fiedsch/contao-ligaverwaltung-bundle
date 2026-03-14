@@ -21,7 +21,7 @@ use Contao\Model;
  * @property int    $pid
  * @property string $name
  * @property string $saison
- * @property string $spielplan
+ * @property int    $spielplan
  * @property string $spielstaerke
  * @property string $rechnungsbetrag_spielort
  * @property string $rechnungsbetrag_aufsteller
