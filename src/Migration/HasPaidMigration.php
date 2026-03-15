@@ -18,6 +18,7 @@ use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
+use Doctrine\DBAL\Schema\Column;
 
 class HasPaidMigration extends AbstractMigration
 {
@@ -40,9 +41,12 @@ class HasPaidMigration extends AbstractMigration
             return false;
         }
 
-        $spielerColumns = $schemaManager->listTableColumns('tl_spieler');
-        $memberColumns = $schemaManager->listTableColumns('tl_member');
+        $spielerColumns = $schemaManager->introspectTableColumnsByUnquotedName('tl_spieler');
+        $spielerColumns = array_map(fn(Column $col): string => $col->getObjectName()->getIdentifier()->getValue(), $spielerColumns);
 
+        $memberColumns = $schemaManager->introspectTableColumnsByUnquotedName('tl_member');
+        $memberColumns = array_map(fn(Column $col): string => $col->getObjectName()->getIdentifier()->getValue(), $memberColumns);
+        dd($spielerColumns, $memberColumns);
         return !isset($spielerColumns['haspaid']) && isset($memberColumns['haspaidcurrentseason']);
     }
 

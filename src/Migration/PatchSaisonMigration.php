@@ -18,6 +18,7 @@ use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Schema\Column;
 
 class PatchSaisonMigration extends AbstractMigration
 {
@@ -40,10 +41,10 @@ class PatchSaisonMigration extends AbstractMigration
             return false;
         }
 
-        $columns = $schemaManager->listTableColumns('tl_saison');
+        $columns = $schemaManager->introspectTableColumnsByUnquotedName('tl_saison');
+        $columns = array_map(fn(Column $col): string => $col->getObjectName()->getIdentifier()->getValue(), $columns);
 
         return isset($columns['alias']) && $this->getNumberOfEmptyAliases() > 0;
-
     }
 
     /**
