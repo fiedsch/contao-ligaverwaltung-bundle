@@ -137,6 +137,10 @@ class MannschaftModel extends Model
         $teampageId = Config::get('teampage');
         $teampage = PageModel::findById($teampageId);
 
+        if (!$teampage) {
+            return '';
+        }
+
         if (Config::get('folderUrl')) {
             $url = $teampage->getFrontendUrl('/id/'.$this->id);
         } else {
