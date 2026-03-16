@@ -104,7 +104,7 @@ class LigenlisteController extends AbstractContentElementController
                 if ($teampageId = Config::get('teampage')) {
                     $teampage = PageModel::findById($teampageId);
                     $temp[] = sprintf("<a href='%s'>%s</a>",
-                        $this->contentUrlGenerator->generate($teampage, ['id' => $mannschaft->id], UrlGeneratorInterface::ABSOLUTE_URL),
+                        $this->contentUrlGenerator->generate($teampage, ['id' => $mannschaft->id], UrlGeneratorInterface::ABSOLUTE_PATH),
                         $mannschaft->name
                     );
                 } else {
