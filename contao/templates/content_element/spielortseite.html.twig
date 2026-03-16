@@ -23,11 +23,16 @@
       <div class="row  mt-3">
           <div class="mannschaften col-sm-12">
               {%  for ligaId,elememnt in mannschaften %}
-                  <h2>{{ mannschaften[ligaId][0].liga  }} {{ mannschaften[ligaId][0].saison  }}</h2>
+                  <h2>{{ mannschaften[ligaId][0].liga  }} {{ mannschaften[ligaId][0].saison }}</h2>
                   <ul>
                       {% for mannschaft in mannschaften[ligaId] %}
                           <li>
-                              {{ mannschaft.link|raw }}
+                              {% if mannschaft.link %}
+                                 <a href="{{ mannschaft.link|raw }}">{{ mannschaft.name }}</a>
+                              {% else %}
+                                  {{ mannschaft.name }}
+                              {% endif
+                              %}
                           </li>
                       {% endfor %}
                   </ul>

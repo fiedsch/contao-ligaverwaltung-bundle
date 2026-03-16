@@ -88,7 +88,8 @@ class SpielortseiteController extends AbstractContentElementController
                 $ligen_lookup[$liga?->id ?? 0] = $liga;
 
                 $result[$saison][] = [
-                    'link' => $mannschaft->getLinkedName(),
+                    'link' => $mannschaft->getTeamPageLink(),
+                    'name' => $mannschaft->getShortName(),
                     'liga' => $ligen_lookup[$mannschaft->liga]?->name,
                     'saison' => $saison_lookup[$liga->saison] ?? '',
                 ];
