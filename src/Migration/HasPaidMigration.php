@@ -46,7 +46,7 @@ class HasPaidMigration extends AbstractMigration
 
         $memberColumns = $schemaManager->introspectTableColumnsByUnquotedName('tl_member');
         $memberColumns = array_map(fn(Column $col): string => $col->getObjectName()->getIdentifier()->getValue(), $memberColumns);
-        dd($spielerColumns, $memberColumns);
+
         return !isset($spielerColumns['haspaid']) && isset($memberColumns['haspaidcurrentseason']);
     }
 
