@@ -70,12 +70,15 @@ services:
         arguments:
             - '@contao.routing.content_url_generator'
 
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielplanController:
+        arguments:
+            - '@contao.routing.content_url_generator'
+
     Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftslisteController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielberichtController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielerlisteController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftenuebersichtController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielortinfoController: ~
-    Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielplanController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielortseiteController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftsseiteController: ~
 

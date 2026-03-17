@@ -18,6 +18,7 @@ use Contao\Config;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
+use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Date;
 use Contao\PageModel;
@@ -31,6 +32,7 @@ use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Exception;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use function Symfony\Component\String\u;
 
 #[AsContentElement(
@@ -42,6 +44,10 @@ class SpielplanController extends AbstractContentElementController
 {
 
     use TlModeTrait;
+
+    public function __construct(private readonly ContentUrlGenerator $contentUrlGenerator)
+    {
+    }
 
     /**
      * @throws Exception
@@ -156,13 +162,10 @@ class SpielplanController extends AbstractContentElementController
             $spielort = $home->getRelated('spielort');
 
             $spielortlabel = $spielort->name;
+            $spielortlink = null;
 
-            if ($spielort->spielortpage) {
-                $spielortpage = PageModel::findById($spielort->spielortpage);
-                $spielortlabel = sprintf("<a href='%s'>%s</a>",
-                    $spielortpage->getFrontendUrl(),
-                    $spielort->name
-                );
+            if ($spielort->spielortpage && $spielortpage = PageModel::findById($spielort->spielortpage)) {
+                $spielortlink = $this->contentUrlGenerator->generate($spielortpage, ['id' => $spielort->id], UrlGeneratorInterface::ABSOLUTE_PATH);
             }
 
             $spiel = [
@@ -189,7 +192,8 @@ class SpielplanController extends AbstractContentElementController
                     Date::parse(Config::get('dateFormat'), $begegnung->spiel_am)
                 ),
                 'um' => $spielfrei ? '' : Date::parse(Config::get('timeFormat'), $begegnung->spiel_am),
-                'im' => $spielfrei ? '' : $spielortlabel,
+                'spielort' => $spielfrei ? '' : $spielortlabel,
+                'spielortlink' => $spielortlink,
                 'score_link' => $begegnung->getScoreLinkTarget(),
                 'spiel_tag' => $begegnung->spiel_tag,
                 // 'kommentar' => $begegnung->kommentar,

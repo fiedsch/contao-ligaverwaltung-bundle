@@ -113,7 +113,11 @@
                           {% endblock %}
                           {% block played_venue %}
                               <td class='spiel ort w-25'>
-                                  {{ spiel.im }}
+                                  {% if spiel.spielortlink %}
+                                      <a href="{{ spiel.spielortlink }}">{{ spiel.spielort }}</a>
+                                  {% else %}
+                                      {{ spiel.spielort }}
+                                  {% endif %}
                               </td>
                           {% endblock %}
                           {% block score %}
