@@ -188,7 +188,8 @@ class SpielberichtController extends AbstractContentElementController
                 $spieler = SpielerModel::findById($highlight->spieler_id);
                 // Zusatzcheck: verwaiste Highlight-Einträge
                 if ($spieler) {
-                    $result[$highlight->spieler_id]['name'] = $spieler->getName();
+                    $member = $spieler->getRelated('member_id');
+                    $result[$highlight->spieler_id]['name'] =  DCAHelper::makeSpielerName($member);
                     $result[$highlight->spieler_id]['team'] = $spieler->getRelated('pid')->name;
                 }
             }
@@ -212,16 +213,19 @@ class SpielberichtController extends AbstractContentElementController
 
     private function mapAufstellungData(array $originalDataAvailable, array $originalDataLineup, string $prefix): array
     {
-        //dd($originalDataAvailable, $originalDataLineup);
         $result = [];
         foreach ($originalDataLineup as $position => $spieler_id) {
             $spielerdata = array_first(array_filter($originalDataAvailable, fn ($el) => $el['id'] === $spieler_id));
-            $result[$spieler_id] = [
-                'name' => $spielerdata['name'],
-                'pass' => $spielerdata['pass'],
-                'id' => $spielerdata['id'],
-                'position' => sprintf('%s%d', $prefix, $position+1),
-            ];
+            if ($spieler_id > 0) {
+                $spieler = SpielerModel::findById($spieler_id);
+                $member = $spieler->getRelated('member_id');
+                $result[$spieler_id] = [
+                    'name' => $member ? DCAHelper::makeSpielerName($member) : '',
+                    'pass' => $spielerdata['pass'],
+                    'id' => $spielerdata['id'],
+                    'position' => sprintf('%s%d', $prefix, $position + 1),
+                ];
+            }
         }
 
         return $result;
