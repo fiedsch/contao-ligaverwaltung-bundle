@@ -22,6 +22,7 @@ use Contao\Model\Collection;
 use Contao\PageModel;
 use Contao\System;
 use Fiedsch\Ligaverwaltung\Helper\UrlHelper;
+use Symfony\Component\Routing\Exception\ExceptionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Exception;
 
@@ -101,9 +102,10 @@ class MannschaftModel extends Model
     /**
      * Zur "Mannschaftsseite" verlinkter Name der Mannschaft.
      *
+     * @return string
+     * @throws ExceptionInterface
      * @deprecated do not generate HTML which forces us to use |raw in templates. Use self::getTeamPageLink()
      *
-     * @return string
      */
     public function getLinkedName(): string
     {
