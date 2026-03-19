@@ -25,7 +25,6 @@ class Spielplan
      */
     public static function getSpielplan(BegegnungModel $begegnungModel): array
     {
-        /** @var LigaModel $liga */
         $liga = $begegnungModel->getRelated('pid');
 
         switch ($liga->spielplan) {
