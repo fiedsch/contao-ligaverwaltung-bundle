@@ -15,15 +15,17 @@ declare(strict_types=1);
 namespace Fiedsch\Ligaverwaltung\Model;
 
 use Contao\Config;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\Date;
 use Contao\Model;
 use Contao\PageModel;
 use Contao\System;
 use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
 use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
+use Fiedsch\Ligaverwaltung\Helper\UrlHelper;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use RuntimeException;
 use Exception;
 use function count;
@@ -338,14 +340,22 @@ class BegegnungModel extends Model
         if ($spielberichtpageId) {
             $spielberichtpage = PageModel::findById($spielberichtpageId);
 
-            if (Config::get('folderUrl')) { // TODO (?) root-Page::useFolderUrl Einstellung verwenden
-                return $spielberichtpage->getFrontendUrl('/id/' . $this->id);
-                //return $this->urlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_URL);
-            } else {
-                return $spielberichtpage->getFrontendUrl('?id=' . $this->id);
-                // return $this->urlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_URL);
-            }
+            /** @var ContentUrlGenerator $contentUrlGenerator */
+            $contentUrlGenerator = System::getContainer()->get('contao.routing.content_url_generator');
+
+            // if (Config::get('folderUrl')) { // TODO (?) root-Page::useFolderUrl Einstellung verwenden
+            //     return $spielberichtpage->getFrontendUrl('/id/' . $this->id);
+            //     //return $this->urlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_URL);
+            // } else {
+            //     return $spielberichtpage->getFrontendUrl('?id=' . $this->id);
+            //     // return $this->urlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_URL);
+            // }
+            $url = $contentUrlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_PATH);
+            $url = UrlHelper::asFolderUrl($url, 'id', $spielberichtpage->urlSuffix);
+
+            return $url;
         }
+
         return $score;
     }
 

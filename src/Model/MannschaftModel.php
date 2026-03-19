@@ -15,12 +15,16 @@ declare(strict_types=1);
 namespace Fiedsch\Ligaverwaltung\Model;
 
 use Contao\Config;
+use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\Database;
 use Contao\Model;
 use Contao\Model\Collection;
 use Contao\PageModel;
-//use Contao\System;
+use Contao\System;
+use Fiedsch\Ligaverwaltung\Helper\UrlHelper;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Exception;
+
 //use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -113,13 +117,16 @@ class MannschaftModel extends Model
         if ($teampageId && $this->active) {
             $teampage = PageModel::findById($teampageId);
 
-            if (Config::get('folderUrl')) {
-                $url = $teampage->getFrontendUrl('/id/'.$this->id);
-            } else {
-                $url = $teampage->getFrontendUrl('?id='.$this->id);
-            }
-            // $urlGenerator = System::getContainer()->get('contao.routing.content_url_generator');
-            // $url = $urlGenerator->generate($teampage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_PATH);
+            /** @var ContentUrlGenerator $contentUrlGenerator */
+            $contentUrlGenerator = System::getContainer()->get('contao.routing.content_url_generator');
+
+            // if (Config::get('folderUrl')) {
+            //     $url = $teampage->getFrontendUrl('/id/'.$this->id);
+            // } else {
+            //     $url = $teampage->getFrontendUrl('?id='.$this->id);
+            // }
+            $url = $contentUrlGenerator->generate($teampage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_PATH);
+            $url = UrlHelper::asFolderUrl($url, 'id', $teampage->urlSuffix);
 
             $result = sprintf("<a href='%s'>%s</a>",
                 $url,
