@@ -32,6 +32,7 @@ use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Exception;
+use Symfony\Component\Routing\Exception\ExceptionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use function Symfony\Component\String\u;
 
@@ -51,6 +52,7 @@ class SpielplanController extends AbstractContentElementController
 
     /**
      * @throws Exception
+     * @throws ExceptionInterface
      */
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
@@ -61,6 +63,7 @@ class SpielplanController extends AbstractContentElementController
 
     /**
      * @throws Exception
+     * @throws ExceptionInterface
      */
     private function setData(FragmentTemplate $template, ContentModel $model): void
     {

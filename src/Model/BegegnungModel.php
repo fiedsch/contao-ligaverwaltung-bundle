@@ -23,6 +23,7 @@ use Contao\System;
 use Fiedsch\JsonWidgetBundle\Traits\YamlGetterSetterTrait;
 use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 use Fiedsch\Ligaverwaltung\Helper\UrlHelper;
+use Symfony\Component\Routing\Exception\ExceptionInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -324,6 +325,9 @@ class BegegnungModel extends Model
         return $score;
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function getScoreLinkTarget(): string
     {
         if (!$this->published) {

@@ -211,6 +211,9 @@ class SpielberichtController extends AbstractContentElementController
         return $result;
     }
 
+    /**
+     * @throws Exception
+     */
     private function mapAufstellungData(array $originalDataAvailable, array $originalDataLineup, string $prefix): array
     {
         $result = [];
