@@ -343,6 +343,9 @@ class BegegnungModel extends Model
 
         if ($spielberichtpageId) {
             $spielberichtpage = PageModel::findById($spielberichtpageId);
+            if (!$spielberichtpage) {
+                return $score;
+            }
 
             /** @var ContentUrlGenerator $contentUrlGenerator */
             $contentUrlGenerator = System::getContainer()->get('contao.routing.content_url_generator');
