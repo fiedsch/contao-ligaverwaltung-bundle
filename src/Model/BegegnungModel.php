@@ -340,11 +340,10 @@ class BegegnungModel extends Model
         }
 
         $spielberichtpageId = Config::get('spielberichtpage');
-
         if ($spielberichtpageId) {
             $spielberichtpage = PageModel::findById($spielberichtpageId);
             if (!$spielberichtpage) {
-                return $score;
+                return '';
             }
 
             /** @var ContentUrlGenerator $contentUrlGenerator */
@@ -363,7 +362,7 @@ class BegegnungModel extends Model
             return $url;
         }
 
-        return $score;
+        return '';
     }
 
     public function isSpielfrei(): bool

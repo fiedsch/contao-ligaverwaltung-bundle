@@ -123,7 +123,11 @@
                           {% block score %}
                               {% if spiel.counted %}
                                   <td class='spiel score'>
+                                      {% if spiel.score_link %}
                                       <a href="{{ spiel.score_link }}">{{ spiel.home.score }}:{{ spiel.away.score }}</a>
+                                      {% else %}
+                                          {{ spiel.home.score }}:{{ spiel.away.score }}
+                                      {% endif %}
                                   </td>
                                   <td class='spiel legs'>
                                       {% if spiel.home.noshow %}
