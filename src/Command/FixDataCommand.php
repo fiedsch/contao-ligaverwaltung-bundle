@@ -30,8 +30,9 @@ use function json_encode;
 
 
 /**
- * Fixen von Daten (in der aktuellen Implementierung: neu Abspeichern der tl_highlightErstellen einer Liste aller Spieler (inkl. Name etc. aus zugehörigem tl_member)
- * für dir Spieler (tl_spieler) aller Mannschaften (tl_mannschaft) einer Saison (tl_saison).
+ * Fixen von Daten (in der aktuellen Implementierung: neu Abspeichern der tl_highlight. Erstellen einer Liste aller
+ * Spieler (inkl. Name etc. aus zugehörigem tl_member) für die Spieler (tl_spieler) aller Mannschaften (tl_mannschaft)
+ * einer Saison (tl_saison).
  *
  * TODO: Sollte das nicht eher eine Migarion sein/werden? Oder ist es mittlerweile obsolete?
  *
