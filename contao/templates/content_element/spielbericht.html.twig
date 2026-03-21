@@ -5,6 +5,7 @@
   {% if as_editor_view %}
 
      {% block editor_view %}
+         <!--suppress CssUnusedSymbol -->
          <div class="tl_gray">
              <span class="upper">{{ wildcard }}</span>
              <br>
@@ -99,10 +100,10 @@
         <tr>
             <td>{{ data.name }}</td>
             <td>{{ data.team }}</td>
-            <td>{{ data.highlights[1] }}</td>
-            <td>{{ data.highlights[2] }}</td>
-            <td>{{ data.highlights[3] }}</td>
-            <td>{{ data.highlights[4] }}</td>
+            <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_180')] }}</td>
+            <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_171')] }}</td>
+            <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_SHORTLEG')] }}</td>
+            <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_HIGHFINISH')] }}</td>
         </tr>
     {% endfor %}
 </tbody>
