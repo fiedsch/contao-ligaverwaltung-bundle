@@ -23,7 +23,7 @@ Finden von verwaisten Begegnungen:
 
 Zugehörige Mannschaften existieren nicht mehr
 ```sql
-SELECT id FROM tl_begegnung b
+SELECT b.id FROM tl_begegnung b
   LEFT JOIN tl_mannschaft mh ON (b.home=mh.id)
   LEFT JOIN tl_mannschaft ma ON (b.away=ma.id)
   WHERE
