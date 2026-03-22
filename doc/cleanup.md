@@ -15,7 +15,7 @@ Laufe der Zeit aber zu unnötigem Datenmüll.
 ## Datenbereinigungen
 
 Folgende Datenbereinigungen können nicht einfach im Backend druchgeführt werden (entweder, weil die Suche nach den Records
-zu aufwändig ist, oder, weil es zu viele sein könnten um es manuell einzeln zu machen).
+zu aufwändig ist, oder, weil es zu viele sein könnten, um es manuell einzeln zu machen).
 
 ### Verwaiste Begegnungen
 
