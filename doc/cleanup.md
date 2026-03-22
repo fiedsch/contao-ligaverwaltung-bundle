@@ -33,17 +33,16 @@ SELECT id FROM tl_begegnung b
 ```
 Bei obigen Query u.U. noch berücksichtigen, daß die Begegnung nicht aus einer aktuell aktiven Saison (Ausgabe im
 Frontend) stammt (`tl_begegnung.pid = tl_liga.id` und `tl_liga.aktiv = 1`). Your Mileage may vary, da die Liga u.U.
-nicht mehr im Fontend ausgegeben wird und dennoch immer noch auf `aktiv` steht.
+nicht mehr im Frontend ausgegeben wird und dennoch immer noch auf `aktiv` steht.
 
-Vor einem `DELETE FROM tl_begegnung WHERE /* s.o. */` müssen auch
+Nach einem `DELETE FROM tl_begegnung WHERE /* siehe jeweils oben */` müssen auch
 
 - die zugehörigen `tl_spiel` Records gelöscht werden: Relation `tl_spiel.pid = tl_begegnung.id`
 ```sql
-DELETE FROM tl_spiel WHERE pid IN (/*obiger Query mit SELECT id FROM ...*/)
+DELETE FROM tl_spiel WHERE pid NOT IN (SELECT id FROM tl_begegnung)
 ```
 - die zugehörigen `tl_highlight` Records gelöscht werden: Relation `tl_highlight.begegnung_id = tl_begegnung.id`
-```sql
-DELETE FROM tl_highlight WHERE begegnung_id IN (/*obiger Query mit SELECT id FROM ...*/)
+DELETE FROM `tl_highlight` WHERE begegnung_id NOT IN (SELECT id FROM tl_begegnung);
 ```
 - die zugehörigen `tl_spieler` Records gelöscht werden: Relation `tl_spieler.pid = tl_mannschaft.id`
   und `tl_mannschaft.id` ist entweder `tl_begegnung.home` oder `tl_begegnung.away`
