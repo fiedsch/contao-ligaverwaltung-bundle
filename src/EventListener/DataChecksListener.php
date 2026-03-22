@@ -16,7 +16,7 @@ namespace Fiedsch\Ligaverwaltung\EventListener;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Exception as DBALException;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 
 #[AsHook('getSystemMessages')]
@@ -33,7 +33,7 @@ class DataChecksListener
      * - Mannschaft spielt in Liga (ist aber kein Child von Liga; das wäre die Verband -> Liga -> Begegnung -> Spiel Hierarchie)
      * - Mannschaft spielt an einem Spielort (ist aber kein Child von Spielort; s.o.)
      *
-     * @throws Exception
+     * @throws DBALException
      */
     public function __invoke(): string|null
     {
@@ -49,6 +49,11 @@ class DataChecksListener
             $result = [...$result ?? [], $check];
         }
 
+        $check = $this->checkBegegnungen();
+        if (null !== $check) {
+            $result = [...$result ?? [], $check];
+        }
+
         if (is_array($result)) {
             return implode('', $result);
         }
@@ -59,6 +64,8 @@ class DataChecksListener
 
     /**
      * Mannschaften ohne existierende zugeordnete Liga
+     *
+     * @throws DBALException
      */
     protected function checkMannschaftAndLiga(): string|null
     {
@@ -82,6 +89,8 @@ class DataChecksListener
 
     /**
      * Spielorte, die keiner Mannschaft zugeordnet sind.
+     *
+     * @throws DBALException
      */
     protected function checkSpielortAndMannschaft(): string|null
     {
@@ -102,6 +111,30 @@ class DataChecksListener
         $result .= '</ul>';
 
         return $result;
+    }
+
+    /**
+     * Verwaiste Begegnungen
+     * @throws DBALException
+     */
+    protected function checkBegegnungen(): string|null
+    {
+        $sql = <<<EOF
+SELECT COUNT(*) n FROM tl_begegnung b
+  LEFT JOIN tl_mannschaft mh ON (b.home=mh.id)
+  LEFT JOIN tl_mannschaft ma ON (b.away=ma.id)
+  WHERE
+      b.away > 0 -- kein "Spielfrei"
+      AND (mh.id IS NULL OR ma.id IS NULL)
+  ;
+EOF;
+
+        $dbResult = $this->connection->executeQuery($sql);
+        $numRecords = $dbResult->fetchOne();
+
+        // TO-DOs für den Admin beim Löschen in der Datenbank: siehe doc/cleanup.md
+
+        return sprintf('<p class="tl_error">Es gibt %d Begegnungen ohne zugehörige (noch existierende) Heim- oder Auswärtsmannschaft (Datenbereinigung durch Administrator)</p>', $numRecords);
     }
 
 }
