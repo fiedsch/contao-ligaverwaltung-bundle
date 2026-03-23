@@ -25,8 +25,7 @@ tl_verband
             |
             + tl_spiel (Spieler gegen Spieler)
 
-tl_mannschaft (hat als Attribut (u.A.) eine Liga, ist aber im Sinne der Contao DCA keine
-Kindtabelle von tl_liga!)
+tl_mannschaft (hat als Attribut (u.A.) eine Liga, ist aber im Sinne der Contao DCA keine Kindtabelle von tl_liga!)
    |
    + tl_spieler (Mapping-Tabelle, die einen Spieler in einer Mannschaft -- und damit Liga
      und damit Saison -- auf ein Contao-Member abbildet).

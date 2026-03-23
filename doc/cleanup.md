@@ -17,6 +17,17 @@ Laufe der Zeit aber zu unnötigem Datenmüll.
 Folgende Datenbereinigungen können nicht einfach im Backend druchgeführt werden (entweder, weil die Suche nach den Records
 zu aufwändig ist, oder, weil es zu viele sein könnten, um es manuell einzeln zu machen).
 
+### Verwaiste Saisons
+
+Saisons dienen (nur) als Marker bei einer Liga (`tl_liga`). Sie können daher gelöscht werden, sobald die zugehörigen
+Ligen nicht mehr existieren.
+
+```sql
+DELETE FROM tl_saison WHERE id NOT IN (SELECT DISTINCT saison FROM tl_liga);
+```
+
+
+
 ### Verwaiste Begegnungen
 
 Finden von verwaisten Begegnungen:
@@ -37,11 +48,13 @@ nicht mehr im Frontend ausgegeben wird und dennoch immer noch auf `aktiv` steht.
 
 Nach einem `DELETE FROM tl_begegnung WHERE /* siehe jeweils oben */` müssen auch
 
-- die zugehörigen `tl_spiel` Records gelöscht werden: Relation `tl_spiel.pid = tl_begegnung.id`
+- die zugehörigen `tl_spiel` Records gelöscht werden: Relation `tl_spiel.pid = tl_begegnung.id` (Anmerkung: beim Löschen
+im Backend erledigt Contao dies).
 ```sql
 DELETE FROM tl_spiel WHERE pid NOT IN (SELECT id FROM tl_begegnung)
 ```
 - die zugehörigen `tl_highlight` Records gelöscht werden: Relation `tl_highlight.begegnung_id = tl_begegnung.id`
+```sql
 DELETE FROM `tl_highlight` WHERE begegnung_id NOT IN (SELECT id FROM tl_begegnung);
 ```
 - die zugehörigen `tl_spieler` Records gelöscht werden: Relation `tl_spieler.pid = tl_mannschaft.id`
@@ -50,3 +63,27 @@ DELETE FROM `tl_highlight` WHERE begegnung_id NOT IN (SELECT id FROM tl_begegnun
 Danach: Löschen von nun verwaisten Mannschaften: Eine Begegnung könnte gelöscht werden, weil `home`oder `away` nicht
 mehr existieren. Durch das Löschen der Begegnung ist nun u.U. `away` oder `home` eineMannschaft, die nirgends verwendet
 wird ...
+
+### Verwaiste Spieler
+
+Spieler (`tl_spieler`) sind das Mapping zwischen Spielern einer Mannschaft (einer Saison/Liga/...) und den zugehörigen
+Mitgliedern (`tl_member`).
+
+### Verwaiste Spielorte
+
+Verwaiste Spielorte ergeben sich, wenn keine Mannschaft mehr diesen Spleiort als Referenz hinterlegt hat
+(`tl_mannschaft.spielort`). Hier ist beim löschen natürlich Vorsicht geboten, da es nur aktuell so sein könnte, daß
+keine Mannschaft an diesem Spielort spielt, dies sich aber in der Zukunft wieder ändert. Beim vorzeitigen Löschen müsste
+der Spielort erneut angelegt werden.
+
+```sql
+DELETE FROM tl_spielort WHERE id NOT IN (SELECT DISTINCT spielort FROM tl_mannschaft);
+```
+
+### Verwaiste Aufsteller
+
+Für die Aufsteller gilt analog das, was zu den Spielorten beschrieben wurde.
+
+```sql
+DELETE FROM tl_aufsteller WHERE id NOT IN (SELECT DISTINCT aufsteller FROM tl_spielort);
+```
