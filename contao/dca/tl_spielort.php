@@ -16,6 +16,7 @@ use Contao\DataContainer;
 use Contao\DC_Table;
 use Contao\System;
 use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
+use Fiedsch\Ligaverwaltung\Helper\DCAHelper;
 
 System::loadLanguageFile('default');
 
@@ -40,8 +41,9 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'defaultSearchField' => 'name'
         ],
         'label' => [
-            'fields' => ['name'],
-            'format' => '%s',
+            'fields' => ['name','aktiv'],
+            'format' => '%s (aktiv=%s)',
+            'label_callback' => [DCAHelper::class, 'spielortLabelCallback'],
         ],
         'global_operations' => [
             'all' => [
@@ -55,12 +57,13 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'edit',
             'copy',
             'delete',
+            'toggle', // Nicht mit Standardfeld 'published', sondern mit 'aktiv', daher 'toggle' => true in der Felddefinition unten
             'show',
         ],
     ],
 
     'palettes' => [
-        'default' => '{title_legend},name;{details_legend},phone,website,street,postal,city,spielortpage,aufsteller',
+        'default' => '{title_legend},name;{details_legend},phone,website,street,postal,city,spielortpage,aufsteller,aktiv',
     ],
 
     'fields' => [
@@ -143,6 +146,15 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'sorting' => false,
             'eval' => ['mandatory' => false, 'multiple' => false, 'fieldType' => 'radio', 'tl_class' => 'w50'],
             'sql' => ['type' => 'blob', 'length' => AbstractMySQLPlatform::LENGTH_LIMIT_BLOB, 'notnull' => false ],
+        ],
+        'aktiv' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['aktiv'],
+            'inputType' => 'checkbox',
+            'toggle' => true,
+            'filter' => true,
+            'exclude' => true,
+            'eval' => ['tl_class' => 'w50'],
+            'sql' => ['type' => 'boolean', 'default' => true]
         ],
     ],
 ];

@@ -79,3 +79,8 @@ $GLOBALS['TL_LANG']['tl_spielort']['aufsteller'] = [
     'Aufsteller',
     'Aufsteller',
 ];
+
+$GLOBALS['TL_LANG']['tl_spielort']['aktiv'] = [
+    'Aktiv',
+    'Dieser Spielort ist aktiv, d.h. es spielen hier im aktuellen Ligabetrieb Mannschaften. Dieses Feld ist nur ein Marker und hat auf die Funktionsweise der Ligaverwaltung keinen Einfluss.',
+];

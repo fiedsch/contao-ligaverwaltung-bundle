@@ -60,6 +60,17 @@ class DCAHelper
         return sprintf('%s (%d Ligen)', $label, $ligen->n);
     }
 
+    public static function spielortLabelCallback(array $row, string $label): string
+    {
+        return sprintf('<span class="%s"><span class="%s">%s</span>, %s %s</span>',
+            $row['aktiv']===1 ? '' : 'tl_gray',
+            $row['aktiv']===1 ? 'tl_green' : '',
+            $row['name'],
+            $row['street'],
+            $row['city']
+        );
+    }
+
     /**
      * Callback für das Label eines Child Records tl_liga.child_record_callback
      */
