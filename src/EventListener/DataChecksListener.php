@@ -94,14 +94,14 @@ class DataChecksListener
      */
     protected function checkSpielortAndMannschaft(): string|null
     {
-        $dbResult = $this->connection->executeQuery('SELECT * FROM tl_spielort WHERE id NOT IN (SELECT DISTINCT spielort FROM tl_mannschaft)');
+        $dbResult = $this->connection->executeQuery('SELECT * FROM tl_spielort WHERE id NOT IN (SELECT DISTINCT spielort FROM tl_mannschaft) and aktiv=1');
         $numRecords = $dbResult->rowCount();
 
         if (0 === $numRecords) {
             return null;
         }
 
-        $message = sprintf('Es gibt %d Spielorte, die keiner (existierenden) Mannschaft zugeordnet sind', $numRecords);
+        $message = sprintf('Es gibt %d "aktive" Spielorte, die keiner (existierenden) Mannschaft zugeordnet sind', $numRecords);
         $result = '<p class="tl_error">'.$message.'</p>';
         $result .= '<p>Das beinflusst die Funktion der Ligaverwaltung nicht, erzeugt aber u.U. unsinnige Einträge auf einer ggf. vorhandenen "Übersicht der Spielorte":</p>';
         $result .= '<ul>';
