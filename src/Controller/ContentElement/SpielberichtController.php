@@ -71,6 +71,7 @@ class SpielberichtController extends AbstractContentElementController
         $template->begegnunglabel = $begegnung->getLabel();
         $template->home = $begegnung->getRelated('home')->name;
         $template->away = $begegnung->getRelated('away')->name;
+        $template->published = $begegnung->published;
 
         $template->spielergebnisse = $this->compileSpielergebnsisse($begegnung);
 

@@ -17,6 +17,10 @@
 
       <h1>{{ begegnunglabel }}</h1>
 
+      {% if not published %}
+          <p>Die Begegnung ist noch nicht gespielt oder die Ergebnisse sind noch nicht erfasst und veröffentlicht.</p>
+      {% endif %}
+
       {% if spielergebnisse %}
           {% set legs_home = 0 %}
           {% set legs_away = 0 %}
