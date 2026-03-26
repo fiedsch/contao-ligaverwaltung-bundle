@@ -774,8 +774,9 @@ class DCAHelper
         }
 
         foreach ($saisons as $saison) {
-            $result[$saison->id] = sprintf('%s',
-                $saison->name
+            $result[$saison->id] = sprintf('%s %s',
+                $saison->name,
+                $saison->name === $saison->alias ? '' : '('.$saison->alias.')'
             );
         }
 
