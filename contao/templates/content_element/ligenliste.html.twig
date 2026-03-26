@@ -15,16 +15,22 @@
   {% else %}
 
       {% if listitems %}
+          {%  block listitems %}
           <ul>
           {% for item in listitems %}
-              <li>{{ item['liga'] }}</li>
-              <ul>
-              {% for subitem in item.mannschaften %}
-                  <li>{{ subitem|raw }}</li>
-              {% endfor %}
-              </ul>
+              {%  block listitem %}
+                  {%  block listitem_liga %}<li>{{ item['liga'] }}</li>{% endblock %}
+                  {%  block listitem_mannschaften %}
+                      <ul>
+                          {% for subitem in item.mannschaften %}
+                              {% block listitem_mannschaften_mannschaft %}<li>{{ subitem|raw }}</li>{% endblock %}
+                          {% endfor %}
+                      </ul>
+                  {% endblock %}
+              {%  endblock %}
           {% endfor %}
           </ul>
+          {%  endblock %}
       {% endif %}
 
   {% endif %}

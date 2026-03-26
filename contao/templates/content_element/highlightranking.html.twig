@@ -27,7 +27,9 @@
         {% if rankingtype == 'spieler' %}
 
             <div class="table-responsive">
-                <table class="table table-hover">
+                {%  block table_start %}
+                    <table class="table table-hover">
+                {% endblock %}
                     <thead>
                     <tr>
                         {% if rankingfield != constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL') %}
@@ -35,24 +37,24 @@
                         {% endif %}
                         <th>Name</th>
                         {% if not auf_mannschaftsseite %}
-                            <th>Mannschaft</th>
+                            <th>{% block th_mannschaft %}Mannschaft{% endblock %}</th>
                         {% endif %}
                         {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_171')
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_180')
                         %}
-                            <th>171</th>
-                            <th>180</th>
+                            <th>{%  block th_171 %}171{% endblock %}</th>
+                            <th>{% block th_180 %}180{% endblock %}</th>
                         {% endif %}
                         {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_HIGHFINISH')
                         %}
-                            <th>Highfinish</th>
+                            <th>{% block th_highfinnish %}Highfinish{% endblock %}</th>
                         {% endif %}
                         {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_SHORTLEG')
                         %}
-                            <th>Shortleg</th>
+                            <th>{%  block th_shortleg %}Shortleg{% endblock %}</th>
                         {% endif %}
                     </tr>
                     </thead>
@@ -63,6 +65,7 @@
                             <td>{{ listitem.hl_rang }}</td>
                         {% endif %}
                         <td>{{ listitem.name }}</td>
+                        {#  auf einer Mannschaftsseite ist die Angabe der Mannschaft des Spielers wenig informativ, da immer gleich. #}
                         {% if not auf_mannschaftsseite %}<td>{{ listitem.mannschaft|raw }}</td>{% endif %}
                         {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_171')
