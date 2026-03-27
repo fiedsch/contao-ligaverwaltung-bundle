@@ -101,7 +101,7 @@ class LigenlisteController extends AbstractContentElementController
             $temp = [];
             /** @var Collection $mannschaften */
             foreach ($mannschaften ?? [] as $mannschaft) {
-                if ($teampageId = Config::get('teampage') && $teampage = PageModel::findById($teampageId ?? -1)) {
+                if ($teampage = PageModel::findById(Config::get('teampage') ?? -1)) {
                     $temp[] = sprintf("<a href='%s'>%s</a>",
                         $this->contentUrlGenerator->generate($teampage, ['id' => $mannschaft->id], UrlGeneratorInterface::ABSOLUTE_PATH),
                         $mannschaft->name
