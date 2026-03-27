@@ -18,12 +18,12 @@ $GLOBALS['TL_LANG']['CTE']['ligaverwaltung'] = 'Ligaverwaltung';
 
 $GLOBALS['TL_LANG']['CTE']['ligenliste'] = [
     'Ligenliste',
-    'Liste aller Ligen (eines Verbands) aus den Daten, die im Backend in der Ligaverwaltung erfasst werden',
+    'Liste aller Ligen (eines Verbands) aus den Daten, die im Backend in der Ligaverwaltung erfasst werden. Wie "Mannschaftsliste", jedoch kompakter.',
 ];
 
 $GLOBALS['TL_LANG']['CTE']['mannschaftsliste'] = [
     'Mannschaftsliste',
-    'Mannschaftsliste aus den Daten, die im Backend in der Ligaverwaltung erfasst werden',
+    'Mannschaftsliste aus den Daten, die im Backend in der Ligaverwaltung erfasst werden. Ähnlich, wie "Ligenliste", jedoch mit mehr Details.',
 ];
 
 $GLOBALS['TL_LANG']['CTE']['ranking'] = [
