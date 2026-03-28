@@ -1,4 +1,5 @@
 {% extends "@Contao/content_element/_base.html.twig" %}
+{% use '@Contao/component/_list.html.twig' %}
 
 {% block content %}
 
@@ -14,13 +15,16 @@
 
   {% else %}
 
-      {% if listitems %}
-          <ul>
-          {% for item in listitems %}
-              <li>{{ item|raw }}</li>
-          {% endfor %}
-          </ul>
-      {% endif %}
+      {% with { items: listitems } %}{{ block('list_component') }}{% endwith %}
+      {% block list_item %}
+          {% if item|default is not empty %}
+              {% if item.url %}
+                  <a href="{{ item.url }}">{{ item.name }}</a>
+              {% else %}
+                  {{ item.name }}
+              {% endif %}
+          {% endif %}
+      {% endblock %}
 
   {% endif %}
 
