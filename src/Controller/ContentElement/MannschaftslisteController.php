@@ -69,22 +69,23 @@ class MannschaftslisteController extends AbstractContentElementController
             return;
         }
 
-        $listitems = [];
-
         $mannschaften = MannschaftModel::findByLiga($model->liga, ['order' => 'name ASC']);
         if (!$mannschaften) {
-            $template->listitems = $listitems;
+            $template->listitems = [];
             return;
         }
 
+        $listitems = [];
 
+        /** @var MannschaftModel $mannschaft */
         foreach ($mannschaften as $mannschaft) {
             if ($mannschaft->active) {
-                $listitem = $mannschaft->getLinkedName();
-                $listitems[] = $listitem;
+                $listitems[] = [
+                    'name' => $mannschaft->getShortName(),
+                    'url' => $mannschaft->getTeamPageLink()
+                ];
             }
         }
-
         $template->listitems = $listitems;
     }
 }
