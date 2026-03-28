@@ -1,4 +1,5 @@
 {% extends "@Contao/content_element/_base.html.twig" %}
+{% use '@Contao/component/_list.html.twig' %}
 
 {% block content %}
 
@@ -24,18 +25,16 @@
           <div class="mannschaften col-sm-12">
               {%  for ligaId,elememnt in mannschaften %}
                   <h2>{{ mannschaften[ligaId][0].liga  }} {{ mannschaften[ligaId][0].saison }}</h2>
-                  <ul>
-                      {% for mannschaft in mannschaften[ligaId] %}
-                          <li>
-                              {% if mannschaft.link %}
-                                 <a href="{{ mannschaft.link|raw }}">{{ mannschaft.name }}</a>
-                              {% else %}
-                                  {{ mannschaft.name }}
-                              {% endif
-                              %}
-                          </li>
-                      {% endfor %}
-                  </ul>
+                  {% with { items: mannschaften[ligaId] } %}{{ block('list_component') }}{% endwith %}
+                  {% block list_item %}
+                      {% if item|default is not empty %}
+                          {% if item.link %}
+                              <a href="{{ item.link }}">{{ item.name }}</a>
+                          {% else %}
+                              {{ item.name }}
+                          {% endif %}
+                      {% endif %}
+                  {% endblock %}
               {% endfor %}
           </div>
       </div>
