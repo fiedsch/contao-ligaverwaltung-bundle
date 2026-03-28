@@ -14,41 +14,65 @@
 
   {% else %}
 
+      {% set liga_table_attributes = attrs()
+          .addClass('table table-hover')
+          .mergeWith(liga_table_attributes|default)
+      %}
+      {% set wrapper_attributes = attrs()
+          .addClass('table-responsive')
+          .mergeWith(wrapper_attributes|default)
+      %}
+
       {% for id,liga in ligen %}
-          <div class="table-responsive">
-              <h3>{{ liga }}</h3>
-              <table class="table table-hover">
-                  <thead>
-                  <tr>
-                      <th>Mannschaft</th>
-                      <th>Teamcaptain</th>
-                      <th>Spielort</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {%  for mannschaft in ligendetails[id] %}
+          {% block liga %}
+              <div {{ wrapper_attributes }}>
+                  {% block liga_header %}
+                      <h3>{{ liga }}</h3>
+                  {% endblock %}
+                  <table {{ liga_table_attributes }}>
+                      <thead>
                       <tr>
-                          <td>
-                              {% if mannschaft.mannschaftlink is not empty %}
-                               <a href="{{ mannschaft.mannschaftlink }}">{{ mannschaft.mannschaft }}</a>
-                              {% else %}
-                                  {{ mannschaft.mannschaft }}
-                              {% endif %}
-                          </td>
-                          <td>{{ mannschaft.tc[0].name|default }} {{ mannschaft.tc[0].email|default|raw }} {{ mannschaft.tc[0].mobile|default|raw }}</td>
-                          <td>{{ mannschaft.spielort.name }}
-                              {% if mannschaft.spielort.phone %}
-                                  <br><a href="tel:{{ mannschaft.spielort.phone }}">{{ mannschaft.spielort.phone }}</a>
-                              {% endif %}
-                              {% if mannschaft.spielort.website %}
-                                  <br><a href="{{ mannschaft.spielort.website }}">{{ mannschaft.spielort.website }}</a>
-                              {% endif %}
-                          </td>
+                          <th>{% block liga_table_th_mannschaft %}Mannschaft{% endblock %}</th>
+                          <th>{% block liga_table_th_tc %}Teamcaptain{% endblock %}</th>
+                          <th>{% block liga_table_th_spielort %}Spielort{% endblock %}</th>
                       </tr>
-                  {% endfor %}
-                  </tbody>
-              </table>
-          </div>
+                      </thead>
+                      <tbody>
+                      {%  for mannschaft in ligendetails[id] %}
+                          {% block liga_table_tr_mannschaft %}
+                          <tr>
+                              <td>
+                                  {% block liga_table_tr_mannschaft_td_mannschaft %}
+                                      {% if mannschaft.mannschaftlink is not empty %}
+                                          <a href="{{ mannschaft.mannschaftlink }}">{{ mannschaft.mannschaft }}</a>
+                                      {% else %}
+                                          {{ mannschaft.mannschaft }}
+                                      {% endif %}
+                                  {% endblock %}
+                              </td>
+                              <td>
+                                  {% block liga_table_tr_mannschaft_td_tc %}
+                                      {{ mannschaft.tc[0].name|default }} {{ mannschaft.tc[0].email|default|raw }} {{ mannschaft.tc[0].mobile|default|raw }}
+                                  {% endblock %}
+                              </td>
+                              <td>
+                                  {% block liga_table_tr_mannschaft_td_spielort %}
+                                      {{ mannschaft.spielort.name }}
+                                      {% if mannschaft.spielort.phone %}
+                                          <br><a href="tel:{{ mannschaft.spielort.phone }}">{{ mannschaft.spielort.phone }}</a>
+                                      {% endif %}
+                                      {% if mannschaft.spielort.website %}
+                                          <br><a href="{{ mannschaft.spielort.website }}">{{ mannschaft.spielort.website }}</a>
+                                      {% endif %}
+                                  {% endblock %}
+                              </td>
+                          </tr>
+                          {% endblock %}
+                      {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          {% endblock %}
       {% endfor %}
 
   {% endif %}
