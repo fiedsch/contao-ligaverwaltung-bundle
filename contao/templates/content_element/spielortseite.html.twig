@@ -26,15 +26,6 @@
               {%  for ligaId,elememnt in mannschaften %}
                   <h2>{{ mannschaften[ligaId][0].liga  }} {{ mannschaften[ligaId][0].saison }}</h2>
                   {% with { items: mannschaften[ligaId] } %}{{ block('list_component') }}{% endwith %}
-                  {% block list_item %}
-                      {% if item|default is not empty %}
-                          {% if item.link %}
-                              <a href="{{ item.link }}">{{ item.name }}</a>
-                          {% else %}
-                              {{ item.name }}
-                          {% endif %}
-                      {% endif %}
-                  {% endblock %}
               {% endfor %}
           </div>
       </div>
@@ -42,3 +33,12 @@
   {% endif %}
 
 {% endblock %}
+
+{% block list_item %}
+    {% if item.link %}
+        <a href="{{ item.link }}">{{ item.name }}</a>
+    {% else %}
+        {{ item.name }}
+    {% endif %}
+{% endblock %}
+

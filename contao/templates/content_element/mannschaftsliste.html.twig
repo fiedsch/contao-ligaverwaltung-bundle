@@ -16,16 +16,16 @@
   {% else %}
 
       {% with { items: listitems } %}{{ block('list_component') }}{% endwith %}
-      {% block list_item %}
-          {% if item|default is not empty %}
-              {% if item.url %}
-                  <a href="{{ item.url }}">{{ item.name }}</a>
-              {% else %}
-                  {{ item.name }}
-              {% endif %}
-          {% endif %}
-      {% endblock %}
 
   {% endif %}
 
 {% endblock %}
+
+{% block list_item %}
+    {% if item.url %}
+        <a href="{{ item.url }}">{{ item.name }}</a>
+    {% else %}
+        {{ item.name }}
+    {% endif %}
+{% endblock %}
+
