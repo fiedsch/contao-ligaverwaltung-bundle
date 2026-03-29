@@ -13,39 +13,52 @@
       {% endblock %}
 
   {% else %}
+      {%  block headline %}
+          <div class="row">
+              <div class="col-sm-12">
+                  <h1>Mannschaftsseite {{ mannschaft_name  }} {{ liga }} {{ saison }}</h1>
+              </div>
+          </div>
+      {% endblock %}
 
-      <div class="row">
-          <div class="col-sm-12">
-              <h1>Mannschaftsseite {{ mannschaft_name  }} {{ liga }} {{ saison }}</h1>
+      {%  block spielortinfo %}
+          <div class="row mt-3">
+              <div class="spielortinfo col-md-6 col-sm-12">
+                  {{ spielortinfo|raw }}
+              </div>
           </div>
-      </div>
+      {% endblock %}
 
-      <div class="row mt-3">
-          <div class="spielortinfo col-md-6 col-sm-12">
-              {{ spielortinfo|raw }}
+      {%  block spielerliste %}
+          <div class="row mt-3">
+              <div class="spielerliste col-sm-12">
+                  {{ spielerliste|raw }}
+              </div>
           </div>
-      </div>
+      {% endblock %}
 
-      <div class="row mt-3">
-          <div class="spielerliste col-sm-12">
-              {{ spielerliste|raw }}
+      {% block spielplan %}
+          <div class="row mt-3">
+              <div class="spielplan col-sm-12">
+                  {{ spielplan|raw }}
+              </div>
           </div>
-      </div>
+      {% endblock %}
 
-      <div class="row mt-3">
-          <div class="spielplan col-sm-12">
-              {{ spielplan|raw }}
+      {% block ranking %}
+          <div class="row mt-3">
+              {%  block ranking_spieler %}
+                  <div class="ranking col-md-6 col-sm-12">
+                      {{ ranking|raw }}
+                  </div>
+              {% endblock %}
+              {% block ranking_highlights %}
+                  <div class="ranking col-md-6 col-sm-12">
+                      {{ highlightranking|raw }}
+                  </div>
+              {% endblock %}
           </div>
-      </div>
-
-      <div class="row mt-3">
-          <div class="ranking col-md-6 col-sm-12">
-              {{ ranking|raw }}
-          </div>
-          <div class="ranking col-md-6 col-sm-12">
-              {{ highlightranking|raw }}
-          </div>
-      </div>
+      {% endblock %}
 
   {% endif %}
 

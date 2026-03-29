@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  {% if as_editor_view %}
+    {% if as_editor_view %}
 
      {% block editor_view %}
          <!--suppress CssUnusedSymbol -->
@@ -13,12 +13,14 @@
          </div>
       {% endblock %}
 
-  {% else %}
+    {% else %}
 
       <h1>{{ begegnunglabel }}</h1>
 
       {% if not published %}
-          <p>Die Begegnung ist noch nicht gespielt oder die Ergebnisse sind noch nicht erfasst und veröffentlicht.</p>
+          {% block not_published_message %}
+              <p>Die Begegnung ist noch nicht gespielt oder die Ergebnisse sind noch nicht erfasst und veröffentlicht.</p>
+          {% endblock %}
       {% endif %}
 
       {% if spielergebnisse %}
@@ -26,98 +28,114 @@
           {% set legs_away = 0 %}
           {% set points_home = 0 %}
           {% set points_away = 0 %}
-          <div class="row">
-              <h2>Aufstellung</h2>
-              <div  class="col-12 col-md-4">
-                  <h3>{{ home }}</h3>
-                  <ul>
-                      {%  for playerId in spielergebnisse.raw_data.home.lineup %}
-                          {% if playerId > 0 %}
-                              <li>({{ spielergebnisse.player_map.home[playerId].position }}) {{ spielergebnisse.player_map.home[playerId].name }}</li>
-                          {% endif %}
-                      {% endfor %}
-                  </ul>
+          {% block aufstellung %}
+              <div class="row">
+                  {% block aufstellung_headline %}
+                      <h2>Aufstellung</h2>
+                  {% endblock %}
+                  {% block aufstellung_home %}
+                      <div  class="col-12 col-md-4">
+                          <h3>{{ home }}</h3>
+                          <ul>
+                              {%  for playerId in spielergebnisse.raw_data.home.lineup %}
+                                  {% if playerId > 0 %}
+                                      <li>({{ spielergebnisse.player_map.home[playerId].position }}) {{ spielergebnisse.player_map.home[playerId].name }}</li>
+                                  {% endif %}
+                              {% endfor %}
+                          </ul>
+                      </div>
+                  {% endblock %}
+                  {% block aufstellung_away %}
+                      <div  class="col-12 col-md-4">
+                          <h3>{{ away }}</h3>
+                          <ul>
+                              {%  for playerId in spielergebnisse.raw_data.away.lineup %}
+                                  {% if playerId > 0 %}
+                                      <li>({{ spielergebnisse.player_map.away[playerId].position }}) {{ spielergebnisse.player_map.away[playerId].name }}</li>
+                                  {% endif %}
+                              {% endfor %}
+                          </ul>
+                      </div>
+                  {% endblock %}
               </div>
-              <div  class="col-12 col-md-4">
-                  <h3>{{ away }}</h3>
-                  <ul>
-                      {%  for playerId in spielergebnisse.raw_data.away.lineup %}
-                          {% if playerId > 0 %}
-                              <li>({{ spielergebnisse.player_map.away[playerId].position }}) {{ spielergebnisse.player_map.away[playerId].name }}</li>
-                          {% endif %}
+          {% endblock %}
+
+          {% block spiele %}
+              <h2>Spiele</h2>
+              <div class="table-responsive">
+                  <table class="table table-hover">
+                      <thead>
+                      <tr>
+                          <th>{{ home }}</th>
+                          <th>{{ away }}</th>
+                          <th></th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {% for i,spielergebnis in spielergebnisse.ergebnisse %}
+                          {% set legs_home = legs_home + spielergebnis.score_home %}
+                          {% set legs_away = legs_away + spielergebnis.score_away %}
+                          {% set points_home = points_home + (spielergebnis.score_home > spielergebnis.score_away ? 1 : 0) %}
+                          {% set points_away = points_away + (spielergebnis.score_home < spielergebnis.score_away ? 1 : 0) %}
+
+                          <tr class="{{ 'spiel-'~(i+1) }} {{ spielergebnis.type }}">
+                              <td class="{{ spielergebnis.css_home }}">{{ spielergebnis.player_home }}</td>
+                              <td class="{{ spielergebnis.css_away }}">{{ spielergebnis.player_away }}</td>
+                              <td class="score">{{ spielergebnis.score_home }}:{{ spielergebnis.score_away }}</td>
+                          </tr>
                       {% endfor %}
-                  </ul>
+                      </tbody>
+                      {% block gesamtergebnis %}
+                          <tfoot>
+                          <tr class="final-result table-active">
+                              <td>Gesamtergebnis</td>
+                              <td colspan="2" class="score gesamt">{{ points_home }}:{{ points_away }} Spiele ({{ legs_home }}:{{ legs_away }} Legs)</td>
+                          </tr>
+                          </tfoot>
+                      {% endblock %}
+                  </table>
               </div>
-          </div>
+          {% endblock %}
 
-          <h2>Spiele</h2>
-          <div class="table-responsive">
-              <table class="table table-hover">
-                  <thead>
-                  <tr>
-                      <th>{{ home }}</th>
-                      <th>{{ away }}</th>
-                      <th></th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {% for i,spielergebnis in spielergebnisse.ergebnisse %}
-                      {% set legs_home = legs_home + spielergebnis.score_home %}
-                      {% set legs_away = legs_away + spielergebnis.score_away %}
-                      {% set points_home = points_home + (spielergebnis.score_home > spielergebnis.score_away ? 1 : 0) %}
-                      {% set points_away = points_away + (spielergebnis.score_home < spielergebnis.score_away ? 1 : 0) %}
+          {% block highlights %}
+              {% if highlights %}
+                  <h2>Highlights</h2>
+                  <div class="table-responsive">
+                      <table class="table table-hover">
+                          <thead>
+                          <tr>
+                              <th>Spieler</th>
+                              <th>Team</th>
+                              <th>180</th>
+                              <th>171</th>
+                              <th>Shortleg</th>
+                              <th>Highfinish</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          {% for data in highlights %}
+                              <tr>
+                                  <td>{{ data.name }}</td>
+                                  <td>{{ data.team }}</td>
+                                  <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_180')] }}</td>
+                                  <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_171')] }}</td>
+                                  <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_SHORTLEG')] }}</td>
+                                  <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_HIGHFINISH')] }}</td>
+                              </tr>
+                          {% endfor %}
+                          </tbody>
+                      </table>
+                  </div>
+              {% endif %}
+          {% endblock %}
 
-                  <tr class="{{ 'spiel-'~(i+1) }} {{ spielergebnis.type }}">
-                      <td class="{{ spielergebnis.css_home }}">{{ spielergebnis.player_home }}</td>
-                      <td class="{{ spielergebnis.css_away }}">{{ spielergebnis.player_away }}</td>
-                      <td class="score">{{ spielergebnis.score_home }}:{{ spielergebnis.score_away }}</td>
-                  </tr>
-                  {% endfor %}
-                  </tbody>
-                  <tfoot>
-                  <tr class="final-result table-active">
-                      <td>Gesamtergebnis</td>
-                      <td colspan="2" class="score gesamt">{{ points_home }}:{{ points_away }} Spiele ({{ legs_home }}:{{ legs_away }} Legs)</td>
-                  </tr>
-                  </tfoot>
-              </table>
-          </div>
       {% endif %}
 
-    {% if highlights %}
-        <h2>Highlights</h2>
-
-<div class="table-responsive">
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th>Spieler</th>
-        <th>Team</th>
-        <th>180</th>
-        <th>171</th>
-        <th>Shortleg</th>
-        <th>Highfinish</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for data in highlights %}
-        <tr>
-            <td>{{ data.name }}</td>
-            <td>{{ data.team }}</td>
-            <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_180')] }}</td>
-            <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_171')] }}</td>
-            <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_SHORTLEG')] }}</td>
-            <td>{{ data.highlights[constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_HIGHFINISH')] }}</td>
-        </tr>
-    {% endfor %}
-</tbody>
-</table>
-</div>
     {% endif %}
 
-  {% endif %}
+{% endblock content %}
 
-    {% block css %}
+{% block css %}
 <style>
 {# Zeilen, die jeweils Beginn eines neuen 4er Blocks oder der Doppel darstellen #}
 /*tr.spiel-1  td,*/
@@ -138,6 +156,5 @@ td.score.gesamt {
     padding-right: 2rem; {# biovisuell ermittelt #}
 }
 </style>
-    {% endblock %}
-
 {% endblock %}
+
