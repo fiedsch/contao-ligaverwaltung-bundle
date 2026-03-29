@@ -36,7 +36,7 @@ use Exception;
  * @property int    $spielort
  *
  * @method static MannschaftModel|null findById($id, array $opt=array())
- * @method static Collection|MannschaftModel|null findByLiga($id, array $opt=array())
+ * @method static Collection<MannschaftModel>|MannschaftModel|null findByLiga($id, array $opt=array())
  */
 class MannschaftModel extends Model
 {

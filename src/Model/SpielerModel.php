@@ -33,8 +33,7 @@ use Exception;
  * @property bool   $haspaid
  *
  * @method static SpielerModel|null findById($id, array $opt = [])
- * @method static Collection|SpielerModel|null findByPid($id, array $opt = [])
- * @method static Collection|Model|null getRelated($tablename)
+ * @method static Collection<SpielerModel>|SpielerModel|null findByPid($id, array $opt = [])
  */
 class SpielerModel extends Model
 {
