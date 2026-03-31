@@ -61,7 +61,7 @@ DELETE FROM `tl_highlight` WHERE begegnung_id NOT IN (SELECT id FROM tl_begegnun
   und `tl_mannschaft.id` ist entweder `tl_begegnung.home` oder `tl_begegnung.away`
 
 Danach: Löschen von nun verwaisten Mannschaften: Eine Begegnung könnte gelöscht werden, weil `home`oder `away` nicht
-mehr existieren. Durch das Löschen der Begegnung ist nun u.U. `away` oder `home` eineMannschaft, die nirgends verwendet
+mehr existieren. Durch das Löschen der Begegnung ist nun u.U. `away` oder `home` eine Mannschaft, die nirgends verwendet
 wird ...
 
 ### Verwaiste Spieler
@@ -71,7 +71,7 @@ Mitgliedern (`tl_member`).
 
 ### Verwaiste Spielorte
 
-Verwaiste Spielorte ergeben sich, wenn keine Mannschaft mehr diesen Spleiort als Referenz hinterlegt hat
+Verwaiste Spielorte ergeben sich, wenn keine Mannschaft mehr diesen Spielort als Referenz hinterlegt hat
 (`tl_mannschaft.spielort`). Hier ist beim löschen natürlich Vorsicht geboten, da es nur aktuell so sein könnte, daß
 keine Mannschaft an diesem Spielort spielt, dies sich aber in der Zukunft wieder ändert. Beim vorzeitigen Löschen müsste
 der Spielort erneut angelegt werden.
