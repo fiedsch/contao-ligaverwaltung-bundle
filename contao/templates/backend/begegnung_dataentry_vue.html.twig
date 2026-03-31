@@ -10,17 +10,23 @@
 
 {# JS und CSS Code für die App #}
 <script src="/bundles/fiedschligaverwaltung/js/chunk-vendors.601565e7.js"></script>
-<script src="/bundles/fiedschligaverwaltung/js/app.d81f15c9.js"></script>
-<link rel="stylesheet" href="/bundles/fiedschligaverwaltung/css/app.634ed743.css">
+<script src="/bundles/fiedschligaverwaltung/js/app.31b1bd1f.js"></script>
+<link rel="stylesheet" href="/bundles/fiedschligaverwaltung/css/app.ee4e9518.css">
 
 <style>
     {{ app_data.spielplanCss|raw }}
+
+    td.label {
+        width: 12rem; /* quick fix while this is not in https://github.com/fiedsch/begegnungserfassung */
+    }
 </style>
 
 <script>
     document.addEventListener("turbo:load", () => {
-        document.querySelectorAll('#tl_begegnung').forEach(function (el) {
-            el.dataset.turbo = false
-        })
+        let form = document.querySelector('#tl_begegnung')
+        if (form) {
+            form.dataset.turbo = false
+        }
     });
 </script>
+
