@@ -132,6 +132,10 @@ EOF;
         $dbResult = $this->connection->executeQuery($sql);
         $numRecords = $dbResult->fetchOne();
 
+        if (0 === $numRecords) {
+            return null;
+        }
+
         // TO-DOs für den Admin beim Löschen in der Datenbank: siehe doc/cleanup.md
 
         return sprintf('<p class="tl_error">Es gibt %d Begegnungen ohne zugehörige (noch existierende) Heim- oder Auswärtsmannschaft (Datenbereinigung durch Administrator)</p>', $numRecords);
