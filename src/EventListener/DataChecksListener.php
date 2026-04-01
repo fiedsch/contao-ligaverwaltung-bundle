@@ -94,23 +94,42 @@ class DataChecksListener
      */
     protected function checkSpielortAndMannschaft(): string|null
     {
+        $result = '';
+
+        // Aktive Spielorte, die keiner Mannschaft zugeordnet sind
         $dbResult = $this->connection->executeQuery('SELECT * FROM tl_spielort WHERE id NOT IN (SELECT DISTINCT spielort FROM tl_mannschaft) and aktiv=1');
         $numRecords = $dbResult->rowCount();
 
-        if (0 === $numRecords) {
-            return null;
+        if ($numRecords > 0) {
+            $message = sprintf('Es gibt %d <strong>aktive</strong> Spielorte, die <strong>keiner Mannschaft</strong> zugeordnet sind', $numRecords);
+            $result .= '<p class="tl_info">' . $message . '</p>';
+            $result .= '<ul>';
+            foreach ($dbResult->fetchAllAssociative() as $spielort) {
+                $result .= sprintf('<li>%s, %s</li>', $spielort['name'], $spielort['city']);
+            }
+            $result .= '</ul>';
         }
 
-        $message = sprintf('Es gibt %d "aktive" Spielorte, die keiner (existierenden) Mannschaft zugeordnet sind', $numRecords);
-        $result = '<p class="tl_error">'.$message.'</p>';
-        $result .= '<p>Das beinflusst die Funktion der Ligaverwaltung nicht, erzeugt aber u.U. unsinnige Einträge auf einer ggf. vorhandenen "Übersicht der Spielorte":</p>';
-        $result .= '<ul>';
-        foreach ($dbResult->fetchAllAssociative() as $spielort) {
-            $result .= sprintf('<li>%s, %s</li>', $spielort['name'], $spielort['city']);
-        }
-        $result .= '</ul>';
 
-        return $result;
+        // Nicht-aktive Spielorte, die (mittlerweile wieder) einer Mannschaft zugeordnet sind
+        $dbResult = $this->connection->executeQuery('SELECT * FROM tl_spielort WHERE id IN (SELECT DISTINCT spielort FROM tl_mannschaft) and aktiv=0');
+        $numRecords = $dbResult->rowCount();
+
+        if ($numRecords > 0) {
+            $message = sprintf('Es gibt %d <strong>nicht aktive</strong> Spielorte, die <strong>Mannschaften</strong> zugeordnet sind', $numRecords);
+            $result .= '<p class="tl_info">' . $message . '</p>';
+            $result .= '<ul>';
+            foreach ($dbResult->fetchAllAssociative() as $spielort) {
+                $result .= sprintf('<li>%s, %s</li>', $spielort['name'], $spielort['city']);
+            }
+            $result .= '</ul>';
+        }
+
+        if ('' !== $result) {
+            $result .= '<p class="tl_info">Die obige Zuordnung der Spielorte beinflusst die Funktion der Ligaverwaltung nicht, erzeugt aber u.U. unsinnige Einträge auf einer ggf. vorhandenen "Übersicht der Spielorte":</p>';
+        }
+
+        return $result === '' ? null : $result;
     }
 
     /**
