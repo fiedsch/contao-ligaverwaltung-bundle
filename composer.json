@@ -16,7 +16,8 @@
     "contao/core-bundle": "^5.7",
     "eluceo/ical": "^2.11",
     "fiedsch/contao-jsonwidget": "^0.8",
-    "symfony/string": "^7.0"
+    "symfony/string": "^7.0",
+    "doctrine/dbal": "^4.4"
   },
   "autoload": {
     "psr-4": {
