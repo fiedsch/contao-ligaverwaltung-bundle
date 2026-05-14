@@ -126,7 +126,7 @@ class DataChecksListener
         }
 
         if ('' !== $result) {
-            $result .= '<p class="tl_info">Die obige Zuordnung der Spielorte beinflusst die Funktion der Ligaverwaltung nicht, erzeugt aber u.U. unsinnige Einträge auf einer ggf. vorhandenen "Übersicht der Spielorte":</p>';
+            $result .= '<p class="tl_info">Die obige Zuordnung der Spielorte beinflusst die Funktion der Ligaverwaltung nicht, erzeugt aber u.U. unsinnige Einträge auf einer ggf. vorhandenen "Übersicht der Spielorte".</p>';
         }
 
         return $result === '' ? null : $result;
