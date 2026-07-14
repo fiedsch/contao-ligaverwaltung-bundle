@@ -1,7 +1,7 @@
 {
   "name": "fiedsch/ligaverwaltung-bundle",
   "type": "contao-bundle",
-  "description": "Contao 4 Bundle: Ligaverwaltung",
+  "description": "Contao Bundle: Ligaverwaltung",
   "license": "MIT",
   "authors": [
     {
