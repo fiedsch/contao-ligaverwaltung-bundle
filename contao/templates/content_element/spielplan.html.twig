@@ -14,7 +14,7 @@
 
   {% else %}
 
-      {% if spiele is empty %}
+      {% if spiele|default is empty %}
           {% block no_games_yet %}
               <code>Es sind noch keine Spiele hinterlegt.</code>
           {% endblock %}
