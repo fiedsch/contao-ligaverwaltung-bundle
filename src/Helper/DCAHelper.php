@@ -972,7 +972,7 @@ class DCAHelper
      */
     public static function makeSpielerName(MemberModel|Result $member = null): string
     {
-        return self::makeSpielerNameFromParts($member?->firstname ?? '-', $member?->lastname ?? '-', $member->anonymize);
+        return self::makeSpielerNameFromParts($member?->firstname ?? '-', $member?->lastname ?? '-', $member->anonymize > 0);
     }
 
     public static function makeSpielerNameFromParts(string $firstname, string $lastname, bool $anonymize = false): string
