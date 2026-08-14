@@ -14,7 +14,7 @@
 
   {% else %}
 
-    {% if listitems is empty %}
+    {% if listitems|default is empty %}
         {% block no_results_yet %}
             <code>Es liegen noch keine Ergebnisse vor.</code>
         {% endblock %}
