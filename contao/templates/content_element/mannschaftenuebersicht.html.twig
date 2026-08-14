@@ -23,7 +23,7 @@
           .mergeWith(wrapper_attributes|default)
       %}
 
-      {% for id,liga in ligen %}
+      {% for id,liga in ligen|default %}
           {% block liga %}
               <div {{ wrapper_attributes }}>
                   {% block liga_header %}

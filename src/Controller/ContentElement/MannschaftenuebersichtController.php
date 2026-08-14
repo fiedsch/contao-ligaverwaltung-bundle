@@ -75,6 +75,7 @@ class MannschaftenuebersichtController extends AbstractContentElementController
                 'value' => [1, $saisonId],
                 'order' => 'spielstaerke ASC, name ASC', // name ASC as fallback if spielstaerke (which is kind of an order field) is left emtpy
             ]);
+            if (!$ligen) { continue; }
             array_push($alleLigen, ...$ligen->fetchAll());
         }
         if (!$alleLigen) {
