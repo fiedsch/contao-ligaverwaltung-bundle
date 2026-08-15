@@ -31,6 +31,9 @@ services:
     fiedsch_ligaverwaltung.listener.buttons_callback:
         class: Fiedsch\Ligaverwaltung\EventListener\DataContainer\EditButtonsCallbackListener
 
+    fiedsch_ligaverwaltung.listener.content.config.onload:
+        class: Fiedsch\Ligaverwaltung\EventListener\DataContainer\ContentSubpaletteListener
+
     fiedsch_ligaverwaltung.listener.datachecks:
         class: Fiedsch\Ligaverwaltung\EventListener\DataChecksListener
         arguments:
