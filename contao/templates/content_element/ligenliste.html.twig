@@ -14,7 +14,7 @@
 
   {% else %}
 
-      {% if listitems %}
+      {% if listitems|default %}
           {%  block listitems %}
           <ul>
           {% for item in listitems|default %}
