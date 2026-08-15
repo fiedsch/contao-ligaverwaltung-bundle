@@ -67,6 +67,7 @@ class LigenlisteController extends AbstractContentElementController
         $template->wildcard = '### '.u($GLOBALS['TL_LANG']['CTE']['ligenliste'][0])->upper().' ###';
 
         if (!$model->saison) {
+            $template->listitems = [];
             return;
         }
         $saisonIds = StringUtil::deserialize($model->saison);
