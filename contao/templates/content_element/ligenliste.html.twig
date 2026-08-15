@@ -17,7 +17,7 @@
       {% if listitems %}
           {%  block listitems %}
           <ul>
-          {% for item in listitems %}
+          {% for item in listitems|default %}
               {%  block listitem %}
                   {%  block listitem_liga %}<li>{{ item['liga'] }}</li>{% endblock %}
                   {%  block listitem_mannschaften %}
