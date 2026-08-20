@@ -96,17 +96,14 @@ class SpielberichtController extends AbstractContentElementController
         // Für die "Metainformationen wie "Aufstellung" ("wer hat an welcher Position gespielt" + "Einwechslungen" etc.)
         $begegnung_data = Yaml::parse($begegnung->begegnung_data)['app_data'] ?? [];
 
-        //dd($begegnung_data);
         $playerMap = [
             'home' => $this->mapAufstellungData($begegnung_data['home']['available'], $begegnung_data['home']['lineup'], 'H'),
             'away' => $this->mapAufstellungData($begegnung_data['away']['available'], $begegnung_data['away']['lineup'], 'G'),
         ];
-        // dd($playerMap);
 
         $spielergebnisse = [];
         /** @var SpielModel $spiel */
         foreach ($spiele as $spiel) {
-            // dd($playerMap['home'][$spiel->home]);
             // Einzel (und erster Spieler Doppel)
             /** @var SpielerModel $home */
             if ($home = $spiel->getRelated('home')) {

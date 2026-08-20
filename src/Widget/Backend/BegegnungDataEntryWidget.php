@@ -39,7 +39,7 @@ class BegegnungDataEntryWidget extends Widget
     {
         /** @var BegegnungDataEntryForm $form */
         $form = System::getContainer()->get(BegegnungDataEntryForm::class);
-        //dd($form->generate($this->activeRecord->id));
+
         return $form->generate($this->activeRecord->id);
     }
 
@@ -64,11 +64,6 @@ class BegegnungDataEntryWidget extends Widget
 
     protected function saveData(array $inputData): void
     {
-        // Das folgende wird in
-        /* @see DataEntrySaver::handleDataEntryData(...) */
-        /* @see LigaverwaltungBackendController::begegnungDataSaveAction() */
-        // "mit erledigt"
-
         try {
             DataEntrySaver::handleDataEntryData($this->activeRecord->id /* == $inputData['begegnungId']*/, $inputData);
         } catch (Exception $e) {

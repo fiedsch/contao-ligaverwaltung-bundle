@@ -52,7 +52,6 @@ class PlayerHistoryController
             foreach ($spieler as $sp) {
                 $mannschaft = $sp->getRelated('pid');
                 if (null == $mannschaft) { continue; } // skip if parent data has already been deleted
-                // dd(['sp'=>$sp,'mannschaft'=>$mannschaft, 'liga'=>$sp->getRelated('pid')->getRelated('liga')]);
                 $liga = $mannschaft->getRelated('liga');
                 if (null == $liga) { continue; } // skip if parent data has already been deleted
                 $saison = $liga->getRelated('saison');
