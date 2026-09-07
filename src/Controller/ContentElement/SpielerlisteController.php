@@ -82,13 +82,14 @@ class SpielerlisteController extends AbstractContentElementController
         foreach ($allespieler as $spieler) {
             $member = $spieler->getRelated('member_id');
             $metaInformationOnPlayer = [];
+            $positionOfPlayer = [];
+            if ($spieler->teamcaptain) {
+                $positionOfPlayer[] = $GLOBALS['TL_LANG']['MSC']['tc1'];
+            }
+            if ($spieler->co_teamcaptain) {
+                $positionOfPlayer[] = $GLOBALS['TL_LANG']['MSC']['tc2'];
+            }
             if ($model->showdetails) {
-                if ($spieler->teamcaptain) {
-                    $metaInformationOnPlayer[] = $GLOBALS['TL_LANG']['MSC']['tc1'];
-                }
-                if ($spieler->co_teamcaptain) {
-                    $metaInformationOnPlayer[] = $GLOBALS['TL_LANG']['MSC']['tc2'];
-                }
                 if ($spieler->teamcaptain || $spieler->co_teamcaptain) {
                     if ($member->mobile) {
                         $metaInformationOnPlayer[] = sprintf('<a href="tel:%s">%s</a>',
@@ -101,7 +102,7 @@ class SpielerlisteController extends AbstractContentElementController
                         $metaInformationOnPlayer[] = sprintf("<a href='%s'>%s</a>",
                             StringUtil::encodeEmail('mailto:'.$member->email),
                             StringUtil::encodeEmail($member->email)
-                );
+                        );
                     }
                 }
             }
@@ -111,6 +112,7 @@ class SpielerlisteController extends AbstractContentElementController
                 'spieler' => $spieler,
                 'avatar' => FilesModel::findByUUid($member->avatar)?->path,
                 'meta' => join(', ', $metaInformationOnPlayer),
+                'position' => join(', ', $positionOfPlayer),
             ];
         }
 
