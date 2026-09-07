@@ -37,7 +37,7 @@
                         <tr>
                             {% block playername %}<td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.firstname }} {{ listitem.member.lastname }}{% endif %}</td>{% endblock %}
                             {% block playerpass %}<td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.passnummer }}{% endif %}</td>{% endblock %}
-                            {% block playerposition %}<td>{{ listitem.position|default('-') }}</td>{% endblock %}
+                            {% block playerposition %}<td>{{ listitem.position|default }}</td>{% endblock %}
                             {% if showdetails %}
                                 {% block playerdetails %}<td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.meta|raw }}{% endif %}</td>{% endblock %}
                             {% endif %}
