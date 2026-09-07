@@ -17,7 +17,6 @@ namespace Fiedsch\Ligaverwaltung\EventListener;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
-use Fiedsch\Ligaverwaltung\Model\LigaModel;
 
 #[AsHook('getSystemMessages')]
 class DataChecksListener
