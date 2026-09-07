@@ -23,36 +23,36 @@
                     <tbody>
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Spieler&shy;pass</th>
+                        {%  block playernameheader %}<th>Name</th>{% endblock %}
+                        {%  block playerpassheader %}<th>Spieler&shy;pass</th>{% endblock %}
                         {% if showdetails %}
-                            <th>Kontakt</th>
+                            {% block playerdetailsheader %}<th>Kontakt</th>{% endblock %}
                         {% endif %}
-                        <th><!-- Bild --></th>
+                        {% block playeravatarheader %}<th><!-- Bild --></th>{% endblock %}
                     </tr>
                     </thead>
                     <tbody>
                     {% for listitem in listitems %}
                         <tr>
-                            <td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.firstname }} {{ listitem.member.lastname }}{% endif %}</td>
-                            <td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.passnummer }}{% endif %}</td>
+                            {% block playername %}<td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.firstname }} {{ listitem.member.lastname }}{% endif %}</td>{% endblock %}
+                            {% block playerpass %}<td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.member.passnummer }}{% endif %}</td>{% endblock %}
                             {% if showdetails %}
-                                <td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.meta|raw }}{% endif %}</td>
+                                {% block playerdetails %}<td>{% if listitem.member.anonymize %}***{%  else %}{{ listitem.meta|raw }}{% endif %}</td>{% endblock %}
                             {% endif %}
+                            {% block playeravatar %}
                             <td>
-                                {%  block playeravatar %}
-                                    {% if listitem.avatar and not listitem.member.anonymize %}
-                                        <figure class="image_container float_above" style="margin-right:1em;" itemscope="" itemtype="https://schema.org/ImageObject" itemprop="associatedMedia">
-                                            <a href="{{ listitem.avatar }}" data-lightbox="lb1" itemprop="contentUrl" class="cboxElement">
-                                                <img src="{{ listitem.avatar }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="" itemprop="image">
-                                            </a>
-                                        </figure>
-                                    {% else %}
-                                        {# kein Bild vorhanden oder anonymisieren! #}
-                                        <img src="{{ placeholderImage }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="... Name ... TODO" itemprop="image">
-                                    {% endif %}
-                                {% endblock %}
+                                {% if listitem.avatar and not listitem.member.anonymize %}
+                                    <figure class="image_container float_above" style="margin-right:1em;" itemscope="" itemtype="https://schema.org/ImageObject" itemprop="associatedMedia">
+                                        <a href="{{ listitem.avatar }}" data-lightbox="lb1" itemprop="contentUrl" class="cboxElement">
+                                            <img src="{{ listitem.avatar }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="" itemprop="image">
+                                        </a>
+                                    </figure>
+                                {% else %}
+                                    {# kein Bild vorhanden oder anonymisieren! #}
+                                    <img src="{{ placeholderImage }}" class="img-thumbnail my-anywidth" width="{{ avatarWidth }}" alt="... Name ... TODO" itemprop="image">
+                                {% endif %}
                             </td>
+                            {% endblock %}
                         </tr>
                     {% endfor %}
                     </tbody>
