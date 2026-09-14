@@ -76,7 +76,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
 
         // Kopfzeile
 
-        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+        printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
             'Nachname',
             'Vorname',
             'Geschlecht',
@@ -87,6 +87,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
             'Liga',
             'Saison',
             'Geburtsdatum',
+            'jugendlich',
             'bezahlt'
         );
 
@@ -123,6 +124,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                                 html_entity_decode($liga->name),
                                 html_entity_decode($saison->name),
                                 Date::parse('Y-m-d', $member->dateOfBirth),
+                                $s->jugendlich == '1' ? 'ja' : '',
                                 $s->bezahlt == '1' ? 'ja' : '',
                             );
                         }
