@@ -147,3 +147,12 @@ foreach (['passnummer', 'anonymize', 'avatar'] as $field) {
 
 $paletteManipulator->applyToPalette('default', 'tl_member');
 
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Filter on values of a column of another table
+// see also src/Callback/MemberCallbacks.php
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// $GLOBALS['TL_DCA']['tl_member']['list']['sorting']['panelLayout'] = 'filter;foreign_filter;search;sort;limit';
+$GLOBALS['TL_DCA']['tl_member']['list']['sorting']['panelLayout'] = str_replace('filter', 'filter;foreign_filter', $GLOBALS['TL_DCA']['tl_member']['list']['sorting']['panelLayout']);
