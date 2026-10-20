@@ -94,3 +94,6 @@ services:
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\MannschaftsseitenreaderController: ~
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielberichtreaderController: ~
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielortseitenreaderController: ~
+
+    Fiedsch\Ligaverwaltung\Callback\MemberCallbacks: ~
+
