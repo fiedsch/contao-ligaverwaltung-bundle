@@ -22,7 +22,7 @@
 ## Bugs und Fragen
 
 * [Github Issue](https://github.com/fiedsch/contao-ligaverwaltung-bundle/issues)
-* [Ping me on Twitter](https://twitter.com/fiedschMuc)
+
 
 
 
