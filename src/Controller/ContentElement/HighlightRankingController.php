@@ -90,7 +90,10 @@ class HighlightRankingController extends AbstractContentElementController
     private function setDataMannschaftenranking(FragmentTemplate $template, ContentModel $model): void
     {
         $liga = LigaModel::findById($model->liga);
-        if (!$liga) { return; }
+        if (!$liga) {
+            $template->subject = 'Fehler: keine (gültige) Liga gewählt gewählt!';
+            return;
+        }
         if ($this->isBackend()) {
             $template->subject = sprintf('Highlight-Ranking aller Mannschaften der %s %s %s',
                 $liga->getRelated('pid')->name,
