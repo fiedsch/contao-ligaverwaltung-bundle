@@ -39,9 +39,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[AsController]
 #[Route('/ligaverwaltung/spielplan/ical/{ligaid}/{mannschaftid}', name: 'spielplan_ical', requirements: [ "ligaid" => "\d+", "mannschaftid"=> "\d+"], defaults: ['mannschaftid' => '0'])]
 // #[AsController]
-class IcalController
+readonly class IcalController
 {
-    public function __construct(private readonly ContaoFramework $framework)
+    public function __construct(private ContaoFramework $framework)
     {
         $this->framework->initialize();
         Controller::loadDataContainer('tl_begegnung'); // see generateIcalEvent()

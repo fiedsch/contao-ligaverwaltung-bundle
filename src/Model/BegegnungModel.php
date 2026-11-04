@@ -258,35 +258,26 @@ class BegegnungModel extends Model
      */
     public function getLabel(string $mode = 'full'): string
     {
-        switch ($mode) {
-            case 'full':
-                return sprintf('%s:%s (%s %s%s%s)',
-                    $this->getRelated('home')?->name ?? DCAHelper::DOES_NOT_EXIST,
-                    $this->getRelated('away')?->name,
-                    $this->getRelated('pid')->name,
-                    $this->getRelated('pid')->getRelated('saison')->name,
-                    $this->spiel_am ? ', ' : '',
-                        $this->spiel_am ? Date::parse(Config::get('dateFormat'), $this->spiel_am) : ''
-                );
-                //break;
-
-            case 'medium':
-                return sprintf('%s:%s (%s %s)',
-                    $this->getRelated('home')?->name ?? DCAHelper::DOES_NOT_EXIST,
-                    $this->getRelated('away')?->name,
-                    $this->getRelated('pid')->name,
-                    $this->getRelated('pid')->getRelated('saison')->name
-                );
-                //break;
-
-            case 'short':
-            default:
-                return sprintf('%s:%s',
-                    $this->getRelated('home')?->name ?? DCAHelper::DOES_NOT_EXIST,
-                    $this->getRelated('away')?->name
-                );
-            //break;
-        }
+        return match ($mode) {
+            'full' => sprintf('%s:%s (%s %s%s%s)',
+                $this->getRelated('home')?->name ?? DCAHelper::DOES_NOT_EXIST,
+                $this->getRelated('away')?->name,
+                $this->getRelated('pid')->name,
+                $this->getRelated('pid')->getRelated('saison')->name,
+                $this->spiel_am ? ', ' : '',
+                $this->spiel_am ? Date::parse(Config::get('dateFormat'), $this->spiel_am) : ''
+            ),
+            'medium' => sprintf('%s:%s (%s %s)',
+                $this->getRelated('home')?->name ?? DCAHelper::DOES_NOT_EXIST,
+                $this->getRelated('away')?->name,
+                $this->getRelated('pid')->name,
+                $this->getRelated('pid')->getRelated('saison')->name
+            ),
+            default => sprintf('%s:%s',
+                $this->getRelated('home')?->name ?? DCAHelper::DOES_NOT_EXIST,
+                $this->getRelated('away')?->name
+            ),
+        };
     }
 
     /**
@@ -356,9 +347,7 @@ class BegegnungModel extends Model
             //     // return $this->urlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_URL);
             // }
             $url = $contentUrlGenerator->generate($spielberichtpage, ['id' => $this->id], UrlGeneratorInterface::ABSOLUTE_PATH);
-            $url = UrlHelper::asFolderUrl($url, 'id', $spielberichtpage->urlSuffix);
-
-            return $url;
+            return UrlHelper::asFolderUrl($url, 'id', $spielberichtpage->urlSuffix);
         }
 
         return '';

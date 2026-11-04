@@ -22,9 +22,9 @@ use Twig\Environment;
 use Exception;
 
 #[AsController]
-class PlayerHistoryController
+readonly class PlayerHistoryController
 {
-    public function __construct(private readonly Environment $twig)
+    public function __construct(private Environment $twig)
     {
     }
 

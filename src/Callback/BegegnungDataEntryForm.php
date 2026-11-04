@@ -25,10 +25,10 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Exception;
 
-class BegegnungDataEntryForm
+readonly class BegegnungDataEntryForm
 {
 
-    public function __construct(private readonly Environment $twig)
+    public function __construct(private Environment $twig)
     {
     }
 

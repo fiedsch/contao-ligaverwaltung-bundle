@@ -34,7 +34,6 @@ class Begegnung
      */
     public function __construct()
     {
-        /** @noinspection PhpFieldAssignmentTypeMismatchInspection */
         $this->rankingHelper = System::getContainer()->get('fiedsch_ligaverwaltung.helper.ranking');
     }
 

@@ -19,9 +19,9 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
 
 #[AsHook('getSystemMessages')]
-class DataChecksListener
+readonly class DataChecksListener
 {
-    public function __construct(private readonly Connection $connection)
+    public function __construct(private Connection $connection)
     {
     }
 

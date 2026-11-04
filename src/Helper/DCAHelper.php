@@ -219,7 +219,7 @@ class DCAHelper
                         <span class='tl_gray'>%s</span>",
             $row['spiel_tag'],
             $spielDate,
-            $home?->getShortName() ?? self::DOES_NOT_EXIST,
+            $home->getShortName() ?? self::DOES_NOT_EXIST,
             $away ? 'vs' : 'hat',
             $away ? $away->name : 'Spielfrei',
             $final_score,
@@ -505,6 +505,9 @@ class DCAHelper
     /**
      * Spieler der Heimmannschaft
      *  tl_spiel.fields.home.options_callback
+     *
+     *
+     * @throws Exception
      */
     public static function getHomeSpielerForSelect(DataContainer $dc): array
     {
@@ -544,7 +547,9 @@ class DCAHelper
     /**
      * Spieler der Gastmannschaft
      *  tl_spiel.fields.away.options_callback
- */
+     *
+     * @throws Exception
+     */
     public static function getAwaySpielerForSelect(DataContainer $dc): array
     {
         $initial = [0 => 'Kein Spieler (ID 0)'];

@@ -8,7 +8,7 @@ use Contao\ContentModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 #[AsCallback(table: 'tl_content', target: 'config.onload')]
-class ContentSubpaletteListener
+readonly class ContentSubpaletteListener
 {
     public function __construct(private RequestStack $requestStack)
     {

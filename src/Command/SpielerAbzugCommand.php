@@ -113,7 +113,7 @@ class SpielerAbzugCommand extends Command implements FrameworkAwareInterface
                                 continue;
                             }
 
-                            printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+                            printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
                                 html_entity_decode($member->lastname ?? ''),
                                 html_entity_decode($member->firstname ?? ''),
                                 $member->gender,
