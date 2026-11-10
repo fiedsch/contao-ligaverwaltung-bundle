@@ -47,19 +47,24 @@ readonly class BegegnungDataEntryForm
             throw new RedirectResponseException('/contao?do=liga.begegnung');
             // ODER: 'contao/main.php?act=error' ?
         }
+        $appData = $this->getData($begegnungModel);
+        $template = '@Contao_FiedschLigaverwaltungBundle/backend/begegnung_dataentry_vue.html.twig';
+        return $this->twig->render($template, ['app_data' => $appData]);
+    }
 
+    public function getData(BegegnungModel $begegnungModel): array
+    {
         $appData = $begegnungModel->{DataEntrySaver::KEY_APP_DATA};
         if (!is_array($appData)) {
             $appData = [];
         }
-        $appData['begegnungId'] = $id;
+        $appData['begegnungId'] = $begegnungModel->id;
         $appData['numSlots'] = 8;
         $appData['spielplanCss'] = Spielplan::getSpielplanCss($begegnungModel->getRelated('pid')->spielplan);
         $appData['disabled'] = $begegnungModel->published;
         $appData = DataEntrySaver::augment($appData);
         $appData = DataEntrySaver::fixInputEncoding($appData);
 
-        $template = '@Contao_FiedschLigaverwaltungBundle/backend/begegnung_dataentry_vue.html.twig';
-        return $this->twig->render($template, ['app_data' => $appData]);
+        return $appData;
     }
 }

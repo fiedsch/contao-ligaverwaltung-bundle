@@ -1,0 +1,57 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+{% use "@Contao/component/_stylesheet.html.twig" %}
+
+{% block content %}
+
+    <h1>{{ begegnung.label }}</h1>
+
+    {% if begegnung.published %}
+        {% block not_published_message %}
+            <p class="alert alert-danger">Die Begegnung ist bereits veröffentlicht und kann daher hier nicht mehr bearbeitet werden.</p>
+        {% endblock %}
+    {% endif %}
+
+    {# Dateneingabemaske (Vue-App) #}
+    {%  block data_form %}
+        <form method="post">
+            <div class="tl_listing_container">
+                <script>
+                    let data = {{ app_data|default({})|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
+                </script>
+                <div id="app"></div>
+            </div>
+            <input type="hidden" name="REQUEST_TOKEN" value="{{ contao.request_token }}">
+            <input type="hidden" name="begegnungId" value="{{ app_data.begegnungId }}">
+            <button type="submit" class="btn btn-primary">Speichern!</button>
+        </form>
+    {% endblock data_form %}
+
+    {# JS und CSS der Vue app #}
+    {% block js_and_css %}
+        {% add "data_form_js" to body %}
+            {% set script_attributes = attrs()
+                .setIfExists('nonce', csp_nonce('script-src'))
+                .mergeWith(script_attributes|default)
+            %}
+            <script {{ script_attributes }} src="/bundles/fiedschligaverwaltung/js/chunk-vendors.601565e7.js"></script>
+            <script {{ script_attributes }} src="/bundles/fiedschligaverwaltung/js/app.31b1bd1f.js"></script>
+        {% endadd %}
+
+        {% add "data_form_css" to stylesheets %}
+            {% with {file: asset('/bundles/fiedschligaverwaltung/css/app.ee4e9518.css')} %}
+                {{ block('stylesheet_component') }}
+            {% endwith %}
+        {% endadd %}
+        <style>
+            /* Hier ggf. noch Abweicungen zum Styling im Backend */
+            /*
+            select.tl_select.unsetwidth {
+                max-width: unset;
+            }
+            */
+             */
+        </style>
+    {% endblock js_and_css %}
+
+{% endblock content %}
+
