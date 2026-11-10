@@ -71,8 +71,8 @@
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_171')
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_180')
                         %}
-                            <td>{{ listitem.hl_171|replace({'0': ''}) }}</td>
-                            <td>{{ listitem.hl_180|replace({'0': ''}) }}</td>
+                            <td>{{ listitem.hl_171|replace({'^0': ''}) }}</td>
+                            <td>{{ listitem.hl_180|replace({'^0': ''}) }}</td>
                         {% endif %}
                         {% if rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_ALL')
                             or rankingfield == constant('Fiedsch\\Ligaverwaltung\\Model\\HighlightModel::TYPE_HIGHFINISH')
