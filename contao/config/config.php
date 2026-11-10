@@ -64,30 +64,6 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], $accounts_index +  1, [
     ],
 ]);
 
-/*
- * Contentelemente
- */
-
-// $GLOBALS['TL_CTE']['ligaverwaltung']['ligenliste'] = ContentLigenliste::class; // now a service registered using attributes (see LigenlisteController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsliste'] = ContentMannschaftsliste::class; // now a service registered using attributes (see MannschaftslisteController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['spielbericht'] = ContentSpielbericht::class; // now a service registered using attributes (see SpielberichtController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['spielerliste'] = ContentSpielerliste::class; // now a service registered using attributes (see SpielerlisteController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['spielplan'] = ContentSpielplan::class; // now a service registered using attributes (see SpieleplanController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['spielortinfo'] = ContentSpielortinfo::class; // now a service registered using attributes (see SpielortinfoController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['ranking'] = ContentRanking::class; // now a service registered using attributes (see RankingController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['highlightranking'] = ContentHighlightRanking::class; // now a service registered using attributes (see HighlightRankingController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftsseite'] = ContentMannschaftsseite::class; // now a service registered using attributes (see MannschaftsseiteController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['spielortseite'] = ContentSpielortseite::class; // now a service registered using attributes (see SpielortseiteController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['mannschaftenuebersicht'] = ContentMannschaftenuebersicht::class; // now a service registered using attributes (see HighlightRankingController)
-// $GLOBALS['TL_CTE']['ligaverwaltung']['teamsandplayersoverview'] = ContentTeamsAndPlayersOverview::class; // now a service registered using attributes (see TeamsAndPlayersOverviewController)
-
-/*
- * Module
- */
-
-// $GLOBALS['FE_MOD']['ligaverwaltung']['mannschaftsseitenreader'] = ModuleMannschaftsseitenReader::class; // now a service registered using attributes (see MannschaftsseitenreaderController)
-// $GLOBALS['FE_MOD']['ligaverwaltung']['spielortseitenreader'] = ModuleSpielortseitenReader::class; // now a service registered using attributes (see SpielortseitenreaderController)
-// $GLOBALS['FE_MOD']['ligaverwaltung']['spielberichtreader'] = ModuleSpielberichtReader::class; // now a service registered using attributes (see SpielberichtreaderController)
 
 /*
  * Hooks
