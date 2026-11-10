@@ -72,10 +72,6 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], $accounts_index +  1, [
 $GLOBALS['TL_HOOKS']['addCustomRegexp'][] = [DCAHelper::class, 'addCustomRegexp'];
 
 
-
-
-
-
 /* Add to Backend CSS */
 if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(
     System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')
