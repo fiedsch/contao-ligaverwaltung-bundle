@@ -27,7 +27,7 @@ use function is_array;
 
 class DataEntrySaver
 {
-    // app_data ist der "root key" der Daten, die n tl_begegnung.begegnung_data gespeichert werden!
+    // app_data ist der "root key" der Daten, die in tl_begegnung.begegnung_data gespeichert werden!
     const string KEY_APP_DATA = 'app_data';
 
     /**
