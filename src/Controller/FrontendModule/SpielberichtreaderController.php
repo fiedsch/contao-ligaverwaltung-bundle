@@ -44,7 +44,7 @@ class SpielberichtreaderController extends AbstractFrontendModuleController
     {
         $id = Input::get('id');
         // spielbericht.html?id=123 (id Parameter) vs.
-        // spielbericht/id/123.html (auto_item)
+        // spielbericht/123.html (auto_item)
         if (!$id) {
             $id = Input::get('auto_item');
         }
