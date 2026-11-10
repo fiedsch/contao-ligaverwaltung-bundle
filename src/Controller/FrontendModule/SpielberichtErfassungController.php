@@ -103,6 +103,7 @@ class SpielberichtErfassungController extends AbstractFrontendModuleController
             $template->begegnunglabel = $template->subject;
             $template->published = false;
             $template->begegnung = null;
+
             return;
         }
 
