@@ -85,13 +85,14 @@ class BegegnungslisteController extends AbstractContentElementController
         ]);
         $ligenIds = $ligenCollection->fetchEach('id');
 
-        // Mannschaften aus den $ligenIds, in denen einer der $spielerCollection spielt
+        // Mannschaften aus den $ligenIds, in denen einer der zum Member gehörenden Spieler ($spielerCollection) spielt
         $mannschaftsliste = [];
         foreach ($spielerCollection as $spielerModel) {
             $mannschaftsliste[] = $spielerModel->getRelated('pid');
         }
+        // Reduzieren auf die konfigurierten Saisons und aktive Mannschaften
         $mannschaftsliste = array_filter($mannschaftsliste,
-            fn($el) => in_array($el->liga, $ligenIds)
+            fn($el) => in_array($el->liga, $ligenIds) && $el->active
         );
 
         return $mannschaftsliste;
