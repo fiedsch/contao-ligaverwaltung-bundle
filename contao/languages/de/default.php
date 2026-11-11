@@ -76,6 +76,11 @@ $GLOBALS['TL_LANG']['CTE']['teamsandplayersoverview'] = [
     'Übersicht über die Mannschaften und Spieler einer Saison',
 ];
 
+$GLOBALS['TL_LANG']['CTE']['begegnungsliste'] = [
+    'Liste von Begegnungen (Spielplaneingabe)',
+    'Liste von Begegnungen für die Spielplaneingabe im Frontend. Individuell für den angemeldeten User (Member).',
+];
+
 /* Textbausteine */
 
 $GLOBALS['TL_LANG']['MSC']['tc1'] = 'TC';

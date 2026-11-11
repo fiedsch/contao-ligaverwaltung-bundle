@@ -85,6 +85,9 @@ services:
     Fiedsch\Ligaverwaltung\Controller\ContentElement\SpielortseiteController: ~
     Fiedsch\Ligaverwaltung\Controller\ContentElement\MannschaftsseiteController: ~
 
+    Fiedsch\Ligaverwaltung\Controller\ContentElement\BegegnungslisteController:
+        arguments:
+            - '@security.token_storage'
 
     Fiedsch\Ligaverwaltung\Callback\BegegnungDataEntryForm:
         public: true
