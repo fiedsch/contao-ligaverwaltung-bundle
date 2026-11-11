@@ -27,8 +27,6 @@ use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Model\SpielerModel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
-//use Contao\FilesModel;
-//use Contao\StringUtil;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,26 +75,23 @@ class BegegnungslisteController extends AbstractContentElementController
      */
     protected function getRelevantMannschaften(MemberModel $member, array $saisons): array
     {
-        // Spieler zumangemeldeten FrontendUser (Member)
-        $spieler = SpielerModel::findBy('member_id', $member->id, ['pid DESC']);
+        // Aktive Spieler zum angemeldeten FrontendUser (Member)
+        $spielerCollection = SpielerModel::findBy(['tl_spieler.member_id=?', 'tl_spieler.active=?'], [$member->id, '1'], ['eager'=>false,'order'=>'pid DESC']);
 
-        // Ligen zu den konfigurierten Saisons
-        $ligen = LigaModel::findBy('aktiv',true, [
-            'return' => 'Array',
+        // Ligen zu den im Inhaltselement konfigurierten Saisons
+        $ligenCollection = LigaModel::findBy('aktiv',true, [
             'eager' => true,
             'having' => sprintf('saison IN (%s)', implode(',', $saisons))
         ]);
-        //dd($ligen);
-        $ligen = array_map(fn($el) => $el->id, $ligen);
-        //dd($ligen);
+        $ligenIds = $ligenCollection->fetchEach('id');
 
-        // Mannschaften aus den $ligen, in denen einer der $spieler spielt
+        // Mannschaften aus den $ligenIds, in denen einer der $spielerCollection spielt
         $mannschaftsliste = [];
-        foreach ($spieler as $spielerModel) {
+        foreach ($spielerCollection as $spielerModel) {
             $mannschaftsliste[] = $spielerModel->getRelated('pid');
         }
         $mannschaftsliste = array_filter($mannschaftsliste,
-            fn($el) => in_array($el->liga, $ligen)
+            fn($el) => in_array($el->liga, $ligenIds)
         );
 
         return $mannschaftsliste;
