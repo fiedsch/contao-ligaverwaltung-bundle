@@ -1,0 +1,59 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+
+  {% if as_editor_view %}
+
+     {% block editor_view %}
+         <div class="tl_gray">
+             <span class="upper">{{ wildcard }}</span>
+         </div>
+      {% endblock %}
+
+  {% else %}
+
+      {% if mannschaften|length > 1 %}
+      <h2>Deine Mannschaften</h2>
+      <ul>
+      {% for mannschaft in mannschaften %}
+          <li>
+              {{ mannschaft.mannschaft }} ({{ mannschaft.liga }} {{ mannschaft.saison }})
+          </li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+
+      <h2>Spiele Deiner Mannschaft{% if mannschaften|length > 1 %}en{% endif %}</h2>
+      {% if listitems|default %}
+          {%  block listitems %}
+              {% for liga,items in listitems|default %}
+                  <h3>{{ ligenmap[liga]|default(liga) }}</h3>
+                  <ul>
+                  {% for item in items|default %}
+                      {%  block listitem %}
+                          <li>
+                              {% if item.spiel_am %}
+                                  {{ item.spiel_am|date(contao.datim_format) }}
+                              {% endif %}
+                              {% if not item.published %}
+                                  <a href="spielbericht-erfassung/{{ item.id }}.html">
+                              {% endif %}
+                                  {{ item.label }}
+                              {% if not item.published %}
+                                  </a>
+                              {% endif %}
+                              {%  if item.published -%}
+                                   (bereits veröffentlicht: {{ item.linkedscore|raw }})
+                              {% endif %}
+                          </li>
+                      {% endblock %}
+                  {% endfor %}
+                  </ul>
+              {% endfor %}
+          </ul>
+          {%  endblock %}
+      {% endif %}
+
+  {% endif %}
+
+{% endblock %}
