@@ -22,7 +22,9 @@
             </div>
             <input type="hidden" name="REQUEST_TOKEN" value="{{ contao.request_token }}">
             <input type="hidden" name="begegnungId" value="{{ app_data.begegnungId }}">
-            <button type="submit" class="btn btn-primary">Speichern!</button>
+            {% if not begegnung.published %}
+               <button type="submit" class="btn btn-primary">Speichern!</button>
+            {% endif %}
         </form>
     {% endblock data_form %}
 
@@ -43,7 +45,7 @@
             {% endwith %}
         {% endadd %}
         <style>
-            /* Hier ggf. noch Abweicungen zum Styling im Backend */
+            /* Hier ggf. noch Abweichungen zum Styling im Backend */
             /*
             select.tl_select.unsetwidth {
                 max-width: unset;
