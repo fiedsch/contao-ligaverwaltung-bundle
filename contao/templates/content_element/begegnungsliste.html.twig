@@ -34,6 +34,7 @@
                           <li>
                               {% if item.spiel_am %}
                                   {{ item.spiel_am|date(contao.datim_format) }}
+                                 <br class="d-md-none">
                               {% endif %}
                               {% if not item.published %}
                                   <a href="spielbericht-erfassung/{{ item.id }}.html">
@@ -43,6 +44,7 @@
                                   </a>
                               {% endif %}
                               {%  if item.published -%}
+                                  <br class="d-md-none">
                                    (bereits veröffentlicht: {{ item.linkedscore|raw }})
                               {% endif %}
                           </li>
