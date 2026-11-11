@@ -12,16 +12,16 @@
 
   {% else %}
 
-      {% if mannschaften|length > 1 %}
-      <h2>Deine Mannschaften</h2>
-      <ul>
-      {% for mannschaft in mannschaften %}
-          <li>
-              {{ mannschaft.mannschaft }} ({{ mannschaft.liga }} {{ mannschaft.saison }})
-          </li>
-      {% endfor %}
-      </ul>
-      {% endif %}
+      {%  block mannschaftsauflistung %}
+          <h2>Deine Mannschaft{% if mannschaften|length > 1 %}en{% endif %}</h2>
+          <ul>
+              {% for mannschaft in mannschaften %}
+                  <li>
+                      {{ mannschaft.mannschaft }} ({{ mannschaft.liga }} {{ mannschaft.saison }})
+                  </li>
+              {% endfor %}
+          </ul>
+      {% endblock %}
 
       <h2>Spiele Deiner Mannschaft{% if mannschaften|length > 1 %}en{% endif %}</h2>
       {% if listitems|default %}
