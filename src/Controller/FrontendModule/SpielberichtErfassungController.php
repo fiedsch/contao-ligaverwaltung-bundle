@@ -73,10 +73,14 @@ class SpielberichtErfassungController extends AbstractFrontendModuleController
         $id = (int)$id;
 
         $begegnung = BegegnungModel::findById($id);
-        if (!$begegnung) {
+        if (null== $begegnung) {
+            throw new PageNotFoundException('die angegebene Begegnung existiert nicht');
+        }
+        if (null === $begegnung) {
             $template->subject = sprintf('Begegnung mit der ID %d existiert nicht mehr', $id);
             $template->begegnunglabel = $template->subject;
             $template->published = false;
+            $template->begegnung = null;
             return;
         }
 
