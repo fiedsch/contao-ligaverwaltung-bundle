@@ -60,7 +60,7 @@ class BegegnungslisteController extends AbstractContentElementController
     }
 
     /**
-     * Datenfür die Ausgabe ermitteln und im $template setzen
+     * Daten für die Ausgabe ermitteln und im $template setzen
      *
      * @throws Exception
      */
@@ -76,7 +76,7 @@ class BegegnungslisteController extends AbstractContentElementController
 
         $saisons = StringUtil::deserialize($model->saison);
 
-        $mannschaften = $this->ligaverwaltungHelper->getRelevantMannschaften($frontendMember, $saisons);
+        $mannschaften = $this->ligaverwaltungHelper->getMannschaften($frontendMember, $saisons);
         $mannschaftenReduced = [];
         foreach ($mannschaften as $mannschaft) {
             $mannschaftenReduced[] = [
