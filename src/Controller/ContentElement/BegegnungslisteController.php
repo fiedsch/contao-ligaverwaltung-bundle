@@ -20,6 +20,7 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\MemberModel;
 use Contao\StringUtil;
+use Fiedsch\Ligaverwaltung\Helper\LigaVerwaltungHelper;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SaisonModel;
@@ -42,7 +43,8 @@ class BegegnungslisteController extends AbstractContentElementController
     use TlModeTrait;
 
     public function __construct(
-        private readonly FrontendHelper $frontendHelper
+        private readonly FrontendHelper $frontendHelper,
+        private readonly LigaVerwaltungHelper $ligaverwaltungHelper
     ) {
     }
 
@@ -57,40 +59,9 @@ class BegegnungslisteController extends AbstractContentElementController
         return $template->getResponse();
     }
 
-
-
     /**
-     * @return array<MannschaftModel>
-     * @throws Exception
-     */
-    protected function getRelevantMannschaften(MemberModel $member, array $saisons): array
-    {
-        // Aktive Spieler zum angemeldeten FrontendUser (Member)
-        $spielerCollection = SpielerModel::findBy(['tl_spieler.member_id=?', 'tl_spieler.active=?'], [$member->id, '1'], ['eager'=>false,'order'=>'pid DESC']);
-
-        // Ligen zu den im Inhaltselement konfigurierten Saisons
-        $ligenCollection = LigaModel::findBy('aktiv',true, [
-            'eager' => true,
-            'having' => sprintf('saison IN (%s)', implode(',', $saisons))
-        ]);
-        $ligenIds = $ligenCollection->fetchEach('id');
-
-        // Mannschaften aus den $ligenIds, in denen einer der zum Member gehörenden Spieler ($spielerCollection) spielt
-        $mannschaftsliste = [];
-        foreach ($spielerCollection as $spielerModel) {
-            $mannschaftsliste[] = $spielerModel->getRelated('pid');
-        }
-        // Reduzieren auf die konfigurierten Saisons und aktive Mannschaften
-        $mannschaftsliste = array_filter($mannschaftsliste,
-            fn($el) => in_array($el->liga, $ligenIds) && $el->active
-        );
-
-        return $mannschaftsliste;
-    }
-
-
-
-    /**
+     * Datenfür die Ausgabe ermitteln und im $template setzen
+     *
      * @throws Exception
      */
     private function setData(FragmentTemplate $template, ContentModel $model): void
@@ -102,10 +73,10 @@ class BegegnungslisteController extends AbstractContentElementController
         }
 
         $frontendMember = $this->frontendHelper->getCurrentLoggedInMember();
+
         $saisons = StringUtil::deserialize($model->saison);
-        $mannschaften = $this->getRelevantMannschaften($frontendMember, $saisons);
 
-
+        $mannschaften = $this->ligaverwaltungHelper->getRelevantMannschaften($frontendMember, $saisons);
         $mannschaftenReduced = [];
         foreach ($mannschaften as $mannschaft) {
             $mannschaftenReduced[] = [
@@ -118,7 +89,9 @@ class BegegnungslisteController extends AbstractContentElementController
             ];
         }
         $template->mannschaften = $mannschaftenReduced;
+        $mannschaftsIds = array_map(fn($el) => $el['mannschaft-id'], $mannschaftenReduced);
 
+        // Lookup für Labels zu den IDs von Ligen
         $ligenmap = [];
         foreach ($mannschaften as $mannschaft) {
             $ligenmap[$mannschaft->getRelated('liga')->id] =
@@ -129,16 +102,11 @@ class BegegnungslisteController extends AbstractContentElementController
         }
         $template->ligenmap = $ligenmap;
 
-        $mannschaftsIds = array_map(fn($el) => $el['mannschaft-id'], $mannschaftenReduced);
-
-
+        // Im Template auszugebende Items (Begegnungen)
         $begegnungen = BegegnungModel::findAll([
             'having' => sprintf('home IN (%s) OR away IN (%s)', implode(',', $mannschaftsIds), implode(',', $mannschaftsIds)),
             'orderBy' => 'spiel_am ASC',
          ]);
-        //dd($begegnungen);
-
-
         $listitems = [];
         foreach ($begegnungen as $begegnung) {
             $listitems[$begegnung->pid][] =
@@ -152,7 +120,6 @@ class BegegnungslisteController extends AbstractContentElementController
                     'linkedscore' => $begegnung->getLinkedScore(),
                 ];
         }
-
         $template->listitems = $listitems;
 
     }
