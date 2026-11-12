@@ -7,6 +7,12 @@ services:
         class: Fiedsch\Ligaverwaltung\Helper\RankingHelper
         public: true
 
+    fiedsch_ligaverwaltung.helper.frontend:
+        class: Fiedsch\Ligaverwaltung\Helper\FrontendHelper
+        public: true
+        arguments:
+            - '@security.token_storage'
+
     fiedsch_ligaverwaltung.migration.haspaidmigration:
         class: Fiedsch\Ligaverwaltung\Migration\HasPaidMigration
         arguments:
@@ -87,7 +93,8 @@ services:
 
     Fiedsch\Ligaverwaltung\Controller\ContentElement\BegegnungslisteController:
         arguments:
-            - '@security.token_storage'
+            # - '@security.token_storage'
+            - '@fiedsch_ligaverwaltung.helper.frontend'
 
     Fiedsch\Ligaverwaltung\Callback\BegegnungDataEntryForm:
         public: true
@@ -97,4 +104,7 @@ services:
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\MannschaftsseitenreaderController: ~
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielberichtreaderController: ~
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielortseitenreaderController: ~
-    Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielberichtErfassungController: ~
+
+    Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielberichtErfassungController:
+        arguments:
+            - '@fiedsch_ligaverwaltung.helper.frontend'

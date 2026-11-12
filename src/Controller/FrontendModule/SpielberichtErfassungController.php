@@ -25,20 +25,23 @@ use Fiedsch\Ligaverwaltung\Callback\BegegnungDataEntryForm;
 use Fiedsch\Ligaverwaltung\Helper\DataEntrySaver;
 use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
-use Fiedsch\Ligaverwaltung\Widget\Backend\BegegnungDataEntryWidget;
-use Symfony\Component\HttpFoundation\InputBag;
+use Fiedsch\Ligaverwaltung\Helper\FrontendHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Exception;
 
 #[AsFrontendModule(
     category: 'ligaverwaltung',
-    priority: 1,
-    template: 'frontend_module/spielberichterfassung'
+    template: 'frontend_module/spielberichterfassung',
+    priority: 1
 )]
 class SpielberichtErfassungController extends AbstractFrontendModuleController
 {
     use TlModeTrait;
+
+    public function __construct(protected FrontendHelper $frontendHelper)
+    {
+    }
 
     /**
      * @throws Exception

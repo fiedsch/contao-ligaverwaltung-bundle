@@ -18,14 +18,13 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
-use Contao\FrontendUser;
 use Contao\MemberModel;
 use Contao\StringUtil;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SaisonModel;
 use Fiedsch\Ligaverwaltung\Model\SpielerModel;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Fiedsch\Ligaverwaltung\Helper\FrontendHelper;
 use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Fiedsch\Ligaverwaltung\Trait\TlModeTrait;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +42,7 @@ class BegegnungslisteController extends AbstractContentElementController
     use TlModeTrait;
 
     public function __construct(
-        private readonly TokenStorageInterface $tokenStorage,
+        private readonly FrontendHelper $frontendHelper
     ) {
     }
 
@@ -58,16 +57,7 @@ class BegegnungslisteController extends AbstractContentElementController
         return $template->getResponse();
     }
 
-    protected function getCurrentMember(): ?MemberModel
-    {
-        $user = $this->tokenStorage->getToken()?->getUser();
 
-        if ($user instanceof FrontendUser) {
-            return MemberModel::findById($user->id);
-        }
-
-        return null;
-    }
 
     /**
      * @return array<MannschaftModel>
@@ -111,7 +101,7 @@ class BegegnungslisteController extends AbstractContentElementController
             return;
         }
 
-        $frontendMember = $this->getCurrentMember();
+        $frontendMember = $this->frontendHelper->getCurrentLoggedInMember();
         $saisons = StringUtil::deserialize($model->saison);
         $mannschaften = $this->getRelevantMannschaften($frontendMember, $saisons);
 
