@@ -37,5 +37,4 @@ class FrontendHelper
         return null;
     }
 
-
 }
