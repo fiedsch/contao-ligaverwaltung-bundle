@@ -122,6 +122,9 @@ class SpielberichtErfassungController extends AbstractFrontendModuleController
             //  - data consistency
             //  - data integrity (e.g. $data['begegnungId'] must be equal to $id from the URL for which we testet the access rights above)
             //  - etc.
+            //    unter Verwendung von $this->ligaverwaltungHelper->... (noch zu implementierende Methoden)
+            //  - Nicht speichern, wenn die Begegnung (mittlerweile) bereits veröffentlicht ist (ggf. geeignete Message) -> zeitliche Überschneidungen beim Bearbeiten
+
             $data = json_decode($data['vue_app'], true) ?? [];
             $data = DataEntrySaver::augment($data);
             $data = DataEntrySaver::fixInputEncoding($data);
