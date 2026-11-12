@@ -47,7 +47,7 @@ class LigaVerwaltungHelper
      * @return array<MannschaftModel>
      * @throws Exception
      */
-    public function getRelevantMannschaften(MemberModel $member, array $saisons): array
+    public function getMannschaften(MemberModel $member, array $saisons): array
     {
         // Aktive Spieler zum angemeldeten FrontendUser (Member)
         $spielerCollection = SpielerModel::findBy(['tl_spieler.member_id=?', 'tl_spieler.active=?'], [$member->id, '1'], ['eager'=>false,'order'=>'pid DESC']);
