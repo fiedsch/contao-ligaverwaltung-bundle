@@ -75,3 +75,8 @@ $GLOBALS['TL_LANG']['tl_content']['ligen'] = [
     'Ligen',
     'Ligen, die in diesem CE berücksichtigt werden sollen',
 ];
+
+$GLOBALS['TL_LANG']['tl_content']['dataentrypage'] = [
+    'Dateneingabe-Seite',
+    'Seite, auf der ein Modul vom Typ "'.$GLOBALS['TL_LANG']['MOD']['liga_begegnungserfassung'][0].'" enthalten ist.'
+];

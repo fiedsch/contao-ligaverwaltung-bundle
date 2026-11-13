@@ -19,6 +19,7 @@ use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\MemberModel;
+use Contao\PageModel;
 use Contao\StringUtil;
 use Fiedsch\Ligaverwaltung\Helper\LigaVerwaltungHelper;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
@@ -121,7 +122,7 @@ class BegegnungslisteController extends AbstractContentElementController
                 ];
         }
         $template->listitems = $listitems;
-
+        $template->dataentrypage = PageModel::findById($model->dataentrypage)->alias;
     }
 
 }
