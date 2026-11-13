@@ -108,7 +108,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'inputType' => 'checkbox',
             'filter' => true,
             'toggle' => true,
-            'eval' => ['tl_class' => 'w50,clr','submitOnChange' => true],
+            'eval' => ['tl_class' => '', 'submitOnChange' => true],
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'home' => [
@@ -166,7 +166,9 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         ],
         'postponed' => [
             'inputType' => 'checkbox',
-            'filter' => trueval' => ['tl_class' => 'w50'],
+            'filter' => true,
+            'exclude' => true,
+            'eval' => ['tl_class' => ''],
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'erfasst' => [
