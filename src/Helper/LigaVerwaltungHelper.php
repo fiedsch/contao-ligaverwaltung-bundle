@@ -16,6 +16,7 @@ namespace Fiedsch\Ligaverwaltung\Helper;
 
 use Contao\MemberModel;
 use Doctrine\DBAL\Connection;
+use Fiedsch\Ligaverwaltung\Model\BegegnungModel;
 use Fiedsch\Ligaverwaltung\Model\LigaModel;
 use Fiedsch\Ligaverwaltung\Model\MannschaftModel;
 use Fiedsch\Ligaverwaltung\Model\SpielerModel;
@@ -36,7 +37,20 @@ class LigaVerwaltungHelper
             return false;
         }
 
-        return true; // TODO anhand von $member und $begegnungId
+        $begegnung = BegegnungModel::findById($begegnungId);
+        if (null === $begegnung) {
+            return false;
+        }
+        $homePlayers = SpielerModel::findBy('pid', $begegnung->home);
+        $awayPlayers = SpielerModel::findBy('pid', $begegnung->away);
+        $allPlayers = [...$homePlayers, ...$awayPlayers];
+
+        return in_array($member->id,
+                array_map(fn($el) => $el->member_id,
+                    array_filter($allPlayers, fn($el) => $el->active)
+                )
+            )
+            && !$member->disable;
     }
 
     /**
