@@ -137,6 +137,7 @@ class SpielberichtErfassungController extends AbstractFrontendModuleController
         if (!$this->ligaverwaltungHelper->memberCanEdit($this->frontendHelper->getCurrentLoggedInMember(), $this->begegnungId)) {
           throw new AccessDeniedException('You are not allowed to edit this page');
         }
+        // TODO: optional auch noch auf Mitgliedergruppe (z.B. "Begegnungserfasung") testen. Dazu die Gruppen im Modul konfigurierbar machen
     }
 
 }
