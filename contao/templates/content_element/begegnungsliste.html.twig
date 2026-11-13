@@ -37,7 +37,7 @@
                                  <br class="d-md-none">
                               {% endif %}
                               {% if not item.published %}
-                                  <a href="spielbericht-erfassung/{{ item.id }}.html">
+                                  <a href="{{ prefix_url(dataentrypage~'/'~item.id~contao.page.urlSuffix) }}">
                               {% endif %}
                                   {{ item.label }}
                               {% if not item.published %}
