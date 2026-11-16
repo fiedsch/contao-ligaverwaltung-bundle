@@ -95,7 +95,6 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
         'home' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['home'],
             'filter' => true,
-            'exclude' => true,
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'select',
@@ -107,7 +106,6 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
         'away' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['away'],
             'filter' => true,
-            'exclude' => true,
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'select',
@@ -118,14 +116,12 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
         ],
         'score_home' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['score_home'],
-            'exclude' => true,
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50 clr', 'mandatory' => true, 'rgxp' => 'digit'],
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'score_away' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['score_away'],
-            'exclude' => true,
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'rgxp' => 'digit'],
             'sql' => ['type' => 'integer', 'default' => 0],
@@ -133,7 +129,6 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
 
         'spieltype' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['spieltype'],
-            'exclude' => true,
             'inputType' => 'select',
             'options' => [SpielModel::TYPE_EINZEL => 'Einzel', SpielModel::TYPE_DOPPEL => 'Doppel'],
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
@@ -142,7 +137,6 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
         'home2' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['home2'],
             'filter' => true,
-            'exclude' => true,
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'select',
@@ -154,7 +148,6 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
         'away2' => [
             'label' => &$GLOBALS['TL_LANG']['tl_spiel']['away2'],
             'filter' => true,
-            'exclude' => true,
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'select',

@@ -98,7 +98,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         'pid' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['pid'],
             'filter' => false,
-            'exclude' => true,
             'sorting' => false,
             //'flag'             => DataContainer::SORT_ASC,
             'inputType' => 'select',
@@ -112,7 +111,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['published'],
             'inputType' => 'checkbox',
             'filter' => true,
-            'exclude' => true,
             'toggle' => true,
             'eval' => ['tl_class' => '', 'submitOnChange' => true],
             'sql' => ['type' => 'boolean', 'default' => false]
@@ -120,7 +118,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         'home' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['home'],
             'filter' => true,
-            'exclude' => true,
             //'sorting' => true,
             //'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'inputType' => 'select',
@@ -133,7 +130,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         'away' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['away'],
             'filter' => true,
-            'exclude' => true,
             //'sorting' => true,
             //'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'foreignKey' => 'tl_mannschaft.name',
@@ -146,7 +142,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         ],
         'spiel_tag' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_tag'],
-            'exclude' => true,
             //'sorting' => true,
             //'flag' => DataContainer::SORT_ASC,
             'filter' => true,
@@ -156,14 +151,12 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         ],
         'spiel_am' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'],
-            'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
             'sql' => ['type' => 'string', 'length' => 11, 'default' => ''],
         ],
         'kommentar' => [
             //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['kommentar'],
-            'exclude' => true,
             'search' => true,
             'inputType' => 'textarea',
             'eval' => ['tl_class' => 'clr long', 'maxlength' => 255],
@@ -172,7 +165,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         'begegnung_data' => [
             // Data not shown in back end
             // 'inputType' => 'yamlWidget',
-            'exclude' => true,
             'default' => '',
             'sql' => ['type' => 'blob', 'length' => AbstractMySQLPlatform::LENGTH_LIMIT_BLOB ],
         ],
@@ -185,7 +177,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['postponed'],
             'inputType' => 'checkbox',
             'filter' => true,
-            'exclude' => true,
             'eval' => ['tl_class' => ''],
             'sql' => ['type' => 'boolean', 'default' => false]
         ],

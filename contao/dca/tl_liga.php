@@ -93,7 +93,6 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
             'search' => true,
-            'exclude' => true,
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
             'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
@@ -101,7 +100,6 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['saison'],
             'inputType' => 'select',
             'filter' => true,
-            'exclude' => true,
             'foreignKey' => 'tl_saison.alias',
             'eval' => ['chosen' => true, 'includeBlankOption' => true, 'tl_class' => 'w50', 'mandatory' => true],
             'relation' => ['type' => 'belongsTo', 'load' => 'eager'],
@@ -112,7 +110,6 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'inputType' => 'checkbox',
             'filter' => true,
             'toggle' => true,
-            'exclude' => true,
             'eval' => ['tl_class' => 'w50'],
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
@@ -120,14 +117,12 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['spielstaerke'],
             'inputType' => 'text',
             'filter' => true,
-            'exclude' => true,
             'eval' => ['rgxp' => 'digit', 'tl_class' => 'w50 clr'],
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'spielplan' => [
             'label' => &$GLOBALS['TL_LANG']['tl_liga']['spielplan'],
             'inputType' => 'select',
-            'exclude' => true,
             'options' => [
                 LigaModel::SPIELPLAN_16E2D => '16E,2D',
                 LigaModel::SPIELPLAN_16E4D => '16E,4D',

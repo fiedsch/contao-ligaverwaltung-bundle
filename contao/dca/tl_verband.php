@@ -78,7 +78,6 @@ $GLOBALS['TL_DCA']['tl_verband'] = [
             'sorting' => true,
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'inputType' => 'text',
-            'exclude' => true,
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],
             'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],

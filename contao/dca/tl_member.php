@@ -93,7 +93,6 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['anonymize'] = [
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_member']['avatar'],
-    'exclude' => true,
     'search' => false,
     'filter' => false,
     'inputType' => 'fileTree',

@@ -47,7 +47,6 @@ $GLOBALS['TL_DCA']['tl_content']['subpalettes']['rankingtype_2'] = 'mannschaft';
 /* Fields */
 $GLOBALS['TL_DCA']['tl_content']['fields']['verband'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['verband'],
-    'exclude' => true,
     'foreignKey' => 'tl_verband.name',
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
@@ -59,7 +58,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['verband'] = [
 ];
 $GLOBALS['TL_DCA']['tl_content']['fields']['saison'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['saison'],
-    'exclude' => true,
     'inputType' => 'checkboxWizard',
     'eval' => ['mandatory' => true, 'multiple' => true, 'tl_class' => 'w50 clr'],
     'options_callback' => [DCAHelper::class, 'getAlleSaisonsForSelect'],
@@ -68,7 +66,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['saison'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['liga'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['liga'],
-    'exclude' => true,
     'foreignKey' => 'tl_liga.name',
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
@@ -81,7 +78,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['liga'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['mannschaft'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['mannschaft'],
-    'exclude' => true,
     'foreignKey' => 'tl_mannschaft.name',
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
@@ -90,7 +86,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['mannschaft'] = [
 ];
 $GLOBALS['TL_DCA']['tl_content']['fields']['showdetails'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['showdetails'],
-    'exclude' => true,
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'w50'],
     'sql' => ['type' => 'boolean', 'default' => false]
@@ -98,7 +93,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['showdetails'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['spielort'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['spielort'],
-    'exclude' => true,
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     'foreignKey' => 'tl_spielort.name',
@@ -107,7 +101,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spielort'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['begegnung'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['begegnung'],
-    'exclude' => true,
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
     'foreignKey' => 'tl_begegnung.id',
@@ -117,7 +110,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['begegnung'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['rankingtype'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['rankingtype'],
-    'exclude' => true,
     'options' => [1 => 'Mannschaften', 2 => 'Spieler'],
     'inputType' => 'select',
     'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'submitOnChange' => true],
@@ -126,7 +118,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['rankingtype'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['rankingfield'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['rankingfield'],
-    'exclude' => true,
     'options' => [
         HighlightModel::TYPE_ALL => 'Alle zusammen',
         //HighlightModel::TYPE_171 => '180+171',
