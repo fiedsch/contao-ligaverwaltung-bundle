@@ -60,7 +60,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -88,7 +87,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
 
     'fields' => [
         'id' => [
-            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['id'],
             'search' => true,
             'sql' => ['type' => 'integer', 'unsigned' => true, 'autoincrement' => true],
         ],
@@ -96,7 +94,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
         ],
         'pid' => [
-            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['pid'],
             'filter' => false,
             'sorting' => false,
             //'flag'             => DataContainer::SORT_ASC,
@@ -108,7 +105,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'published' => [
-            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['published'],
             'inputType' => 'checkbox',
             'filter' => true,
             'toggle' => true,
@@ -116,7 +112,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'home' => [
-            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['home'],
             'filter' => true,
             //'sorting' => true,
             //'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
@@ -128,7 +123,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'away' => [
-            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['away'],
             'filter' => true,
             //'sorting' => true,
             //'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
@@ -141,7 +135,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'spiel_tag' => [
-            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_tag'],
             //'sorting' => true,
             //'flag' => DataContainer::SORT_ASC,
             'filter' => true,
@@ -150,13 +143,11 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => ['type' => 'integer', 'default' => 1],
         ],
         'spiel_am' => [
-            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['spiel_am'],
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
             'sql' => ['type' => 'string', 'length' => 11, 'default' => ''],
         ],
         'kommentar' => [
-            //'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['kommentar'],
             'search' => true,
             'inputType' => 'textarea',
             'eval' => ['tl_class' => 'clr long', 'maxlength' => 255],
@@ -174,7 +165,6 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
             'sql' => null, // no data
         ],
         'postponed' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_begegnung']['postponed'],
             'inputType' => 'checkbox',
             'filter' => true,
             'eval' => ['tl_class' => ''],

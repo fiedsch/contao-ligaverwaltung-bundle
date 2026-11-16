@@ -62,7 +62,6 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -87,7 +86,6 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'sql' => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
         ],
         'begegnung_id' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_highlight']['begegnung_id'],
             'inputType' => 'select',
             'filter' => true,
             'foreignKey' => 'tl_begegnung.id',
@@ -96,7 +94,6 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'spieler_id' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_highlight']['spieler_id'],
             'inputType' => 'select',
             'sorting' => false,
             'foreignKey' => 'tl_spieler.id',
@@ -105,7 +102,6 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'type' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_highlight']['typ'],
             'inputType' => 'select',
             'sorting' => false,
             'filter' => true,
@@ -114,7 +110,6 @@ $GLOBALS['TL_DCA']['tl_highlight'] = [
             'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'value' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_highlight']['value'],
             'inputType' => 'text',
             'eval' => ['mandatory' => true, 'tl_class' => 'w50', 'rgxp' => 'csvdigit'],
             'save_callback' => [[DCAHelper::class, 'cleanCsvDigitList']],

@@ -47,7 +47,6 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -74,7 +73,6 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'sql' => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
         ],
         'name' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['name'],
             'sorting' => true,
             'search' => true,
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
@@ -83,7 +81,6 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'street' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['street'],
             'sorting' => false,
             'search' => false,
             'inputType' => 'text',
@@ -91,7 +88,6 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'postal' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['postal'],
             'sorting' => false,
             'search' => false,
             'inputType' => 'text',
@@ -99,7 +95,6 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'sql' => ['type' => 'string', 'length' => 32, 'default' => ''],
         ],
         'city' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['city'],
             'sorting' => false,
             'search' => false,
             'inputType' => 'text',
@@ -107,7 +102,6 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'sql' => ['type' => 'string', 'length' => 255, 'default' => ''],
         ],
         'phone' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['phone'],
             'sorting' => false,
             'search' => false,
             'inputType' => 'text',
@@ -115,14 +109,12 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'sql' => ['type' => 'string', 'length' => 64, 'default' => ''],
         ],
         'website' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['website'],
             'search' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'url', 'maxlength' => 255, 'tl_class' => 'w50'],
             'sql' => ['type' => 'string', 'length' => 255, 'default' => ''],
         ],
         'aufsteller' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['aufsteller'],
             'search' => true,
             'inputType' => 'select',
             'foreignKey' => 'tl_aufsteller.name',
@@ -131,7 +123,6 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'spielortpage' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['spielortpage'],
             'inputType' => 'pageTree',
             'search' => false,
             'filter' => false,
@@ -140,7 +131,6 @@ $GLOBALS['TL_DCA']['tl_spielort'] = [
             'sql' => ['type' => 'blob', 'length' => AbstractMySQLPlatform::LENGTH_LIMIT_BLOB, 'notnull' => false ],
         ],
         'aktiv' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spielort']['aktiv'],
             'inputType' => 'checkbox',
             'toggle' => true,
             'filter' => true,

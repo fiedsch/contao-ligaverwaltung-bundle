@@ -51,7 +51,6 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -86,14 +85,12 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'slot' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['slot'],
             'inputType' => 'text',
             'sorting' => true,
             'eval' => ['rgxp' => 'digit', 'minval' => 1],
             'sql' => ['type' => 'integer', 'default' => 1],
         ],
         'home' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['home'],
             'filter' => true,
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,
@@ -104,7 +101,6 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'away' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['away'],
             'filter' => true,
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,
@@ -115,27 +111,23 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'score_home' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['score_home'],
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50 clr', 'mandatory' => true, 'rgxp' => 'digit'],
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'score_away' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['score_away'],
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'rgxp' => 'digit'],
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
 
         'spieltype' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['spieltype'],
             'inputType' => 'select',
             'options' => [SpielModel::TYPE_EINZEL => 'Einzel', SpielModel::TYPE_DOPPEL => 'Doppel'],
             'eval' => ['tl_class' => 'w50', 'mandatory' => true, 'submitOnChange' => true, 'includeBlankOption' => true],
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'home2' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['home2'],
             'filter' => true,
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,
@@ -146,7 +138,6 @@ $GLOBALS['TL_DCA']['tl_spiel'] = [
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'away2' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spiel']['away2'],
             'filter' => true,
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,

@@ -54,7 +54,6 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -88,7 +87,6 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'name' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_liga']['name'],
             'sorting' => true,
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
@@ -97,7 +95,6 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'saison' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_liga']['saison'],
             'inputType' => 'select',
             'filter' => true,
             'foreignKey' => 'tl_saison.alias',
@@ -106,7 +103,6 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'aktiv' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_liga']['aktiv'],
             'inputType' => 'checkbox',
             'filter' => true,
             'toggle' => true,
@@ -114,14 +110,12 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'spielstaerke' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_liga']['spielstaerke'],
             'inputType' => 'text',
             'filter' => true,
             'eval' => ['rgxp' => 'digit', 'tl_class' => 'w50 clr'],
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'spielplan' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_liga']['spielplan'],
             'inputType' => 'select',
             'options' => [
                 LigaModel::SPIELPLAN_16E2D => '16E,2D',
@@ -135,7 +129,6 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'rechnungsbetrag_spielort' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_spielort'],
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50'],
             'save_callback' => [static function ($value) {
@@ -152,7 +145,6 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'sql' => ['type' => 'string', 'length' => 16, 'default' => ''],
         ],
         'rechnungsbetrag_aufsteller' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_liga']['rechnungsbetrag_aufsteller'],
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50'],
             'save_callback' => [static function ($value) {
