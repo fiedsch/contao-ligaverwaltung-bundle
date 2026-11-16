@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
             'mode' => DataContainer::MODE_PARENT,
             'flag' => DataContainer::SORT_ASC,
             'fields' => ['name'],
-            'panelLayout' => 'filter;search,limit',
+            'panelLayout' => 'filter;search,sort,limit',
             'headerFields' => ['name'],
             'child_record_callback' => [DCAHelper::class, 'ligaListCallback'],
             'child_record_class' => 'no_padding',
@@ -112,6 +112,7 @@ $GLOBALS['TL_DCA']['tl_liga'] = [
         'spielstaerke' => [
             'inputType' => 'text',
             'filter' => true,
+            'sorting' => true,
             'eval' => ['rgxp' => 'digit', 'tl_class' => 'w50 clr'],
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
