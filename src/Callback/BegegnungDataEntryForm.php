@@ -45,7 +45,6 @@ readonly class BegegnungDataEntryForm
 
         if (!$begegnungModel) {
             throw new RedirectResponseException('/contao?do=liga.begegnung');
-            // ODER: 'contao/main.php?act=error' ?
         }
 
         $appData = $begegnungModel->{DataEntrySaver::KEY_APP_DATA};

@@ -401,7 +401,7 @@ class DCAHelper
 
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
 
-        return '<a href="contao/main.php?do=member&amp;act=edit&amp;id='.$dc->value
+        return '<a href="contao?do=member&amp;act=edit&amp;id='.$dc->value
             .'&amp;popup=1&amp;rt='.$requestToken
             .'" title="'.StringUtil::specialchars($GLOBALS['TL_LANG']['tl_spieler']['editmember'][1]).'"'
             .' style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\''
