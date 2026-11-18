@@ -69,7 +69,7 @@ class SpielerModel extends Model
     public static function getFullNameFor(MemberModel $member = null): string
     {
         if ($member) {
-            return DCAHelper::makeSpielerName($member);
+            return DCAHelper::makeSpielerName($member, true);
         }
 
         return 'Kein Member';
