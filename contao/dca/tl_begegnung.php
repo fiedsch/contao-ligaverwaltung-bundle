@@ -161,7 +161,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         ],
         'vue_app' => [
             'inputType' => 'begegnungdataentry_widget',
-            'eval'      => ['tl_class' => 'clr long', 'doNotSaveEmpty' => true],
+            'eval'      => ['tl_class' => 'clr long', 'doNotSaveEmpty' => true, 'data-turbo' => 'false'],
             'sql' => null, // no data
         ],
         'postponed' => [
