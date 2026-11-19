@@ -144,6 +144,8 @@ class MannschaftsseiteController extends AbstractContentElementController
         $template->liga = $liga?->name;
         $template->saison = SaisonModel::findById($liga?->saison)?->name;
 
+        $template->id_data = ['liga' => $liga?->id, 'mannschaft' => $mannschaftModel->id];
+
     }
 
     protected function addInfoToHead(string $mannschaftName): void

@@ -1,5 +1,12 @@
 {% extends "@Contao/content_element/_base.html.twig" %}
 
+{# set the IDs that might be needed when using the "/ligaverwaltung/spielplan/json/{ligaid}/{mannschaftid}" route (see Controller\Frontend\JsonController) #}
+{# so a user can find these looking at the HTML source (which they also could by looking at the iCal url on the same page) #}
+{% set attributes = attrs()
+    .set('data-liga', id_data.liga)
+    .set('data-mannschaft', id_data.mannschaft)
+%}
+
 {% block content %}
 
   {% if as_editor_view %}

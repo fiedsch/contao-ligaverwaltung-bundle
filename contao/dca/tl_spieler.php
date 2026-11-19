@@ -48,7 +48,6 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -81,8 +80,6 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'sql' => ['type' => 'integer', 'default' => 0],
         ],
         'member_id' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spieler']['member_id'],
-            'exclude' => true,
             'search' => true,
             'sorting' => true,
             'inputType' => 'select',
@@ -97,20 +94,16 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'sql' => ['type' => 'integer', 'default' => null, 'notnull' => false],
         ],
         'teamcaptain' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spieler']['teamcaptain'],
             'inputType' => 'checkbox',
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'co_teamcaptain' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spieler']['co_teamcaptain'],
             'inputType' => 'checkbox',
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'active' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spieler']['active'],
             'save_callback' => [[DCAHelper::class, 'spielerSaveCallback']],
             'inputType' => 'checkbox',
-            'exclude' => true,
             'search' => false,
             'filter' => true,
             'sorting' => false,
@@ -119,9 +112,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'ersatzspieler' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spieler']['ersatzspieler'],
             'inputType' => 'checkbox',
-            'exclude' => true,
             'search' => false,
             'filter' => true,
             'sorting' => false,
@@ -129,9 +120,7 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'jugendlich' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spieler']['jugendlich'],
             'inputType' => 'checkbox',
-            'exclude' => true,
             'search' => false,
             'filter' => true,
             'sorting' => false,
@@ -139,7 +128,6 @@ $GLOBALS['TL_DCA']['tl_spieler'] = [
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
         'haspaid' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_spieler']['haspaid'],
             'inputType' => 'checkbox',
             'filter' => true,
             'eval' => ['tl_class' => 'w50  m12'],

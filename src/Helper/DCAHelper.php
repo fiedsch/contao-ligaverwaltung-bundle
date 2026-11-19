@@ -219,7 +219,7 @@ class DCAHelper
                         <span class='tl_gray'>%s</span>",
             $row['spiel_tag'],
             $spielDate,
-            $home?->getShortName() ?? self::DOES_NOT_EXIST,
+            $home->getShortName() ?? self::DOES_NOT_EXIST,
             $away ? 'vs' : 'hat',
             $away ? $away->name : 'Spielfrei',
             $final_score,
@@ -299,7 +299,7 @@ class DCAHelper
         // weil es bereits in der Datenbank eingetragen und somit "im Einsatz" ist.
         if ($activeRecord && $activeRecord['member_id']) {
             $member = MemberModel::findById($activeRecord['member_id']);
-            $result[$member->id] = self::makeSpielerName($member);
+            $result[$member->id] = self::makeSpielerName($member, true);
         }
 
         if (1 === Config::get('ligaverwaltung_exclusive_model')) {
@@ -351,7 +351,7 @@ class DCAHelper
         }
 
         while ($member->next()) {
-            $result[$member->id] = sprintf('%s (%s)', self::makeSpielerName($member), $member->passnummer);
+            $result[$member->id] = sprintf('%s (%s)', self::makeSpielerName($member, true), $member->passnummer);
         }
 
         return $result;
@@ -381,8 +381,9 @@ class DCAHelper
             return sprintf('Mitglied mit der ID %d existiert nicht mehr', $arrRow['member_id']);
         }
 
-        return sprintf('<div class="tl_content_left">%s<span class="tl_gray">%s%s</span>%s</div>',
-            self::makeSpielerName($member),
+        return sprintf('<div class="tl_content_left">%s%s<span class="tl_gray">%s%s</span>%s</div>',
+            self::makeSpielerName($member, true),
+            $member->anonymize ? ' (****)' : '',
             $teamcaptain_label,
             $co_teamcaptain_label,
             $ersatzspieler_label
@@ -401,7 +402,7 @@ class DCAHelper
 
         $requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
 
-        return '<a href="contao/main.php?do=member&amp;act=edit&amp;id='.$dc->value
+        return '<a href="contao?do=member&amp;act=edit&amp;id='.$dc->value
             .'&amp;popup=1&amp;rt='.$requestToken
             .'" title="'.StringUtil::specialchars($GLOBALS['TL_LANG']['tl_spieler']['editmember'][1]).'"'
             .' style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\''
@@ -505,6 +506,9 @@ class DCAHelper
     /**
      * Spieler der Heimmannschaft
      *  tl_spiel.fields.home.options_callback
+     *
+     *
+     * @throws Exception
      */
     public static function getHomeSpielerForSelect(DataContainer $dc): array
     {
@@ -527,7 +531,7 @@ class DCAHelper
         if ($spieler) {
             foreach ($spieler as $sp) {
                 $member = $sp->getRelated('member_id');
-                $result[$sp->id] = self::makeSpielerName($member);
+                $result[$sp->id] = self::makeSpielerName($member, true);
             }
         }
         // Nach Namen sortieren
@@ -544,7 +548,9 @@ class DCAHelper
     /**
      * Spieler der Gastmannschaft
      *  tl_spiel.fields.away.options_callback
- */
+     *
+     * @throws Exception
+     */
     public static function getAwaySpielerForSelect(DataContainer $dc): array
     {
         $initial = [0 => 'Kein Spieler (ID 0)'];
@@ -565,7 +571,7 @@ class DCAHelper
         if ($spieler) {
             foreach ($spieler as $sp) {
                 $member = $sp->getRelated('member_id');
-                $result[$sp->id] = self::makeSpielerName($member);
+                $result[$sp->id] = self::makeSpielerName($member, true);
             }
         }
         // Nach Namen sortieren
@@ -600,13 +606,13 @@ class DCAHelper
                 $memberAway = $spielerAway?->getRelated('member_id');
 
                 if ($memberHome) {
-                    $memberHomeDisplayname = self::makeSpielerName($memberHome);
+                    $memberHomeDisplayname = self::makeSpielerName($memberHome, true);
                 } else {
                     $memberHomeDisplayname = 'Kein Spieler (ID '.$row['home'].')';
                 }
 
                 if ($memberAway) {
-                    $memberAwayDisplayname = self::makeSpielerName($memberAway);
+                    $memberAwayDisplayname = self::makeSpielerName($memberAway, true);
                 } else {
                     $memberAwayDisplayname = 'Kein Spieler (ID '.$row['away'].')';
                 }
@@ -637,25 +643,25 @@ class DCAHelper
                 $memberAway2 = $spielerAway2?->getRelated('member_id');
 
                 if ($memberHome) {
-                    $memberHomeDisplayname = self::makeSpielerName($memberHome);
+                    $memberHomeDisplayname = self::makeSpielerName($memberHome, true);
                 } else {
                     $memberHomeDisplayname = 'Kein Spieler (ID '.$row['home'].')';
                 }
 
                 if ($memberHome2) {
-                    $memberHome2Displayname = self::makeSpielerName($memberHome2);
+                    $memberHome2Displayname = self::makeSpielerName($memberHome2, true);
                 } else {
                     $memberHome2Displayname = 'Kein Spieler (ID '.$row['home2'].')';
                 }
 
                 if ($memberAway) {
-                    $memberAwayDisplayname = self::makeSpielerName($memberAway);
+                    $memberAwayDisplayname = self::makeSpielerName($memberAway, true);
                 } else {
                     $memberAwayDisplayname = 'Kein Spieler (ID '.$row['away'].')';
                 }
 
                 if ($memberAway2) {
-                    $memberAway2Displayname = self::makeSpielerName($memberAway2);
+                    $memberAway2Displayname = self::makeSpielerName($memberAway2, true);
                 } else {
                     $memberAway2Displayname = 'Kein Spieler (ID '.$row['away2'].')';
                 }
@@ -941,9 +947,13 @@ class DCAHelper
      * Eine Funktion, die bestimmt, ob wir "Nachname, Vorname" oder "Vorname Nachname"
      * haben wollen.
      */
-    public static function makeSpielerName(MemberModel|Result $member = null): string
+    public static function makeSpielerName(MemberModel|Result $member = null, bool $doNotAnonymize = false): string
     {
-        return self::makeSpielerNameFromParts($member?->firstname ?? '-', $member?->lastname ?? '-', $member->anonymize > 0);
+        return self::makeSpielerNameFromParts(
+            $member?->firstname ?? '-',
+                $member?->lastname ?? '-',
+            $doNotAnonymize ? false : $member?->anonymize > 0
+        );
     }
 
     public static function makeSpielerNameFromParts(string $firstname, string $lastname, bool $anonymize = false): string

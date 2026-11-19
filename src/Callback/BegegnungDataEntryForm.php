@@ -25,10 +25,10 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Exception;
 
-class BegegnungDataEntryForm
+readonly class BegegnungDataEntryForm
 {
 
-    public function __construct(private readonly Environment $twig)
+    public function __construct(private Environment $twig)
     {
     }
 
@@ -45,7 +45,6 @@ class BegegnungDataEntryForm
 
         if (!$begegnungModel) {
             throw new RedirectResponseException('/contao?do=liga.begegnung');
-            // ODER: 'contao/main.php?act=error' ?
         }
 
         $appData = $begegnungModel->{DataEntrySaver::KEY_APP_DATA};

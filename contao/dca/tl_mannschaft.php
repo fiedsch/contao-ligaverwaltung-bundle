@@ -47,7 +47,6 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -79,7 +78,6 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
         ],
 
         'liga' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['liga'],
             'inputType' => 'select',
             'filter' => true,
             'sorting' => true,
@@ -92,9 +90,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
         ],
 
         'name' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['name'],
             'inputType' => 'text',
-            'exclude' => true,
             'search' => true,
             'filter' => false,
             'sorting' => true,
@@ -103,9 +99,7 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             'sql' => ['type' => 'string', 'length' => 255, 'default' => ''],
         ],
         'spielort' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['spielort'],
             'inputType' => 'select',
-            'exclude' => true,
             'search' => false,
             'filter' => true,
             'sorting' => false,
@@ -115,10 +109,8 @@ $GLOBALS['TL_DCA']['tl_mannschaft'] = [
             'sql' => ['type' => 'integer', 'default' => 0, 'unsigned' => true],
         ],
         'active' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_mannschaft']['active'],
             'inputType' => 'checkbox',
             'toggle' => true,
-            'exclude' => true,
             'search' => false,
             'filter' => true,
             'sorting' => false,

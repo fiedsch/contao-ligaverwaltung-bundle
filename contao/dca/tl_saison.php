@@ -41,7 +41,6 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -67,18 +66,14 @@ $GLOBALS['TL_DCA']['tl_saison'] = [
             'sql' => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
         ],
         'name' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_saison']['name'],
             'sorting' => true,
-            'exclude' => true,
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],
             'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],
         'alias' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_saison']['alias'],
             'sorting' => true,
-            'exclude' => true,
             'flag' => DataContainer::SORT_ASC,
             'inputType' => 'text',
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50', 'mandatory' => true],

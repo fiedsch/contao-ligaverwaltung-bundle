@@ -68,6 +68,7 @@ class LigenlisteController extends AbstractContentElementController
 
         if (!$model->saison) {
             $template->listitems = [];
+            $template->subject = 'Fehler: keine Saison gewählt!';
             return;
         }
         $saisonIds = StringUtil::deserialize($model->saison);

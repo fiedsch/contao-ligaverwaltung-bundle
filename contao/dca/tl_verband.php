@@ -47,7 +47,6 @@ $GLOBALS['TL_DCA']['tl_verband'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -74,11 +73,9 @@ $GLOBALS['TL_DCA']['tl_verband'] = [
             'sql' => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
         ],
         'name' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_verband']['name'],
             'sorting' => true,
             'flag' => DataContainer::SORT_INITIAL_LETTER_ASC,
             'inputType' => 'text',
-            'exclude' => true,
             'eval' => ['maxlength' => 128, 'tl_class' => 'w50'],
             'sql' => ['type' => 'string', 'length' => 128, 'default' => ''],
         ],

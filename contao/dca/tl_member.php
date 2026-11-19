@@ -21,7 +21,6 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
 
 $GLOBALS['TL_DCA']['tl_member']['list']['operations']['history'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_member']['history'],
     'prefetch' => false,
     'primary' => true,
     'button_callback' => static function ($arrRow, $href, $label, $title, $icon, $attributes, $strTable, $arrRootIds, $arrChildRecordIds, $blnCircularReference, $strPrevious, $strNext) {
@@ -51,7 +50,6 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['email']['eval']['mandatory'] = false;
 
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_member']['passnummer'],
     'inputType' => 'text',
     'search' => true,
     'sorting' => true,
@@ -84,7 +82,6 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['passnummer'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['anonymize'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_member']['anonymize'],
     'inputType' => 'checkbox',
     'filter' => true,
     'eval' => ['tl_class' => 'w25 m12'],
@@ -92,8 +89,6 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['anonymize'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_member']['avatar'],
-    'exclude' => true,
     'search' => false,
     'filter' => false,
     'inputType' => 'fileTree',

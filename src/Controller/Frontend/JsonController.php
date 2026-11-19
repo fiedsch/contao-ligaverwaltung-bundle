@@ -25,9 +25,9 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
-class JsonController
+readonly class JsonController
 {
-    public function __construct(private readonly ContaoFramework $framework)
+    public function __construct(private ContaoFramework $framework)
     {
         $this->framework->initialize();
         $this->initialize();
