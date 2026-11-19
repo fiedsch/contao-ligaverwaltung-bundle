@@ -57,8 +57,8 @@ class MemberCallbacks
     public function dcaOnloadCallback(DataContainer $dc): void
     {
         $foreignFilter = $this->getFilter(); // auch, um ggf. den Filter aus der Session zu entfernen
-
-        if ($foreignFilter !== null && $foreignFilter !== '') {
+dump($foreignFilter);
+        if ($foreignFilter !== null && !empty($foreignFilter)) {
 $sql = <<<SQL
   SELECT me.id FROM tl_member me
             LEFT JOIN tl_spieler sp ON (sp.member_id=me.id)
@@ -80,6 +80,31 @@ SQL;
                 'id IN (' . implode(',', array_map('intval', $ids)) . ')'
             ;
         }
+
+
+        // Filter für "keiner Mannschaft zugeordnet
+        if ($foreignFilter !== null && $foreignFilter === '0') {
+$sql = <<<SQL
+  SELECT me.id FROM tl_member me
+            LEFT JOIN tl_spieler sp ON (sp.member_id=me.id)
+            WHERE sp.member_id IS NULL
+SQL;
+            $relatedIds = $this->connection->fetchAllAssociative(
+                $sql
+            );
+
+            $ids = array_column($relatedIds, 'id');
+
+            if (empty($ids)) {
+                $ids = [0];
+            }
+
+
+            $GLOBALS['TL_DCA']['tl_member']['list']['sorting']['filter'][] =
+                'id IN (' . implode(',', array_map('intval', $ids)) . ')'
+            ;
+        }
+
     }
 
     protected function getFilter(): string
@@ -116,8 +141,9 @@ SQL;
 
     protected function getOptionValues(): array
     {
+        // Alle aktiven Mannschaften nach Liga und Saison
         $sql = <<<SQL
-SELECT m.id as id, m.name as mannschaft,l.name as liga, s.name as saison
+SELECT m.id as id, m.name as mannschaft, l.name as liga, s.name as saison
   FROM tl_mannschaft m
   LEFT JOIN tl_liga l ON (m.liga=l.id)
   LEFT JOIN tl_saison s ON (l.saison=s.id)
@@ -130,6 +156,9 @@ SQL;
         foreach ($dbResult->fetchAllAssociative() as $row) {
             $result[$row['id']] = sprintf('%s (%s %s)', $row['mannschaft'], $row['saison'], $row['liga']);
         }
+
+        // Filter für "keine Mannschaft"
+        $result[0] = sprintf('%s (%s %s)', 'keine Mannschaft', 'keine Saison', 'keine Liga');
 
         return $result;
     }
