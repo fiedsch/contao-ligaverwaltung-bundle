@@ -112,6 +112,9 @@ services:
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielberichtreaderController: ~
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielortseitenreaderController: ~
 
+    Fiedsch\Ligaverwaltung\Callback\MemberCallbacks: ~
+
+
     Fiedsch\Ligaverwaltung\Controller\FrontendModule\SpielberichtErfassungController:
         arguments:
             - '@fiedsch_ligaverwaltung.helper.frontend'
