@@ -80,3 +80,8 @@ $GLOBALS['TL_LANG']['tl_content']['dataentrypage'] = [
     'Dateneingabe-Seite',
     'Seite, auf der ein Modul vom Typ "'.$GLOBALS['TL_LANG']['MOD']['liga_begegnungserfassung'][0].'" enthalten ist.'
 ];
+
+$GLOBALS['TL_LANG']['tl_content']['begegnungsliste'] = [
+    'Auswahlliste für Begegnungserfassung',
+    'Auswahlliste von Begegnungen für Begegnungserfassung.'
+];
