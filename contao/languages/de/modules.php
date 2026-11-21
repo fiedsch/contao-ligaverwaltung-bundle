@@ -82,3 +82,8 @@ $GLOBALS['TL_LANG']['FMD']['ligaverwaltung'] = [
     'Ligaverwaltung',
     'Ligaverwaltung',
 ];
+
+$GLOBALS['TL_LANG']['FMD']['spielbericht_erfassung'] = [
+    'Erfassung eines Spielberichts',
+    'Dateneingabe für einen Spielbericht im Frontend.',
+];

@@ -167,6 +167,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         'postponed' => [
             'inputType' => 'checkbox',
             'filter' => true,
+            'exclude' => true,
             'eval' => ['tl_class' => ''],
             'sql' => ['type' => 'boolean', 'default' => false]
         ],
