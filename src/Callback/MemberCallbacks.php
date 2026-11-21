@@ -57,7 +57,6 @@ class MemberCallbacks
     public function dcaOnloadCallback(DataContainer $dc): void
     {
         $foreignFilter = $this->getFilter(); // auch, um ggf. den Filter aus der Session zu entfernen
-dump($foreignFilter);
         if ($foreignFilter !== null && !empty($foreignFilter)) {
 $sql = <<<SQL
   SELECT me.id FROM tl_member me
