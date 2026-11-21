@@ -15,8 +15,8 @@
     {%  block data_form %}
         <form method="post">
             <div class="tl_listing_container">
-                <script>
-                    let data = {{ app_data|default({})|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
+                <script id="begegnung-data" type="application/json">
+                    {{ app_data|default({})|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
                 </script>
                 <div id="app"></div>
             </div>
@@ -35,12 +35,12 @@
                 .setIfExists('nonce', csp_nonce('script-src'))
                 .mergeWith(script_attributes|default)
             %}
-            <script {{ script_attributes }} src="/bundles/fiedschligaverwaltung/js/chunk-vendors.601565e7.js"></script>
-            <script {{ script_attributes }} src="/bundles/fiedschligaverwaltung/js/app.31b1bd1f.js"></script>
+            <script {{ script_attributes }} src="/bundles/fiedschligaverwaltung/js/chunk-vendors.7220a5f6.js"></script>
+            <script {{ script_attributes }} src="/bundles/fiedschligaverwaltung/js/app.0b4a705a.js"></script>
         {% endadd %}
 
         {% add "data_form_css" to stylesheets %}
-            {% with {file: asset('/bundles/fiedschligaverwaltung/css/app.ee4e9518.css')} %}
+            {% with {file: asset('/bundles/fiedschligaverwaltung/css/app.f267e1ff.css')} %}
                 {{ block('stylesheet_component') }}
             {% endwith %}
         {% endadd %}
