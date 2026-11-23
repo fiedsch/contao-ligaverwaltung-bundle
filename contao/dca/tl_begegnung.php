@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @package Ligaverwaltung
  * @link https://github.com/fiedsch/contao-ligaverwaltung-bundle/
  * @license https://opensource.org/licenses/MIT
- *
- * TODO: disable turbo for the complete data entry form so that toggling [] published forces a reload of the vue app with toggled "disabled" data field
  */
 
 use Contao\DC_Table;
@@ -161,7 +159,7 @@ $GLOBALS['TL_DCA']['tl_begegnung'] = [
         ],
         'vue_app' => [
             'inputType' => 'begegnungdataentry_widget',
-            'eval'      => ['tl_class' => 'clr long', 'doNotSaveEmpty' => true, 'data-turbo' => 'false'],
+            'eval'      => ['tl_class' => 'clr long', 'doNotSaveEmpty' => true/*, 'data-turbo' => 'false'*/],
             'sql' => null, // no data
         ],
         'postponed' => [
