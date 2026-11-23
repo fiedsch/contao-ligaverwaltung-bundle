@@ -1,21 +1,16 @@
-<div class="tl_listing_container" data-turbo="false">
-    {#
-    <script data-turbo-track="reload">
-        let data = {{ app_data|json_encode()|raw }}
-    </script>
-     #}
+<div class="tl_listing_container">
     <script id="begegnung-data" type="application/json">
         {{ app_data|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
         {# {{ app_data|json_encode()|raw }} #}
     </script>
 
     {# hier wird die App injiziert #}
-    <div id="app" data-turbo-track="reload"></div>
+    <div id="app"></div>
 </div>
 
 {# JS und CSS Code für die App #}
 <script src="/bundles/fiedschligaverwaltung/js/chunk-vendors.7220a5f6.js"></script>
-<script src="/bundles/fiedschligaverwaltung/js/app.0b4a705a.js"></script>
+<script src="/bundles/fiedschligaverwaltung/js/app.c5967f3a.js"></script>
 <link rel="stylesheet" href="/bundles/fiedschligaverwaltung/css/app.f267e1ff.css">
 <style>
     {{ app_data.spielplanCss|raw }}
@@ -24,30 +19,3 @@
         width: 12rem; /* quick fix while this is not in https://github.com/fiedsch/begegnungserfassung */
     }
 </style>
-
-<script>
-    document.addEventListener("turbo:load", () => {
-        let form = document.querySelector('#tl_begegnung')
-        if (form) {
-            form.dataset.turbo = 'false'
-            document.body.dataset.turbo = 'false';
-            document.head.appendChild('<meta name="turbo-cache-control" content="no-cache">');
-        }
-    });
-
-    document.addEventListener("turbo:load", () => {
-        let begegnungData = document.getElementById('begegnung-data');
-        if (begegnungData && begegnungData.textContent) {
-            try {
-                //appData.value = JSON.parse(begegnungData.textContent)
-                console.debug(JSON.parse(begegnungData.textContent))
-                let data = JSON.parse(begegnungData.textContent);
-                alert(data.home.name + ' vs ' + data.away.name);
-            } catch (error) {
-                console.error('Failed to parse JSON from script tag:', error)
-            }
-        }
-        alert(appData);
-    }
-</script>
-
